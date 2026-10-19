@@ -2,12 +2,14 @@
 
     .venv/bin/python pipeline/check_overrides.py [file ...]      exit code 1 on errors
 
-Checks: building id exists and is in the hero/mid tier, edge exists and is exposed, bay centres
-and opening widths fit the edge, floors fit under the roof, sign cells exist, ground list
-length matches the bays. Run make_spec.py first so the spec reflects the current OSM cleanup.
+Checks: building id exists and is in the hero/mid tier, edge exists (resolved from the "at" anchor
+when present, as make_spec does) and is exposed, bay centres and opening widths fit the edge,
+floors fit under the roof, sign cells exist, ground list length matches the bays. Reads every
+sector spec (data/spec, or $SPEC_DIR); run make_spec.py first.
 """
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -16,8 +18,14 @@ GROUND_KINDS = {"shop", "door", "window", "blind"}
 
 
 def main():
-    spec = json.loads((ROOT / "data/scene_spec.json").read_text())
-    blds = {b["osm"]: b for b in spec["buildings"]}
+    sdir = Path(os.environ["SPEC_DIR"]) if os.environ.get("SPEC_DIR") else ROOT / "data/spec"
+    blds = {}
+    for fn_ in sorted(sdir.glob("*.json")):
+        if fn_.name in ("index.json",) or fn_.name.startswith("scene_spec"):
+            continue
+        for b_ in json.loads(fn_.read_text()).get("buildings", []):
+            if b_["osm"] not in blds or b_["id"] == b_["osm"]:
+                blds[b_["osm"]] = b_
     sj = ROOT / "data/textures/gen/signs.json"
     cells = set(json.loads(sj.read_text())["signs"]) if sj.exists() else set()
     files = [Path(a) for a in sys.argv[1:]] or sorted((ROOT / "data/reference/overrides").glob("*.json"))
@@ -43,6 +51,18 @@ def main():
         for e, ov in d.get("facades", {}).items():
             i = int(e)
             tag = "%s edge %s" % (fn.name, e)
+            if "at" in ov:                                 # resolve the anchor like hero.facades_for
+                best, bd_ = None, 3.0
+                for k in range(len(r)):
+                    a_, b2 = r[k], r[(k + 1) % len(r)]
+                    dd = math.dist(((a_[0] + b2[0]) / 2, (a_[1] + b2[1]) / 2), ov["at"])
+                    if dd < bd_:
+                        best, bd_ = k, dd
+                if best is None:
+                    print("%s: anchor %s is not within 3 m of any edge midpoint" % (tag, ov["at"]))
+                    errors += 1
+                    continue
+                i = best
             if not 0 <= i < len(r):
                 print("%s: edge out of range (ring has %d edges)" % (tag, len(r)))
                 errors += 1

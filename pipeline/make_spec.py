@@ -11,6 +11,7 @@ Blender only builds what the spec lists:
     .venv/bin/python pipeline/make_spec.py
 """
 import functools
+import os
 import re
 import json
 import math
@@ -118,6 +119,41 @@ LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, a
 COVERED_SOUQS = {"Suq Al La'h'hamin", "Suq Al Attarin", "Suq Al-Khawajat", "Suq El-Quatta"}
 
 
+# ---------------------------------------------------------------- sector profiles
+# data/reference/profiles/<sector>.json, written by the per-sector passes (format and checks:
+# pipeline/check_profiles.py): market and covered streets, open areas, missing / non-existent
+# buildings, notable props. Building settings (height, wall, tint, shops, domes, roof, parapet,
+# storey) and facades go in data/reference/overrides/<osm>.json ("settings" / "facades").
+PROFILES = {}
+_PDIR = ROOT / "data/reference/profiles"
+for _fn in sorted(_PDIR.glob("*.json")) if _PDIR.exists() else []:
+    try:
+        PROFILES[_fn.stem] = json.loads(_fn.read_text())
+    except (ValueError, OSError) as _e:
+        print("profile %s skipped: %s" % (_fn.name, _e))
+COVERED_IDS, PROFILE_OPEN, PROFILE_PROPS = set(), [], []
+for _sid, _pr in PROFILES.items():
+    for _k, _v in _pr.get("souq_streets", {}).items():
+        SOUQ_STREETS[str(_k)] = tuple(_v)
+    for _k in _pr.get("covered_streets", []):
+        if str(_k).isdigit():
+            COVERED_IDS.add(int(_k))
+        else:
+            COVERED_SOUQS.add(_k)
+    PROFILE_OPEN += [Polygon(_o["ring"]).buffer(0) for _o in _pr.get("open_areas", [])]
+    MANUAL_BUILDINGS.extend({**_m, "ring": [tuple(_q) for _q in _m["ring"]]} for _m in _pr.get("manual_buildings", []))
+    SKIP.update(_pr.get("remove_buildings", {}).keys())
+    PROFILE_PROPS += _pr.get("props", [])
+
+
+def souq_key(w):
+    """SOUQ_STREETS key of a way (its OSM id as a string, or its name:en), or None."""
+    if str(w["id"]) in SOUQ_STREETS:
+        return str(w["id"])
+    n = w["tags"].get("name:en")
+    return n if n in SOUQ_STREETS else None
+
+
 def covered_ways(d):
     out = []
     for w in d["ways"]:
@@ -125,7 +161,7 @@ def covered_ways(d):
         pts = w.get("pts") or []
         if not t.get("highway") or len(pts) < 2 or t.get("area") == "yes":
             continue
-        named = t.get("name:en") in COVERED_SOUQS
+        named = t.get("name:en") in COVERED_SOUQS or w["id"] in COVERED_IDS
         lay = int(t.get("layer", "0") or 0)
         if named or (lay >= 0 and (t.get("tunnel") in ("yes", "building_passage") or t.get("covered") == "yes")):
             out.append((w, LineString(pts), "souq" if named else "passage"))
@@ -233,13 +269,25 @@ def souq_profile(L, eg, rng, canopy=True, width=7.0):
     return ov
 
 
+# SPEC_DIR=<dir> writes the spec there instead of data/spec (parallel workers each use their own;
+# build_city.py --part reads the same variable). Files are written atomically.
+SPEC_DIR = Path(os.environ["SPEC_DIR"]).resolve() if os.environ.get("SPEC_DIR") else ROOT / "data/spec"
+LEGACY_SPEC = SPEC_DIR / "scene_spec.json" if os.environ.get("SPEC_DIR") else ROOT / "data/scene_spec.json"
+
+
+def write_json(path, obj, indent=None):
+    tmp = path.with_name(path.name + ".tmp%d" % os.getpid())
+    tmp.write_text(json.dumps(obj, indent=indent))
+    os.replace(tmp, path)
+
+
 def write_sectors(spec):
     """Split the spec: data/spec/base.json (ground, kerbs, walls, citadel, gate, context) and one file
     per sector (its buildings, props, steps, cables, beams, ground decals). data/scene_spec.json stays
     a legacy single-scene spec (base + s00) for the evaluation loop and tools."""
     import sectors as S
     secs = S.load()
-    out_dir = ROOT / "data/spec"
+    out_dir = SPEC_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
 
     def sector_of(x, y, osm=None):
@@ -286,7 +334,7 @@ def write_sectors(spec):
                                   "walls_generic", "spawn", "sources")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": [], "cables": [],
                  "beams": []})
-    (out_dir / "base.json").write_text(json.dumps(base))
+    write_json(out_dir / "base.json", base)
     index = []
     for sid, geom, rec in secs:
         bx = list(geom.bounds)                              # sector area plus what its buildings overhang
@@ -295,15 +343,15 @@ def write_sectors(spec):
             ys = [p[1] for p in bd["ring"]]
             bx = [min(bx[0], min(xs)), min(bx[1], min(ys)), max(bx[2], max(xs)), max(bx[3], max(ys))]
         part = dict(per[sid], id=sid, bounds=[round(v, 1) for v in bx], name=rec["name"])
-        (out_dir / ("%s.json" % sid)).write_text(json.dumps(part))
+        write_json(out_dir / ("%s.json" % sid), part)
         index.append({"id": sid, "bounds": part["bounds"], "buildings": len(part["buildings"]),
                       "props": len(part["props"]), "name": rec["name"]})
-    (out_dir / "index.json").write_text(json.dumps({"sectors": index}, indent=1))
+    write_json(out_dir / "index.json", {"sectors": index}, indent=1)
     legacy = dict(base)
     legacy["buildings"] = base_b + per["s00_jaffa"]["buildings"]
     for k in ("props", "steps", "cables", "beams", "ground_decals"):
         legacy[k] = base[k] + per["s00_jaffa"][k] if k in ("props", "ground_decals") else per["s00_jaffa"][k]
-    (ROOT / "data/scene_spec.json").write_text(json.dumps(legacy))
+    write_json(LEGACY_SPEC, legacy)
     print("sectors:", ", ".join("%s %d" % (i["id"], i["buildings"]) for i in index), "| base context", len(base_b))
 
 
@@ -514,13 +562,13 @@ def main():
     d = json.loads((ROOT / "data/osm_local.json").read_text())
     rng = random.Random(1898)
     for w in d["ways"]:            # the covered souqs are mapped as layer -1 (under the buildings above):
-        if w["tags"].get("name:en") in COVERED_SOUQS:        # they are the street level here
+        if w["tags"].get("name:en") in COVERED_SOUQS or w["id"] in COVERED_IDS:   # they are the street level
             w["tags"] = dict(w["tags"], layer="0")
     setup_flats(d)
     # the Dome of the Rock's upper platform (OSM retaining wall w137725307): no trees on it
     PLATFORM = next((Polygon(w["pts"]).buffer(0) for w in d["ways"] if w["id"] == 137725307), Polygon())
-    souq_lines = [(LineString(w["pts"]), SOUQ_STREETS[w["tags"]["name:en"]]) for w in d["ways"]
-                  if w["tags"].get("highway") and w["tags"].get("name:en") in SOUQ_STREETS
+    souq_lines = [(LineString(w["pts"]), SOUQ_STREETS[souq_key(w)]) for w in d["ways"]
+                  if w["tags"].get("highway") and souq_key(w)
                   and len(w.get("pts") or []) > 1 and int(w["tags"].get("layer", "0") or 0) >= 0]
     souq_tree = STRtree([ln for ln, _ in souq_lines])
     if (ROOT / "data/sectors.json").exists():
@@ -609,6 +657,7 @@ def main():
     # buildings OSM does not map along the streets (pipeline/infill.py), lowest priority of all
     fill = infill.infill(d, [p for _, p, t in cands if t != "context"], CITY.buffer(-16.5),
                          unary_union([HARAM.buffer(2.0), HERO_ZONE.buffer(3.0), blocked.buffer(2.0), wall_slabs.buffer(0.5),
+                                      unary_union(GROUND_HOLES).buffer(0.5), unary_union(PROFILE_OPEN or [Polygon()]),
                                       LineString(ROAD).buffer(ROAD_HALF + 1.0)]))
     for k, fp in enumerate(fill):
         cands.append(({"id": "f%d" % k, "tags": {"building": "yes", "note": "infill"}, "outer": [list(fp.exterior.coords)[:-1]]},
@@ -757,10 +806,11 @@ def main():
             h = roofscape.height_for(osm, bd["tags"], q.area, sid)
         if h is None:
             h = roofscape.osm_height(bd["tags"]) or (7.0 if q.area < 60 else 9.0 + (zlib.crc32(osm.encode()) % 5))
-        ashlar = osm in ASHLAR
-        style = {"wall": hb.get("wall", "ashlar" if ashlar else "rubble"), "shops": osm in SHOPS,
-                 "domes": DOMES.get(osm, 0), "roof": "hipped" if osm in HIPPED else "flat",
-                 "storey": hb.get("storey", 4.2 if ashlar or osm in SHOPS else 3.6),
+        ashlar = hb["wall"] == "ashlar" if "wall" in hb else osm in ASHLAR
+        shops = hb.get("shops", osm in SHOPS)
+        style = {"wall": hb.get("wall", "ashlar" if ashlar else "rubble"), "shops": shops,
+                 "domes": hb.get("domes", DOMES.get(osm, 0)), "roof": hb.get("roof", "hipped" if osm in HIPPED else "flat"),
+                 "storey": hb.get("storey", 4.2 if ashlar or shops else 3.6),
                  "parapet": hb.get("parapet", "solid")}
         rec = {"id": bid, "osm": osm, "tier": bd["tier"], "ring": r, "c": [round(q.centroid.x, 2), round(q.centroid.y, 2)],
                "tags": {k_: v for k_, v in bd["tags"].items() if k_ in ("name", "name:en", "building")},
@@ -947,6 +997,10 @@ def main():
                               or w["tags"].get("leisure") in ("park", "garden"))
                          and not Polygon(w["pts"]).buffer(0).intersects(PLATFORM)]}
     props, cables, ground_decals, beams = dressing.dress(ctxinfo, rng)
+    for pp in PROFILE_PROPS:                                   # notable furniture from the sector profiles
+        x, y = pp["p"][:2]
+        props.append({"type": pp["type"], "p": [round(x, 3), round(y, 3), round(street_z(x, y), 3)],
+                      "rot": pp.get("rot", 0.0), "s": pp.get("s", 1.0), "col": pp.get("col", True), "r": pp.get("r", 0.5)})
 
     # ---------------------------------------------------------------- the rest of the wall circuit (OSM)
 

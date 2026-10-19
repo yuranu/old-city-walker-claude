@@ -10,6 +10,7 @@ glTF node extras). Props are linked duplicates of library meshes (blender/props.
 import argparse
 import json
 import math
+import os
 import sys
 import zlib
 from pathlib import Path
@@ -576,13 +577,16 @@ def export_glb(path, collections, images=True):
     print("exported", path, n, "objects")
 
 
+SPEC_DIR = Path(os.environ["SPEC_DIR"]).resolve() if os.environ.get("SPEC_DIR") else ROOT / "data/spec"   # see make_spec
+
+
 def main():
     args = parse_args()
     part = args.part
     if part == "base":
-        spec = json.loads((ROOT / "data/spec/base.json").read_text())
+        spec = json.loads((SPEC_DIR / "base.json").read_text())
     elif part:
-        spec = json.loads((ROOT / ("data/spec/%s.json" % part)).read_text())
+        spec = json.loads((SPEC_DIR / ("%s.json" % part)).read_text())
     else:
         spec = json.loads(Path(args.spec).read_text())
     bpy.ops.wm.read_factory_settings(use_empty=True)
