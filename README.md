@@ -1,17 +1,26 @@
 # Old City Walker
 
-A walkable, geo-registered recreation of Jerusalem's Old City built from open data. The first
-area is **Jaffa Gate, Omar Ibn el-Khattab Square and the top of David Street**. It is modelled in
-Blender from OpenStreetMap footprints plus photo-based research, and walked in a browser
-(three.js). Every point in the game maps to a real lat/lon. Shops are closed and there are no
-people.
+A walkable, geo-registered recreation of Jerusalem's walled Old City built from open data. It is
+modelled in Blender from OpenStreetMap footprints, an 1865 survey of street levels and photo-based
+research, and walked in a browser (three.js). Every point in the game maps to a real lat/lon.
+Shops are closed and there are no people.
 
+![the walled city from the Mount of Olives](docs/img/city_from_olives.jpg)
+
+* **The whole walled city**, streamed by sector: 2,600 buildings, 0.86 km², 35 m of fall from
+  Jaffa Gate to the Western Wall plaza. Market streets have closed shopfronts and canopies,
+  covered souqs and passages are vaulted, and steep lanes are stepped. Domed roofscapes, gates
+  and the wall circuit are built, along with the landmarks: the Holy Sepulchre, the Temple Mount,
+  the Redeemer, the Hurva, minarets and churches.
+* **The Jaffa Gate area** (the first, hero area): photo-matched facades, signage, fortifications.
+
+![Christian Quarter from above](docs/img/city_aerial.jpg)
+![in the game: Khan ez-Zeit and the Holy Sepulchre parvis](docs/img/ingame_streets.jpg)
 ![hero area](docs/img/hero_views.jpg)
 
-Status: v2 detail pass in progress (photo-matched facades, signage, fortifications, engine
-quality). The process is documented as a reusable playbook in
-[docs/METHODOLOGY.md](docs/METHODOLOGY.md), and the photo-matched evaluation loop in
-[docs/EVALUATION.md](docs/EVALUATION.md).
+The process is a reusable playbook in [docs/METHODOLOGY.md](docs/METHODOLOGY.md) (§9: scaling to
+the whole city). The photo-matched evaluation loop is in [docs/EVALUATION.md](docs/EVALUATION.md),
+and the street-level terrain in [docs/TERRAIN.md](docs/TERRAIN.md).
 
 ## Play
 
@@ -26,8 +35,11 @@ Click to walk: **WASD** + mouse, **Shift** run, **Space** jump.
 URL `?x=60&y=8&h=90` starts at local metres (x east, y north from the Jaffa Gate OSM node) facing
 compass heading `h`. `?cam=<name>` loads an evaluation camera and `&clean=1` hides the HUD.
 
-`game/public/city.glb` is committed (Git LFS) so the game runs without the build pipeline. It is
-refreshed at milestones, not on every change.
+`game/public/city.glb` (the Jaffa Gate area) is committed (Git LFS), so the game runs without the
+build pipeline; it is refreshed at milestones. The streamed whole city (`game/public/sectors.json`,
+`base/*.glb`, `sectors/*.glb`, ~440 MB) is built locally by `./build.sh`. The game uses it when
+present and falls back to `city.glb` otherwise. Integrated GPUs run it at about 6-10 ms per frame at
+1024x768. F3 shows which sectors are at full detail, and `?sectors=0` forces the single scene.
 
 ## Rebuild
 
@@ -36,7 +48,9 @@ Requirements: Blender 5.x (with system Python 3.14, as on Arch), Python 3.14 wit
 ```bash
 python3 -m venv --system-site-packages .venv && .venv/bin/pip install -r requirements.txt
 ./fetch_data.sh          # textures (Poly Haven, CC0), photo metadata; the OSM snapshot is versioned
-./build.sh               # spec -> textures/signs -> Blender -> game/public/city.glb -> audit (~40 s)
+./build.sh               # terrain -> spec -> textures/signs -> Blender: city.glb + base and 12 sectors
+                         # in parallel (~2 min) -> sectors.json -> audit
+PARTS="s04_sepulchre" ./build.sh --preview ""   # rebuild only some parts
 ./build.sh --preview ""  # skip preview renders
 ```
 
