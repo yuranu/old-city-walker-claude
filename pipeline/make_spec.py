@@ -119,33 +119,6 @@ LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, a
 COVERED_SOUQS = {"Suq Al La'h'hamin", "Suq Al Attarin", "Suq Al-Khawajat", "Suq El-Quatta"}
 
 
-# ---------------------------------------------------------------- sector profiles
-# data/reference/profiles/<sector>.json, written by the per-sector passes (format and checks:
-# pipeline/check_profiles.py): market and covered streets, open areas, missing / non-existent
-# buildings, notable props. Building settings (height, wall, tint, shops, domes, roof, parapet,
-# storey) and facades go in data/reference/overrides/<osm>.json ("settings" / "facades").
-PROFILES = {}
-_PDIR = ROOT / "data/reference/profiles"
-for _fn in sorted(_PDIR.glob("*.json")) if _PDIR.exists() else []:
-    try:
-        PROFILES[_fn.stem] = json.loads(_fn.read_text())
-    except (ValueError, OSError) as _e:
-        print("profile %s skipped: %s" % (_fn.name, _e))
-COVERED_IDS, PROFILE_OPEN, PROFILE_PROPS = set(), [], []
-for _sid, _pr in PROFILES.items():
-    for _k, _v in _pr.get("souq_streets", {}).items():
-        SOUQ_STREETS[str(_k)] = tuple(_v)
-    for _k in _pr.get("covered_streets", []):
-        if str(_k).isdigit():
-            COVERED_IDS.add(int(_k))
-        else:
-            COVERED_SOUQS.add(_k)
-    PROFILE_OPEN += [Polygon(_o["ring"]).buffer(0) for _o in _pr.get("open_areas", [])]
-    MANUAL_BUILDINGS.extend({**_m, "ring": [tuple(_q) for _q in _m["ring"]]} for _m in _pr.get("manual_buildings", []))
-    SKIP.update(_pr.get("remove_buildings", {}).keys())
-    PROFILE_PROPS += _pr.get("props", [])
-
-
 def souq_key(w):
     """SOUQ_STREETS key of a way (its OSM id as a string, or its name:en), or None."""
     if str(w["id"]) in SOUQ_STREETS:
@@ -245,6 +218,34 @@ SOUQ_STREETS = {
     "Via Dolorosa": (0.35, 0.2), "Lions' Gate Street": (0.3, 0.2), "Bab Hutta Street": (0.25, 0.1),
     "Latin Patriarchate Road": (0.25, 0.2), "Greek Orthodox Patriarchate Street": (0.3, 0.2),
 }
+
+
+# ---------------------------------------------------------------- sector profiles
+# data/reference/profiles/<sector>.json, written by the per-sector passes (format and checks:
+# pipeline/check_profiles.py): market and covered streets, open areas, missing / non-existent
+# buildings, notable props. Building settings (height, wall, tint, shops, domes, roof, parapet,
+# storey) and facades go in data/reference/overrides/<osm>.json ("settings" / "facades").
+PROFILES = {}
+_PDIR = ROOT / "data/reference/profiles"
+for _fn in sorted(_PDIR.glob("*.json")) if _PDIR.exists() else []:
+    try:
+        PROFILES[_fn.stem] = json.loads(_fn.read_text())
+    except (ValueError, OSError) as _e:
+        print("profile %s skipped: %s" % (_fn.name, _e))
+COVERED_IDS, PROFILE_OPEN, PROFILE_PROPS = set(), [], []
+for _sid, _pr in PROFILES.items():
+    for _k, _v in _pr.get("souq_streets", {}).items():
+        SOUQ_STREETS[str(_k)] = tuple(_v)
+    for _k in _pr.get("covered_streets", []):
+        if str(_k).isdigit():
+            COVERED_IDS.add(int(_k))
+        else:
+            COVERED_SOUQS.add(_k)
+    PROFILE_OPEN += [Polygon(_o["ring"]).buffer(0) for _o in _pr.get("open_areas", [])]
+    MANUAL_BUILDINGS.extend({**_m, "ring": [tuple(_q) for _q in _m["ring"]]} for _m in _pr.get("manual_buildings", []))
+    SKIP.update(_pr.get("remove_buildings", {}).keys())
+    PROFILE_PROPS += _pr.get("props", [])
+
 
 
 def souq_profile(L, eg, rng, canopy=True, width=7.0):
