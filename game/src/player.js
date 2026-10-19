@@ -27,11 +27,17 @@ export class Player {
 
   // place feet at local plan (x east, y north) on the ground below
   teleport(x, y, headingDeg = null, pitchDeg = 0) {
-    // prefer street level (start below most roofs), fall back to dropping from the sky
+    // stand on the lowest upward-facing surface with headroom (street level, not a canopy or roof)
     const down = new THREE.Vector3(0, -1, 0);
-    const hit = this.bvh.raycastFirst(new THREE.Ray(new THREE.Vector3(x, 3.5, -y), down), THREE.DoubleSide) ||
-      this.bvh.raycastFirst(new THREE.Ray(new THREE.Vector3(x, 80, -y), down), THREE.DoubleSide);
-    const groundY = hit ? hit.point.y : 0;
+    const hits = this.bvh.raycast(new THREE.Ray(new THREE.Vector3(x, 80, -y), down), THREE.DoubleSide)
+      .sort((a, b) => a.point.y - b.point.y);
+    let groundY = hits.length ? hits[hits.length - 1].point.y : 0;
+    for (let i = 0; i < hits.length; i++) {
+      const h = hits[i];
+      if (!h.face || h.face.normal.y < 0.5) continue;
+      const above = i + 1 < hits.length ? hits[i + 1].point.y : Infinity;
+      if (above - h.point.y >= 2.0) { groundY = h.point.y; break; }
+    }
     this.groundY = groundY;
     this.pos.set(x, groundY + RADIUS + SEGMENT + 0.05, -y);
     this.vel.set(0, 0, 0);
