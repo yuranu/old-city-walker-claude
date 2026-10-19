@@ -674,7 +674,7 @@ def water_heater(mb, ctx):
              caps=False)
         beam(mb, (sx * 0.56, -0.98, 0.0), (sx * 0.56, -0.98, 1.5), 0.045, 0.045, G, caps=False)  # rear leg
         beam(mb, (sx * 0.56, -0.72, 1.5), (sx * 0.56, -1.22, 1.5), 0.065, 0.04, G, caps=False)   # tank saddle
-    lathe(mb, [(0.27, -0.72), (0.27, 0.72)], P, white, seg=10, o=(0, -0.98, 1.79), axis=(1, 0, 0),
+    lathe(mb, [(0.27, -0.72), (0.27, 0.72)], P, white, seg=7, o=(0, -0.98, 1.79), axis=(1, 0, 0),
           cap0=(P, (0.9, 0.9, 0.88)), cap1=(P, (0.9, 0.9, 0.88)))
     _recentre(mb)
 
@@ -682,7 +682,7 @@ def water_heater(mb, ctx):
 def water_tank(mb, ctx):
     P = "plastic"
     blk = (0.07, 0.07, 0.07)
-    lathe(mb, [(0.55, 0.0), (0.55, 1.0), (0.2, 1.15), (0.2, 1.21)], P, blk, seg=10, cap1=(P, (0.05, 0.05, 0.05)),
+    lathe(mb, [(0.55, 0.0), (0.55, 1.0), (0.2, 1.15), (0.2, 1.21)], P, blk, seg=7, cap1=(P, (0.05, 0.05, 0.05)),
           bands=[(P, blk), (P, (0.08, 0.08, 0.08)), (P, (0.05, 0.05, 0.05))])
 
 
@@ -695,8 +695,8 @@ def sat_dish(mb, ctx):
     a = Vector((0, math.cos(t), math.sin(t)))
     dn = Vector((0, math.sin(t), -math.cos(t)))
     c = Vector((0, 0.04, 1.06))
-    lathe(mb, [(0.4, 0.075), (0.22, 0.022), (0.0, 0.0)], P, wc, seg=10, o=c, axis=a)
-    lathe(mb, [(0.0, -0.05), (0.4, 0.075)], P, (0.8, 0.8, 0.78), seg=10, o=c, axis=a)
+    lathe(mb, [(0.4, 0.075), (0.22, 0.022), (0.0, 0.0)], P, wc, seg=7, o=c, axis=a)
+    lathe(mb, [(0.0, -0.05), (0.4, 0.075)], P, (0.8, 0.8, 0.78), seg=7, o=c, axis=a)
     f = c + a * 0.46 + dn * 0.1
     ttube(mb, [c + a * 0.07 + dn * 0.38, f], [0.012] * 2, G, sides=3)
     obox(mb, f + a * 0.03, (0.05, 0.12, 0.05), P, (0.3, 0.3, 0.3), ax=(1, 0, 0), ay=a, az=a.cross(Vector((1, 0, 0))))
@@ -731,8 +731,8 @@ def ac_unit(mb, ctx):
 def spout(mb, ctx):
     rust = (0.62, 0.34, 0.2)
     pts = [Vector((0, -0.02, 0)), Vector((0, 0.16, -0.006)), Vector((0, 0.30, -0.045))]
-    ttube(mb, pts, [0.036, 0.035, 0.034], "metal_grey", rust, sides=6, cap=("void", None))
-    obox(mb, (0, 0.01, 0), (0.12, 0.02, 0.12), "metal_grey", tuple(k * 0.8 for k in rust), skip=("-y",))
+    ttube(mb, pts, [0.036, 0.035, 0.034], "metal_grey", rust, sides=4, cap=("void", None))   # ~18 tris: thousands
+    #                                                                                      of these per sector
 
 
 # ------------------------------------------------------------------ present-day plaza furniture (photo-matched)

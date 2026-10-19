@@ -226,7 +226,7 @@ def layout(bld, i, eg, rng, override=None):
         u = rng.uniform(1.2, 2.5)
         while u < L - 1.0:
             f["fixtures"].append({"type": "spout", "u": round(u, 2), "z": top - 0.95})
-            u += rng.uniform(4.5, 8.0)
+            u += rng.uniform(4.5, 8.0) if hero else rng.uniform(9.0, 15.0)
         if auto and rng.random() < 0.45:
             pu = rng.choice([0.35, L - 0.35])
             f["fixtures"].append({"type": "pipe", "u": pu, "z0": eg, "z1": top - 0.9})

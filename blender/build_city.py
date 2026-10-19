@@ -287,6 +287,18 @@ def build_ground(mbs, spec):
 
 
 # ---------------------------------------------------------------- props
+# extras.draw_dist (m) per prop type: the game hides a prop beyond it and keeps it out of the far
+# copies and shadow casters (trees read from far, litter does not)
+DRAW_DIST = {"tree_olive": 160, "tree_ficus": 160, "tree_young": 140, "palm": 150,
+             "lamp_post": 110, "lamp_modern": 110, "lamp_modern_double": 110, "flagpole": 120, "banner_pole": 110,
+             "cart": 90, "dumpster": 90, "bench": 80, "bench_stone": 80, "info_board": 80, "bin_slatted": 70,
+             "bin_post": 70, "bollard": 60, "barrier_post": 60, "lamp_disc": 90,
+             "water_heater": 90, "water_tank": 90, "sat_dish": 70, "antenna": 70,
+             "wall_lantern": 60, "ac_unit": 55, "spout": 45, "caper": 50, "weeds": 40, "plant_pot": 50,
+             "crate_stack": 50, "crate_single": 45, "box_stack": 50, "stool_stack": 45}
+SMALL_DIST = 40                            # litter and anything else small
+
+
 class Placer:
     def __init__(self, lib, col):
         self.lib, self.col = lib or {}, col
@@ -303,6 +315,7 @@ class Placer:
         ob.scale = (scale, scale, scale)
         if nocol:
             ob["nocol"] = 1
+        ob["draw_dist"] = DRAW_DIST.get(ty, SMALL_DIST)
         self.col.objects.link(ob)
         self.count[ty] = self.count.get(ty, 0) + 1
 
