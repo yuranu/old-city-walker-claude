@@ -99,4 +99,18 @@ def build(root: Path):
         m.use_backface_culling = True
         mats[name] = m
         tiles[name] = 2.0
+    # ---- append-only: Haram landmark materials (blender/landmarks_haram.py, textures from
+    # pipeline/gen_landmark_textures.py): gold (gilded dome, metallic), leaddome (lead sheeting,
+    # metallic), herodian (Western Wall ashlar), faience (Dome of the Rock tile/marble atlas; its UV
+    # rects are exposed to the builders as gen["landmarks"]["faience"]["cells"])
+    lm = root / "data/textures/gen/landmarks/manifest.json"
+    if lm.exists():
+        lmj = json.loads(lm.read_text())
+        for name, info in lmj.items():
+            m = _textured(name, root / info["diff"], root / info["nor"], rough=info.get("rough", 0.8))
+            bsdf = next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+            bsdf.inputs["Metallic"].default_value = info.get("metallic", 0.0)
+            mats[name] = m
+            tiles[name] = info["tile"]
+        gen["landmarks"] = lmj
     return mats, tiles, gen

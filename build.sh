@@ -18,6 +18,7 @@ $PY pipeline/terrain_street.py > /dev/null      # street levels (1865 OS spot he
 $PY pipeline/make_spec.py
 [ -f data/textures/gen/manifest.json ] || $PY pipeline/gen_textures.py
 [ -f pipeline/gen_signs.py ] && [ ! -f data/textures/gen/signs.png ] && $PY pipeline/gen_signs.py
+[ -f data/textures/gen/landmarks/manifest.json ] || $PY pipeline/gen_landmark_textures.py   # gold, lead, faience, Herodian
 $PY pipeline/export_game_data.py
 mkdir -p build/logs
 BL=(blender -b --factory-startup --python-exit-code 1 -P blender/build_city.py --)
