@@ -16,9 +16,9 @@ UA = "old-city-walker-poc/0.1"
 # role -> (Poly Haven id, metres per texture repeat, RGB tint). Chosen and tinted against the
 # Commons reference photos: Jerusalem limestone is warm cream, the plaza paving is pale.
 TEXTURES = {
-    "ashlar": ("sandstone_blocks_08", 3.0, (1.06, 1.00, 0.90)),   # dressed stone: hotels, institutions
-    "rubble": ("sandstone_blocks_05", 3.0, (1.10, 1.02, 0.88)),   # coursed rough blocks: older houses
-    "fort": ("sandstone_blocks_08", 5.5, (1.00, 0.93, 0.80)),     # same ashlar, bigger blocks: walls, citadel
+    "ashlar": ("sandstone_blocks_08", 3.0, (1.08, 1.03, 0.94)),   # dressed stone: hotels, institutions
+    "rubble": ("sandstone_blocks_05", 3.0, (1.10, 1.04, 0.95)),   # coursed rough blocks: older houses
+    "fort": ("sandstone_blocks_08", 5.5, (1.04, 0.99, 0.91)),     # same ashlar, bigger blocks: walls, citadel
     "paving": ("square_cobblestone", 3.0, (1.40, 1.32, 1.15)),    # (legacy; plaza paving is generated)
     "dressed": ("sandstone_blocks_08", 1.6, (1.22, 1.17, 1.06)),  # lighter, finer dressed stone: frames, sills, cornices
 }
@@ -53,6 +53,10 @@ def main():
             if short == "diff":                    # tinted copy per role
                 tfn = d / ("diff_%s.jpg" % role)
                 im = Image.open(fn).convert("RGB")
+                # desaturate towards warm grey-cream first (photo-matched evaluation: the real stone is
+                # far less saturated than the raw textures), then tint
+                grey = im.convert("L").convert("RGB")
+                im = Image.blend(im, grey, 0.45)
                 r, g, b = im.split()
                 im = Image.merge("RGB", [ch.point(lambda v, k=k: min(255, int(v * k))) for ch, k in zip((r, g, b), tint)])
                 im.save(tfn, quality=90)

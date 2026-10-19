@@ -24,6 +24,7 @@ import datetime
 import json
 import math
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -116,7 +117,13 @@ def photo_sky(rgb):
     gm = np.hypot(shift(gray, 0, 1) - shift(gray, 0, -1), shift(gray, 1, 0) - shift(gray, -1, 0))
     blue = (b > r + 8) & (v > 80)
     white = (sat < 0.18) & (v > 150)
-    skylike = (blue | white) & (gm < 14)
+    smooth = gm < 14
+    # clear blue sky at the top -> do not accept white/grey pixels (pale sunlit stone leaks in)
+    top_sky = ((blue | white) & smooth)[:3]
+    if top_sky.any() and (blue & smooth)[:3][top_sky].mean() > 0.6:
+        skylike = blue & smooth
+    else:
+        skylike = (blue | white) & smooth
     # seeds: sky-like pixels in the top row band
     seed = np.zeros_like(skylike)
     seed[:3] = skylike[:3]
@@ -242,7 +249,7 @@ def compare_image(name, cam, photo, model, info, sc, h=720):
     M = M.resize((P.width, h), Image.LANCZOS) if abs(M.width - P.width) > 2 else M
     draw_labels(M, info, M.width, h, font(15))
     pad, top, bot = 8, 58, 34
-    W = P.width + M.width + 3 * pad
+    W = max(P.width + M.width + 3 * pad, 1240)          # room for the headers on portrait photos
     im = Image.new("RGB", (W, h + top + bot), (24, 24, 24))
     im.paste(P, (pad, top))
     im.paste(M, (2 * pad + P.width, top))
@@ -335,16 +342,18 @@ def cmd_compare(a):
     if not only:
         contact_sheet(rows, OUT / "sheet.jpg")
         print("sheet ->", (OUT / "sheet.jpg").relative_to(ROOT))
-    blend = None
+    blend, blend_mtime, poses = None, None, {}
     for name in scores:
         jp = model_paths(name)[2]
         if jp.exists():
-            blend = json.loads(jp.read_text()).get("blend")
-            break
+            info = json.loads(jp.read_text())
+            blend, blend_mtime = blend or info.get("blend"), blend_mtime or info.get("blend_mtime")
+            pz = info.get("pose", {})
+            poses[name] = [pz.get(k) for k in ("x", "y", "z_eye", "heading", "pitch", "fov")]
     rec = {"time": datetime.datetime.now().isoformat(timespec="seconds"), "blend": blend,
-           "blend_mtime": datetime.datetime.fromtimestamp(os.path.getmtime(blend)).isoformat(timespec="seconds")
-           if blend and os.path.exists(blend) else None,
-           "mean_align": round(sum(s["align"] for s in scores.values()) / len(scores), 3), "cams": scores}
+           "blend_mtime": blend_mtime,
+           "mean_align": round(sum(s["align"] for s in scores.values()) / len(scores), 3), "cams": scores,
+           "poses": poses}
     if not only:
         (OUT / "scores.json").write_text(json.dumps(rec, indent=1) + "\n")
         with open(OUT / "history.jsonl", "a") as f:
@@ -444,6 +453,17 @@ def cmd_plan(a):
     print(out.relative_to(ROOT))
 
 
+def blender_env():
+    """Render on the discrete GPU when there is one (Mesa PRIME offload, as build.sh does)."""
+    env = dict(os.environ)
+    try:
+        if "DRI_PRIME" not in env and sum(n.startswith("renderD") for n in os.listdir("/dev/dri")) > 1:
+            env["DRI_PRIME"] = "1"
+    except OSError:
+        pass
+    return env
+
+
 STEPS = {"heading": 2.0, "pitch": 1.0, "roll": 1.0, "fov": 3.0, "x": 1.5, "y": 1.5, "z_eye": 0.4}
 
 
@@ -455,7 +475,8 @@ def cmd_refine(a):
     params = a.params.split(",")
     steps = {p: STEPS[p] * a.scale for p in params}
     photo = load_photo(cam)
-    tmp = Path(tempfile.mkdtemp(prefix="eval_refine_"))
+    OUT.mkdir(parents=True, exist_ok=True)
+    tmp = Path(tempfile.mkdtemp(prefix="_refine_%s_" % a.name, dir=OUT))
     best_sc = None
 
     def run(variants):
@@ -463,7 +484,7 @@ def cmd_refine(a):
         vf.write_text(json.dumps(variants))
         cmd = [a.blender, "-b", a.blend, "--python-exit-code", "1", "-P", str(ROOT / "blender/render_eval.py"),
                "--", "--variants", str(vf), "--long", str(a.long), "--fast", "--cams", str(CAMS)]
-        r = subprocess.run(cmd, capture_output=True, text=True)
+        r = subprocess.run(cmd, capture_output=True, text=True, env=blender_env())
         if r.returncode:
             sys.exit(r.stdout[-2000:] + r.stderr[-2000:])
         out = []
@@ -498,6 +519,7 @@ def cmd_refine(a):
                 break
         else:
             cam.update(variants[k]["set"])
+    shutil.rmtree(tmp, ignore_errors=True)
     print("refined:", {p: cam[p] for p in params}, score_text(best_sc or {}))
     if a.write:
         data = json.loads(CAMS.read_text())          # re-read: other edits may have happened meanwhile

@@ -1,0 +1,125 @@
+{
+ "_about": "Photo evaluation cameras (docs/EVALUATION.md). Local frame: x east, y north, metres from the Jaffa Gate OSM node 561157424; heading compass deg (0 N, 90 E); pitch deg above horizon; fov = vertical FOV deg of the photo; z_eye = eye height above the ground under the camera. Poses fitted 2026-10-19 (GPS + EXIF + landmarks + eval_compare.py refine); expect ~1-2 m / ~1 deg error.",
+ "cams": {
+  "outside_gate": {
+   "photo": "data/photos/062_157136657.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-0530.jpg",
+   "x": -27.25,
+   "y": -34.25,
+   "z_eye": 1.6,
+   "heading": 50.0,
+   "pitch": 13.0,
+   "fov": 44.4,
+   "covers": "outer plaza: gate tower SW face, blocked-arch wall, flanking tower, 1898 breach, Citadel west tower",
+   "pose_quality": "good: gate tower silhouette and plaza edges line up"
+  },
+  "gate_outer": {
+   "photo": "data/photos/065_157136656.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-0618.jpg",
+   "x": -24.0,
+   "y": 0.0,
+   "z_eye": 1.6,
+   "heading": 98.0,
+   "pitch": 12.0,
+   "fov": 53.1,
+   "covers": "gate outer (west/NW) face with the entrance arch, blocked arch and the flanking tower to the north",
+   "pose_quality": "fair: gate face lines up; trees/props hide the base"
+  },
+  "passage": {
+   "photo": "data/photos/053_157136671.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-1250.jpg",
+   "x": 4.0,
+   "y": -4.0,
+   "z_eye": 1.6,
+   "heading": 38.5,
+   "pitch": 18.0,
+   "fov": 67.3,
+   "covers": "inside the L-shaped gate passage looking out through the inner (NE) arch",
+   "pose_quality": "fair: inner arch outline lines up"
+  },
+  "inside_square": {
+   "photo": "data/photos/087_124589152.jpg",
+   "credit": "ישראל פרקר Israel Preker, CC BY 2.5, https://commons.wikimedia.org/wiki/File:91279_jaffa_gate_in_jerusalem_PikiWiki_Israel.jpg",
+   "x": 12.4,
+   "y": -2.5,
+   "z_eye": 1.6,
+   "heading": 82.0,
+   "pitch": 20.2,
+   "fov": 51.3,
+   "covers": "just inside: Ministry of Tourism, New Imperial Hotel S facade, Citadel north wall",
+   "pose_quality": "good: resected on 5 footprint corners + refine"
+  },
+  "imperial_west": {
+   "photo": "data/photos/103_124589146.jpg",
+   "credit": "ישראל פרקר Israel Preker, CC BY 2.5, https://commons.wikimedia.org/wiki/File:91269_jaffa_gate_in_jerusalem_PikiWiki_Israel.jpg",
+   "x": 64,
+   "y": 9,
+   "z_eye": 1.6,
+   "heading": 280,
+   "pitch": 20,
+   "fov": 81.0,
+   "covers": "New Imperial Hotel S facade close up, looking west to the gate (ultra-wide, pitched up)",
+   "pose_quality": "fair: resected on the gate tower and NIH corners (3 pts), ultra-wide FOV assumed 81 deg"
+  },
+  "north_side": {
+   "photo": "data/photos/141_84782472.jpg",
+   "credit": "Bahnfrend, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Omar_Ibn_El-Khattab_Square,_2019_(01).jpg",
+   "x": 92,
+   "y": -14,
+   "z_eye": 1.6,
+   "heading": 320,
+   "pitch": 9.0,
+   "fov": 46.5,
+   "covers": "north side from the moat: New Imperial Hotel, w1392903902 (two big arches), w1393928801",
+   "pose_quality": "fair: building identities matched (NIH, w1392903902 two-arch front, w1393928801 corner) by eye; camera at the Citadel NE moat corner"
+  },
+  "east_end_david": {
+   "photo": "data/photos/142_84782473.jpg",
+   "credit": "Bahnfrend, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Omar_Ibn_El-Khattab_Square,_2019_(03).jpg",
+   "x": 92.25,
+   "y": -6.0,
+   "z_eye": 1.6,
+   "heading": 53.5,
+   "pitch": 4.9,
+   "fov": 44.9,
+   "covers": "east end: w1393928801 corner, David Street entrance, white building, Swedish Christian Study Centre",
+   "pose_quality": "provisional: score-fitted; landmark resection (David St entrance corners) inconsistent, heading may be off by 10-20 deg"
+  },
+  "citadel_moat": {
+   "photo": "data/photos/113_110483072.jpg",
+   "credit": "Sasha1506, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Tower_of_David_20210924_093210.jpg",
+   "x": 85,
+   "y": -8,
+   "z_eye": 1.6,
+   "heading": 280,
+   "pitch": 15.0,
+   "fov": 51.3,
+   "covers": "Citadel NE tower (Phasael/David's Tower), north wall and moat, looking back west to the gate",
+   "pose_quality": "provisional: score-fitted (85,-8); landmark resection inconsistent"
+  },
+  "back_to_gate": {
+   "photo": "data/photos/072_157136654.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-0310.jpg",
+   "x": 39.2,
+   "y": -2.7,
+   "z_eye": 1.6,
+   "heading": 257.8,
+   "pitch": 12,
+   "fov": 53.1,
+   "covers": "from the Citadel NE corner back to the gate tower and the ticket building",
+   "pose_quality": "good: resected on 4 gate-tower corners; pitch from the horizon (heads)"
+  },
+  "david_street": {
+   "photo": "data/photos_ref/eval/58944795.jpg",
+   "credit": "Rhododendrites, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:David_Street_(20041).jpg",
+   "x": 114.25,
+   "y": 9.5,
+   "z_eye": 1.6,
+   "heading": 91.0,
+   "pitch": -4.0,
+   "fov": 72.6,
+   "covers": "top of David Street looking east (dusk; shops open)",
+   "pose_quality": "fair: dusk, low sky; edges only"
+  }
+ }
+}

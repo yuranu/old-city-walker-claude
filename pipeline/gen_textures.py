@@ -108,8 +108,8 @@ def paving(N=2048, tile=4.0):
     px = N / tile
     sid, dist, n = slab_field(N, tile, [0.4, 0.45, 0.5, 0.55, 0.6], (0.55, 1.25), 0.004, rr)
     # Jerusalem limestone: cream, beige, warm grey, faintly pink; subtle per-slab variation
-    palette = np.array([[0.80, 0.75, 0.65], [0.76, 0.71, 0.61], [0.73, 0.70, 0.64], [0.79, 0.72, 0.63],
-                        [0.83, 0.79, 0.70]], np.float32)
+    palette = np.array([[0.82, 0.76, 0.64], [0.78, 0.72, 0.60], [0.75, 0.71, 0.62], [0.81, 0.74, 0.62],
+                        [0.84, 0.79, 0.68]], np.float32)    # warm beige limestone flags (eval: not blue-grey)
     pick = rr.integers(0, len(palette), n)
     tone = rr.normal(1.0, 0.035, n).astype(np.float32)
     tilt = rr.normal(0, 0.0025, (n, 2)).astype(np.float32)

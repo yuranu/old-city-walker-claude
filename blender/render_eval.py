@@ -12,8 +12,9 @@ For every camera in eval_cams.json it writes, into --out:
                            image positions of visible labelled objects (for the compare sheet)
 
 The .blend is opened read-only: nothing is ever saved. Works on any rebuild: the camera is
-placed relative to whatever ground mesh is under (x, y) (objects named ground/steps/terrain/
-paving/kerb/street/road/stairs, else the lowest surface hit), existing lights are hidden and
+placed relative to whatever ground mesh is under (x, y) (objects with a truthy "ground" custom
+property, or named ground*/terrain*/paving*/road*/kerbs*/steps*/*_steps but not cables/decals;
+else the lowest surface hit), existing lights are hidden and
 replaced by a warm afternoon sun from the south-west plus a sky fill.
 
 Pose convention (local frame, x east, y north, metres): heading = compass degrees (0 N, 90 E),
@@ -28,6 +29,7 @@ cropped / perspective-corrected photos).
 import argparse
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -39,7 +41,8 @@ from mathutils import Matrix, Vector
 from mathutils.bvhtree import BVHTree
 
 ROOT = Path(__file__).resolve().parent.parent
-GROUND_RX = re.compile(r"ground|steps|terrain|paving|kerb|street|road|stair|plaza|floor", re.I)
+GROUND_RX = re.compile(r"^(ground|terrain|paving|road|plaza|kerbs?|steps|stairs)|_(steps|stairs|ground)\b", re.I)
+NOT_GROUND_RX = re.compile(r"cable|wire|lamp|awning|sign|decal|tree|prop", re.I)
 DEFAULT_RENDER = {
     "sun_azimuth": 240.0,     # compass direction the sun is IN (SW = 225); afternoon
     "sun_elevation": 32.0,
@@ -135,7 +138,9 @@ class Ground:
         dg = bpy.context.evaluated_depsgraph_get()
         self.trees = []
         for ob in scn.objects:
-            if ob.type == "MESH" and GROUND_RX.search(ob.name) and not ob.hide_render:
+            tagged = bool(ob.get("ground"))                       # build tags walkable ground
+            named = GROUND_RX.search(ob.name) and not NOT_GROUND_RX.search(ob.name)
+            if ob.type == "MESH" and (tagged or named) and not ob.hide_render:
                 ev = ob.evaluated_get(dg)
                 me = ev.to_mesh()
                 verts = [ob.matrix_world @ v.co for v in me.vertices]
@@ -325,7 +330,10 @@ def main():
         finish(rgba, str(model_path), mask, rs)
         info = {"cam": name, "pose": {k: c[k] for k in c if k not in ("credit",)},
                 "ground_z": round(gz, 3), "ground_from": how, "eye_z": round(gz + c["z_eye"], 3),
-                "size": size, "blend": bpy.data.filepath, "render_s": round(time.time() - t0, 1)}
+                "size": size, "blend": bpy.data.filepath,
+                "blend_mtime": time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(os.path.getmtime(bpy.data.filepath)))
+                if bpy.data.filepath and os.path.exists(bpy.data.filepath) else None,
+                "render_s": round(time.time() - t0, 1)}
         if not nolabels:
             info["labels"] = visible_labels(scn, camob, size)
         Path(str(stem) + ".json").write_text(json.dumps(info, indent=1))

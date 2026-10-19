@@ -39,7 +39,7 @@ Each cam in `eval_cams.json`:
 | `heading` | compass degrees of the optical axis (0 N, 90 E) |
 | `pitch` | degrees above the horizon (phone shots of buildings are often tilted up 5–20°) |
 | `fov` | **vertical** field of view in degrees of the photo as published (crop included) |
-| optional | `roll` (deg, + turns the image content clockwise), `shift_x`/`shift_y` (lens shift for perspective-corrected or off-centre crops), `covers`, `notes` |
+| optional | `roll` (deg, + turns the image content clockwise), `shift_x`/`shift_y` (lens shift for perspective-corrected or off-centre crops), `covers` (what the view is for), `pose_quality` (good / fair / provisional + how it was fitted; judge only good/fair cams on geometry), `notes` |
 
 Top-level `"render"` (optional) overrides the lighting: `sun_azimuth` (compass direction the sun is
 in, default 240 = WSW), `sun_elevation` (32), `sun_strength`, `sun_color`, `sky_color`, `sky_top`,
@@ -110,7 +110,7 @@ horizontal FOV wedge.
 4. **Render and overlay.** Try a pose without touching the JSON:
 
    ```bash
-   blender -b build/city.blend --python-exit-code 1 -P blender/render_eval.py -- \
+   DRI_PRIME=1 blender -b build/city.blend --python-exit-code 1 -P blender/render_eval.py -- \
        --only inside_square --set inside_square.heading=83 --set inside_square.x=12 --suffix _try --fast
    python3 pipeline/eval_compare.py overlay inside_square --suffix _try
    ```
@@ -125,7 +125,8 @@ horizontal FOV wedge.
 5. **Polish automatically (optional).**
    `python3 pipeline/eval_compare.py refine <cam> --params x,y,heading,pitch [--scale 2] [--write]`
    does a coordinate search on low-res renders against the score below (±1 and ±2 steps per
-   parameter per iteration, halving the steps when nothing improves; ~20 s per iteration). It
+   parameter per iteration, halving the steps when nothing improves; ~1 min per iteration for four
+   parameters - parallel runs share the GPU and do not finish sooner). It
    can trade pose error for model error (e.g. tilt the camera to hide a too-tall building), so
    start it close, restrict `--params`, and always check the overlay afterwards.
 
@@ -139,6 +140,11 @@ Pitfalls seen in this area:
 - Phone photos of tall facades are tilted up a lot (15–22°); verticals converge in both photo and
   render, which is correct - do not "fix" it with roll.
 - Portrait photos: `fov` is still the vertical (long side) angle.
+- Ultra-wide shots of facades are pitched up more than they look: in `imperial_west` and
+  `citadel_moat` the distant heads (the horizon) sit at 80-90 % of the image height, i.e. 18-25°
+  of pitch. Estimate pitch from the heads, not from the impression of the picture.
+- The build changes under you (another session rebuilds `build/city.blend`). Poses are fitted to
+  the stable reference geometry; if a rebuild moves footprints or the gate, re-check the overlays.
 
 When a pose is good, record it (`eval_set.py set <cam> x=… heading=…` or `resect --write`) and run
 `python3 pipeline/eval_set.py sync` to validate and copy the file to `game/public/eval_cams.json`.
@@ -146,12 +152,13 @@ When a pose is good, record it (`eval_set.py set <cam> x=… heading=…` or `re
 ## 3. Running the loop
 
 ```bash
-# after every rebuild of build/city.blend (~1.5 min for 11 cams at 1280 px)
-blender -b build/city.blend --python-exit-code 1 -P blender/render_eval.py
+# after every rebuild of build/city.blend (~1.5 min for 10 cams at 1280 px)
+DRI_PRIME=1 blender -b build/city.blend --python-exit-code 1 -P blender/render_eval.py
 python3 pipeline/eval_compare.py            # compare images, sheet, scores, history
 ```
 
-Options: `--only cam1,cam2`, `--long 1920` (resolution), `--samples 64`, `--fast` (4 samples, no
+`DRI_PRIME=1` puts EEVEE on the discrete GPU (Arc A370M here) instead of the iGPU; `refine` sets it
+automatically when a second render node exists. Options: `--only cam1,cam2`, `--long 1920` (resolution), `--samples 64`, `--fast` (4 samples, no
 labels), `--no-labels`; any `.blend` can be evaluated (`blender -b other.blend ...`). The `.blend`
 is never saved. Only the eval cams need to exist; nothing in the build has to know about them.
 
@@ -200,6 +207,11 @@ lines means the heading is off; buildings whose yellow line sits above the cyan 
 5. Run the loop after every rebuild; turn the differences into modelling tasks, worst
    score/most visible first; keep `history.jsonl` to show progress.
 
+Fit poses by **landmark identity first** (which footprint corner is which in the photo), scores second:
+`refine` happily matches the silhouette of the wrong building (it did so for `north_side` until the
+facade overrides made the two-arch front of w1392903902 recognisable). If three or four landmarks do not
+resect consistently (`resect` rms > 1°), the identification is wrong - mark the cam `provisional`.
+
 Cam names should describe the view (`imperial_west`, `david_street`), not the photo, so a cam can be
 re-pointed at a better photo later.
 
@@ -216,7 +228,6 @@ re-pointed at a better photo later.
 | `east_end_david` | the east end: Swedish centre and the David Street entrance | Bahnfrend 2019, CC BY-SA 4.0 |
 | `citadel_moat` | Citadel NE tower, north wall and moat, looking back west | Sasha1506 2021, CC BY-SA 4.0 |
 | `back_to_gate` | from the Citadel's NE corner back to the gate | Bukvoed 2024, CC BY 4.0 |
-| `citadel_east` | Citadel east side / entrance and Christian Information Centre, looking south | מקף־עברי 2025, CC BY-SA 4.0 |
 | `david_street` | top of David Street looking east (dusk) | Rhododendrites 2017, CC BY-SA 4.0 |
 
 Full credits and page links are in `eval_cams.json` and on each compare image.
