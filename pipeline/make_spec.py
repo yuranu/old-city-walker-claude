@@ -11,6 +11,7 @@ Blender only builds what the spec lists:
     .venv/bin/python pipeline/make_spec.py
 """
 import functools
+import re
 import json
 import math
 import random
@@ -28,6 +29,7 @@ import infill
 import roofscape
 import stairs
 from geo import LineString, Point, Polygon, ccw, clean, edge_frame, poly_json, polys_of, unary_union
+import shapely
 from shapely import STRtree, clip_by_rect, constrained_delaunay_triangles, prepare
 from shapely.geometry import box
 
@@ -103,18 +105,27 @@ GROUND_HOLES = [Polygon([(621.91, 30.53), (646.06, 35.24), (640.68, 62.55), (639
 SUNKEN = [{"poly": box(884.0, 249.0, 892.0, 266.0), "dz": -4.5, "name": "golden_gate_court"}]
 
 
+# footprints that OSM draws across a street: clip them back to the street wall (way id, half-width)
+CLIP_STREETS = {"w1022672085": [(26492706, 2.2)]}     # Holy Sepulchre over Christian Quarter St
+# level areas the terrain field does not know about: (OSM way, point whose street level they take)
+LOCAL_FLATS = [(612045223, (208.2, 183.4))]           # Holy Sepulchre parvis, at the main door
+
+
 def landmark_ids():
     """OSM ids registered by the landmark builders (blender/landmarks_*.py LANDMARKS dicts)."""
-    import re
     ids = set()
     for fn in (ROOT / "blender").glob("landmarks_*.py"):
-        src = fn.read_text()
-        i = src.find("LANDMARKS = {")
-        if i < 0:
-            continue
-        j = src.find("}", i)
-        ids |= set(re.findall(r'"([wrnm][\w]+)"\s*:', src[i:j]))
+        m = re.search(r"^LANDMARKS = \{(.*?)^\}", fn.read_text(), re.M | re.S)   # the module-level dict
+        if m:
+            ids |= set(re.findall(r'"([wrnm][\w]+)"\s*:', m.group(1)))
     return ids
+
+
+def gate_ids():
+    """OSM ids of the gates (blender/landmarks_gates.py LANDMARKS)."""
+    fn = ROOT / "blender/landmarks_gates.py"
+    m = re.search(r"^LANDMARKS = \{(.*?)^\}", fn.read_text(), re.M | re.S) if fn.exists() else None
+    return set(re.findall(r'"([wrnm][\w]+)"\s*:', m.group(1))) if m else set()
 
 
 SHOPS = {"w290812336", "w290812408", "w1392903902", "w1393928801", "w126781854",
@@ -371,8 +382,22 @@ def david_drop(s):
     return max(0.0, s - DAVID["start_s"]) * DAVID["riser"] / DAVID["tread"]
 
 
+_FLATS = []                                    # [(polygon, z)] filled by setup_flats()
+
+
+def setup_flats(d):
+    for wid, at in LOCAL_FLATS:
+        w = next((w_ for w_ in d["ways"] if w_["id"] == wid), None)
+        if w and _terrain is not None:
+            _FLATS.append((Polygon(w["pts"]).buffer(0), float(_terrain.street_z(*at))))
+    street_z.cache_clear()
+
+
 @functools.lru_cache(maxsize=1 << 21)          # ground vertices are shared by ~6 triangles
 def street_z(x, y):
+    for poly, z in _FLATS:
+        if poly.contains(Point(x, y)):
+            return z
     if _terrain is not None:
         return float(_terrain.street_z(x, y))
     if x > 100 and y > 3.5:
@@ -384,7 +409,10 @@ def street_z_v(xs, ys):
     """street_z over arrays (one vectorised terrain lookup for a whole ground tile set)."""
     xs, ys = np.asarray(xs, float), np.asarray(ys, float)
     if _terrain is not None:
-        return np.asarray(_terrain.street_z(xs, ys), float)
+        z = np.asarray(_terrain.street_z(xs, ys), float)
+        for poly, zf in _FLATS:
+            z = np.where(shapely.contains_xy(poly, xs, ys), zf, z)
+        return z
     return np.array([street_z(x, y) for x, y in zip(xs, ys)])
 
 
@@ -458,6 +486,7 @@ LANDMARK_IDS = landmark_ids()
 def main():
     d = json.loads((ROOT / "data/osm_local.json").read_text())
     rng = random.Random(1898)
+    setup_flats(d)
     # the Dome of the Rock's upper platform (OSM retaining wall w137725307): no trees on it
     PLATFORM = next((Polygon(w["pts"]).buffer(0) for w in d["ways"] if w["id"] == 137725307), Polygon())
     souq_lines = [(LineString(w["pts"]), SOUQ_STREETS[w["tags"]["name:en"]]) for w in d["ways"]
@@ -530,6 +559,12 @@ def main():
     walls_generic = generic_walls(d, cit_outer, gate_poly)
     wall_slabs = unary_union([LineString([w_["a"], w_["b"]]).buffer(w_["thick"] + 0.05, single_sided=True,
                                                                      cap_style="flat") for w_ in walls_generic])
+    gids = gate_ids()
+    # Dung and New Gate are sections of crenellated curtain (landmarks_gates builds them): still wall
+    cuts = [p_.convex_hull.buffer(1.0) for b_, p_, _ in cands
+            if b_["id"] in gids and b_["id"] not in ("w1545285986", "w1393450805")]
+    if cuts:
+        wall_slabs = wall_slabs.difference(unary_union(cuts).buffer(0.5))   # no wall inside a gate
     prepare(wall_slabs)
     # buildings OSM does not map along the streets (pipeline/infill.py), lowest priority of all
     fill = infill.infill(d, [p for _, p, t in cands if t != "context"], CITY.buffer(-16.5),
@@ -551,6 +586,10 @@ def main():
     buildings = []
     for b, p, tier in cands:
         rest = p.difference(blocked) if blocked.intersects(p) else p
+        for wid, hw_ in CLIP_STREETS.get(b["id"], []):
+            wpts = next((w_["pts"] for w_ in d["ways"] if w_["id"] == wid), None)
+            if wpts:
+                rest = rest.difference(LineString(wpts).buffer(hw_))
         if b["id"] not in LANDMARK_IDS and wall_slabs.intersects(rest):
             rest = rest.difference(wall_slabs)
         near = {k for c_ in cells_of(p) for k in grid.get(c_, ())}

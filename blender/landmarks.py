@@ -30,7 +30,7 @@ for _m in ("landmarks_haram", "landmarks_city", "landmarks_gates"):
     try:
         REG.update(getattr(importlib.import_module(_m), "LANDMARKS", {}))
     except ModuleNotFoundError as e:
-        if e.name != _m or STRICT:
+        if e.name != _m:            # a module that is simply not written yet is fine, even in strict mode
             raise
     except Exception:  # noqa: BLE001
         if STRICT:

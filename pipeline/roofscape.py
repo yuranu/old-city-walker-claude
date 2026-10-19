@@ -55,6 +55,8 @@ def height_for(osm, tags, area, sid):
     if h is not None:
         return h
     r = (zlib.crc32(("h" + osm).encode()) % 1000) / 1000.0
+    if osm.startswith("f"):                  # infill (pipeline/infill.py): unmapped, mostly low buildings
+        return 6.0 + 3.0 * r + QUARTER.get(sid, (0, 0, 0))[0] / 2
     if area < 40:
         h = 5.0 + 2.5 * r
     elif area < 120:
