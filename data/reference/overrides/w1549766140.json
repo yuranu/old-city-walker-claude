@@ -1,0 +1,93 @@
+{
+ "building": "w1549766140",
+ "name": "White corner building at the mouth of David Street",
+ "sources": [
+  "data/photos_ref/citadel_east/C03_52848837.jpg",
+  "data/photos/142_84782473.jpg",
+  "data/photos/144_85127420.jpg",
+  "data/photos/022_56514443.jpg",
+  "data/reference/citadel_east.md#B2"
+ ],
+ "notes": {
+  "method": "Edge 1 (west, on the square) measured on C03 (2016, frontal; 88 px/m from the 5.3 m OSM edge, which makes the ceramic plaque 1.0 m wide as in the notes): windows at u 0.95 / 2.31 / 3.73 (0.6 / 0.8 / 0.6 m wide, 1.15-1.25 m tall, sills ~5.4 m), oculus 0.6 m at u 4.74, eave ~7.4 m. Ground floor from 142 (2019): shop under a flat canopy, the west door with a white scroll grille under a small quarter-round dark-grey awning at the south end, downpipe at the SW corner. 142 (vertical scale from the oculus, ~53 px/m) agrees: canopy ~4.0-4.2 m, quarter-round awning ~4.6-5.2 m over the south door.",
+  "compromises": "The oculus cannot be expressed (no circular opening) and is left out; one window width (0.7 m) for all three. The hipped standing-seam roof needs the HIPPED list in make_spec.py (code), so the roof stays flat; height 8.3 puts the generated cornice at 7.05-7.37 m, on the real eave line (7.4 m), and lets the upper floor fit with sills at 5.5 m. The south door is ~0.8 x 3.9 m with a white scroll grille in reality; 'door' openings are fixed at 2.75 m and shops must be >= 1.4 m wide, so it is a 0.9 m door of standard height. The quarter-round awning is a sloped generic awning. Edge 0 (David St) keeps the automatic souq profile.",
+  "material": "Clean near-white ashlar with visible coursed joints (C03), not plaster; tint is at the clamp limit (build_city divides by 1.06 and clamps at 1.0), so it cannot render whiter than the ashlar texture. The SCSC tint is kept warmer for contrast.",
+  "edges": "Edge keys follow the scene_spec ring as of 2026-10-19 evening (ring start rotated by the city-wide make_spec changes): 0 = west facade on the square (u from the north end, David St corner). Before the rotation this was 1."
+ },
+ "settings": {
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   1.06,
+   1.03
+  ],
+  "height": 8.3
+ },
+ "facades": {
+  "0": {
+   "centres": [
+    1.95,
+    4.55
+   ],
+   "shops": true,
+   "ground_storey": 4.6,
+   "storey": 3.0,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 3.0,
+     "h": 3.85,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "door",
+     "w": 0.9,
+     "arch": null,
+     "door": "glass"
+    }
+   ],
+   "awning": false,
+   "floors": [
+    {
+     "centres": [
+      0.95,
+      2.31,
+      3.73
+     ],
+     "w": 0.7,
+     "h": 1.2,
+     "arch": "round"
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.15,
+     "u1": 4.0,
+     "z": 4.15,
+     "depth": 1.1
+    },
+    {
+     "u0": 4.08,
+     "u1": 5.2,
+     "z": 5.15,
+     "depth": 0.7
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "plaque_omar",
+     "u": 2.31,
+     "z": 4.8,
+     "w": 0.95,
+     "h": 0.55
+    }
+   ],
+   "at": [
+    111.37,
+    5.8
+   ]
+  }
+ }
+}

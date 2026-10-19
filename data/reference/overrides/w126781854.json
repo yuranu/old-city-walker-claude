@@ -1,0 +1,166 @@
+{
+ "building": "w126781854",
+ "name": "Swedish Christian Study Centre",
+ "sources": [
+  "data/photos/144_85127420.jpg",
+  "data/photos/041_185219889.jpg",
+  "data/photos/142_84782473.jpg",
+  "data/photos/022_56514443.jpg",
+  "data/photos/145_84782649.jpg",
+  "data/reference/citadel_east.md#B1"
+ ],
+ "notes": {
+  "method": "Edge 0 bay positions from a 1-D homography on 144 (2019, near-frontal) and 041 (2025, oblique from the NW), scaled to the 12.2 m OSM edge; the two photos agree within 0.2 m. Heights from 144 at ~64 px/m mid-facade: terrace +0.7, canopy/springing 3.5 m above the terrace, upper sills ~5.4, window heads ~7.3, parapet top ~9.1 above the terrace.",
+  "terrace": "The raised terrace (+0.7 m, curved steps, grey tube railing) is not in the model, so all heights are absolute above the square; the shop openings therefore run 0.7 m lower than in reality.",
+  "compromises": "Springing set to 4.0 instead of 4.2 and the upper sills ~0.27 m high, so the generated string course (always 0.9+0.12 m below the sill) clears the arch heads. Floodlights between the upper windows are wall_lantern stand-ins. The orange box awning over bay 1 (2025) is an extra awning in the generic awning material. Edge 1: the SCSC entrance (door with a small gabled hood, two arched windows above, 145) at the west end facing the forecourt of the CIC gate; positions low confidence; the rest is the 3-4 m passage to the CIC (notes B4).",
+  "edges": "Edge keys follow the scene_spec ring as of 2026-10-19 evening (ring start rotated by the city-wide make_spec changes): 7 = west facade on the square (u from the north end), 0 = south face towards the CIC (u from the west end). Before the rotation these were 0 and 1."
+ },
+ "settings": {
+  "height": 9.8,
+  "tint": [
+   1.03,
+   0.98,
+   0.88
+  ]
+ },
+ "facades": {
+  "0": {
+   "centres": [
+    4.3
+   ],
+   "shops": false,
+   "ground_storey": 5.4,
+   "storey": 3.8,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.1,
+     "arch": null,
+     "door": "glass"
+    }
+   ],
+   "awning": false,
+   "floors": [
+    {
+     "centres": [
+      2.3,
+      4.3
+     ],
+     "w": 1.1,
+     "h": 1.8,
+     "arch": "round"
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 3.55,
+     "u1": 5.05,
+     "z": 3.15,
+     "depth": 0.55
+    }
+   ],
+   "at": [
+    121.54,
+    -8.83
+   ]
+  },
+  "7": {
+   "centres": [
+    1.65,
+    4.35,
+    7.0,
+    9.9
+   ],
+   "shops": true,
+   "ground_storey": 5.4,
+   "storey": 3.8,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.05,
+     "h": 4.905,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 5.08,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.1,
+     "h": 4.93,
+     "arch": "round",
+     "door": "rolldown_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 5.13,
+     "arch": "round",
+     "door": "glass"
+    }
+   ],
+   "awning": false,
+   "floors": [
+    {
+     "centres": [
+      1.75,
+      4.4,
+      7.03,
+      9.88
+     ],
+     "w": 1.4,
+     "h": 1.95,
+     "arch": "round"
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.25,
+     "u1": 11.95,
+     "z": 4.0,
+     "depth": 0.95
+    },
+    {
+     "u0": 0.3,
+     "u1": 3.1,
+     "z": 6.05,
+     "depth": 0.45
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "sign_swedish_facade",
+     "u": 9.9,
+     "z": 9.12,
+     "w": 2.85,
+     "h": 0.24
+    },
+    {
+     "type": "wall_lantern",
+     "u": 3.08,
+     "z": 8.3
+    },
+    {
+     "type": "wall_lantern",
+     "u": 5.72,
+     "z": 8.3
+    },
+    {
+     "type": "wall_lantern",
+     "u": 8.46,
+     "z": 8.3
+    }
+   ],
+   "at": [
+    111.53,
+    -2.92
+   ]
+  }
+ }
+}

@@ -1,0 +1,208 @@
+{
+ "building": "w126782745",
+ "name": "Christian Information Centre",
+ "sources": [
+  "data/photos_ref/citadel_east/B09_113447516.jpg",
+  "data/photos/145_84782649.jpg",
+  "data/photos/041_185219889.jpg",
+  "data/photos/144_85127420.jpg",
+  "data/reference/citadel_east.md#B3"
+ ],
+ "notes": {
+  "method": "Edge 1 measured on B09 (2021, near-frontal, slight keystone): main block 13.4 m + south annex 3.4 m of the 16.8 m OSM edge; 51.4 px/m at ground-floor level, 49.1 px/m at upper-floor level, each row normalised to the block width. Cross-checked against 145 (oblique from the SW).",
+  "heights": "String course 5.35, upper windows 5.67-7.32, cornice ~7.95-8.25, parapet piers to ~9.0 above the pavement: lower than the ~9 m cornice estimate in the notes; the gate is ~2.2 x 3.5 m and the annex opening ~1.4 x 2.2 m (sill ~1.1 m), smaller than the notes' estimates.",
+  "compromises": "One width per floor, so all 9 upper windows are 0.68 m (real 0.55-0.85, the centre of each group wider). Ground windows start at the fixed 1.6 m (real sill ~1.25). Upper floor base 4.95 so the windows land within 0.2 m; the generated string course is therefore ~0.4 m low. Parapet left solid: the real one is 6 stone piers with black steel railings between them; the 'balustrade' option was tried but its coping boxes overlap coplanar at every ring corner (audit, ~1 m2 on this building). Corner box lamps are wall_lantern stand-ins. The gate's black lattice is shown as a dark void. The annex shares the building height (in reality 1 storey, ~5.3 m). Edge 0 (north, faces the SCSC across a 3-4 m passage) is plain per notes B4.",
+  "edge2": "Edge 2 (south face of the annex, 145, low-med confidence on positions): a rectangular cream roll-down near the SW corner and a round-arched cream roll-down next to it; the rest of the 12.4 m face is hidden in the photos and left plain at ground level.",
+  "edges": "Edge keys follow the scene_spec ring as of 2026-10-19 evening (ring start rotated by the city-wide make_spec changes): 7 = west main facade (u from the north end), 6 = north face on the passage to the SCSC, 0 = south face of the annex (u from the west end). Before the rotation these were 1, 0 and 2."
+ },
+ "settings": {
+  "height": 9.2,
+  "parapet": "solid",
+  "tint": [
+   1.05,
+   0.96,
+   0.82
+  ]
+ },
+ "facades": {
+  "0": {
+   "centres": [
+    1.0,
+    2.7
+   ],
+   "shops": false,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.5,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "door",
+     "w": 1.1,
+     "arch": "round",
+     "door": "rolldown_grey"
+    }
+   ],
+   "awning": false,
+   "ground_storey": 4.95,
+   "storey": 3.3,
+   "at": [
+    124.78,
+    -29.17
+   ]
+  },
+  "6": {
+   "centres": [
+    11.0
+   ],
+   "shops": false,
+   "ground_storey": 4.95,
+   "storey": 3.3,
+   "ground": [
+    {
+     "kind": "blind"
+    }
+   ],
+   "awning": false,
+   "floors": [
+    {
+     "centres": []
+    }
+   ],
+   "at": [
+    128.5,
+    -11.83
+   ]
+  },
+  "7": {
+   "centres": [
+    1.36,
+    4.4,
+    5.91,
+    7.45,
+    9.42,
+    10.84,
+    12.39,
+    14.93
+   ],
+   "shops": true,
+   "ground_storey": 4.95,
+   "storey": 3.3,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.25,
+     "h": 3.38,
+     "arch": "round",
+     "door": "void"
+    },
+    {
+     "kind": "window",
+     "w": 0.75,
+     "h": 1.75,
+     "arch": "round"
+    },
+    {
+     "kind": "window",
+     "w": 1.2,
+     "h": 1.75,
+     "arch": "round"
+    },
+    {
+     "kind": "window",
+     "w": 0.75,
+     "h": 1.75,
+     "arch": "round"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.75,
+     "arch": "round"
+    },
+    {
+     "kind": "window",
+     "w": 1.2,
+     "h": 1.75,
+     "arch": "round"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.75,
+     "arch": "round"
+    },
+    {
+     "kind": "door",
+     "w": 1.45,
+     "arch": "round",
+     "door": "rolldown_grey"
+    }
+   ],
+   "awning": false,
+   "floors": [
+    {
+     "centres": [
+      1.12,
+      2.04,
+      2.97,
+      4.95,
+      6.13,
+      7.31,
+      9.55,
+      10.69,
+      11.87
+     ],
+     "w": 0.68,
+     "h": 1.65,
+     "arch": "round"
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "sign_christian_info",
+     "u": 6.0,
+     "z": 3.67,
+     "w": 2.25,
+     "h": 1.0
+    },
+    {
+     "type": "sign",
+     "cell": "plaque_omar",
+     "u": 13.45,
+     "z": 2.75,
+     "w": 0.7,
+     "h": 0.42
+    },
+    {
+     "type": "wall_lantern",
+     "u": 0.3,
+     "z": 6.9
+    },
+    {
+     "type": "wall_lantern",
+     "u": 13.1,
+     "z": 6.9
+    },
+    {
+     "type": "ac_unit",
+     "u": 14.6,
+     "z": 5.55
+    },
+    {
+     "type": "pipe",
+     "u": 13.75,
+     "z0": 0.0,
+     "z1": 5.3
+    }
+   ],
+   "at": [
+    117.99,
+    -21.11
+   ]
+  }
+ }
+}

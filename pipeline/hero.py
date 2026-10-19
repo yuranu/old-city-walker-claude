@@ -12,6 +12,11 @@ Each building that has been researched gets one JSON file in data/reference/over
     "facades": {"4": { ...facade override... }}  keyed by edge index of the current spec ring
   }
 
+Edge indices move when footprint cleaning changes (where a ring starts, vertices merged or split).
+Give every facade an anchor, "at": [x, y] = the midpoint of the edge in the local frame. When
+present it wins: the facade goes to the ring edge whose midpoint is nearest (within 3 m and facing
+the same way to within 45 deg), whatever its index; the key is then only a label.
+
 Facade override keys understood by facades.layout():
   centres        bay centre positions along the edge (m from vertex a)
   shops          ground floor is a shop row (bool)
@@ -33,6 +38,7 @@ from pathlib import Path
 OVR = Path(__file__).resolve().parent.parent / "data/reference/overrides"
 
 FACADES = {}
+ANCHORED = {}          # bid -> [(x, y, ov)] for facades with an "at" anchor
 BUILDING = {}
 SOURCES = {}
 
@@ -42,4 +48,26 @@ for fn in sorted(OVR.glob("*.json")) if OVR.exists() else []:
     BUILDING[bid] = d.get("settings", {})
     SOURCES[bid] = d.get("sources", [])
     for edge, ov in d.get("facades", {}).items():
-        FACADES[(bid, int(edge))] = ov
+        if "at" in ov:
+            ANCHORED.setdefault(bid, []).append((ov["at"][0], ov["at"][1], int(edge), ov))
+        else:
+            FACADES[(bid, int(edge))] = ov
+
+
+def facades_for(bid, ring):
+    """{edge index: override} for a building ring (CCW list of (x, y)), resolving anchors."""
+    import math
+    out = {e: ov for (b, e), ov in FACADES.items() if b == bid}
+    n = len(ring)
+    for x, y, key, ov in ANCHORED.get(bid, []):
+        best, bd = None, 3.0
+        for i in range(n):
+            a, b = ring[i], ring[(i + 1) % n]
+            d = math.dist(((a[0] + b[0]) / 2, (a[1] + b[1]) / 2), (x, y))
+            if d < bd:
+                best, bd = i, d
+        if best is None:
+            print("override %s facade %s: no edge near anchor (%.1f, %.1f)" % (bid, key, x, y))
+            continue
+        out[best] = ov
+    return out
