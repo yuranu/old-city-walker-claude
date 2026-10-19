@@ -115,3 +115,41 @@ in-game check. Keep the per-pass notes in the README findings.
   walking; cut-out cards for foliage, grilles and railings;
 * AO at reduced resolution, dynamic resolution scaling, light-space-snapped shadows;
 * context tier is massing only.
+
+## 8. Lessons from the Jaffa Gate pass (apply them to the next area)
+
+**Street profiles.** A street with a strong character (a souq) gets a *profile*: a default facade
+override applied to every facade that fronts its centreline, e.g. `souq_profile()` in
+`make_spec.py` for David Street (closed dukkan shops with teal panelled steel doors and padlock
+bars, raised stone thresholds, shed canopies on scroll brackets, blade boards; tie-beams and
+centre-line manholes from `dressing.py`). Hand overrides for named buildings still take
+precedence. Write one profile per street type (souq, residential alley, market square) from the
+reference notes and reuse it.
+
+**Manual buildings for OSM gaps.** When every photo shows a continuous street wall that OSM does
+not map, add a polygon to `MANUAL_BUILDINGS` with the reason and the photos. It is given the
+lowest priority, so it only fills space the OSM footprints leave free.
+
+**Verify the reference against the plan, not just the photos.** The Phasael tower had been placed
+at the wrong corner of the Citadel, and the gate tower was 2 m too tall. Have researchers check
+named landmarks against several photos and record the camera position for each claim.
+
+**Depth precision.** Anything that sits just in front of a surface (window cards, signs, plaques)
+must be offset enough for the distance it is seen from: about 1–2 cm close up, 5 cm for context
+buildings 150–300 m away (near plane 0.2 m, 24-bit depth). Blended decals instead use polygon
+offset in the engine and need no physical offset.
+
+**Weathering and vegetation: less is more.** Generic dark streak and damp decals and ground stains
+read as smears and were removed after review. Grime comes from the shader (a gradient at the
+wall foot) and from texture variation. Vegetation goes only where it grows: small dry tufts in
+the joint between wall and paving, capers high on old wall faces. Never put it in open paving or
+in passages.
+
+**Untextured surfaces stand out immediately.** Every large surface needs a texture: doors (atlas
+cells), canopies (corrugated sheet), lawns. Flat colours are fine only for thin things such as
+cables, tubes and small fittings.
+
+**Walk the build, not only the renders.** The user's in-game screenshots found issues that the
+evaluation renders did not (floating tufts, black streaks, flat doors). After each build, check
+the fixed viewpoints in the game, including viewpoints that face away from the hero area: the
+horizon has to be filled too, using context massing from an extra OSM extract if needed.
