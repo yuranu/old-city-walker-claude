@@ -147,7 +147,7 @@ def layout(bld, i, eg, rng, override=None):
                                   "frame": frame_w * 0.8, "sill": True, "grille": g.get("grille", True) if g else True})
     # awning over a row of shops (sheet-metal canopies, photos 010 / 022)
     shop_ops = [o for o in f["openings"] if o["kind"] == "shop"]
-    if souq and shop_ops_pre(f):
+    if souq and override.get("canopy") and shop_ops_pre(f):
         cp = override["canopy"]
         f["canopies"] = [{"u0": 0.15, "u1": L - 0.15, "depth": cp["depth"], "z_front": eg + cp["z_front"],
                           "z_wall": eg + cp["z_wall"]}]

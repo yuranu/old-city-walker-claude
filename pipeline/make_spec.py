@@ -123,9 +123,25 @@ KERB_BAND = 0.4
 SPAWN = {"p": (-22.0, 2.0), "heading": 104.0}
 
 
-def souq_profile(L, eg, rng):
-    """Default override for a facade fronting David Street: closed dukkan shops (notes C3), raised
-    thresholds (C2), shed canopies (C4), blade boards (C6). Hero overrides take precedence."""
+# Market streets (OSM name:en) -> (share of facades that are shop rows, canopy probability).
+# Every facade fronting one gets the souq profile, as David Street does; covered souqs get no
+# canopies. From the sector notes and the OSM shop/amenity nodes per street.
+SOUQ_STREETS = {
+    "David Street": (1.0, 0.6), "Suq Khan al-Zeit": (0.95, 0.5), "Al Wadi": (0.7, 0.35),
+    "Christian Quarter Street": (0.9, 0.35), "Suq Aftimos": (0.9, 0.5), "Muristan Street": (0.7, 0.3),
+    "Suq Al La'h'hamin": (1.0, 0.0), "Suq Al Attarin": (1.0, 0.0), "Suq Al-Khawajat": (1.0, 0.0),
+    "Suq El-Quatta": (1.0, 0.0), "Suq Ed-Dabbagha": (0.9, 0.4), "Suq Al-Aqbat": (0.8, 0.3),
+    "Silsileh": (0.8, 0.3), "Damascus Gate": (0.9, 0.5), "Aqabat El-Khanqa": (0.6, 0.2),
+    "Saint Mark Street": (0.5, 0.2), "Habad Street": (0.6, 0.2), "Habad": (0.7, 0.1),
+    "Via Dolorosa": (0.35, 0.2), "Lions' Gate Street": (0.3, 0.2), "Bab Hutta Street": (0.25, 0.1),
+    "Latin Patriarchate Road": (0.25, 0.2), "Greek Orthodox Patriarchate Street": (0.3, 0.2),
+}
+
+
+def souq_profile(L, eg, rng, canopy=True, width=7.0):
+    """Default override for a facade fronting a market street: closed dukkan shops (notes C3), raised
+    thresholds (C2), shed canopies (C4) where the street is wide enough, blade boards (C6). Hero
+    overrides take precedence."""
     n = max(1, int((L - 0.8) // 3.0))
     sp = (L - 0.8) / n
     ground = []
@@ -135,9 +151,13 @@ def souq_profile(L, eg, rng):
                        "arch": rng.choice(["segment", "segment", None]),
                        "door": rng.choice(["door_teal", "door_teal", "door_teal", "door_olive", "rolldown_green",
                                            "rolldown_grey", "door_green2"])})
-    return {"souq": True, "shops": True, "centres": [round(0.4 + sp * (k + 0.5), 2) for k in range(n)], "ground": ground,
-            "ground_storey": 4.4, "awning": False, "thr": round(rng.uniform(0.16, 0.28), 2), "thr_out": round(rng.uniform(0.4, 0.65), 2),
-            "canopy": {"depth": round(rng.uniform(1.2, 1.6), 2), "z_front": 2.9, "z_wall": 3.6}}   # eval david_street
+    ov = {"souq": True, "shops": True, "centres": [round(0.4 + sp * (k + 0.5), 2) for k in range(n)], "ground": ground,
+          "ground_storey": 4.4, "awning": False, "thr": round(rng.uniform(0.16, 0.28), 2),
+          "thr_out": round(min(rng.uniform(0.4, 0.65), 0.12 * width), 2)}
+    depth = min(rng.uniform(1.2, 1.6), 0.3 * width)
+    if canopy and depth >= 0.8:
+        ov["canopy"] = {"depth": round(depth, 2), "z_front": 2.9, "z_wall": 3.6}   # eval david_street
+    return ov
 
 
 def write_sectors(spec):
@@ -362,6 +382,10 @@ def _tri_piece(piece, zfun, tris):
 def main():
     d = json.loads((ROOT / "data/osm_local.json").read_text())
     rng = random.Random(1898)
+    souq_lines = [(LineString(w["pts"]), SOUQ_STREETS[w["tags"]["name:en"]]) for w in d["ways"]
+                  if w["tags"].get("highway") and w["tags"].get("name:en") in SOUQ_STREETS
+                  and len(w.get("pts") or []) > 1 and int(w["tags"].get("layer", "0") or 0) >= 0]
+    souq_tree = STRtree([ln for ln, _ in souq_lines])
     if (ROOT / "data/sectors.json").exists():
         import sectors
         sector_at = roofscape.sector_lookup(sectors.load())
@@ -588,6 +612,21 @@ def main():
                     if (cx_ - m_[0]) * nx_ + (cy_ - m_[1]) * ny_ > 0.3 * max(dd_, 0.1):
                         base_ov = souq_profile(L_, eground[i], brng)
                         ov = {**base_ov, **(ov or {})}
+                elif rec["tier"] == "mid" and L_ > 2.2 and souq_lines:      # other market streets
+                    pm = Point(m_)
+                    for j in souq_tree.query(pm.buffer(6.0)):
+                        ln, (p_shop, p_can) = souq_lines[j]
+                        dist = ln.distance(pm)
+                        if dist > 6.0:
+                            continue
+                        cp = ln.interpolate(ln.project(pm))
+                        if (cp.x - m_[0]) * nx_ + (cp.y - m_[1]) * ny_ <= 0.5 * max(dist, 0.1):
+                            continue                                 # facade does not face this street
+                        if brng.random() < p_shop:
+                            base_ov = souq_profile(L_, eground[i], brng, canopy=brng.random() < p_can,
+                                                   width=2 * dist)
+                            ov = {**base_ov, **(ov or {})}
+                        break
                 fac = facades.layout(rec, i, eground[i], brng, ov)
                 # balconies must not touch any wall (stepped facades, narrow alleys)
                 a, b = r[i], r[(i + 1) % len(r)]
