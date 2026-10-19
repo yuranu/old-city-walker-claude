@@ -12,6 +12,9 @@ mkdir -p data/raw/terrain
 [ -f data/raw/osm_oldcity.osm ] || curl -sS -A "old-city-walker-poc/0.2" -o data/raw/osm_oldcity.osm \
   'https://api.openstreetmap.org/api/0.6/map?bbox=35.2255,31.7700,35.2385,31.7825'
 
+[ -f data/raw/osm_west.osm ] || curl -sS -A "old-city-walker-poc/0.2" -o data/raw/osm_west.osm \
+  'https://api.openstreetmap.org/api/0.6/map?bbox=35.2215,31.7715,35.2256,31.7815'
+
 # Elevation: AWS Terrain Tiles (terrarium encoding, SRTM-derived here), z15
 for t in 15/19590/13330 15/19591/13330 15/19590/13331 15/19591/13331; do
   f="data/raw/terrain/$(echo $t | tr / _).png"

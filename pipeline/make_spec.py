@@ -26,7 +26,7 @@ from shapely.geometry import box
 ROOT = Path(__file__).resolve().parent.parent
 
 POC = (-30, -75, 160, 60)
-CONTEXT = (-190, -200, 260, 170)    # as far west as the pinned OSM extract reaches
+CONTEXT = (-330, -220, 260, 170)    # west part from data/raw/osm_west.osm (context massing only)
 HERO_ZONE = Polygon([(-45, -32), (100, -32), (100, -42), (152, -42), (152, 32), (102, 32), (102, 48), (-45, 48)])
 
 # Heights in metres above local ground, from Commons photos (022, 010, 019/020, 024, 027 ...)

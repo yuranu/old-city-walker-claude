@@ -13,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "data/raw/osm_oldcity.osm"
+EXTRA = [ROOT / "data/raw/osm_west.osm"]      # context only: Mamilla / slope west of the walls
 DST = ROOT / "data/osm_local.json"
 
 LAT0, LON0 = 31.7766282, 35.2275435          # Jaffa Gate node
@@ -61,8 +62,23 @@ def join_rings(segments):
     return rings
 
 
-def main():
+def merged_root():
+    """Old City snapshot plus any extra extracts, de-duplicated by element type and id."""
     root = ET.parse(SRC).getroot()
+    seen = {(e.tag, e.get("id")) for e in root if e.get("id")}
+    for extra in EXTRA:
+        if not extra.exists():
+            continue
+        for e in ET.parse(extra).getroot():
+            k = (e.tag, e.get("id"))
+            if e.get("id") and k not in seen:
+                root.append(e)
+                seen.add(k)
+    return root
+
+
+def main():
+    root = merged_root()
     nodes, tagged_nodes = {}, []
     for n in root.findall("node"):
         p = to_local(float(n.get("lat")), float(n.get("lon")))
