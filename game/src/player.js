@@ -1,0 +1,120 @@
+// First-person capsule controller against a static MeshBVH (after the three-mesh-bvh
+// character-movement example). World frame: three.js, Y up; local plan frame: x east, y north
+// => three (x, z) = (east, -north).
+import * as THREE from 'three';
+
+const RADIUS = 0.35;
+const SEGMENT = 1.0;          // top sphere centre -> bottom sphere centre
+const EYE = 0.3;              // eye above the top sphere centre (eye at 1.65 m)
+const GRAVITY = -24;
+
+export class Player {
+  constructor(camera, bvh) {
+    this.camera = camera;
+    this.bvh = bvh;
+    this.pos = new THREE.Vector3();        // top sphere centre
+    this.vel = new THREE.Vector3();
+    this.yaw = 0;
+    this.pitch = 0;
+    this.onGround = false;
+    this.keys = new Set();
+    this._seg = new THREE.Line3();
+    this._box = new THREE.Box3();
+    this._a = new THREE.Vector3();
+    this._b = new THREE.Vector3();
+    this._d = new THREE.Vector3();
+  }
+
+  // place feet at local plan (x east, y north) on the ground below
+  teleport(x, y, headingDeg = null, pitchDeg = 0) {
+    // prefer street level (start below most roofs), fall back to dropping from the sky
+    const down = new THREE.Vector3(0, -1, 0);
+    const hit = this.bvh.raycastFirst(new THREE.Ray(new THREE.Vector3(x, 3.5, -y), down), THREE.DoubleSide) ||
+      this.bvh.raycastFirst(new THREE.Ray(new THREE.Vector3(x, 80, -y), down), THREE.DoubleSide);
+    const groundY = hit ? hit.point.y : 0;
+    this.groundY = groundY;
+    this.pos.set(x, groundY + RADIUS + SEGMENT + 0.05, -y);
+    this.vel.set(0, 0, 0);
+    if (headingDeg !== null) this.yaw = -THREE.MathUtils.degToRad(headingDeg);
+    this.pitch = THREE.MathUtils.degToRad(pitchDeg);
+    this.updateCamera();
+  }
+
+  // heading in compass degrees (0 = north, 90 = east)
+  heading() {
+    return (THREE.MathUtils.radToDeg(-this.yaw) % 360 + 360) % 360;
+  }
+
+  plan() {
+    return { x: this.pos.x, y: -this.pos.z, z: this.pos.y - RADIUS - SEGMENT };
+  }
+
+  look(dx, dy) {
+    this.yaw -= dx * 0.0022;
+    this.pitch = THREE.MathUtils.clamp(this.pitch - dy * 0.0022, -1.45, 1.45);
+  }
+
+  update(dt) {
+    const k = this.keys;
+    const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
+    const side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
+    if (k.has('ArrowLeft')) this.yaw += 1.8 * dt;
+    if (k.has('ArrowRight')) this.yaw -= 1.8 * dt;
+    const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 6.5 : 2.8;
+
+    // horizontal move in the yaw frame (camera looks down -Z at yaw 0, i.e. north)
+    const sin = Math.sin(this.yaw), cos = Math.cos(this.yaw);
+    const mx = (-sin * fwd + cos * side), mz = (-cos * fwd - sin * side);
+    const len = Math.hypot(mx, mz) || 1;
+    this.vel.y += GRAVITY * dt;
+    if (this.onGround && k.has('Space')) this.vel.y = 6.0;
+
+    const steps = Math.max(1, Math.ceil(dt / (1 / 120)));   // substeps keep fast falls stable
+    const h = dt / steps;
+    for (let i = 0; i < steps; i++) {
+      this.pos.x += (mx / len) * speed * h * (fwd || side ? 1 : 0);
+      this.pos.z += (mz / len) * speed * h * (fwd || side ? 1 : 0);
+      this.pos.addScaledVector(this.vel, h);
+      this.collide(h);
+    }
+    if (this.pos.y < -40) this.teleport(-22, 2, 104);
+    this.updateCamera();
+  }
+
+  collide(dt) {
+    const seg = this._seg, box = this._box;
+    seg.start.copy(this.pos);
+    seg.end.copy(this.pos).y -= SEGMENT;
+    box.makeEmpty().expandByPoint(seg.start).expandByPoint(seg.end);
+    box.min.addScalar(-RADIUS);
+    box.max.addScalar(RADIUS);
+    const a = this._a, b = this._b;
+    this.bvh.shapecast({
+      intersectsBounds: (bb) => bb.intersectsBox(box),
+      intersectsTriangle: (tri) => {
+        const dist = tri.closestPointToSegment(seg, a, b);
+        if (dist < RADIUS) {
+          const depth = RADIUS - dist;
+          const dir = b.sub(a).normalize();
+          seg.start.addScaledVector(dir, depth);
+          seg.end.addScaledVector(dir, depth);
+        }
+      },
+    });
+    const delta = this._d.subVectors(seg.start, this.pos);
+    this.onGround = delta.y > Math.abs(dt * this.vel.y * 0.25);
+    const off = Math.max(0, delta.length() - 1e-5);
+    delta.normalize().multiplyScalar(off);
+    this.pos.add(delta);
+    if (this.onGround) this.vel.set(0, 0, 0);
+    else if (off > 0) {
+      delta.normalize();
+      this.vel.addScaledVector(delta, -delta.dot(this.vel));
+    }
+  }
+
+  updateCamera() {
+    this.camera.position.set(this.pos.x, this.pos.y + EYE, this.pos.z);
+    this.camera.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
+  }
+}
