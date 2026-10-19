@@ -1,0 +1,23 @@
+# Binary assets go through Git LFS
+*.glb   filter=lfs diff=lfs merge=lfs -text
+*.blend filter=lfs diff=lfs merge=lfs -text
+*.jpg   filter=lfs diff=lfs merge=lfs -text
+*.jpeg  filter=lfs diff=lfs merge=lfs -text
+*.png   filter=lfs diff=lfs merge=lfs -text
+*.webp  filter=lfs diff=lfs merge=lfs -text
+*.ktx2  filter=lfs diff=lfs merge=lfs -text
+*.osm   filter=lfs diff=lfs merge=lfs -text
+# keep text normalised
+*.py    text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+*.osm !text !filter !merge !diff
+*.jpg !text !filter !merge !diff
+*.png !text !filter !merge !diff
+*.glb !text !filter !merge !diff
+*.blend !text !filter !merge !diff
+*.jpeg !text !filter !merge !diff
+*.webp !text !filter !merge !diff
+*.ktx2 !text !filter !merge !diff
