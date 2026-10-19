@@ -139,7 +139,8 @@ def setts(N=1024, tile=2.0):
     rr = np.random.default_rng(11)
     px = N / tile
     sid, dist, n = slab_field(N, tile, [0.1, 0.11, 0.12, 0.13], (0.1, 0.2), 0.008, rr)
-    palette = np.array([[0.58, 0.55, 0.50], [0.52, 0.50, 0.47], [0.62, 0.58, 0.51], [0.55, 0.51, 0.46]], np.float32)
+    # road pavers: same limestone family as the plaza, a touch greyer and smaller (photos: back_to_gate)
+    palette = np.array([[0.74, 0.70, 0.62], [0.69, 0.66, 0.60], [0.77, 0.72, 0.63], [0.71, 0.67, 0.60]], np.float32)
     pick = rr.integers(0, len(palette), n)
     tone = rr.normal(1.0, 0.07, n).astype(np.float32)
     detail = fbm(N, N, 16, 5)

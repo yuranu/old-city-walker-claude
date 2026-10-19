@@ -59,10 +59,10 @@ def dress(c, rng):
             continue
         t = n["tags"]
         if t.get("natural") == "tree" and street.contains(Point(x, y)):
-            add("tree_olive" if rng.random() < 0.6 else "tree_ficus", x, y, rng.uniform(0, 360), rng.uniform(0.85, 1.2),
-                col=True, r=1.2)
+            kind = "tree_young" if x < 0 and -30 < y < 30 else ("tree_olive" if rng.random() < 0.6 else "tree_ficus")
+            add(kind, x, y, rng.uniform(0, 360), rng.uniform(0.85, 1.2), col=True, r=1.0)
         elif t.get("amenity") == "bench" and street.contains(Point(x, y)):
-            add("bench", x, y, _face_open(street, x, y), col=True, r=0.9)
+            add("bench_stone", x, y, _face_open(street, x, y), col=True, r=0.9)
         elif t.get("information") == "board":
             add("info_board", x, y, _face_open(street, x, y), col=True, r=0.6)
         elif t.get("amenity") in ("waste_disposal", "waste_basket"):
@@ -76,27 +76,38 @@ def dress(c, rng):
         u = rng.uniform(0.3, 1.5)
         while u < L:
             x, y = a[0] + tx * u - nx * 0.35, a[1] + ty * u - ny * 0.35
-            if hero.contains(Point(x, y)) and c["moat"].distance(Point(x, y)) > 4.0 and free(x, y, 0.25):
-                add("bollard", x, y, 0, 1.0, col=True, r=0.15)
-            u += 2.6
-    lamp_d = 0.0
+            near_gate = -5 < x < 35 and -20 < y < 12                 # photos: stone blocks along the breach road
+            if near_gate and c["moat"].distance(Point(x, y)) > 2.0 and free(x, y, 0.25):
+                add("barrier_post", x, y, math.degrees(math.atan2(nx, ny)), 1.0, col=True, r=0.2)
+            u += 2.2 if near_gate else 1e9
+    lamp_d = 6.0
     for a, b in c_kerbs(c):
         (tx, ty), (nx, ny), L = edge_frame(a, b)
         u = 0.0
         while u < L:
             lamp_d += 0.5
-            if lamp_d > 19:
+            if lamp_d > 24:
                 x, y = a[0] + tx * u - nx * 0.7, a[1] + ty * u - ny * 0.7
                 if hero.contains(Point(x, y)) and free(x, y, 0.5):
-                    add("lamp_post", x, y, math.degrees(math.atan2(nx, ny)), col=True, r=0.25)
+                    add("lamp_modern_double" if rng.random() < 0.5 else "lamp_modern", x, y,
+                        math.degrees(math.atan2(nx, ny)), col=True, r=0.25)
                     lamp_d = 0.0
-                    if rng.random() < 0.35 and free(x + tx * 1.2, y + ty * 1.2, 0.3):
-                        add("bin_post", x + tx * 1.2, y + ty * 1.2, math.degrees(math.atan2(nx, ny)), col=True, r=0.3)
+                    if rng.random() < 0.4 and free(x + tx * 1.4, y + ty * 1.4, 0.3):
+                        add("bin_slatted", x + tx * 1.4, y + ty * 1.4, 0, col=True, r=0.3)
             u += 0.5
     # outside the gate: lamps along the plaza edge facing the wall
-    for x, y in [(-14, 12), (-26, 24), (-6, -14), (-20, -18)]:
+    for x, y in [(-14, 12), (-26, 24), (-6, -14), (-20, -18), (-34, 4), (-40, -14), (-30, -22)]:
         if free(x, y, 0.5):
-            add("lamp_post", x, y, 45, col=True, r=0.25)
+            add("lamp_disc", x, y, 45, col=True, r=0.25)
+    for x, y, yaw in [(-9.0, -10.5, 300), (14.5, -11.5, 20), (70.0, -1.0, 200)]:   # Tower of David museum banners
+        if free(x, y, 0.5):
+            add("banner_pole", x, y, yaw, col=True, r=0.3)
+    if free(-7.5, -14.5, 0.5):
+        add("flagpole", -7.5, -14.5, 0, col=True, r=0.2)
+    for x, y in [(38, -16.5), (52, -10.5), (72, -10), (78, -22)]:                   # fan palms in the moat
+        q = Point(x, y)
+        if c["moat"].contains(q):
+            add("palm", x, y, rng.uniform(0, 360), rng.uniform(0.9, 1.2), col=False, r=0.5, z=-5.0)
 
     # ---- facades: litter, shop clutter, carts
     hero_b = [b for b in c["buildings"] if b["tier"] in ("hero", "mid")]
