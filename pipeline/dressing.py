@@ -151,43 +151,60 @@ def dress(c, rng):
                 elif roll < 0.3 and free(x, y, 0.3):
                     add(rng.choice(["stool_stack", "crate_single", "plant_pot"]), x, y, rng.uniform(0, 360), col=True, r=0.3)
 
-    # ---- weeds at the foot of walls (city wall, gate tower, citadel glacis) and alleys
-    wall_lines = [LineString(w["pts"]) for w in c["walls"]] + [LineString(c["gate"]["ring"] + [c["gate"]["ring"][0]])]
-    for wl in wall_lines:
-        for side in (-1.75, 1.75):
-            off = wl.offset_curve(side) if hasattr(wl, "offset_curve") else wl.parallel_offset(abs(side))
+    # ---- vegetation: small dry tufts only in the joint where a wall meets the paving, and caper
+    #      bushes high on the outer face of the city wall (never in open paving or in passages)
+    from shapely.geometry import Polygon as _Poly
+    gate_zone = _Poly(c["gate"]["ring"]).buffer(0.6)
+
+    def tuft_line(line, spacing, scale):
+        d_ = rng.uniform(0, spacing[1])
+        while d_ < line.length:
+            q = line.interpolate(d_)
+            if walk.contains(q) and not gate_zone.contains(q):
+                add("weeds", q.x, q.y, rng.uniform(0, 360), rng.uniform(*scale), r=0.05)
+            d_ += rng.uniform(*spacing)
+
+    for w in c["walls"]:
+        wl = LineString(w["pts"])
+        for side in (-1, 1):
+            off = wl.offset_curve(side * (w["thick"] / 2 + 0.07))
             for g in getattr(off, "geoms", [off]):
-                d_ = rng.uniform(0, 1)
-                while d_ < g.length:
-                    q = g.interpolate(d_)
-                    if walk.contains(q):
-                        add("weeds", q.x, q.y, rng.uniform(0, 360), rng.uniform(0.6, 1.3), r=0.05)
-                    d_ += rng.uniform(1.5, 4.0)
+                tuft_line(g, (3.0, 9.0), (0.35, 0.65))
+    gate_outer = _Poly(c["gate"]["ring"]).buffer(0.07, join_style="mitre").exterior
+    for k in range(len(c["gate"]["ring"])):                     # outer faces of the tower, clear of the arches
+        a, b = c["gate"]["ring"][k], c["gate"]["ring"][(k + 1) % len(c["gate"]["ring"])]
+        if any(p_["edge"] == k for p_ in c["gate"]["passages"]):
+            continue
+        (tx, ty), (nx, ny), L = edge_frame(a, b)
+        seg = LineString([(a[0] + nx * 0.07, a[1] + ny * 0.07), (b[0] + nx * 0.07, b[1] + ny * 0.07)])
+        d_ = rng.uniform(0.5, 3.0)
+        while d_ < L - 0.5:
+            q = seg.interpolate(d_)
+            if walk.contains(q):
+                add("weeds", q.x, q.y, rng.uniform(0, 360), rng.uniform(0.35, 0.6), r=0.05)
+            d_ += rng.uniform(3.0, 7.0)
     for b in hero_b:
         for f in b.get("facades", []):
-            if rng.random() < 0.3:
+            if rng.random() < 0.15:
                 r = b["ring"]
                 i = f["edge"]
                 a, bb = r[i], r[(i + 1) % len(r)]
                 (tx, ty), (nx, ny), L = edge_frame(a, bb)
-                for _ in range(rng.randint(1, 3)):
-                    u = rng.uniform(0.2, L - 0.2)
-                    x, y = a[0] + tx * u + nx * 0.08, a[1] + ty * u + ny * 0.08
-                    if walk.contains(Point(x, y)):
-                        add("weeds", x, y, rng.uniform(0, 360), rng.uniform(0.4, 0.8), r=0.05)
-    # caper bushes growing out of the city wall faces (both sides) and the gate tower
-    for w in c["walls"]:
+                u = rng.choice([rng.uniform(0.1, 0.6), rng.uniform(L - 0.6, L - 0.1)])   # corners, where dust collects
+                x, y = a[0] + tx * u + nx * 0.07, a[1] + ty * u + ny * 0.07
+                if walk.contains(Point(x, y)):
+                    add("weeds", x, y, rng.uniform(0, 360), rng.uniform(0.3, 0.5), r=0.05)
+    for w in c["walls"]:                                        # capers: outer (right-hand) face only, high up
         pts = w["pts"]
         for a, b in zip(pts, pts[1:]):
             (tx, ty), (nx, ny), L = edge_frame(a, b)
-            for _ in range(int(L / 4)):
-                u = rng.uniform(0.5, L - 0.5)
-                s = rng.choice([-1, 1])
-                h = rng.uniform(1.5, w["height"] - 1.5)
-                x, y = a[0] + tx * u + nx * s * (w["thick"] / 2 + 0.02), a[1] + ty * u + ny * s * (w["thick"] / 2 + 0.02)
-                yaw = math.degrees(math.atan2(nx * s, ny * s))
-                props.append({"type": "caper", "p": [round(x, 3), round(y, 3), round(h, 2)], "rot": round(yaw, 1),
-                              "s": round(rng.uniform(0.6, 1.4), 2), "col": False, "r": 0})
+            for _ in range(int(L / 7)):
+                u = rng.uniform(0.8, L - 0.8)
+                h = rng.uniform(3.5, w["height"] - 1.5)
+                x, y = a[0] + tx * u + nx * (w["thick"] / 2 + 0.02), a[1] + ty * u + ny * (w["thick"] / 2 + 0.02)
+                props.append({"type": "caper", "p": [round(x, 3), round(y, 3), round(h, 2)],
+                              "rot": round(math.degrees(math.atan2(nx, ny)), 1), "s": round(rng.uniform(0.6, 1.0), 2),
+                              "col": False, "r": 0})
 
     # ---- rooftop clutter on every flat roof (gives the skyline its look)
     for b in c["buildings"]:
@@ -245,8 +262,36 @@ def dress(c, rng):
                                "b": [round(ends[1][0], 2), round(ends[1][1], 2), round(z2, 2)],
                                "sag": round(rng.uniform(0.25, 0.7), 2), "r": 0.012})
         s += rng.uniform(2.0, 4.0)
-    # ---- ground decals: manholes along the road, drains at kerbs, stains on the paving
+    # ---- green steel tie-beams across David Street at ~4.5 m tying the canopy rows (notes C5)
+    beams = []
+    s = 12.0
+    while s < line.length - 2:
+        p = line.interpolate(s)
+        q = line.interpolate(min(line.length, s + 0.5))
+        dx, dy = q.x - p.x, q.y - p.y
+        L = math.hypot(dx, dy) or 1
+        nx, ny = -dy / L, dx / L
+        ends = []
+        for sgn in (1, -1):
+            ray = LineString([(p.x, p.y), (p.x + nx * sgn * 7, p.y + ny * sgn * 7)])
+            hit = ray.intersection(obstacles.boundary)
+            pts_ = [g for g in getattr(hit, "geoms", [hit]) if not g.is_empty and g.geom_type == "Point"]
+            if pts_:
+                h_ = min(pts_, key=lambda g: g.distance(Point(p.x, p.y)))
+                ends.append((h_.x - nx * sgn * 0.02, h_.y - ny * sgn * 0.02))
+        if len(ends) == 2 and math.dist(*ends) < 7.5:
+            zb = sz(p.x, p.y) + 4.5
+            beams.append({"a": [round(ends[0][0], 2), round(ends[0][1], 2), round(zb, 2)],
+                          "b": [round(ends[1][0], 2), round(ends[1][1], 2), round(zb + rng.uniform(-0.1, 0.1), 2)]})
+        s += rng.uniform(5.0, 8.0)
+    # ---- ground decals: manholes along the road and David St, drains at kerbs
     gdec = []
+    d_ = 14.0
+    while d_ < line.length:                                    # round cast-iron covers on the centre line (C2)
+        q = line.interpolate(d_)
+        gdec.append({"type": "manhole", "p": [round(q.x, 2), round(q.y, 2), round(zat(q.x, q.y) + 0.006, 3)],
+                     "rot": rng.uniform(0, 360), "w": 0.7, "h": 0.7})
+        d_ += rng.uniform(6.0, 10.0)
     rl = LineString(c["road_line"])
     d_ = 8.0
     while d_ < rl.length:
@@ -263,16 +308,9 @@ def dress(c, rng):
         if hero.contains(Point(x, y)):
             gdec.append({"type": "drain", "p": [round(x, 2), round(y, 2), round(zat(x, y) + 0.006, 3)],
                          "rot": math.degrees(math.atan2(tx, ty)), "w": 0.9, "h": 0.45})
-    for _ in range(140):
-        q = _rand_in(street.intersection(hero), rng)
-        if q is None:
-            continue
-        sz_ = rng.uniform(0.4, 1.6)
-        gdec.append({"type": rng.choice(["stain", "stain", "damp"]), "p": [round(q.x, 2), round(q.y, 2),
-                     round(zat(q.x, q.y) + 0.004 + rng.uniform(0, 0.002), 4)], "rot": rng.uniform(0, 360), "w": sz_, "h": sz_})
     for p_ in props:
         p_.pop("r", None)
-    return props, cables, gdec
+    return props, cables, gdec, beams
 
 
 def c_kerbs(c):

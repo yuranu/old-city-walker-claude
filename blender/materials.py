@@ -1,7 +1,7 @@
 """Materials for the city build. glTF-exportable; names are a contract with the game:
 
   stone (tinted per face by vertex colour, game adds macro variation + ground grime):
-      ashlar, rubble, fort, dressed (frames, sills, cornices), paving, setts
+      ashlar, rubble, fort, dressed (frames, sills, cornices), paving, setts; grass (moat lawn)
   atlases:  doors (closed shop doors / shutters / windows, + normal map)
             cut   (RGBA cut-outs: grilles, railings, fan lights, foliage) -> alpha test, double sided
             decal (RGBA streaks, rust, posters, manholes)                  -> alpha blend, polygon offset
@@ -27,7 +27,7 @@ FLAT = {   # base colour (linear), roughness, metallic
     "solar": ((0.02, 0.03, 0.06), 0.15, 0.3),
     "glass_lamp": ((0.75, 0.70, 0.55), 0.2, 0.0),
     "bark": ((0.20, 0.15, 0.11), 0.9, 0.0),
-    "awning": ((0.16, 0.18, 0.16), 0.7, 0.2),
+
     "void": ((0.01, 0.01, 0.012), 0.9, 0.0),       # darkness behind grilles
 }
 
@@ -77,9 +77,12 @@ def build(root: Path):
         mats[role] = _textured(role, root / info["maps"]["diff"], root / info["maps"].get("nor"))
         tiles[role] = info.get("tile", info["size_m"][0])
     gen = json.loads((root / "data/textures/gen/manifest.json").read_text())
-    for role in ("paving", "setts"):
+    for role in ("paving", "setts", "grass"):
         mats[role] = _textured(role, root / gen[role]["diff"], root / gen[role]["nor"], rough=0.8)
         tiles[role] = gen[role]["tile"]
+    # canopies / awnings: corrugated sheet (keeps the material name "awning" for the game contract)
+    mats["awning"] = _textured("awning", root / gen["corrugated"]["diff"], root / gen["corrugated"]["nor"], rough=0.6)
+    tiles["awning"] = gen["corrugated"]["tile"]
     mats["doors"] = _textured("doors", root / gen["doors"]["diff"], root / gen["doors"]["nor"], rough=0.6)
     mats["cut"] = _textured("cut", root / gen["cutout"]["img"], alpha="mask", rough=0.7)
     mats["decal"] = _textured("decal", root / gen["decal"]["img"], alpha=True, rough=0.9)

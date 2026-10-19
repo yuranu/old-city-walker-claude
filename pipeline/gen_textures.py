@@ -140,7 +140,7 @@ def setts(N=1024, tile=2.0):
     px = N / tile
     sid, dist, n = slab_field(N, tile, [0.1, 0.11, 0.12, 0.13], (0.1, 0.2), 0.008, rr)
     # road pavers: same limestone family as the plaza, a touch greyer and smaller (photos: back_to_gate)
-    palette = np.array([[0.74, 0.70, 0.62], [0.69, 0.66, 0.60], [0.77, 0.72, 0.63], [0.71, 0.67, 0.60]], np.float32)
+    palette = np.array([[0.64, 0.62, 0.58], [0.59, 0.58, 0.55], [0.68, 0.65, 0.59], [0.62, 0.60, 0.56]], np.float32)
     pick = rr.integers(0, len(palette), n)
     tone = rr.normal(1.0, 0.07, n).astype(np.float32)
     detail = fbm(N, N, 16, 5)
@@ -218,6 +218,71 @@ def steel_door(color, ribbed=True, graffiti=False, seed=0):
                 pts.append((x, y))
             d.line(pts, fill=col, width=int(rr.integers(4, 9)), joint="curve")
     return img, hgt
+
+
+def souq_door(color, seed=0):
+    """David Street closed shop: steel leaves of tall panels, two horizontal hasp bars (notes C3)."""
+    rr = np.random.default_rng(seed)
+    H = W = CELL
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    rgb = np.ones((H, W, 3), np.float32) * np.array(color, np.float32)
+    hgt = np.zeros((H, W), np.float32)
+    leaves = 3
+    lw = W / leaves
+    for k in range(leaves):
+        x0 = k * lw
+        seam = np.abs(xx - x0) < 2.5
+        rgb[seam] *= 0.4
+        for (py0, py1) in ((0.04, 0.33), (0.36, 0.64), (0.67, 0.96)):     # three tall panels per leaf
+            ins = (xx > x0 + 0.14 * lw) & (xx < x0 + 0.86 * lw) & (yy > py0 * H) & (yy < py1 * H)
+            hgt[ins] -= 0.003
+            edge = ins & ((np.abs(xx - x0 - 0.14 * lw) < 4) | (np.abs(xx - x0 - 0.86 * lw) < 4) |
+                          (np.abs(yy - py0 * H) < 4) | (np.abs(yy - py1 * H) < 4))
+            rgb[edge] *= 0.78
+    for hy in (0.33, 0.62):                                                # hasp bars at ~1.0 m and ~1.9 m
+        bar = np.abs(yy - (1 - hy) * H) < 7
+        rgb[bar] = np.array([0.12, 0.12, 0.11])
+        hgt[bar] += 0.008
+        for px in (0.33, 0.66):
+            lock = ((xx - px * W) ** 2 / 70 + (yy - (1 - hy) * H - 14) ** 2 / 130) < 1
+            rgb[lock] = [0.55, 0.45, 0.18]
+    c = chips(H, W, 0.16)
+    rust = np.array([0.38, 0.22, 0.1]) * (0.7 + 0.6 * fbm(H, W, 30, 3, wrap=False))[..., None]
+    rgb = rgb * (1 - c[..., None] * 0.85) + rust * c[..., None] * 0.85
+    rgb *= (1 - smooth(0.72, 1.0, yy / H)[..., None] * 0.5)                # dirt and rust at the foot
+    rgb *= (0.92 + 0.12 * fbm(H, W, 40, 3, wrap=False))[..., None]
+    return to_img(rgb), hgt
+
+
+def grass(N=1024, tile=3.0):
+    """Mown lawn (the Citadel moat floor, notes A1)."""
+    rr = np.random.default_rng(21)
+    px = N / tile
+    base = fbm(N, N, 6, 5)
+    blades = vnoise(N, N, 400, 400)
+    rgb = np.stack([0.20 + 0.10 * base, 0.36 + 0.14 * base, 0.12 + 0.05 * base], -1)
+    rgb *= (0.75 + 0.45 * blades[..., None])
+    stripes = 0.94 + 0.06 * np.sin(np.arange(N)[None, :] / N * 2 * math.pi * 3)       # mowing stripes
+    rgb *= stripes[..., None]
+    dry = smooth(0.62, 0.8, fbm(N, N, 4, 3))
+    rgb = rgb * (1 - dry[..., None] * 0.5) + np.array([0.42, 0.38, 0.22]) * dry[..., None] * 0.5
+    h = (blades - 0.5) * 0.004 + (base - 0.5) * 0.01
+    return to_img(rgb), normal_map(h.astype(np.float32), px)
+
+
+def corrugated(N=512, tile=1.0):
+    """Corrugated sheet for canopies and awnings: ribs, dust, rust streaks (citadel_east.md C4)."""
+    px = N / tile
+    yy, xx = np.mgrid[0:N, 0:N].astype(np.float32)
+    rib = 0.5 + 0.5 * np.cos(xx / N * 2 * math.pi * 13)            # 13 ribs per metre (76 mm pitch)
+    base = np.array([0.42, 0.44, 0.42], np.float32)
+    rgb = base * (0.78 + 0.32 * rib)[..., None]
+    dust = fbm(N, N, 6, 4)
+    rgb = rgb * (0.85 + 0.25 * dust[..., None])
+    streak = smooth(0.62, 0.9, np.asarray(Image.fromarray((fbm(N, N, 8, 3) * 255).astype(np.uint8)).resize((N // 16, N)).resize((N, N)), np.float32) / 255)
+    rgb = rgb * (1 - streak[..., None] * 0.25) + np.array([0.36, 0.22, 0.12]) * streak[..., None] * 0.25
+    h = rib * 0.012
+    return to_img(rgb), normal_map(h.astype(np.float32), px)
 
 
 def rolldown(color, seed=0):
@@ -320,8 +385,8 @@ def doors_atlas():
         ("glass", lambda: window(False, 12)),
         ("glass_curtain", lambda: window(True, 13)),
         ("rolldown_blue", lambda: rolldown([0.15, 0.24, 0.40], 14)),
-        ("door_grey", lambda: steel_door([0.42, 0.42, 0.40], True, seed=15)),
-        ("door_wood2", lambda: wood_door(16)),
+        ("door_teal", lambda: souq_door([0.33, 0.52, 0.47], 15)),     # pale teal / verdigris (notes C3)
+        ("door_olive", lambda: souq_door([0.38, 0.40, 0.31], 16)),    # olive-grey variant
     ]
     for k, (name, fn) in enumerate(items):
         img, hgt = fn()
@@ -406,16 +471,17 @@ def foliage(kind):
     im = rgba_canvas()
     d = ImageDraw.Draw(im)
     rr = np.random.default_rng({"caper": 1, "weeds": 2, "olive": 3, "ficus": 4, "cypress": 5}[kind])
-    if kind == "weeds":
-        for _ in range(140):
-            x = rr.normal(CELL / 2, CELL / 6)
-            h = rr.uniform(0.3, 0.95) * CELL
-            bend = rr.normal(0, 40)
-            col = tuple(int(v) for v in (np.array([70, 110, 40]) * rr.uniform(0.6, 1.3)).clip(0, 255)) + (255,)
-            d.line([(x, CELL), (x + bend * 0.5, CELL - h * 0.5), (x + bend, CELL - h)], fill=col, width=int(rr.integers(3, 7)))
-        for _ in range(25):
-            x, y = rr.normal(CELL / 2, CELL / 5), rr.uniform(CELL * 0.5, CELL)
-            d.ellipse([x - 14, y - 8, x + 14, y + 8], fill=(85, 120, 45, 255))
+    if kind == "weeds":                    # dry, sun-bleached tufts that grow in paving joints
+        dry = [[118, 120, 66], [142, 132, 80], [96, 104, 56], [156, 144, 96], [84, 96, 52], [128, 112, 70]]
+        for _ in range(85):
+            x = rr.normal(CELL / 2, CELL / 7)
+            h = rr.uniform(0.2, 0.7) * CELL
+            bend = rr.normal(0, 45)
+            col = tuple(int(v) for v in (np.array(dry[int(rr.integers(0, len(dry)))]) * rr.uniform(0.75, 1.15)).clip(0, 255)) + (255,)
+            d.line([(x, CELL), (x + bend * 0.5, CELL - h * 0.55), (x + bend, CELL - h)], fill=col, width=int(rr.integers(2, 5)))
+        for _ in range(14):
+            x, y = rr.normal(CELL / 2, CELL / 6), rr.uniform(CELL * 0.7, CELL)
+            d.ellipse([x - 10, y - 6, x + 10, y + 6], fill=(98, 104, 58, 255))
     elif kind == "caper":
         for _ in range(110):
             a = rr.uniform(0, 2 * math.pi)
@@ -594,6 +660,14 @@ def main():
     d.save(OUT / "setts_diff.jpg", quality=90)
     n.save(OUT / "setts_nor.png")
     man["setts"] = {"diff": "data/textures/gen/setts_diff.jpg", "nor": "data/textures/gen/setts_nor.png", "tile": 2.0}
+    d, n = corrugated()
+    d.save(OUT / "corrugated_diff.jpg", quality=90)
+    n.save(OUT / "corrugated_nor.png")
+    man["corrugated"] = {"diff": "data/textures/gen/corrugated_diff.jpg", "nor": "data/textures/gen/corrugated_nor.png", "tile": 1.0}
+    d, n = grass()
+    d.save(OUT / "grass_diff.jpg", quality=90)
+    n.save(OUT / "grass_nor.png")
+    man["grass"] = {"diff": "data/textures/gen/grass_diff.jpg", "nor": "data/textures/gen/grass_nor.png", "tile": 3.0}
     d, n, cells = doors_atlas()
     d.save(OUT / "doors_diff.jpg", quality=90)
     n.save(OUT / "doors_nor.png")

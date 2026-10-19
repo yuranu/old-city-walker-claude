@@ -26,6 +26,16 @@ def arch_rise(arch, w):
     return {"round": w / 2, "pointed": 0.7746 * w, "segment": 0.18 * w}.get(arch, 0.0)
 
 
+def shop_ops_pre(f):
+    return any(o["kind"] == "shop" for o in f["openings"])
+
+
+def g2w(ground_spec, k, default):
+    if ground_spec and k < len(ground_spec):
+        return ground_spec[k].get("w", default)
+    return default
+
+
 def top_z_guess(bld):
     return bld["top"]
 
@@ -48,7 +58,7 @@ def layout(bld, i, eg, rng, override=None):
     hero = tier == "hero"
     ashlar = st["wall"] == "ashlar"
     f = {"edge": i, "ground": round(eg, 3), "len": round(L, 3), "openings": [], "bands": [], "cornice": None,
-         "balconies": [], "awnings": [], "signs": [], "fixtures": [], "decals": [], "cables": []}
+         "balconies": [], "awnings": [], "canopies": [], "signs": [], "fixtures": [], "decals": [], "cables": []}
     if override and override.get("blank"):
         return f
     if L < 2.4:
@@ -70,7 +80,11 @@ def layout(bld, i, eg, rng, override=None):
     storey = override.get("storey") if override and override.get("storey") else st["storey"]
     arch_up = override.get("arch_up") if override and "arch_up" in override else bld["arch_pref"]
     frame_w = (0.18 if ashlar else 0.13) if hero else 0.0
-    thr = 0.12
+    souq = bool(override and override.get("souq"))
+    if souq:
+        frame_w = 0.0                                   # souq shop heads hide behind the canopies
+    thr = override.get("thr", 0.12) if override else 0.12
+    thr_out = override.get("thr_out", 0.25) if override else 0.25
     # ---- ground floor
     door_bay = rng.randrange(len(centres))
     ground_spec = override.get("ground") if override else None
@@ -89,9 +103,15 @@ def layout(bld, i, eg, rng, override=None):
             vs = v1 - arch_rise(arch, w)
             door = g.get("door") if g and g.get("door") else rng.choice(SHOP_DOORS)
             f["openings"].append({"kind": "shop", "u0": c - w / 2, "u1": c + w / 2, "v0": v0, "v1": v1, "arch": arch,
-                                  "depth": 0.45, "split": vs if arch else None, "lo": door, "hi": "fanlight",
-                                  "frame": frame_w, "keystone": hero and arch == "round", "threshold": True})
-            if hero and (g and g.get("sign") or rng.random() < 0.45):
+                                  "depth": 0.45, "split": (vs if arch and not souq else None), "lo": door, "hi": "fanlight",
+                                  "frame": frame_w, "keystone": hero and arch == "round" and not souq, "threshold": True,
+                                  "thr": thr, "thr_out": thr_out})
+            if souq and rng.random() < 0.35 and k + 1 < len(centres):   # blade board on the pier
+                pu = (c + w / 2 + centres[k + 1] - (g2w(ground_spec, k + 1, w)) / 2) / 2
+                f["fixtures"].append({"type": "blade", "u": round(pu, 2), "z": eg + 2.3, "h": 0.6, "out": 1.25,
+                                      "cell": rng.choice([None, None, None, "sign_souvenirs", "sign_jewelry", "sign_textiles",
+                                                          "sign_spices", "sign_ceramics"])})
+            if not souq and hero and (g and g.get("sign") or rng.random() < 0.45):
                 sw = min(w + 0.5, sp - 0.2)
                 cell = g.get("sign") if g and g.get("sign") else rng.choice(SHOP_SIGNS)
                 f["signs"].append({"u0": c - sw / 2, "u1": c + sw / 2, "z0": v1 + 0.25, "z1": v1 + 0.85,
@@ -120,6 +140,10 @@ def layout(bld, i, eg, rng, override=None):
                                   "frame": frame_w * 0.8, "sill": True, "grille": True})
     # awning over a row of shops (sheet-metal canopies, photos 010 / 022)
     shop_ops = [o for o in f["openings"] if o["kind"] == "shop"]
+    if souq and shop_ops_pre(f):
+        cp = override["canopy"]
+        f["canopies"] = [{"u0": 0.15, "u1": L - 0.15, "depth": cp["depth"], "z_front": eg + cp["z_front"],
+                          "z_wall": eg + cp["z_wall"]}]
     want_awning = override.get("awning") if override and "awning" in override else (hero and rng.random() < 0.55)
     if shop_ops and len(shop_ops) >= 2 and want_awning:
         f["awnings"].append({"u0": max(0.15, shop_ops[0]["u0"] - 0.3), "u1": min(L - 0.15, shop_ops[-1]["u1"] + 0.3),
@@ -177,27 +201,16 @@ def layout(bld, i, eg, rng, override=None):
             # AC units beside some windows (more on plain back facades)
             if rng.random() < (0.06 if hero else 0.12) and c + w / 2 + 1.1 < L - 0.3:
                 f["fixtures"].append({"type": "ac_unit", "u": c + w / 2 + 0.7, "z": z + 0.6})
-                f["decals"].append({"type": "rust", "u0": c + w / 2 + 0.55, "u1": c + w / 2 + 0.85,
-                                    "z0": z - rng.uniform(1.5, 3.5), "z1": z + 0.55})
         if (hero and ashlar) or (override and override.get("bands")):
             f["bands"].append({"z": z - 0.12 + (i % 2) * 0.002, "h": 0.2, "d": 0.06})
     top = bld["top"]
     if hero and (ashlar or (override and override.get("cornice"))):
         f["cornice"] = {"z": top - 1.25 + (i % 2) * 0.002, "h": 0.32, "d": 0.18}
-    # ---- weathering: darker patches and wide streaks on old stone (more on rubble houses)
-    for _ in range(rng.randint(0, 3 if ashlar else 5)):
-        pw = rng.uniform(0.8, 2.5)
-        pu = rng.uniform(0.2, max(0.3, L - pw - 0.2))
-        pz = rng.uniform(eg + 1.0, max(eg + 1.5, top_z_guess(bld) - 2.5))
-        f["decals"].append({"type": rng.choice(["streak_wide", "damp", "streak_wide"]), "u0": pu, "u1": pu + pw,
-                            "z0": pz, "z1": pz + rng.uniform(1.0, 3.0)})
     # ---- roof drainage: spouts through the parapet + the dark streak they leave
     if tier in ("hero", "mid"):
         u = rng.uniform(1.2, 2.5)
         while u < L - 1.0:
             f["fixtures"].append({"type": "spout", "u": round(u, 2), "z": top - 0.95})
-            ln = rng.uniform(2.5, min(7.0, top - eg - 1.5))
-            f["decals"].append({"type": "streak", "u0": u - 0.22, "u1": u + 0.22, "z0": top - 0.95 - ln, "z1": top - 0.85})
             u += rng.uniform(4.5, 8.0)
         if rng.random() < 0.45:
             pu = rng.choice([0.35, L - 0.35])

@@ -120,9 +120,9 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
     vs = v1 - rise
     # threshold step (doors and shops): stone block from inside the recess to just outside
     if o.get("threshold"):
-        z_g = v0 - 0.12
-        mk.box(mb, P((u0 + u1) / 2, 0) + n * ((0.25 - d) / 2), t, n, w + 0.12, d + 0.25, z_g - 0.04, v0, "dressed",
-               col=(0.86, 0.84, 0.8))
+        thr, out = o.get("thr", 0.12), o.get("thr_out", 0.25)
+        mk.box(mb, P((u0 + u1) / 2, 0) + n * ((out - d) / 2), t, n, w + 0.12 + (0.3 if out > 0.35 else 0), d + out,
+               v0 - thr - 0.04, v0, "dressed", col=(0.86, 0.84, 0.8))
     # dressed stone surround
     fw = o.get("frame", 0.0)
     for q in others:
@@ -177,6 +177,54 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
             mk.card(mb, P((lu0 + lu1) / 2, v0) + n * 0.03, t, UP, lu1 - lu0, top - v0, "doors", half)
 
 
+# ---------------------------------------------------------------- souq canopies and boards
+GREEN = (0.55, 0.85, 0.65)          # vertex tint on metal_green for the dark green / teal frames
+
+
+def _canopy(solid, deco, P, t, n, L, cp):
+    """Steel shed canopy: corrugated roof from the wall (z_wall) down to the front edge (z_front),
+    front tube, triangular brackets with a scroll ring every ~1.6 m (citadel_east.md C4)."""
+    u0, u1, dp, zf, zw = cp["u0"], cp["u1"], cp["depth"], cp["z_front"], cp["z_wall"]
+    q = [P(u0, zw) + n * 0.02, P(u1, zw) + n * 0.02, P(u1, zf) + n * dp, P(u0, zf) + n * dp]
+    solid.poly(q, "awning", UP + n * 0.3)
+    solid.poly(q[::-1], "awning", -UP)
+    mk.tube(deco, [P(u0, zf) + n * dp, P(u1, zf) + n * dp], 0.035, "metal_green", sides=6, col=GREEN)
+    k = max(2, int((u1 - u0) / 1.6) + 1)
+    for j in range(k):
+        u = u0 + 0.05 + (u1 - u0 - 0.1) * j / (k - 1)
+        a, b, c_ = P(u, zw - 0.75) + n * 0.03, P(u, zf) + n * dp, P(u, zw - 0.02) + n * 0.03
+        mk.tube(deco, [a, b], 0.022, "metal_green", col=GREEN)
+        mk.tube(deco, [c_, b], 0.022, "metal_green", col=GREEN)
+        ctr = (a + b + c_) / 3
+        ring = [ctr + (n * math.cos(2 * math.pi * i / 8) + UP * math.sin(2 * math.pi * i / 8)) * 0.12 for i in range(9)]
+        mk.tube(deco, ring, 0.012, "metal_green", sides=4, col=GREEN)
+
+
+def _blade(mb, P, t, n, fx, signs):
+    """Cream board in a black frame hung off the wall on a bracket, or an atlas sign."""
+    u, z0, h, out = fx["u"], fx["z"], fx.get("h", 0.6), fx.get("out", 1.25)
+    w = out - 0.15
+    c = P(u, z0) + n * (0.15 + w / 2)
+    mk.box(mb, c, n, t, w + 0.06, 0.05, z0 - 0.03, z0 + h + 0.03, "metal_dark", bottom=True)
+    rect = None
+    if signs and fx.get("cell") in signs["signs"]:
+        x, y, ww, hh = signs["signs"][fx["cell"]]["rect"]
+        S = signs["size"][0]
+        rect = (x / S, 1 - (y + hh) / S, (x + ww) / S, 1 - y / S)
+    for side in (1, -1):
+        base = c + t * (0.026 * side) - n * (w / 2)
+        if rect:
+            mk.card(mb, base + n * (w / 2) + UP * z0 - UP * z0 + Vector((0, 0, z0)), n * side, UP, w, h, "signs",
+                    rect if side > 0 else (rect[2], rect[1], rect[0], rect[3]))
+        else:
+            q = [base + Vector((0, 0, z0)), base + n * w + Vector((0, 0, z0)), base + n * w + Vector((0, 0, z0 + h)),
+                 base + Vector((0, 0, z0 + h))]
+            mb.poly(q, "lime", t * side, col=(1.0, 0.97, 0.88))
+    mk.tube(mb, [P(u, z0 + h + 0.25), P(u, z0 + h + 0.25) + n * (out + 0.05)], 0.02, "iron")
+    for uu in (0.25, w - 0.05):
+        mk.tube(mb, [P(u, z0 + h + 0.25) + n * (0.15 + uu), P(u, z0 + h + 0.03) + n * (0.15 + uu)], 0.008, "iron")
+
+
 # ---------------------------------------------------------------- extras
 def facade_extras(mbs, a, b, f, gen, signs, place, tint):
     """mbs: {"solid": MeshBuilder, "deco": ..., "signs": ..., "cables": ...}; place(type, pos, yaw, nocol)."""
@@ -216,6 +264,8 @@ def facade_extras(mbs, a, b, f, gen, signs, place, tint):
         solid.poly(q[::-1], "awning", -UP)
         for uu in (aw["u0"] + 0.3, aw["u1"] - 0.3):
             mk.tube(deco, [P(uu, z - 0.7), P(uu, z - 0.7) + n * dp * 0.9 - UP * 0.25 + UP * 0.6], 0.02, "iron")
+    for cp in f.get("canopies", []):
+        _canopy(solid, deco, P, t, n, L, cp)
     if signs:
         for sg in f.get("signs", []):
             meta = signs["signs"].get(sg["cell"])
@@ -259,6 +309,9 @@ def facade_extras(mbs, a, b, f, gen, signs, place, tint):
             p0, p1 = P(fx["u"], fx["z0"] + 0.15) + n * 0.1, P(fx["u"], fx["z1"]) + n * 0.1
             mk.tube(deco, [p0 + n * 0.12 - UP * 0.15, p0, p1], 0.045, "metal_grey", sides=6)
             mk.tube(deco, [p1, p1 - n * 0.1], 0.045, "metal_grey", sides=6)
+            continue
+        if ty == "blade":                                  # board hung perpendicular to the street (notes C6)
+            _blade(mbs["signs"], P, t, n, fx, signs)
             continue
         if ty == "sign":                                   # wall-mounted sign / street plaque from the atlas
             if signs and fx["cell"] in signs["signs"]:

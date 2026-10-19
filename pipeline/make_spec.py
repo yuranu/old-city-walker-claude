@@ -26,7 +26,7 @@ from shapely.geometry import box
 ROOT = Path(__file__).resolve().parent.parent
 
 POC = (-30, -75, 160, 60)
-CONTEXT = (-90, -140, 240, 130)
+CONTEXT = (-190, -200, 260, 170)    # as far west as the pinned OSM extract reaches
 HERO_ZONE = Polygon([(-45, -32), (100, -32), (100, -42), (152, -42), (152, 32), (102, 32), (102, 48), (-45, 48)])
 
 # Heights in metres above local ground, from Commons photos (022, 010, 019/020, 024, 027 ...)
@@ -59,6 +59,12 @@ HEIGHTS = {
     "r3864551": 12.0,
 }
 SKIP = {"w1393445770"}    # 15 m2 sliver tagged layer=1 (a bridge room)
+# Buildings missing from OSM but present in photographs. They take whatever space is left after the
+# OSM footprints (lowest priority), so they only fill gaps.
+MANUAL_BUILDINGS = [
+    {"id": "m_david_s1", "ring": [(124.3, 8.75), (124.5, -3.2), (131.1, -2.2), (130.9, 8.4)], "height": 9.0,
+     "why": "continuous shopfronts on the south side of David St at x 124-131 (citadel_east.md C1; photos C01, C04, C05)"},
+]
 SHOPS = {"w290812336", "w290812408", "w1392903902", "w1393928801", "w126781854",
          "w1549766140", "w126782745", "w290692953", "w1393938082", "w1393938083", "w1393938081"}
 ASHLAR = {"w290812336", "w290812408", "w1393420836", "w1393928801", "w126781854", "w126782745",
@@ -70,29 +76,53 @@ HIPPED = {"w126783156", "w290690288"}
 TINTS = [(1.0, 0.97, 0.9), (1.03, 0.95, 0.87), (0.94, 0.93, 0.9), (1.05, 0.99, 0.86), (1.06, 1.04, 0.98),
          (0.98, 0.92, 0.86)]
 
-GATEHOUSE = {"ring": [(3.4, 3.2), (-3.8, -3.7), (2.9, -11.1), (9.5, -4.7)], "height": 15.0,
+GATEHOUSE = {"ring": [(3.4, 3.2), (-3.8, -3.7), (2.9, -11.1), (9.5, -4.7)], "height": 13.0,    # gate.md s9
              "wall": 2.0,
              "passages": [{"edge": 0, "u": 0.5, "w": 3.6, "h": 6.5},      # outer arch (A-B)
                           {"edge": 3, "u": 0.45, "w": 3.6, "h": 6.5}]}    # inner arch (D-A)
-CITY_WALLS = [{"pts": [(-52.0, 57.5), (-11.8, 18.0), (3.4, 3.2)], "height": 12.0, "thick": 3.2}]
+# The wall NW of the gate steps: low stretch with the blind arch, a taller stretch, then the long wall
+# (gate.md section 2 / 9; photos from the plaza and Schick's 1898 plan)
+CITY_WALLS = [
+    {"name": "wall_nw", "pts": [(-52.0, 57.5), (-11.8, 18.0), (-6.99, 13.32)], "height": 11.25, "thick": 3.2},
+    {"name": "tall_stretch", "pts": [(-6.99, 13.32), (-0.54, 7.04)], "height": 13.3, "thick": 3.8},
+    {"name": "blind_arch_stretch", "pts": [(-0.54, 7.04), (3.4, 3.2)], "height": 10.8, "thick": 3.2},
+]   # points run NW -> SE so the outside (south-west) is on the right of each segment
 MOAT_DEPTH = 5.0
 CITADEL_WALL_H = 13.0
 MOAT_W = 6.0
 TOWERS = [
-    {"kind": "box", "c": (29.0, -28.0), "size": (17.0, 16.0), "rot": 35.0, "h": 22.0,
-     "top": {"size": (10.0, 9.0), "h": 5.0}},
+    {"kind": "box", "name": "phasael", "c": (63.0, -17.0), "size": (20.0, 17.0), "rot": 24.0, "h": 21.0,
+     "top": {"size": (14.0, 12.0), "h": 3.0}},       # NE corner, ~24 m above the street (citadel_east.md A5)
     {"kind": "minaret", "c": (24.0, -79.0), "r": 2.6, "h": 30.0},
 ]
 DAVID = {"pts": [(96.7, 2.8), (106.4, 9.1), (115.4, 9.3), (135.9, 8.7), (159.0, 8.2), (175.6, 9.4)],
-         "start_s": 13.0, "riser": 0.16, "tread": 1.9, "width": 7.0}
+         "start_s": 16.0, "riser": 0.13, "tread": 2.2, "width": 7.0}
 # road through the breach and along the square (OSM ways 26492720 + 265414845)
 ROAD = [(-10.9, -79.3), (-1.8, -38.3), (0.2, -31.8), (3.4, -24.2), (8.0, -16.7), (13.4, -11.6), (21.0, -9.7),
         (25.4, -7.5), (47.8, -0.2), (58.4, 3.7), (65.3, 5.7), (69.5, 7.2), (75.5, 8.6), (82.0, 8.4), (88.5, 6.7),
         (94.5, 4.2), (100.2, -1.2), (104.0, -6.0), (108.6, -14.0), (111.2, -21.2), (112.8, -31.6), (113.0, -41.2),
         (110.6, -57.0), (108.1, -78.4)]
 ROAD_HALF = 3.1
-KERB = 0.15
+KERB = 0.05
+KERB_BAND = 0.4
 SPAWN = {"p": (-22.0, 2.0), "heading": 104.0}
+
+
+def souq_profile(L, eg, rng):
+    """Default override for a facade fronting David Street: closed dukkan shops (notes C3), raised
+    thresholds (C2), shed canopies (C4), blade boards (C6). Hero overrides take precedence."""
+    n = max(1, int((L - 0.8) // 3.0))
+    sp = (L - 0.8) / n
+    ground = []
+    for k in range(n):
+        w = min(sp - 0.55, rng.uniform(2.0, 2.9))
+        ground.append({"kind": "shop" if w >= 1.4 else "blind", "w": round(w, 2), "h": round(rng.uniform(2.8, 3.15), 2),
+                       "arch": rng.choice(["segment", "segment", None]),
+                       "door": rng.choice(["door_teal", "door_teal", "door_teal", "door_olive", "rolldown_green",
+                                           "rolldown_grey", "door_green2"])})
+    return {"souq": True, "shops": True, "centres": [round(0.4 + sp * (k + 0.5), 2) for k in range(n)], "ground": ground,
+            "ground_storey": 4.4, "awning": False, "thr": round(rng.uniform(0.16, 0.28), 2), "thr_out": round(rng.uniform(0.4, 0.65), 2),
+            "canopy": {"depth": round(rng.uniform(1.2, 1.6), 2), "z_front": 3.15, "z_wall": 3.95}}
 
 
 def douglas_peucker(r, tol):
@@ -212,6 +242,12 @@ def main():
         cands.append((b, p, tier))
     prio = {"hero": 0, "mid": 1, "context": 2}
     cands.sort(key=lambda t: (prio[t[2]], -t[1].area))
+    for m in MANUAL_BUILDINGS:                                  # gap fillers go last
+        mp = Polygon(m["ring"])
+        cands.append(({"id": m["id"], "tags": {"name": "", "building": "yes", "note": m["why"]}, "outer": [m["ring"]]},
+                      mp, "hero" if HERO_ZONE.contains(mp.centroid) else "mid"))
+        HEIGHTS[m["id"]] = m["height"]
+        SHOPS.add(m["id"])
     blocked = unary_union([citadel_body, moat, gate_poly] + wall_polys)
     taken = []
     buildings = []
@@ -219,7 +255,7 @@ def main():
         rest = p.difference(blocked)
         if taken:
             rest = rest.difference(unary_union(taken))
-        pieces = [q.simplify(0.05) for q in polys_of(rest, 6.0)]
+        pieces = polys_of(rest, 6.0)            # no simplify after the difference: it would re-open overlaps
         pieces = [q for q in pieces if q.is_valid and q.area > 6.0]
         for k, q in enumerate(sorted(pieces, key=lambda q: -q.area)):
             if len(pieces) > 1 and q.area < 15:
@@ -266,12 +302,15 @@ def main():
 
     street = ctx.difference(bld_union).difference(cit_outer).difference(steps_union)
     road_area = street.intersection(road)
-    paving = street.difference(road)
+    paving_all = street.difference(road)
+    kerb_band = paving_all.intersection(road.buffer(KERB_BAND))
+    paving = paving_all.difference(kerb_band)
     courtyard = cit_inner.difference(bld_union)
     regions = [
         ("paving", paving, street_z),
+        ("kerb_band", kerb_band, street_z),
         ("setts", road_area, lambda x, y: street_z(x, y) - KERB),
-        ("moat", moat.buffer(-0.01), lambda x, y: -MOAT_DEPTH),
+        ("grass", moat.buffer(-0.01), lambda x, y: -MOAT_DEPTH),
         ("paving", courtyard, lambda x, y: 1.0),
     ]
     ground = []
@@ -280,7 +319,7 @@ def main():
         ground.append({"mat": mat, "tris": tri})
     # kerbs: where road meets paving (not where it meets buildings or the moat)
     kerbs = []
-    edge = road_area.boundary.intersection(paving.buffer(0.02))
+    edge = road_area.boundary.intersection(paving_all.buffer(0.02))
     for ls in getattr(edge, "geoms", [edge]):
         if ls.geom_type != "LineString" or ls.length < 0.1:
             continue
@@ -347,6 +386,15 @@ def main():
                 if not exposed[i]:
                     continue
                 ov = hero.FACADES.get((osm, i))
+                a_, b_ = r[i], r[(i + 1) % len(r)]
+                m_ = ((a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2)
+                (tx_, ty_), (nx_, ny_), L_ = edge_frame(a_, b_)
+                sd_, dd_ = polyline_s(DAVID["pts"], m_)
+                if 104 < m_[0] < 175 and dd_ < 8.0 and L_ > 2.2:
+                    cx_, cy_ = LineString(DAVID["pts"]).interpolate(sd_).coords[0]
+                    if (cx_ - m_[0]) * nx_ + (cy_ - m_[1]) * ny_ > 0.3 * max(dd_, 0.1):
+                        base_ov = souq_profile(L_, eground[i], brng)
+                        ov = {**base_ov, **(ov or {})}
                 fac = facades.layout(rec, i, eground[i], brng, ov)
                 # balconies must not touch any wall (stepped facades, narrow alleys)
                 a, b = r[i], r[(i + 1) % len(r)]
@@ -366,6 +414,28 @@ def main():
                 fac["balconies"] = keep
                 if fac["openings"] or fac["fixtures"] or fac["decals"]:
                     rec["facades"].append(fac)
+        # context buildings: flat window cards, each checked against neighbouring walls
+        if rec["tier"] == "context":
+            cells = ["glass", "glass", "glass_curtain", "shutter_green", "shutter_blue", "shutter_brown"]
+            rec["cwin"] = []
+            for i in range(len(r)):
+                if not exposed[i]:
+                    continue
+                a, b = r[i], r[(i + 1) % len(r)]
+                (tx, ty), (nx, ny), L = edge_frame(a, b)
+                if L < 3.5:
+                    continue
+                nb = max(1, int((L - 1.2) // 3.2))
+                for k in range(nb):
+                    u = 0.6 + (L - 1.2) * (k + 0.5) / nb
+                    probe = Point(a[0] + tx * u + nx * 0.3, a[1] + ty * u + ny * 0.3)
+                    if others.contains(probe):
+                        continue
+                    z = eground[i] + 1.4
+                    while z + 1.6 < g_hi + h - 1.2:
+                        if brng.random() > 0.25:
+                            rec["cwin"].append({"edge": i, "u": round(u, 2), "z": round(z, 2), "cell": brng.choice(cells)})
+                        z += 3.6
         # skyline: rooftop rooms (some with red-tile roofs) and lime-washed domes
         rec["roof_rooms"] = []
         if style["roof"] == "flat" and rec["roof"]:
@@ -439,12 +509,12 @@ def main():
     print("street plaques:", sorted(c for c, _ in placed_cells))
 
     # ---------------------------------------------------------------- dressing
-    ctxinfo = {"buildings": out_b, "road": road, "road_line": ROAD, "paving": paving, "street": street,
+    ctxinfo = {"buildings": out_b, "road": road, "road_line": ROAD, "paving": paving_all, "street": street,
                "road_area": road_area, "obstacles": obstacles, "moat": moat, "cit_outer": cit_outer,
                "cit_outer_r": cit_outer_r, "moat_edges": moat_edges, "hero": HERO_ZONE, "david": DAVID,
                "street_z": street_z, "kerb": KERB, "gate": GATEHOUSE, "walls": CITY_WALLS, "steps": steps,
                "courtyard": courtyard}
-    props, cables, ground_decals = dressing.dress(ctxinfo, rng)
+    props, cables, ground_decals, beams = dressing.dress(ctxinfo, rng)
 
     spec = {
         "poc_box": POC, "context_box": CONTEXT,
@@ -453,7 +523,7 @@ def main():
         "citadel": {"outer": cit_outer_r, "mass": [list(p) for p in cit_mass_r], "inner": cit_inner_r,
                     "moat_edges": moat_edges, "wall_h": CITADEL_WALL_H, "moat_depth": MOAT_DEPTH, "towers": TOWERS},
         "ground": ground, "kerbs": kerbs, "steps": steps,
-        "props": props, "cables": cables, "ground_decals": ground_decals,
+        "props": props, "cables": cables, "ground_decals": ground_decals, "beams": beams,
         "spawn": SPAWN,
         "sources": {
             "footprints": "OpenStreetMap contributors (ODbL), API 0.6 map call",

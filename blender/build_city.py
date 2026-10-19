@@ -178,32 +178,16 @@ def add_domes(mb, roofs, rz, count):
 
 
 def context_windows(mb, bd, gen):
-    """Flat window cards on context buildings: reads as windows at distance for 2 tris each."""
-    import random
-    rng = random.Random(zlib.crc32(bd["id"].encode()))
+    """Flat window cards on context buildings (positions from the spec): windows at distance for 2 tris."""
     ring = [tuple(p) for p in bd["ring"]]
-    cells = ["glass", "glass", "glass_curtain", "shutter_green", "shutter_blue", "shutter_brown"]
-    for i in range(len(ring)):
-        if not bd["exposed"][i]:
-            continue
+    for wdw in bd.get("cwin", []):
+        i = wdw["edge"]
         a, b = Vector(ring[i]), Vector(ring[(i + 1) % len(ring)])
-        t = b - a
-        L = t.length
-        if L < 3.5:
-            continue
-        t.normalize()
+        t = (b - a).normalized()
         n = Vector((t.y, -t.x))
-        nb = int((L - 1.2) // 3.2)
-        g = bd["edge_ground"][i]
-        for k in range(max(1, nb)):
-            u = 0.6 + (L - 1.2) * (k + 0.5) / max(1, nb)
-            z = g + 1.4
-            while z + 1.6 < bd["top"] - 1.2:
-                if rng.random() > 0.25:
-                    rect = mk.atlas_rect(gen["doors"]["grid"], gen["doors"]["cells"][rng.choice(cells)])
-                    c = (a + t * u + n * 0.012).to_3d() + UP * z
-                    mk.card(mb, c, t.to_3d(), UP, 1.0, 1.5, "doors", rect)
-                z += 3.6
+        rect = mk.atlas_rect(gen["doors"]["grid"], gen["doors"]["cells"][wdw["cell"]])
+        c = (a + t * wdw["u"] + n * 0.05).to_3d() + UP * wdw["z"]     # 5 cm: safe for depth precision far away
+        mk.card(mb, c, t.to_3d(), UP, 1.0, 1.5, "doors", rect)
 
 
 def build_building(mbs, bd, gen, signs, place):
@@ -254,12 +238,13 @@ def build_building(mbs, bd, gen, signs, place):
 
 # ---------------------------------------------------------------- ground
 def build_ground(mbs, spec):
-    mat_of = {"paving": "paving", "setts": "setts", "moat": "rubble"}
+    mat_of = {"paving": "paving", "setts": "setts", "moat": "rubble", "grass": "grass", "kerb_band": "dressed"}
     for g in spec["ground"]:
         mb = mbs["ground"]
         mat = mat_of.get(g["mat"], "paving")
+        col = (0.9, 0.88, 0.84) if g["mat"] == "kerb_band" else None
         for t in g["tris"]:
-            mb.poly(t, mat, UP)
+            mb.poly(t, mat, UP, col=col)
     for k in spec["kerbs"]:
         a, b = k["a"], k["b"]
         q = [(a[0], a[1], k["z0"] - 0.02), (b[0], b[1], k["z0"] - 0.02), (b[0], b[1], k["z1"]), (a[0], a[1], k["z1"])]
@@ -271,7 +256,10 @@ def build_ground(mbs, spec):
             fl, ft = mk.tess2d([ext] + s["poly"]["holes"])
         except Exception:  # noqa: BLE001
             continue
-        mbs["ground"].tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP)
+        dx_, dy_ = s.get("dir", [1, 0])
+        tile = 4.0
+        mbs["ground"].tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,
+                           uvfn=lambda p, dx_=dx_, dy_=dy_: ((p[0] * -dy_ + p[1] * dx_) / tile, (p[0] * dx_ + p[1] * dy_) / tile))
         for i in range(len(ext)):
             a, b = ext[i], ext[(i + 1) % len(ext)]
             q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], s["top"]), (a[0], a[1], s["top"])]
@@ -418,6 +406,12 @@ def main():
         gd.poly(q, "decal", UP, uv=[(u0, v0), (u1, v0), (u1, v1), (u0, v1)])
     if not gd.empty():
         gd.to_object("ground_decals", mats, col_city)["nocol"] = 1
+
+    bm_ = mk.MeshBuilder(tiles)
+    for bmz in spec.get("beams", []):
+        mk.tube(bm_, [bmz["a"], bmz["b"]], 0.05, "metal_green", sides=6, col=fb.GREEN)
+    if not bm_.empty():
+        bm_.to_object("street_beams", mats, col_city)["nocol"] = 1
 
     cab = mk.MeshBuilder(tiles)
     for c in spec["cables"]:
