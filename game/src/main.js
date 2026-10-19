@@ -20,9 +20,26 @@ const loading = document.getElementById('loading');
 const perfEl = document.getElementById('perf');
 const overlay = new PerfOverlay(perfEl);
 const gpuTimer = new GpuTimer(renderer.getContext());
+// which GPU the browser gave us (integrated vs discrete / PRIME offload) - shown on the start
+// screen and in the F3 panel
+const GPU = gpuInfo(renderer.getContext());
+console.info('GPU:', GPU.raw);
+document.getElementById('gpu').textContent = `GPU: ${GPU.name}${GPU.kind ? ` (${GPU.kind})` : ''}`;
+overlay.gpu = GPU;
 const dynres = new DynRes(pipe);
 // fixed resolution for reproducible screenshots, or when a pixel ratio was asked for
 if (q.get('dynres') === '0' || q.has('pr') || q.has('cam') || q.get('clean') === '1') dynres.enabled = false;
+
+function gpuInfo(gl) {
+  const ext = gl.getExtension('WEBGL_debug_renderer_info');
+  const raw = String(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+  const name = raw.replace(/^ANGLE \((.*)\)$/, '$1').replace(/, (OpenGL|Direct3D|Vulkan|Metal).*$/i, '')
+    .replace(/\((R|TM)\)/gi, '').replace(/\s+/g, ' ').trim();
+  const kind = /\b(Arc|NVIDIA|GeForce|RTX|GTX|Quadro|Radeon RX|Radeon Pro)\b/i.test(raw) ? 'discrete'
+    : /\b(Iris|UHD|HD Graphics|Radeon Graphics|Vega|Apple M\d|Mali|Adreno)\b/i.test(raw) ? 'integrated'
+      : /SwiftShader|llvmpipe|Software/i.test(raw) ? 'software' : '';
+  return { raw, name, kind };
+}
 
 function setClean(on) {
   document.body.classList.toggle('clean', !!on);
@@ -282,6 +299,7 @@ window.game = {
     return { w: canvas.width, h: canvas.height, pr: pipe.pixelRatio, views: out };
   },
   perf: () => ({ ...stats(), fps: 1000 / overlay.dt, frameMs: overlay.dt }),
+  gpu: GPU,
   dynres,
   showPerf: (on = true) => { overlay.toggle(on); overlay.frame(performance.now(), null, stats()); },
   setDynRes: (on) => { dynres.enabled = !!on; if (!on) { pipe.pixelRatio = pipe.maxPR; } renderOnce(); },

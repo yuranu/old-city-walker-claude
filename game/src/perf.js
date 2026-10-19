@@ -128,6 +128,7 @@ export class PerfOverlay {
       (s.gpu != null ? `  gpu ${s.gpu.toFixed(1)} ms` : '') + '\n' +
       `pixel ratio ${s.pr.toFixed(2)}${s.dyn ? ' (auto)' : ''}  ${s.w}×${s.h}\n` +
       `draw calls ${s.calls}  triangles ${(s.tris / 1000).toFixed(0)}k\n` +
-      `AO ${s.ao ? 'on' : 'off'} (O)  shadows 2×${s.shadow}`;
+      `AO ${s.ao ? 'on' : 'off'} (O)  shadows 2×${s.shadow}` +
+      (this.gpu ? `\n${this.gpu.name}${this.gpu.kind ? ` (${this.gpu.kind})` : ''}` : '');
   }
 }
