@@ -1,0 +1,477 @@
+{
+ "s11_haram": {
+  "buildings": 79,
+  "landmarks": [
+   "Dome of the Rock (w4709536, 2001m2)",
+   "Dome of the Chain (w45099263, 160m2)",
+   "Dome of the Ascension (w137729566, 38m2)",
+   "Al-Aqsa Mosque (w280309331, 5585m2)",
+   "Cotton Merchant's Gate (w291836677, 119m2)",
+   "Dome of Solomon (w291836678, 26m2)",
+   "Dome of Suleiman Pasha (w291836679, 74m2)",
+   "Dome of the Prophet (w291836680, 5m2)",
+   "Dome of the Tablets (w291836681, 8m2)",
+   "Gate of Remission (w291836685, 31m2)",
+   "Ablution Gate (w291836686, 26m2)",
+   "Gate of the Chain (w291836687, 122m2)",
+   "Gate of the Tribes (w291836688, 40m2)",
+   "Gate of the Watchman (w291836689, 45m2)",
+   "Iron Gate (w291836690, 38m2)",
+   "Museum of Islamic Art (w291836691, 1503m2)",
+   "Mughrabi Gate (w291836692, 64m2)",
+   "Golden Gate (w291836693, 429m2)",
+   "Throne of Solomon (w291836694, 166m2)",
+   "Gate of Darkness (w291836695, 50m2)",
+   "Dome of al-Khalili (w291836713, 87m2)",
+   "Dome of Musa (w291836718, 56m2)",
+   "Dome of Yusuf (w291836719, 30m2)",
+   "Fountain of Qayt Bay (w291836733, 14m2)",
+   "Gate of the East (w508175929, 23m2)",
+   "Council Gate (w620130982, 37m2)",
+   "Western Wall (w817206833, 825m2)"
+  ],
+  "streets": [
+   "At Takiyyeh",
+   "At Takiyyeh Road",
+   "Silsileh",
+   "Suq El-Quatta",
+   "Western Wall Plaza"
+  ],
+  "steps": 16,
+  "bounds": [
+   587,
+   -104,
+   947,
+   405
+  ]
+ },
+ "s00_jaffa": {
+  "buildings": 20,
+  "landmarks": [
+   "New Imperial Hotel (w290812336, 168m2)"
+  ],
+  "streets": [
+   "David Street",
+   "Greek Catholic Patriarchate Street",
+   "Jaffa Gate",
+   "Latin Patriarchate Road",
+   "Maronite Convent Street",
+   "Omar Bin Al-Khattab",
+   "The Armenian Patriarchate Street"
+  ],
+  "steps": 2,
+  "bounds": [
+   -43,
+   -42,
+   152,
+   48
+  ]
+ },
+ "s01_armenian": {
+  "buildings": 128,
+  "landmarks": [
+   "Christ Church (w126755060, 338m2)",
+   "Christ Church Guest House (w126783156, 273m2)",
+   "Saint James Cathedral (w265410575, 956m2)",
+   "Patriarchate Administration (w612002272, 886m2)",
+   "Tower of David (r136164, 5639m2)"
+  ],
+  "streets": [
+   "Ararat",
+   "Armenian Patriarchate",
+   "Armenian Patriarchate Road",
+   "Biqqur Holim",
+   "HaKinor",
+   "HaMalakh",
+   "HaShofar",
+   "Maronite Convent",
+   "Or HaHayim",
+   "Saint James Street",
+   "The Armenian Patriarchate Street"
+  ],
+  "steps": 4,
+  "bounds": [
+   8,
+   -300,
+   250,
+   -42
+  ]
+ },
+ "s02_zion": {
+  "buildings": 24,
+  "landmarks": [
+   "Armenian Orthodox Church of the Archangels (w290677052, 131m2)",
+   "Mardigian Armenian Museum (r3862591, 1479m2)",
+   "Ayyubid Tower (r9453421, 10m2)"
+  ],
+  "streets": [
+   "Ararat",
+   "Armenian Patriarchate Road",
+   "Batei Mahase",
+   "HaMalakh",
+   "Habad",
+   "Habad Road",
+   "Habad Street",
+   "Zion Gate Street"
+  ],
+  "steps": 1,
+  "bounds": [
+   21,
+   -422,
+   330,
+   -300
+  ]
+ },
+ "s03_christian_w": {
+  "buildings": 249,
+  "landmarks": [
+   "College of Brothers (w91624550, 1293m2)",
+   "Saint Saviours Church (w106249447, 439m2)",
+   "Greek Orthodox Patriarchate (w290810608, 1956m2)",
+   "Custodia Terrae Sanctae (w290818507, 1223m2)",
+   "Terra Sancta High Shool (w290824723, 831m2)",
+   "Holy Archangels Serbian Church (w1392256448, 224m2)",
+   "Co-Cathedral of the Most Holy Name of Jesus (w1392261827, 445m2)",
+   "Cathedral of the Annunciation of the Virgin (Melkite) (w1394461451, 367m2)",
+   "Monastery of Saint Saviour (r1515591, 3618m2)",
+   "Casa Nova (r19228634, 1290m2)"
+  ],
+  "streets": [
+   "Aqabat El-Khanqa",
+   "Ar-Rusul",
+   "Bab El-Jadid",
+   "Bab El-Jadid Road",
+   "Casa Nova Road",
+   "Christian Quarter Street",
+   "El-Jawalida Rd",
+   "Greek Catholic Patriarchate Street",
+   "Greek Orthodox Patriarchate Street",
+   "Latin Patriarchate Road",
+   "Les Fr\u00e8res Street",
+   "New Gate",
+   "Saint Dimitri's Road",
+   "Saint Francis Street",
+   "Saint George Street",
+   "Saint Peter Street",
+   "Suq Al-Aqbat",
+   "Tanners"
+  ],
+  "steps": 6,
+  "bounds": [
+   -170,
+   48,
+   160,
+   430
+  ]
+ },
+ "s04_sepulchre": {
+  "buildings": 368,
+  "landmarks": [
+   "Lutheran Church of the Redeemer (w29268902, 602m2)",
+   "Hospice of the Order of St John (w53474876, 183m2)",
+   "Mosque of Omar (w290821793, 353m2)",
+   "Alexander Nevsky Church (w612045244, 135m2)",
+   "\u05d9\u05e9\u05d9\u05d1\u05ea \u05dc\u05e0\u05ea\u05d9\u05d1\u05d5\u05ea \u05d9\u05e9\u05e8\u05d0\u05dc (w620317533, 136m2)",
+   "Church of the Holy Sepulchre (w1022672085, 5778m2)",
+   "Hebron Khan Hostel (w1392513727, 63m2)",
+   "Propstei (r3864634, 1215m2)"
+  ],
+  "streets": [
+   "Al Wadi",
+   "Al'Kirmi",
+   "Al-Battikh Ascent",
+   "Al-Jabsha",
+   "Al-Karmi Court",
+   "Al-Sayyida",
+   "Aqabat Al Khalidiyeh",
+   "Aqabat Al-Asseila",
+   "Aqabat El Saraya",
+   "Aqabat El-Khanqa",
+   "Aqabat Etkia",
+   "Ar-Rusul",
+   "Ash-Shawish Court",
+   "At Takiyyeh Road",
+   "Beit HaBad",
+   "Christian Quarter Street",
+   "Courtyard",
+   "Es-Sayyida Road",
+   "Ethiopian Monastery",
+   "Greek Orthodox Patriarchate Street",
+   "HaKardo",
+   "HaTut",
+   "Jewish Quarter",
+   "Muristan Street",
+   "Qanater Khudair",
+   "Qukater Khoeir Road",
+   "Saint Helena Road",
+   "Suq Aftimos",
+   "Suq Al Attarin",
+   "Suq Al La'h'hamin",
+   "Suq Al-Aqbat",
+   "Suq Ed-Dabbagha",
+   "Suq Khan al-Zeit",
+   "Via Dolorosa"
+  ],
+  "steps": 20,
+  "bounds": [
+   160,
+   48,
+   400,
+   430
+  ]
+ },
+ "s05_souks": {
+  "buildings": 98,
+  "landmarks": [
+   "Church of Saint John the Baptist (w166965387, 295m2)",
+   "Saint Maron Convent (w290692945, 452m2)"
+  ],
+  "streets": [
+   "Al'Hakkari",
+   "Ararat Hamal'ach",
+   "Biqqur Holim",
+   "Bonei HaHoma Street",
+   "Chabad Street",
+   "Christian Quarter Street",
+   "David Street",
+   "Gagot Galizia",
+   "HaBikurim",
+   "HaKardo",
+   "Jewish Quarter",
+   "Maronite Convent",
+   "Maronite Convent Street",
+   "Muristan Street",
+   "Saint Mark Street",
+   "Silsileh",
+   "Suq Aftimos",
+   "Suq Al La'h'hamin",
+   "khan-as-sultan"
+  ],
+  "steps": 6,
+  "bounds": [
+   152,
+   -42,
+   420,
+   48
+  ]
+ },
+ "s06_jewish": {
+  "buildings": 216,
+  "landmarks": [
+   "The Four Sephardic Synagogue (w29265134, 1153m2)",
+   "Hurva Synagogue (w45081545, 751m2)",
+   "Tiferet Yisrael Synagogue (w195100862, 301m2)",
+   "Chabad Welcome Center (w290723473, 111m2)",
+   "Yeshivat HaKotel (w290726629, 2208m2)",
+   "Ha'Ramban (w290730186, 177m2)",
+   "Church of Saint Mary of the Germans (w290733222, 218m2)",
+   "Yeshivat HaKotel (r3863218, 2228m2)"
+  ],
+  "streets": [
+   "Ararat",
+   "Ararat Hamal'ach",
+   "Barkai Road",
+   "Batei Mahase",
+   "Batei Mahase Square",
+   "Beit El",
+   "Beit Ha-Sho'eva",
+   "Bonei HaHoma Street",
+   "Bonei Hahoma",
+   "Cardo Minimus",
+   "Chabad Street",
+   "Gilad",
+   "Ha-Mekubalim Road",
+   "Ha-Meziltayim Road",
+   "Ha-Nevel",
+   "Ha-Tuppim Road",
+   "HaChatzotzrot",
+   "HaGitit",
+   "HaKaraim",
+   "HaKardo",
+   "HaKotel HaMaaravi",
+   "HaMalakh",
+   "HaMekubalim Road",
+   "HaOmer",
+   "HaShofar",
+   "HaTamid",
+   "Habad",
+   "Habad Street",
+   "Hayei Olam",
+   "Hurva Plaza",
+   "Jewish Quarter",
+   "Jewish Quarter Street",
+   "Lohamei Ha-Rova Be-Tashah",
+   "Mamadot Israel",
+   "Misgav Ladach",
+   "Mishmeret HaKehuna",
+   "Mishmerot HaKehuna",
+   "Mishmerot HaKehuna Road",
+   "Nahamu",
+   "Off the Wall"
+  ],
+  "steps": 18,
+  "bounds": [
+   250,
+   -330,
+   600,
+   -42
+  ]
+ },
+ "s07_kotel": {
+  "buildings": 11,
+  "landmarks": [
+   "Davidson Center (w147608624, 896m2)"
+  ],
+  "streets": [
+   "Ancient Drainage Tunnel",
+   "Batei Mahase",
+   "Herodian",
+   "Mughrabi Bridge",
+   "Umayyad Palace Square",
+   "Western Wall Plaza"
+  ],
+  "steps": 10,
+  "bounds": [
+   560,
+   -204,
+   777,
+   -40
+  ]
+ },
+ "s08_damascus": {
+  "buildings": 280,
+  "landmarks": [
+   "Damascus Gate (w616186088, 449m2)"
+  ],
+  "streets": [
+   "Al Bustamy",
+   "Al Wadi",
+   "Al-Hilal",
+   "Al-Jabsha",
+   "Al-Sa'Diyya",
+   "Aqabat Al-Asseila",
+   "Aqabat Ar-Rahbat",
+   "Aqabat Er-Rahbat",
+   "Ash Sheikh Rihan",
+   "Damascus Gate",
+   "Damascus Gate Plaza (Bab al-Amoud)",
+   "Es-Sayyida Road",
+   "HaTut",
+   "Ibn Jarrah",
+   "Rassas Ascent",
+   "Shaddad",
+   "Sheikh Lulu Ascent",
+   "Suq Khan al-Zeit",
+   "Zawiyat al-Hunud",
+   "al-Malawiya"
+  ],
+  "steps": 4,
+  "bounds": [
+   160,
+   430,
+   560,
+   696
+  ]
+ },
+ "s09_wad": {
+  "buildings": 456,
+  "landmarks": [
+   "Austrian Hospice of the Holy Family (w52890125, 1088m2)",
+   "Church of Our Lady of the Spasm (w277705915, 219m2)",
+   "Gate of Bani Ghanem (w291836716, 57m2)",
+   "Ateret Cohanim Yeshiva (w337612156, 278m2)",
+   "Shuvu Banim Yeshiva (w499210295, 212m2)",
+   "Wilson's Arch prayer hall (w499210296, 551m2)",
+   "Ohel Yitzchak Synagogue (w499223566, 320m2)",
+   "\u05e1\u05e4\u05e8\u05d9\u05d9\u05ea \u05d4\u05db\u05d5\u05dc\u05dc (w499223567, 50m2)",
+   "\u05db\u05d5\u05dc\u05dc (w499223568, 34m2)",
+   "Church of the Condemnation (w744674226, 157m2)",
+   "Church of the Flagellation (w744674450, 200m2)",
+   "Ecce Homo Basilica (w744676490, 329m2)",
+   "Ecce Homo Pilgrim House (w744676491, 450m2)",
+   "Praitorion (Prison of Christ) (w744679915, 229m2)",
+   "Hazon Yekhezkel (w1071118807, 93m2)"
+  ],
+  "streets": [
+   "Al Bairek",
+   "Al Wadi",
+   "Al'Hakkari",
+   "Al-Hilal",
+   "Aqabat Al Khalidiyeh",
+   "Aqabat Al-Asseila",
+   "Aqabat Darwish / Herod's Gate Ascent",
+   "Aqabat El Saraya",
+   "Aqabat Er-Rahbat / The Nuns Ascent",
+   "Aqabat Etkia",
+   "At Takiyyeh",
+   "At Takiyyeh Road",
+   "Bab Al-Ghawanima Street",
+   "Bab El-Hadid",
+   "Bab Ghawanmeh",
+   "Barquq",
+   "HaBikurim",
+   "HaKotel HaMaaravi",
+   "HaOmer",
+   "Lions' Gate",
+   "Misgav Ladach",
+   "Mughrabi Bridge",
+   "Qukater Khoeir Road",
+   "Shonei Halachot",
+   "Silsileh",
+   "Suq El-Quatta",
+   "Via Dolorosa",
+   "Western Wall Plaza",
+   "Western Wall Tunnel",
+   "Wilson's Arch"
+  ],
+  "steps": 26,
+  "bounds": [
+   400,
+   -42,
+   700,
+   430
+  ]
+ },
+ "s10_herod_lions": {
+  "buildings": 293,
+  "landmarks": [
+   "Saint Anne Church (w126864879, 551m2)",
+   "Lions' Gate (w288395731, 126m2)",
+   "Saint Anne Seminary (w288395732, 790m2)",
+   "Terra Sancta Museum (w744674896, 1138m2)"
+  ],
+  "streets": [
+   "Al Bustamy",
+   "Al Umari",
+   "Al-Hilal",
+   "Aqabat Al-Quds",
+   "Aqabat Darwish",
+   "Aqabat Darwish / Herod's Gate Ascent",
+   "Aqabat Er-Rahbat",
+   "Aqabat Er-Rahbat / The Nuns Ascent",
+   "Ash Sheikh Hasan",
+   "Ash Sheikh Rihan",
+   "Bab Hutta",
+   "Bab Hutta Street",
+   "Burj Laqlaq",
+   "El-Ghazali Square",
+   "Ha'Chasidut",
+   "Hab Ra'aman",
+   "Herod's Gate Ascent",
+   "King Faisal",
+   "Lions' Gate",
+   "Lions' Gate Street",
+   "Riman",
+   "Salahiya",
+   "Shaddad",
+   "Zawiyat al-Hunud"
+  ],
+  "steps": 8,
+  "bounds": [
+   560,
+   400,
+   899,
+   781
+  ]
+ }
+}

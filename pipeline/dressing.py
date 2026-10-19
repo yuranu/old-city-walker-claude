@@ -24,6 +24,8 @@ def dress(c, rng):
     sz = c["street_z"]
     road = c["road_area"]
     walk = street.buffer(-0.05)
+    from shapely import prepare as _prepare
+    _prepare(walk)
 
     def zat(x, y):
         q = Point(x, y)
@@ -44,7 +46,7 @@ def dress(c, rng):
 
     def free(x, y, r):
         q = Point(x, y)
-        return walk.contains(q) and not obstacles.buffer(r * 0.5).contains(q) and \
+        return walk.contains(q) and obstacles.distance(q) > r * 0.5 and \
             all(math.hypot(p["p"][0] - x, p["p"][1] - y) > r + p.get("r", 0.3) for p in props[-400:])
 
     def add(t, x, y, rot=0.0, s=1.0, col=False, r=0.3, z=None):
@@ -60,7 +62,8 @@ def dress(c, rng):
         t = n["tags"]
         if t.get("natural") == "tree" and street.contains(Point(x, y)):
             kind = "tree_young" if x < 0 and -30 < y < 30 else ("tree_olive" if rng.random() < 0.6 else "tree_ficus")
-            add(kind, x, y, rng.uniform(0, 360), rng.uniform(0.85, 1.2), col=True, r=1.0)
+            add(kind, x, y, rng.uniform(0, 360), rng.uniform(0.6, 0.8) if kind == "tree_young" else rng.uniform(0.85, 1.2),
+                col=True, r=1.0)                       # plaza trees are thin and young (~4 m, eval gate_outer)
         elif t.get("amenity") == "bench" and street.contains(Point(x, y)):
             add("bench_stone", x, y, _face_open(street, x, y), col=True, r=0.9)
         elif t.get("information") == "board":
@@ -119,7 +122,7 @@ def dress(c, rng):
             a, bb = r[i], r[(i + 1) % len(r)]
             (tx, ty), (nx, ny), L = edge_frame(a, bb)
             yaw = math.degrees(math.atan2(nx, ny))
-            dens = 0.18 if b["tier"] == "hero" else 0.1
+            dens = 0.18 if b["tier"] == "hero" else 0.035          # city-wide: sparse litter outside the hero area
             u = rng.uniform(0.2, 1.5)
             while u < L - 0.2:
                 corner = u < 1.2 or u > L - 1.2                      # wind piles litter into corners
@@ -221,7 +224,9 @@ def dress(c, rng):
                 continue
             area = inner.area
             placed = []
-            items = ["water_heater"] * min(4, int(area / 45) + (1 if rng.random() < 0.6 else 0)) + \
+            if b["tier"] == "context" and rng.random() > 0.35:     # context roofs: sparse (always loaded)
+                continue
+            items = ["water_heater"] * min(3, int(area / 60) + (1 if rng.random() < 0.5 else 0)) + \
                 ["water_tank"] * min(3, int(area / 90) + (1 if rng.random() < 0.3 else 0)) + \
                 (["sat_dish"] if rng.random() < 0.55 else []) + (["antenna"] if rng.random() < 0.35 else [])
             for it in items:

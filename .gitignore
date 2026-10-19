@@ -41,3 +41,5 @@ data/photos_ref/*/*.jpg
 
 # --- temporary benchmarking copies (engine work in progress)
 game/src/legacy/
+data/spec/
+build/logs/

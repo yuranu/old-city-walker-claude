@@ -16,17 +16,28 @@ import random
 import zlib
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parent.parent
+
 import dressing
 import facades
 import hero
+import roofscape
 from geo import LineString, Point, Polygon, ccw, clean, edge_frame, poly_json, polys_of, unary_union
-from shapely import constrained_delaunay_triangles
+from shapely import STRtree, clip_by_rect, constrained_delaunay_triangles, prepare
 from shapely.geometry import box
 
-ROOT = Path(__file__).resolve().parent.parent
+try:                                       # city-wide street-level terrain (pipeline/terrain_street.py)
+    import terrain_street as _terrain
+    if not (ROOT / "data/terrain_street.json").exists():
+        _terrain = None
+except Exception:                          # noqa: BLE001
+    _terrain = None
 
 POC = (-30, -75, 160, 60)
-CONTEXT = (-330, -220, 260, 170)    # west part from data/raw/osm_west.osm (context massing only)
+CONTEXT = (-350, -520, 1010, 860)   # whole walled city + a ring of context (west part from osm_west.osm)
+_OC = json.loads((ROOT / "data/oldcity_polygon.json").read_text()) if (ROOT / "data/oldcity_polygon.json").exists() else None
+CITY = Polygon(_OC["ring"]) if _OC else box(*POC)          # inside the walls -> mid tier (rule-based facades)
+HARAM = Polygon(_OC["haram"]) if _OC and "haram" in _OC else Polygon()
 HERO_ZONE = Polygon([(-45, -32), (100, -32), (100, -42), (152, -42), (152, 32), (102, 32), (102, 48), (-45, 48)])
 
 # Heights in metres above local ground, from Commons photos (022, 010, 019/020, 024, 027 ...)
@@ -91,8 +102,10 @@ MOAT_DEPTH = 5.0
 CITADEL_WALL_H = 13.0
 MOAT_W = 6.0
 TOWERS = [
-    {"kind": "box", "name": "phasael", "c": (63.0, -17.0), "size": (20.0, 17.0), "rot": 24.0, "h": 21.0,
-     "top": {"size": (14.0, 12.0), "h": 3.0}},       # NE corner, ~24 m above the street (citadel_east.md A5)
+    {"kind": "box", "name": "phasael", "c": (66.0, -23.0), "size": (20.0, 17.0), "rot": 24.0, "h": 21.0,
+     "top": {"size": (14.0, 12.0), "h": 3.0}},       # east side by the east ditch (citadel_east.md A5, eval north_side)
+    {"kind": "box", "name": "nw_tower", "c": (27.0, -27.0), "size": (17.0, 15.0), "rot": 35.0, "h": 18.0,
+     "machicolations": 3},                           # by the 1898 breach (eval back_to_gate / outside_gate)
     {"kind": "minaret", "c": (24.0, -79.0), "r": 2.6, "h": 30.0},
 ]
 DAVID = {"pts": [(96.7, 2.8), (106.4, 9.1), (115.4, 9.3), (135.9, 8.7), (159.0, 8.2), (175.6, 9.4)],
@@ -122,7 +135,103 @@ def souq_profile(L, eg, rng):
                                            "rolldown_grey", "door_green2"])})
     return {"souq": True, "shops": True, "centres": [round(0.4 + sp * (k + 0.5), 2) for k in range(n)], "ground": ground,
             "ground_storey": 4.4, "awning": False, "thr": round(rng.uniform(0.16, 0.28), 2), "thr_out": round(rng.uniform(0.4, 0.65), 2),
-            "canopy": {"depth": round(rng.uniform(1.2, 1.6), 2), "z_front": 3.15, "z_wall": 3.95}}
+            "canopy": {"depth": round(rng.uniform(1.2, 1.6), 2), "z_front": 2.9, "z_wall": 3.6}}   # eval david_street
+
+
+def write_sectors(spec):
+    """Split the spec: data/spec/base.json (ground, kerbs, walls, citadel, gate, context) and one file
+    per sector (its buildings, props, steps, cables, beams, ground decals). data/scene_spec.json stays
+    a legacy single-scene spec (base + s00) for the evaluation loop and tools."""
+    import sectors as S
+    secs = S.load()
+    out_dir = ROOT / "data/spec"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    def sector_of(x, y):
+        pt = Point(x, y)
+        if HERO_ZONE.contains(pt):
+            return "s00_jaffa"
+        for sid, geom, _ in secs:
+            if geom.contains(pt):
+                return sid
+        return None
+
+    per = {sid: {"buildings": [], "props": [], "steps": [], "cables": [], "beams": [], "ground_decals": []}
+           for sid, _, _ in secs}
+    base_b, base_props, base_dec = [], [], []
+    for b in spec["buildings"]:
+        sid = sector_of(*b["c"]) if b["tier"] != "context" else None
+        b["sector"] = sid
+        (per[sid]["buildings"] if sid else base_b).append(b)
+    for key, arr in (("props", spec["props"]), ("ground_decals", spec["ground_decals"])):
+        for it in arr:
+            sid = sector_of(it["p"][0], it["p"][1])
+            if sid:
+                per[sid][key].append(it)
+            else:
+                (base_props if key == "props" else base_dec).append(it)
+    for st in spec["steps"]:
+        e = st["poly"]["ext"][0]
+        per[sector_of(*e) or "s00_jaffa"]["steps"].append(st)
+    for key in ("cables", "beams"):
+        for it in spec[key]:
+            m = ((it["a"][0] + it["b"][0]) / 2, (it["a"][1] + it["b"][1]) / 2)
+            per[sector_of(*m) or "s00_jaffa"][key].append(it)
+    base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
+                                  "walls_generic", "spawn", "sources")}
+    base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": [], "cables": [],
+                 "beams": []})
+    (out_dir / "base.json").write_text(json.dumps(base))
+    index = []
+    for sid, geom, rec in secs:
+        bx = list(geom.bounds)                              # sector area plus what its buildings overhang
+        for bd in per[sid]["buildings"]:
+            xs = [p[0] for p in bd["ring"]]
+            ys = [p[1] for p in bd["ring"]]
+            bx = [min(bx[0], min(xs)), min(bx[1], min(ys)), max(bx[2], max(xs)), max(bx[3], max(ys))]
+        part = dict(per[sid], id=sid, bounds=[round(v, 1) for v in bx], name=rec["name"])
+        (out_dir / ("%s.json" % sid)).write_text(json.dumps(part))
+        index.append({"id": sid, "bounds": part["bounds"], "buildings": len(part["buildings"]),
+                      "props": len(part["props"]), "name": rec["name"]})
+    (out_dir / "index.json").write_text(json.dumps({"sectors": index}, indent=1))
+    legacy = dict(base)
+    legacy["buildings"] = base_b + per["s00_jaffa"]["buildings"]
+    for k in ("props", "steps", "cables", "beams", "ground_decals"):
+        legacy[k] = base[k] + per["s00_jaffa"][k] if k in ("props", "ground_decals") else per["s00_jaffa"][k]
+    (ROOT / "data/scene_spec.json").write_text(json.dumps(legacy))
+    print("sectors:", ", ".join("%s %d" % (i["id"], i["buildings"]) for i in index), "| base context", len(base_b))
+
+
+def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0):
+    """City-wall segments from OSM outside the hand-modelled Jaffa Gate stretch: terrain-following,
+    outside (beyond the walls) on the right-hand side of each segment."""
+    from shapely.ops import linemerge
+    lines = unary_union([LineString(w["pts"]) for w in d["ways"]
+                         if "multipolygon" not in w and w["tags"].get("barrier") == "city_wall"])
+    custom = unary_union([LineString(w["pts"]).buffer(w["thick"] / 2 + 2.0) for w in CITY_WALLS]
+                         + [gate_poly.buffer(3.0), cit_outer.buffer(3.0)])
+    rest = lines.difference(custom)
+    rest = linemerge(rest) if rest.geom_type == "MultiLineString" else rest
+    inside = CITY.union(HARAM).buffer(-0.5)
+    out = []
+    for ln in getattr(rest, "geoms", [rest]):
+        if ln.geom_type != "LineString" or ln.length < 2.0:
+            continue
+        n = max(1, int(math.ceil(ln.length / seg_len)))
+        pts = [ln.interpolate(ln.length * k / n).coords[0] for k in range(n + 1)]
+        for a, b in zip(pts, pts[1:]):
+            (tx, ty), (nx, ny), L = edge_frame(a, b)
+            if L < 0.5:
+                continue
+            m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+            if inside.contains(Point(m[0] + nx * 5, m[1] + ny * 5)):     # right side must be outside
+                a, b = b, a
+                nx, ny = -nx, -ny
+            z_in = street_z(m[0] - nx * 5, m[1] - ny * 5)
+            z_out = street_z(m[0] + nx * 5, m[1] + ny * 5)
+            out.append({"a": [round(a[0], 2), round(a[1], 2)], "b": [round(b[0], 2), round(b[1], 2)],
+                        "z0": round(min(z_in, z_out) - 2.5, 2), "z1": round(z_in + height, 2), "thick": thick})
+    return out
 
 
 def douglas_peucker(r, tol):
@@ -177,45 +286,97 @@ def david_drop(s):
 
 
 def street_z(x, y):
+    if _terrain is not None:
+        return _terrain.street_z(x, y)
     if x > 100 and y > 3.5:
         return -david_drop(polyline_s(DAVID["pts"], (x, y))[0])
     return 0.0
 
 
-def tess_regions(region, zfun, cell=2.0):
-    """Clip region to a grid and triangulate each piece; returns flat triangle list with z."""
+def cell_size(x, y):
+    """Ground mesh density: fine in the hero area, medium inside the walls, coarse outside."""
+    if box(*POC).contains(Point(x, y)):
+        return 2.0
+    return 4.0 if CITY.contains(Point(x, y)) else 8.0
+
+
+def tess_regions(region, zfun, cell=None, tile=32.0):
+    """Clip region to 32 m tiles (fast rectangle clipping), then to cells, and triangulate each
+    piece; returns a flat triangle list with z. cell=None picks the size per tile (cell_size)."""
     tris = []
+    if region.is_empty:
+        return tris
+    from shapely import make_valid as _mv
+    region = _mv(region)
+    region = unary_union(polys_of(region, 1e-3))           # polygons only, no stray lines or points
+    if region.is_empty:
+        return tris
     x0, y0, x1, y1 = region.bounds
-    i0, j0 = math.floor(x0 / cell), math.floor(y0 / cell)
-    i1, j1 = math.ceil(x1 / cell), math.ceil(y1 / cell)
-    for i in range(i0, i1):
-        for j in range(j0, j1):
-            c = box(i * cell, j * cell, (i + 1) * cell, (j + 1) * cell)
-            if not region.intersects(c):
+    for ti in range(math.floor(x0 / tile), math.ceil(x1 / tile)):
+        for tj in range(math.floor(y0 / tile), math.ceil(y1 / tile)):
+            tx0, ty0 = ti * tile, tj * tile
+            try:
+                sub = clip_by_rect(region, tx0, ty0, tx0 + tile, ty0 + tile)
+            except Exception:                              # noqa: BLE001
+                sub = region.intersection(box(tx0, ty0, tx0 + tile, ty0 + tile))
+            if sub.is_empty:
                 continue
-            piece = region.intersection(c)
+            c = cell or cell_size(tx0 + tile / 2, ty0 + tile / 2)
+            n = int(round(tile / c))
+            for i in range(n):
+                for j in range(n):
+                    try:
+                        piece = clip_by_rect(sub, tx0 + i * c, ty0 + j * c, tx0 + (i + 1) * c, ty0 + (j + 1) * c)
+                    except Exception:                      # noqa: BLE001
+                        piece = sub.intersection(box(tx0 + i * c, ty0 + j * c, tx0 + (i + 1) * c, ty0 + (j + 1) * c))
+                    if piece.is_empty:
+                        continue
+                    _tri_piece(piece, zfun, tris)
+    return tris
+
+
+def _tri_piece(piece, zfun, tris):
+    if True:
+        if True:
             for p in polys_of(piece, 1e-4):
-                for t in polys_of(constrained_delaunay_triangles(p), 1e-5):
+                try:
+                    tri_set = polys_of(constrained_delaunay_triangles(p), 1e-5)
+                except Exception:                          # noqa: BLE001  (rare degenerate pieces)
+                    from shapely.ops import triangulate as _tri
+                    pv = p.buffer(0)
+                    tri_set = [t for t in _tri(pv) if pv.contains(t.representative_point())]
+                for t in tri_set:
                     pts = list(t.exterior.coords)[:3]
                     if (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0]) < 0:
                         pts = [pts[0], pts[2], pts[1]]
                     tris.append([[round(x, 3), round(y, 3), round(zfun(x, y), 3)] for x, y in pts])
-    return tris
 
 
 def main():
     d = json.loads((ROOT / "data/osm_local.json").read_text())
     rng = random.Random(1898)
+    if (ROOT / "data/sectors.json").exists():
+        import sectors
+        sector_at = roofscape.sector_lookup(sectors.load())
+    else:
+        sector_at = lambda x, y: None  # noqa: E731
 
     # ---------------------------------------------------------------- citadel
     citadel = next(b for b in d["buildings"] if b["id"] == "r136164")
     cit_outer_r = ccw(douglas_peucker(list(map(tuple, citadel["outer"][0])), 2.5))
+    # split the long north edge at x = 42 so the moat can start there
+    for i in range(len(cit_outer_r)):
+        a, b = cit_outer_r[i], cit_outer_r[(i + 1) % len(cit_outer_r)]
+        if (a[0] - 42) * (b[0] - 42) < 0 and min(a[1], b[1]) > -30:
+            t = (42 - a[0]) / (b[0] - a[0])
+            cit_outer_r.insert(i + 1, (42.0, round(a[1] + (b[1] - a[1]) * t, 3)))
+            break
     cit_inner_r = ccw(clean(citadel["inner"][0]).exterior.coords)
     moat_edges = []
     for i in range(len(cit_outer_r)):
         a, b = cit_outer_r[i], cit_outer_r[(i + 1) % len(cit_outer_r)]
         m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
-        moat_edges.append(MOAT_W if (m[1] > -62 and m[0] > 22 and not (m[0] < 30 and m[1] < -30)) else 0.0)
+        moat_edges.append(MOAT_W if (m[1] > -62 and m[0] > 42 and not (m[0] < 30 and m[1] < -30)) else 0.0)
     cit_mass_r = offset_ring(cit_outer_r, moat_edges)
     cit_outer, cit_mass, cit_inner = Polygon(cit_outer_r), Polygon(cit_mass_r), Polygon(cit_inner_r)
     assert cit_mass.is_valid and cit_outer.is_valid, "citadel rings invalid"
@@ -238,7 +399,7 @@ def main():
         c = p.centroid
         if not box(*CONTEXT).contains(c):
             continue
-        tier = "hero" if HERO_ZONE.contains(c) else ("mid" if box(*POC).contains(c) else "context")
+        tier = "hero" if HERO_ZONE.contains(c) else ("mid" if (box(*POC).contains(c) or CITY.contains(c)) else "context")
         cands.append((b, p, tier))
     prio = {"hero": 0, "mid": 1, "context": 2}
     cands.sort(key=lambda t: (prio[t[2]], -t[1].area))
@@ -249,12 +410,22 @@ def main():
         HEIGHTS[m["id"]] = m["height"]
         SHOPS.add(m["id"])
     blocked = unary_union([citadel_body, moat, gate_poly] + wall_polys)
+    prepare(blocked)
     taken = []
+    grid = {}                                  # 20 m cells -> indices into taken
+    G = 20.0
+
+    def cells_of(g):
+        bx0, by0, bx1, by1 = g.bounds
+        return [(i, j) for i in range(math.floor(bx0 / G), math.floor(bx1 / G) + 1)
+                for j in range(math.floor(by0 / G), math.floor(by1 / G) + 1)]
     buildings = []
     for b, p, tier in cands:
-        rest = p.difference(blocked)
-        if taken:
-            rest = rest.difference(unary_union(taken))
+        rest = p.difference(blocked) if blocked.intersects(p) else p
+        near = {k for c_ in cells_of(p) for k in grid.get(c_, ())}
+        near = [taken[k] for k in near if taken[k].intersects(rest)]
+        if near:
+            rest = rest.difference(unary_union(near))
         pieces = polys_of(rest, 6.0)            # no simplify after the difference: it would re-open overlaps
         pieces = [q for q in pieces if q.is_valid and q.area > 6.0]
         for k, q in enumerate(sorted(pieces, key=lambda q: -q.area)):
@@ -262,10 +433,22 @@ def main():
                 continue
             q = Polygon(q.exterior)                              # drop courtyard holes
             taken.append(q)
+            for c_ in cells_of(q):
+                grid.setdefault(c_, []).append(len(taken) - 1)
             bid = b["id"] if k == 0 else "%s_%d" % (b["id"], k)
             buildings.append({"id": bid, "osm": b["id"], "poly": q, "tags": b["tags"], "tier": tier})
 
-    obstacles = unary_union([bd["poly"] for bd in buildings] + [cit_mass, gate_poly] + wall_polys)
+    obs_list = [bd["poly"] for bd in buildings] + [cit_mass, gate_poly] + wall_polys
+    obstacles = unary_union(obs_list)
+    prepare(obstacles)
+    obs_tree = STRtree(obs_list)
+
+    def inside_other(pt, self_idx):
+        """Is the point inside any obstacle other than building self_idx?"""
+        for k in obs_tree.query(pt):
+            if k != self_idx and obs_list[k].contains(pt):
+                return True
+        return False
 
     # ---------------------------------------------------------------- ground regions
     ctx = box(*CONTEXT)
@@ -338,18 +521,17 @@ def main():
 
     # ---------------------------------------------------------------- buildings
     out_b = []
-    for bd in buildings:
+    for bidx, bd in enumerate(buildings):
         bid, osm = bd["id"], bd["osm"]
         q = bd["poly"]
         r = ccw(q.exterior.coords)
         brng = random.Random(zlib.crc32(bid.encode()))
-        others = obstacles.difference(q.buffer(0.05))
         exposed, eground = [], []
         for i in range(len(r)):
             a, b = r[i], r[(i + 1) % len(r)]
             _, (nx, ny), L = edge_frame(a, b)
             hits = sum(1 for t in (0.25, 0.5, 0.75)
-                       if others.contains(Point(a[0] + (b[0] - a[0]) * t + nx * 1.2, a[1] + (b[1] - a[1]) * t + ny * 1.2)))
+                       if inside_other(Point(a[0] + (b[0] - a[0]) * t + nx * 1.2, a[1] + (b[1] - a[1]) * t + ny * 1.2), bidx))
             exposed.append(hits <= 1 and L > 0.3)
             m = ((a[0] + b[0]) / 2 + nx * 1.0, (a[1] + b[1]) / 2 + ny * 1.0)
             z = street_z(*m)
@@ -365,8 +547,11 @@ def main():
         g_lo = min(min(zs), min(eground))
         hb = hero.BUILDING.get(osm, {})
         h = hb.get("height", HEIGHTS.get(osm))
+        sid = sector_at(q.representative_point().x, q.representative_point().y) if bd["tier"] == "mid" else None
+        if h is None and sid:
+            h = roofscape.height_for(osm, bd["tags"], q.area, sid)
         if h is None:
-            h = 7.0 if q.area < 60 else 9.0 + (zlib.crc32(osm.encode()) % 5)
+            h = roofscape.osm_height(bd["tags"]) or (7.0 if q.area < 60 else 9.0 + (zlib.crc32(osm.encode()) % 5))
         ashlar = osm in ASHLAR
         style = {"wall": hb.get("wall", "ashlar" if ashlar else "rubble"), "shops": osm in SHOPS,
                  "domes": DOMES.get(osm, 0), "roof": "hipped" if osm in HIPPED else "flat",
@@ -382,10 +567,11 @@ def main():
         rec["roof"] = [poly_json(p) for p in polys_of(inner, 1.5)]
         if rec["tier"] in ("hero", "mid"):
             rec["facades"] = []
+            fov = hero.facades_for(osm, r)
             for i in range(len(r)):
                 if not exposed[i]:
                     continue
-                ov = hero.FACADES.get((osm, i))
+                ov = fov.get(i)
                 a_, b_ = r[i], r[(i + 1) % len(r)]
                 m_ = ((a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2)
                 (tx_, ty_), (nx_, ny_), L_ = edge_frame(a_, b_)
@@ -415,7 +601,7 @@ def main():
                 if fac["openings"] or fac["fixtures"] or fac["decals"]:
                     rec["facades"].append(fac)
         # context buildings: flat window cards, each checked against neighbouring walls
-        if rec["tier"] == "context":
+        if True:                                   # context tier draws these; hero/mid use them in their LOD
             cells = ["glass", "glass", "glass_curtain", "shutter_green", "shutter_blue", "shutter_brown"]
             rec["cwin"] = []
             for i in range(len(r)):
@@ -429,7 +615,7 @@ def main():
                 for k in range(nb):
                     u = 0.6 + (L - 1.2) * (k + 0.5) / nb
                     probe = Point(a[0] + tx * u + nx * 0.3, a[1] + ty * u + ny * 0.3)
-                    if others.contains(probe):
+                    if inside_other(probe, bidx):
                         continue
                     z = eground[i] + 1.4
                     while z + 1.6 < g_hi + h - 1.2:
@@ -453,6 +639,9 @@ def main():
                         break
             if not style["domes"] and rec["tier"] == "context" and 40 < q.area < 400 and brng.random() < 0.3:
                 style["domes"] = 1
+            if sid and not style["domes"] and osm not in HEIGHTS:     # vernacular field of shallow domes
+                rec["dome_list"] = roofscape.domes_for(osm, roofpoly, rec["roof_rooms"], sid, brng,
+                                                       roofscape.main_axis(q))
         out_b.append(rec)
 
     # ---------------------------------------------------------------- street-name plaques from OSM names
@@ -516,8 +705,12 @@ def main():
                "courtyard": courtyard}
     props, cables, ground_decals, beams = dressing.dress(ctxinfo, rng)
 
+    # ---------------------------------------------------------------- the rest of the wall circuit (OSM)
+    walls_generic = generic_walls(d, cit_outer, gate_poly)
+
     spec = {
         "poc_box": POC, "context_box": CONTEXT,
+        "walls_generic": walls_generic,
         "buildings": out_b,
         "gatehouse": GATEHOUSE, "city_walls": CITY_WALLS,
         "citadel": {"outer": cit_outer_r, "mass": [list(p) for p in cit_mass_r], "inner": cit_inner_r,
@@ -531,7 +724,7 @@ def main():
             "terrain": "AWS Terrain Tiles (SRTM) checked; too coarse, ground hand-modelled",
         },
     }
-    (ROOT / "data/scene_spec.json").write_text(json.dumps(spec))
+    write_sectors(spec)
     nt = {t: sum(1 for b in out_b if b["tier"] == t) for t in ("hero", "mid", "context")}
     nf = sum(len(b.get("facades", [])) for b in out_b)
     no = sum(len(f["openings"]) for b in out_b for f in b.get("facades", []))

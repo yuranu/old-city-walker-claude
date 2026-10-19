@@ -267,8 +267,8 @@ def prism(mb, ring, z0, z1, mat, top_mat=None, bottom=False, col=None):
         mb.tris([(p[0], p[1], z0) for p in fl], ft, top_mat or mat, -UP, col=col)
 
 
-def dome(mb, cx, cy, z, r, mat, drum=0.5, seg=16, rings=6, col=None):
-    """Drum + hemisphere."""
+def dome(mb, cx, cy, z, r, mat, drum=0.5, seg=16, rings=6, col=None, rise=1.0):
+    """Drum + dome; rise < 1 gives a shallow (segmental-looking) dome of height r * rise."""
     pts_lo = [Vector((cx + math.cos(2 * math.pi * k / seg) * r, cy + math.sin(2 * math.pi * k / seg) * r, z))
               for k in range(seg + 1)]
     pts_hi = [p + Vector((0, 0, drum)) for p in pts_lo]
@@ -278,9 +278,9 @@ def dome(mb, cx, cy, z, r, mat, drum=0.5, seg=16, rings=6, col=None):
     zc = z + drum
     for j in range(1, rings + 1):
         phi = (math.pi / 2) * j / rings
-        rr, hz = r * math.cos(phi), r * math.sin(phi)
+        rr, hz = r * math.cos(phi), r * math.sin(phi) * rise
         if j == rings:
-            apex = Vector((cx, cy, zc + r))
+            apex = Vector((cx, cy, zc + r * rise))
             for k in range(seg):
                 mb.poly([prev[k], prev[k + 1], apex], mat, (prev[k] + apex) / 2 - Vector((cx, cy, zc)), col=col)
             break

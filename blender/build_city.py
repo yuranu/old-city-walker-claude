@@ -21,6 +21,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import facade_build as fb  # noqa: E402
 import fortifications  # noqa: E402
+import landmarks  # noqa: E402
 import materials  # noqa: E402
 import meshkit as mk  # noqa: E402
 
@@ -42,6 +43,7 @@ def parse_args():
     p.add_argument("--blend", default=str(ROOT / "build/city.blend"))
     p.add_argument("--preview", default=str(ROOT / "renders"))
     p.add_argument("--no-export", action="store_true")
+    p.add_argument("--part", default=None, help="base | <sector id>; default: legacy single scene (base + s00)")
     return p.parse_args(argv)
 
 
@@ -177,6 +179,14 @@ def add_domes(mb, roofs, rz, count):
                 mk.dome(mb, p.x, p.y, rz, rad, "lime", drum=0.6)
 
 
+def vernacular_domes(mb, bd, z, seg=12, rings=4, limit=None):
+    """Field of shallow lime domes from the spec (pipeline/roofscape.py)."""
+    for i, d in enumerate(bd.get("dome_list", [])[:limit]):
+        g = 0.9 + 0.1 * ((i * 37 + len(bd["id"])) % 7) / 6
+        mk.dome(mb, d["c"][0], d["c"][1], z - 0.05, d["r"], "lime", drum=d["drum"], seg=seg, rings=rings,
+                rise=d["rise"], col=(g, g, g * 0.98))
+
+
 def context_windows(mb, bd, gen):
     """Flat window cards on context buildings (positions from the spec): windows at distance for 2 tris."""
     ring = [tuple(p) for p in bd["ring"]]
@@ -234,6 +244,7 @@ def build_building(mbs, bd, gen, signs, place):
                       "rubble" if wall == "rubble" else "ashlar", col, gen)
     if st["domes"] and roofs:
         add_domes(mb, roofs, rz, st["domes"])
+    vernacular_domes(mb, bd, rz)
 
 
 # ---------------------------------------------------------------- ground
@@ -343,55 +354,155 @@ def setup_preview(outdir: Path):
     bpy.data.objects.remove(sun)
 
 
+def build_steps(mb, steps):
+    for s in steps:
+        ext = s["poly"]["ext"]
+        try:
+            fl, ft = mk.tess2d([ext] + s["poly"]["holes"])
+        except Exception:  # noqa: BLE001
+            continue
+        dx_, dy_ = s.get("dir", [1, 0])
+        tile = 4.0
+        mb.tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,
+                uvfn=lambda p, dx_=dx_, dy_=dy_: ((p[0] * -dy_ + p[1] * dx_) / tile, (p[0] * dx_ + p[1] * dy_) / tile))
+        for i in range(len(ext)):
+            a, b = ext[i], ext[(i + 1) % len(ext)]
+            q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], s["top"]), (a[0], a[1], s["top"])]
+            mb.poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
+
+
+def build_walls_generic(mb, walls):
+    """OSM wall circuit outside the hand-modelled Jaffa Gate stretch: stepped, crenellated."""
+    for w in walls:
+        mk.thick_wall(mb, [tuple(w["a"]), tuple(w["b"])], w["z0"], w["z1"], w["thick"], "fort",
+                      merlons=(0.9, 0.75, 1.4, 0.6), outside="right")
+
+
+def build_lod(mb, bd, gen):
+    """Cheap massing for distant sectors: plain walls, flat or hipped roof, window cards, domes."""
+    ring = [tuple(p) for p in bd["ring"]]
+    col = tuple(min(1.0, c / 1.06) for c in bd["tint"])
+    wall = bd["style"]["wall"]
+    for i in range(len(ring)):
+        fb.wall_panel(mb, ring[i], ring[(i + 1) % len(ring)], bd["base"], bd["top"], [], wall, col, gen)
+    if bd["style"]["roof"] == "hipped":
+        roof_hipped(mb, ring, bd["top"])
+    else:
+        fl, ft = mk.tess2d([ring])
+        mb.tris([(p[0], p[1], bd["top"]) for p in fl], ft, "lime", UP)
+    context_windows(mb, bd, gen)
+    vernacular_domes(mb, bd, bd["top"], seg=8, rings=2, limit=4)
+    if bd["style"]["domes"]:
+        c, t, s, ll, ls = obb(ring)
+        r = min(2.6, 0.24 * ls)
+        if r > 0.9:
+            mk.dome(mb, c.x, c.y, bd["top"], r, "lime", drum=0.4, seg=8, rings=3)
+
+
+def material_library(mats, tiles, collection):
+    """One small quad per material: the textured materials every sector GLB refers to by name."""
+    mb = mk.MeshBuilder(tiles)
+    for i, name in enumerate(sorted(mats)):
+        x = (i % 8) * 2.0
+        y = -2000.0 - (i // 8) * 2.0
+        mb.poly([Vector((x, y, -50)), Vector((x + 1, y, -50)), Vector((x + 1, y + 1, -50)), Vector((x, y + 1, -50))],
+                name, UP, uv=[(0, 0), (1, 0), (1, 1), (0, 1)])
+    ob = mb.to_object("material_library", mats, collection)
+    ob["nocol"] = 1
+    return ob
+
+
+def export_glb(path, collections, images=True):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    for o in bpy.context.scene.objects:
+        o.select_set(False)
+    n = 0
+    for c in collections:
+        for o in c.all_objects:
+            o.select_set(True)
+            n += 1
+    if not n:
+        print("nothing to export for", path)
+        return
+    kw = dict(filepath=str(path), export_format="GLB", export_extras=True, export_yup=True, use_selection=True,
+              export_apply=True, export_image_format="WEBP" if images else "NONE", export_texcoords=True,
+              export_image_quality=85)
+    try:
+        bpy.ops.export_scene.gltf(**kw, export_vertex_color="ACTIVE")
+    except TypeError:
+        bpy.ops.export_scene.gltf(**kw)
+    print("exported", path, n, "objects")
+
+
 def main():
     args = parse_args()
-    spec = json.loads(Path(args.spec).read_text())
+    part = args.part
+    if part == "base":
+        spec = json.loads((ROOT / "data/spec/base.json").read_text())
+    elif part:
+        spec = json.loads((ROOT / ("data/spec/%s.json" % part)).read_text())
+    else:
+        spec = json.loads(Path(args.spec).read_text())
     bpy.ops.wm.read_factory_settings(use_empty=True)
     mats, tiles, gen = materials.build(ROOT)
     sj = ROOT / "data/textures/gen/signs.json"
     signs = json.loads(sj.read_text()) if sj.exists() and "signs" in mats else None
-    col_city = bpy.data.collections.new("city")
-    col_props = bpy.data.collections.new("props")
-    for c in (col_city, col_props):
-        bpy.context.scene.collection.children.link(c)
+    cols = {}
+
+    def col(name):
+        if name not in cols:
+            cols[name] = bpy.data.collections.new(name)
+            bpy.context.scene.collection.children.link(cols[name])
+        return cols[name]
     lib = proplib.build_library(mats, tiles, gen) if proplib else {}
-    place = Placer(lib, col_props)
+    place = Placer(lib, col("props"))
 
     def mbset():
         return {"solid": mk.MeshBuilder(tiles), "deco": mk.MeshBuilder(tiles), "signs": mk.MeshBuilder(tiles),
                 "cables": mk.MeshBuilder(tiles)}
 
-    def flush(mbs, name, label=None):
-        for part, mb in mbs.items():
+    def flush(mbs, name, collection, label=None):
+        for p_, mb in mbs.items():
             if mb.empty():
                 continue
-            ob = mb.to_object(name if part == "solid" else "%s_%s" % (name, part), mats, col_city)
-            if part != "solid":
+            ob = mb.to_object(name if p_ == "solid" else "%s_%s" % (name, p_), mats, collection)
+            if p_ != "solid":
                 ob["nocol"] = 1
             if label:
                 ob["label"] = label
 
-    for tier in ("hero", "mid"):
-        for bd in [b for b in spec["buildings"] if b["tier"] == tier]:
-            mbs = mbset()
+    detailed = [b for b in spec["buildings"] if b["tier"] in ("hero", "mid")]
+    context = [b for b in spec["buildings"] if b["tier"] == "context"]
+    hi = col("city")
+    for bd in detailed:                                     # sector detail (or legacy scene)
+        mbs = mbset()
+        if not landmarks.build(mbs, bd, gen, place):
             build_building(mbs, bd, gen, signs, place)
-            flush(mbs, "bld_%s" % bd["id"], bd["tags"].get("name:en") or bd["tags"].get("name") or bd["id"])
-    mbs = mbset()
-    for bd in [b for b in spec["buildings"] if b["tier"] == "context"]:
-        build_building(mbs, bd, gen, signs, place)
-    flush(mbs, "context_massing")
-
-    fmbs = {k: mk.MeshBuilder(tiles) for k in ("jaffa_gate", "city_wall", "citadel")}
-    fortifications.build(fmbs, spec, gen, place)
-    for k, mb in fmbs.items():
-        mb.to_object(k, mats, col_city)
-
-    gmbs = {"ground": mk.MeshBuilder(tiles)}
-    build_ground(gmbs, spec)
-    gmbs["ground"].to_object("ground", mats, col_city)["ground"] = 1      # exact height field in the game
-
+        flush(mbs, "bld_%s" % bd["id"], hi, bd["tags"].get("name:en") or bd["tags"].get("name") or bd["id"])
+    if context:
+        mbs = mbset()
+        for bd in context:
+            build_building(mbs, bd, gen, signs, place)
+        flush(mbs, "context_massing", col("context"))
+    if part in (None, "base"):
+        fmbs = {k: mk.MeshBuilder(tiles) for k in ("jaffa_gate", "city_wall", "citadel")}
+        fortifications.build(fmbs, spec, gen, place)
+        for k, mb in fmbs.items():
+            mb.to_object(k, mats, col("walls"))
+        wg = mk.MeshBuilder(tiles)
+        build_walls_generic(wg, spec.get("walls_generic", []))
+        if not wg.empty():
+            wg.to_object("city_walls_osm", mats, col("walls"))
+        gmbs = {"ground": mk.MeshBuilder(tiles)}
+        build_ground(gmbs, dict(spec, steps=[]))
+        gmbs["ground"].to_object("ground", mats, col("ground"))["ground"] = 1
+    st = mk.MeshBuilder(tiles)
+    build_steps(st, spec.get("steps", []))
+    if not st.empty():
+        st.to_object("steps", mats, hi)
     gd = mk.MeshBuilder(tiles)
-    for k, dcl in enumerate(spec.get("ground_decals", [])):
+    for dcl in spec.get("ground_decals", []):
         cell = gen["decal"]["cells"].get(dcl["type"])
         if not cell:
             continue
@@ -405,43 +516,53 @@ def main():
         u0, v0, u1, v1 = rect
         gd.poly(q, "decal", UP, uv=[(u0, v0), (u1, v0), (u1, v1), (u0, v1)])
     if not gd.empty():
-        gd.to_object("ground_decals", mats, col_city)["nocol"] = 1
-
+        gd.to_object("ground_decals", mats, col("ground") if part == "base" else hi)["nocol"] = 1
     bm_ = mk.MeshBuilder(tiles)
     for bmz in spec.get("beams", []):
         mk.tube(bm_, [bmz["a"], bmz["b"]], 0.05, "metal_green", sides=6, col=fb.GREEN)
     if not bm_.empty():
-        bm_.to_object("street_beams", mats, col_city)["nocol"] = 1
-
+        bm_.to_object("street_beams", mats, hi)["nocol"] = 1
     cab = mk.MeshBuilder(tiles)
-    for c in spec["cables"]:
+    for c in spec.get("cables", []):
         mk.tube(cab, cable_curve(c["a"], c["b"], c["sag"]), c.get("r", 0.012), "iron")
     if not cab.empty():
-        cab.to_object("street_cables", mats, col_city)["nocol"] = 1
-
-    for p in spec["props"]:
+        cab.to_object("street_cables", mats, hi)["nocol"] = 1
+    for p in spec.get("props", []):
         place(p["type"], Vector(p["p"]), -math.radians(p["rot"]), not p.get("col", False), p.get("s", 1.0))
+    if part not in (None, "base") and detailed:             # massing LOD for this sector
+        lo = mk.MeshBuilder(tiles)
+        lo4 = {"solid": lo, "deco": lo, "signs": lo, "cables": lo}
+        for bd in detailed:
+            if not landmarks.build(lo4, bd, gen, place, lod=True):
+                build_lod(lo, bd, gen)
+        lo.to_object("lod_%s" % part, mats, col("lod"))
 
-    nfaces = sum(len(o.data.polygons) for o in col_city.objects)
-    pf = sum(len(o.data.polygons) for o in col_props.objects)
-    print("objects %d  faces %d  props %d (%d faces)  missing prop types %s" %
-          (len(col_city.objects), nfaces, len(col_props.objects), pf, place.missing))
-    Path(args.blend).parent.mkdir(parents=True, exist_ok=True)
+    for name, c in cols.items():
+        print("collection %-8s objects %5d faces %8d" % (name, len(c.all_objects),
+                                                          sum(len(o.data.polygons) for o in c.all_objects if o.type == "MESH")))
+    print("missing prop types %s" % place.missing)
+    pub = ROOT / "game/public"
     if not args.no_export:
-        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-        kw = dict(filepath=args.out, export_format="GLB", export_extras=True, export_yup=True,
-                  use_selection=False, export_apply=True, export_image_format="WEBP", export_image_quality=85)
-        try:
-            bpy.ops.export_scene.gltf(**kw, export_vertex_color="ACTIVE")
-        except TypeError:
-            bpy.ops.export_scene.gltf(**kw)
-        print("exported", args.out)
-    if args.preview:
+        if part == "base":
+            # textures live once in materials.glb; every other GLB refers to materials by name
+            material_library(mats, tiles, col("materials"))
+            export_glb(pub / "base/materials.glb", [col("materials")])
+            export_glb(pub / "base/ground.glb", [col("ground")], images=False)
+            export_glb(pub / "base/walls.glb", [col("walls")], images=False)
+            export_glb(pub / "base/context.glb", [col("context"), col("props")], images=False)
+        elif part:
+            export_glb(pub / ("sectors/%s.glb" % part), [hi, col("props")], images=False)
+            export_glb(pub / ("sectors/%s_lo.glb" % part), [col("lod")], images=False)
+        else:
+            export_glb(args.out, [c for n, c in cols.items() if n != "lod"])
+    if args.preview and not part:
         out = Path(args.preview)
         out.mkdir(parents=True, exist_ok=True)
         setup_preview(out)
-    bpy.ops.wm.save_as_mainfile(filepath=args.blend)
-    print("saved", args.blend)
+    blend = args.blend if not part else str(ROOT / ("build/%s.blend" % part))
+    Path(blend).parent.mkdir(parents=True, exist_ok=True)
+    bpy.ops.wm.save_as_mainfile(filepath=blend)
+    print("saved", blend)
 
 
 if __name__ == "__main__":
