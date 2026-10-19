@@ -109,6 +109,8 @@ export class PerfOverlay {
     this.fps = 0;
     this.dt = 16.7;
     this.last = 0;
+    this.extra = null;     // () => extra text lines (sector streaming), built only on refresh
+    this.worst = 0;        // worst frame (ms) since the last refresh
   }
 
   toggle(on = !this.visible) {
@@ -119,16 +121,19 @@ export class PerfOverlay {
 
   // dt = null: refresh the text without feeding the frame-time average (step(), toggle)
   frame(now, dt, stats) {
-    if (dt != null) this.dt += (dt - this.dt) * 0.1;
+    if (dt != null) { this.dt += (dt - this.dt) * 0.1; this.worst = Math.max(this.worst, dt); }
     if (!this.visible || now - this.last < 250) return;
     this.last = now;
     const s = stats;
+    const extra = this.extra ? this.extra() : '';
     this.el.textContent =
-      `${(1000 / this.dt).toFixed(0)} fps  ${this.dt.toFixed(1)} ms` +
+      `${(1000 / this.dt).toFixed(0)} fps  ${this.dt.toFixed(1)} ms  worst ${this.worst.toFixed(0)} ms` +
       (s.gpu != null ? `  gpu ${s.gpu.toFixed(1)} ms` : '') + '\n' +
       `pixel ratio ${s.pr.toFixed(2)}${s.dyn ? ' (auto)' : ''}  ${s.w}×${s.h}\n` +
       `draw calls ${s.calls}  triangles ${(s.tris / 1000).toFixed(0)}k\n` +
       `AO ${s.ao ? 'on' : 'off'} (O)  shadows 2×${s.shadow}` +
+      (extra ? '\n' + extra : '') +
       (this.gpu ? `\n${this.gpu.name}${this.gpu.kind ? ` (${this.gpu.kind})` : ''}` : '');
+    this.worst = 0;
   }
 }

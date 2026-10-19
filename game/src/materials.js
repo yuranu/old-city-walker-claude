@@ -27,6 +27,7 @@ export const U = {
   ocGroundXf: { value: new THREE.Vector4(0, 0, 1, 1) },          // minX, minZ, 1/sizeX, 1/sizeZ
   ocGrime: { value: new THREE.Vector4(0.74, 0.67, 0.58, 1.0) },  // albedo multiplier at the very foot, strength
   ocGrimeH: { value: 1.2 },
+  ocPalette: { value: null },                                    // merged flat materials (see setupFlat)
 };
 
 const white = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
@@ -117,6 +118,9 @@ float ocSSAO( float zf ) {
   float tw = w.x + w.y + w.z + w.w;
   return tw > 1e-3 ? dot( w, vec4( s00.x, s10.x, s01.x, s11.x ) ) / tw : 1.0;
 }
+#ifdef OC_FLAT
+uniform highp sampler2D ocPalette;
+#endif
 #ifdef OC_STONE
 varying vec3 vOcNormal;
 uniform highp sampler3D ocNoise;
@@ -151,6 +155,17 @@ const FRAG_STONE = /* glsl */`
 #endif
 `;
 
+// merged flat material: the vertex colour's alpha byte is a palette index; row 0 of the palette
+// is the base colour, row 1 roughness / metalness, row 2 emissive
+const FRAG_FLAT = /* glsl */`
+#ifdef OC_FLAT
+int ocIdx = int( vColor.a * 255.0 + 0.5 );
+diffuseColor.rgb *= texelFetch( ocPalette, ivec2( ocIdx, 0 ), 0 ).rgb;
+diffuseColor.a = opacity;
+vec4 ocPal1 = texelFetch( ocPalette, ivec2( ocIdx, 1 ), 0 );
+#endif
+`;
+
 const FRAG_AO = /* glsl */`
 if ( ocAOParams.z > 0.0 ) {
   float ocA = mix( 1.0, ocSSAO( vViewPosition.z ), ocAOParams.z );
@@ -174,20 +189,23 @@ const FRAG_HAZE = /* glsl */`
 }
 `;
 
-function inject(material, stone) {
+function inject(material, stone, flat = false) {
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, U);
-    const pre = stone ? '#define OC_STONE\n' : '';
+    const pre = (stone ? '#define OC_STONE\n' : '') + (flat ? '#define OC_FLAT\n' : '');
     shader.vertexShader = pre + shader.vertexShader
       .replace('#include <common>', '#include <common>\n' + VERT_PARS)
       .replace('#include <project_vertex>', '#include <project_vertex>\n' + VERT_MAIN);
     shader.fragmentShader = pre + shader.fragmentShader
       .replace('#include <common>', '#include <common>\n' + FRAG_PARS)
-      .replace('#include <color_fragment>', '#include <color_fragment>\n' + FRAG_STONE)
+      .replace('#include <color_fragment>', '#include <color_fragment>\n' + FRAG_STONE + FRAG_FLAT)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n#ifdef OC_FLAT\nroughnessFactor = ocPal1.r;\n#endif')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\n#ifdef OC_FLAT\nmetalnessFactor = ocPal1.g;\n#endif')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n#ifdef OC_FLAT\ntotalEmissiveRadiance = texelFetch( ocPalette, ivec2( ocIdx, 2 ), 0 ).rgb;\n#endif')
       .replace('#include <aomap_fragment>', '#include <aomap_fragment>\n' + FRAG_AO)
       .replace('#include <opaque_fragment>', '#include <opaque_fragment>\n' + FRAG_HAZE);
   };
-  material.customProgramCacheKey = () => (stone ? 'oc-stone-1' : 'oc-base-1');
+  material.customProgramCacheKey = () => (stone ? 'oc-stone-1' : flat ? 'oc-flat-1' : 'oc-base-1');
   material.needsUpdate = true;
 }
 
@@ -230,4 +248,33 @@ export function setupMaterial(m, anisotropy) {
   if (name === 'glass_lamp') { m.emissive = new THREE.Color(0x2a2214); }
   inject(m, STONE.has(name));
   return { castShadow, ao, cutout };
+}
+
+// Untextured materials (plastic, lime, metals, wood...) differ only in factors, so they draw as
+// one merged material each for "no sky reflection" and "sky reflection": the loader worker writes
+// a palette index into every vertex (colour alpha) and the base colour, roughness, metalness and
+// emissive come from this palette. Cuts a draw call per flat material per render cell and pass.
+// entries: [{ mat }] in palette order (index = position); returns the palette texture.
+export function makePalette(entries) {
+  const n = Math.max(1, entries.length);
+  const data = new Float32Array(n * 3 * 4);
+  entries.forEach(({ mat: m }, i) => {
+    data.set([m.color.r, m.color.g, m.color.b, 1], i * 4);
+    data.set([m.roughness, m.metalness, 0, 1], (n + i) * 4);
+    const e = m.emissive ? m.emissive.clone().multiplyScalar(m.emissiveIntensity ?? 1) : new THREE.Color(0);
+    data.set([e.r, e.g, e.b, 1], (2 * n + i) * 4);
+  });
+  const t = new THREE.DataTexture(data, n, 3, THREE.RGBAFormat, THREE.FloatType);
+  t.minFilter = t.magFilter = THREE.NearestFilter;
+  t.needsUpdate = true;
+  U.ocPalette.value = t;
+  return t;
+}
+
+export function setupFlat(m) {
+  m.side = THREE.DoubleSide;
+  m.shadowSide = null;
+  m.vertexColors = true;
+  inject(m, false, true);
+  return { castShadow: true, ao: true, cutout: false };
 }

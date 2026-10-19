@@ -1,6 +1,6 @@
-// First-person capsule controller against a static MeshBVH (after the three-mesh-bvh
-// character-movement example). World frame: three.js, Y up; local plan frame: x east, y north
-// => three (x, z) = (east, -north).
+// First-person capsule controller against the resident collision (a Collider: the union of the
+// chunks' MeshBVHs; after the three-mesh-bvh character-movement example). World frame: three.js,
+// Y up; local plan frame: x east, y north => three (x, z) = (east, -north).
 import * as THREE from 'three';
 
 const RADIUS = 0.35;
@@ -9,9 +9,14 @@ const EYE = 0.3;              // eye above the top sphere centre (eye at 1.65 m)
 const GRAVITY = -24;
 
 export class Player {
-  constructor(camera, bvh) {
+  constructor(camera, world) {
     this.camera = camera;
-    this.bvh = bvh;
+    this.world = world;           // Collider
+    this.held = false;            // frozen in place (waiting for the sectors around a teleport)
+    this.spawn = [-22, 2, 104];   // respawn after falling out of the world (x, y, heading)
+    this.onFall = null;           // replaces the plain respawn teleport (main: one that waits for sectors)
+    this._killY = -40;
+    this._killVersion = -1;
     this.pos = new THREE.Vector3();        // top sphere centre
     this.vel = new THREE.Vector3();
     this.yaw = 0;
@@ -20,6 +25,7 @@ export class Player {
     this.keys = new Set();
     this._seg = new THREE.Line3();
     this._box = new THREE.Box3();
+    this._wb = new THREE.Box3();
     this._a = new THREE.Vector3();
     this._b = new THREE.Vector3();
     this._d = new THREE.Vector3();
@@ -29,7 +35,8 @@ export class Player {
   teleport(x, y, headingDeg = null, pitchDeg = 0) {
     // stand on the lowest upward-facing surface with headroom (street level, not a canopy or roof)
     const down = new THREE.Vector3(0, -1, 0);
-    const hits = this.bvh.raycast(new THREE.Ray(new THREE.Vector3(x, 80, -y), down), THREE.DoubleSide)
+    const top = Math.max(80, this.world.bounds(this._wb).max.y + 1);
+    const hits = this.world.raycast(new THREE.Ray(new THREE.Vector3(x, top, -y), down), THREE.DoubleSide)
       .sort((a, b) => a.point.y - b.point.y);
     let groundY = hits.length ? hits[hits.length - 1].point.y : 0;
     for (let i = 0; i < hits.length; i++) {
@@ -60,7 +67,18 @@ export class Player {
     this.pitch = THREE.MathUtils.clamp(this.pitch - dy * 0.0022, -1.45, 1.45);
   }
 
+  // below the lowest resident geometry: fell out of the world (the terrain spans tens of metres)
+  killY() {
+    if (this._killVersion !== this.world.version) {
+      const b = this.world.bounds(this._wb);
+      this._killY = b.isEmpty() ? -40 : b.min.y - 30;
+      this._killVersion = this.world.version;
+    }
+    return this._killY;
+  }
+
   update(dt) {
+    if (this.held) { this.vel.set(0, 0, 0); this.updateCamera(); return; }
     const k = this.keys;
     const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
     const side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
@@ -83,7 +101,9 @@ export class Player {
       this.pos.addScaledVector(this.vel, h);
       this.collide(h);
     }
-    if (this.pos.y < -40) this.teleport(-22, 2, 104);
+    if (this.pos.y < this.killY()) {
+      if (this.onFall) this.onFall(); else this.teleport(...this.spawn);
+    }
     this.updateCamera();
   }
 
@@ -95,7 +115,7 @@ export class Player {
     box.min.addScalar(-RADIUS);
     box.max.addScalar(RADIUS);
     const a = this._a, b = this._b;
-    this.bvh.shapecast({
+    this.world.shapecast(box, {
       intersectsBounds: (bb) => bb.intersectsBox(box),
       intersectsTriangle: (tri) => {
         const dist = tri.closestPointToSegment(seg, a, b);

@@ -12,7 +12,7 @@ import { SunLight } from 'three/examples/jsm/lights/SunLight.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { StableSunShadow, patchSunShadowChunk } from './sunshadow.js';
 import { U } from './materials.js';
-import { LAYER_NO_AO, RENDER_ORDER } from './world.js';
+import { LAYER_NO_AO, LAYER_SHADOW, RENDER_ORDER } from './world.js';
 
 patchSunShadowChunk();
 
@@ -50,6 +50,15 @@ export class Pipeline {
     r.shadowMap.type = THREE.PCFShadowMap;
     r.shadowMap.autoUpdate = false;     // rendered once per frame, in the main pass only
     r.info.autoReset = false;
+    // shadow-only casters (one merged depth mesh per render cell, see stream.js) live on their own
+    // layer: three filters shadow casters by the view camera's layers, so enable it just there
+    const sm = r.shadowMap, smRender = sm.render.bind(sm);
+    sm.render = (lights, scene, camera) => {
+      const mask = camera.layers.mask;
+      camera.layers.enable(LAYER_SHADOW);
+      smRender(lights, scene, camera);
+      camera.layers.mask = mask;
+    };
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(70, 1, 0.2, 1200);
@@ -92,6 +101,11 @@ export class Pipeline {
     m.envMap = this.envRT.texture;
     m.envMapIntensity = LIGHT.envIntensity;
     m.needsUpdate = true;
+  }
+
+  removeReflective(m) {
+    const i = this.metals.indexOf(m);
+    if (i >= 0) this.metals.splice(i, 1);
   }
 
   setEnvIntensity(v) {
