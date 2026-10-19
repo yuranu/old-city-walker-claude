@@ -1,0 +1,217 @@
+{
+ "building": "w1392903902",
+ "name": "Two-arch building (Franciscan bookshop / Karkash)",
+ "sources": [
+  "data/photos_ref/square_north/042_52848814.jpg",
+  "data/photos_ref/square_north/038_59820150.jpg",
+  "data/photos_ref/square_north/039_59820153.jpg",
+  "data/photos_ref/square_north/043_52616112.jpg",
+  "data/photos_ref/square_north/054_36769467.jpg",
+  "data/photos/141_84782472.jpg",
+  "data/reference/square_north.md"
+ ],
+ "notes": "Heights and bay positions back-projected from R:043 (near-frontal telephoto; camera fitted on the Petra's measured facade, renders/overrides_north/cams.json r043): front block coping ~7.4 m, arch springing ~4.0 m, crown ~5.65 m, inner span ~3.1-3.2 m (the notes' 4.0 m includes the archivolt), set-back block window rows at 7.8-8.6 and 10.4-11.3 m, roof ~12.2 m, white tube railing to ~13.2 m. P:141 gives the same front-block proportions: W pier ~0.75, arch, pier ~0.9, arch, E pier, i.e. a front block ~8.8 m wide; u 8.8-11.5 of edge 2 is the recessed Tannour cafe front (dark canopy ~4.5 m). Until the builder supports a set-back block the whole footprint is one 13.1 m mass; the band at 7.2-7.4 m marks the front-block coping and the two upper rows are the set-back block's. Grey roll-down shutters in both arches (shut 2014/2024). 'sign': false = no fascia sign (to be honoured by facades.py).",
+ "settings": {
+  "height": 13.1,
+  "wall": "ashlar",
+  "storey": 3.3,
+  "tint": [
+   1.04,
+   0.99,
+   0.9
+  ]
+ },
+ "facades": {
+  "0": {
+   "at": [
+    74.5,
+    14.6
+   ],
+   "a": [
+    68.8,
+    14.2
+   ],
+   "b": [
+    80.2,
+    15.0
+   ],
+   "centres": [
+    2.3,
+    6.4,
+    10.1
+   ],
+   "shops": true,
+   "ground_storey": 7.3,
+   "storey": 2.15,
+   "awning": false,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 3.1,
+     "h": 5.53,
+     "arch": "round",
+     "door": "rolldown_grey",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 3.2,
+     "h": 5.53,
+     "arch": "round",
+     "door": "rolldown_grey",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 3.0,
+     "arch": null,
+     "door": "glass",
+     "sign": false
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      1.6,
+      3.95,
+      6.3,
+      8.65
+     ],
+     "w": 1.0,
+     "h": 0.8,
+     "arch": null
+    },
+    {
+     "centres": [
+      1.6,
+      3.95,
+      6.3,
+      8.65
+     ],
+     "w": 1.0,
+     "h": 0.95,
+     "arch": null
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.75,
+     "u1": 3.85,
+     "z": 4.0,
+     "depth": 1.0
+    },
+    {
+     "u0": 4.8,
+     "u1": 8.0,
+     "z": 4.0,
+     "depth": 1.0
+    },
+    {
+     "u0": 8.95,
+     "u1": 11.3,
+     "z": 4.45,
+     "depth": 1.2
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "cell": null,
+     "u": 0.45,
+     "z": 2.7,
+     "h": 0.55,
+     "out": 0.8
+    },
+    {
+     "type": "blade",
+     "cell": "sign_jewelry",
+     "u": 4.35,
+     "z": 2.9,
+     "h": 0.45,
+     "out": 0.9
+    },
+    {
+     "type": "ac_unit",
+     "u": 9.2,
+     "z": 5.6
+    },
+    {
+     "type": "ac_unit",
+     "u": 10.6,
+     "z": 5.6
+    }
+   ],
+   "auto": false
+  },
+  "4": {
+   "at": [
+    65.75,
+    28.15
+   ],
+   "a": [
+    62.7,
+    42.1
+   ],
+   "b": [
+    68.8,
+    14.2
+   ],
+   "centres": [
+    22.6,
+    26.2
+   ],
+   "shops": false,
+   "ground_storey": 7.3,
+   "storey": 2.15,
+   "ground": [
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "door",
+     "w": 1.0,
+     "arch": "round",
+     "door": "door_blue2"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      22.6,
+      26.2
+     ],
+     "w": 1.0,
+     "h": 0.8,
+     "arch": null
+    },
+    {
+     "centres": [
+      22.6,
+      26.2
+     ],
+     "w": 1.0,
+     "h": 0.95,
+     "arch": null
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "plaque_greek",
+     "u": 27.2,
+     "z": 2.3,
+     "w": 0.9,
+     "h": 0.45
+    },
+    {
+     "type": "pipe",
+     "u": 27.85,
+     "z0": 0.0,
+     "z1": 7.2
+    }
+   ],
+   "auto": false
+  }
+ }
+}

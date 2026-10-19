@@ -1,0 +1,8 @@
+{
+  "building": "w1393928800",
+  "name": "Block behind the Petra Hotel",
+  "sources": ["data/photos_ref/square_north/010_112026913.jpg", "data/reference/square_north.md"],
+  "notes": "Not visible from the square (only its roof from the Citadel / rooftops). Kept as plain massing below the Petra's skyline: 11 m instead of 13 m so it does not rise over the Petra parapet (coping ~11.6 m, parapet 12.75 m) in views from the square.",
+  "settings": {"height": 11.0},
+  "facades": {}
+}

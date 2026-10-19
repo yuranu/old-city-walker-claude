@@ -31,6 +31,13 @@ Facade override keys understood by facades.layout():
   extra_fixtures [{"type": "sign", "cell", "u", "z", "w", "h"} | {"type": "wall_lantern"|"ac_unit", "u", "z"}]
   extra_decals / extra_awnings / extra_balconies   appended as given
   blank          no openings at all
+  auto           false: no random elements at all (signs, posters, plaques, AC units, pipes, lanterns,
+                 cables, blind bays, random shutters/grilles); only what the override lists
+  ground[k]      also "sign": false (no fascia sign), "sill" (window sill height), "lo", "grille",
+                 "h" for doors (default 2.75)
+  floors[f]      also "ws" / "hs" / "arches" (per bay), "sill" (window floor above the storey base,
+                 default 0.9), "lo" (infill cell for every window, e.g. "glass", "shutter_green"),
+                 "shutters" ("open" or null), "grille" (bool)
 """
 import json
 from pathlib import Path

@@ -1,0 +1,150 @@
+{
+ "building": "w1393747403",
+ "name": "Ramparts Walk ticket office building",
+ "sources": [
+  "data/photos/063_157136650.jpg",
+  "data/photos/099_124589144.jpg",
+  "data/photos/053_157136671.jpg",
+  "data/photos_ref/square_north/056_81486232.jpg",
+  "data/photos_ref/square_north/058_91359005.jpg",
+  "data/reference/square_north.md"
+ ],
+ "notes": "Not a kiosk: two storeys of rough-dressed ashlar, ~9.5 m to the roof (P:063 scaled from the counter opening and the tall upper windows, P:099). Upper floor: tall narrow windows ~1.0 x 2.8 m (2 on edge 2, 3 on edge 3), each holding a blue Ramparts Walk banner since ~2022. Edge 2 GF: narrow arched doorway (to the rampart stairs) + ticket counter under a red curved fabric awning; edge 3 GF: bracket signs.",
+ "settings": {
+  "height": 9.6,
+  "wall": "ashlar",
+  "storey": 4.5,
+  "tint": [
+   1.05,
+   0.97,
+   0.84
+  ]
+ },
+ "facades": {
+  "0": {
+   "at": [
+    13.25,
+    5.1
+   ],
+   "a": [
+    10.9,
+    4.2
+   ],
+   "b": [
+    15.6,
+    6.0
+   ],
+   "centres": [
+    0.85,
+    3.35
+   ],
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 4.5,
+   "awning": false,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 0.95,
+     "arch": "round",
+     "door": "void"
+    },
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 2.3,
+     "arch": null,
+     "door": "door_wood",
+     "sign": false
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      1.4,
+      3.7
+     ],
+     "w": 1.0,
+     "h": 2.75,
+     "arch": null
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 2.0,
+     "u1": 4.85,
+     "z": 3.1,
+     "depth": 1.0
+    }
+   ],
+   "auto": false
+  },
+  "1": {
+   "at": [
+    14.35,
+    8.5
+   ],
+   "a": [
+    15.6,
+    6.0
+   ],
+   "b": [
+    13.1,
+    11.0
+   ],
+   "centres": [
+    1.1,
+    2.8,
+    4.5
+   ],
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 4.5,
+   "ground": [
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "door",
+     "w": 1.2,
+     "arch": null,
+     "door": "glass"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      1.1,
+      2.8,
+      4.5
+     ],
+     "w": 1.0,
+     "h": 2.75,
+     "arch": null
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "cell": "sign_ramparts_walk",
+     "u": 0.5,
+     "z": 2.4,
+     "h": 0.6,
+     "out": 0.75
+    },
+    {
+     "type": "blade",
+     "cell": "sign_exchange",
+     "u": 3.9,
+     "z": 2.4,
+     "h": 0.35,
+     "out": 1.0
+    }
+   ],
+   "auto": false
+  }
+ }
+}

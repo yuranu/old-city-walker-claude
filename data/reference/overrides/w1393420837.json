@@ -1,0 +1,94 @@
+{
+ "building": "w1393420837",
+ "name": "Block behind the New Imperial Hotel (Greek Catholic Patriarchate Rd, west side)",
+ "sources": [
+  "data/photos_ref/square_north/040_157379247.jpg",
+  "data/reference/square_north.md"
+ ],
+ "notes": "Low confidence (L): entirely behind the NIH; its east face lines the west side of Greek Catholic Patriarchate Rd north of the NIH: arched doors with blue-grey leaves, upper windows with balconies. Spec height 14 m kept.",
+ "settings": {
+  "storey": 3.6
+ },
+ "facades": {
+  "6": {
+   "at": [
+    58.85,
+    38.55
+   ],
+   "a": [
+    60.2,
+    29.5
+   ],
+   "b": [
+    57.5,
+    47.6
+   ],
+   "centres": [
+    2.0,
+    5.5,
+    9.0,
+    12.5,
+    16.0
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.4,
+     "arch": "round",
+     "door": "door_blue2"
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.5,
+     "arch": null
+    },
+    {
+     "kind": "door",
+     "w": 1.4,
+     "arch": "round",
+     "door": "door_blue2"
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.5,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.5,
+     "arch": null
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.1,
+     "h": 1.7,
+     "arch": null,
+     "balconies": [
+      1,
+      3
+     ],
+     "balcony_w": 1.9,
+     "balcony_d": 0.6
+    },
+    {
+     "w": 1.1,
+     "h": 1.7,
+     "arch": null,
+     "balconies": [
+      2
+     ],
+     "balcony_w": 1.9,
+     "balcony_d": 0.6
+    }
+   ],
+   "auto": false
+  }
+ }
+}

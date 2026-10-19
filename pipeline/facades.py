@@ -83,6 +83,10 @@ def layout(bld, i, eg, rng, override=None):
     souq = bool(override and override.get("souq"))
     if souq:
         frame_w = 0.0                                   # souq shop heads hide behind the canopies
+    # "auto": false on a photo-matched facade switches off every random element (signs, posters,
+    # plaques, AC units, pipes, lanterns, cables, blind/walled-up bays, random shutters and grilles):
+    # only what the override lists is built
+    auto = override.get("auto", True) if override else True
     thr = override.get("thr", 0.12) if override else 0.12
     thr_out = override.get("thr_out", 0.25) if override else 0.25
     # ---- ground floor
@@ -106,17 +110,18 @@ def layout(bld, i, eg, rng, override=None):
                                   "depth": 0.45, "split": (vs if arch and not souq else None), "lo": door, "hi": "fanlight",
                                   "frame": frame_w, "keystone": hero and arch == "round" and not souq, "threshold": True,
                                   "thr": thr, "thr_out": thr_out})
-            if souq and rng.random() < 0.35 and k + 1 < len(centres):   # blade board on the pier
+            if souq and auto and rng.random() < 0.35 and k + 1 < len(centres):   # blade board on the pier
                 pu = (c + w / 2 + centres[k + 1] - (g2w(ground_spec, k + 1, w)) / 2) / 2
                 f["fixtures"].append({"type": "blade", "u": round(pu, 2), "z": eg + 2.3, "h": 0.6, "out": 1.25,
                                       "cell": rng.choice([None, None, None, "sign_souvenirs", "sign_jewelry", "sign_textiles",
                                                           "sign_spices", "sign_ceramics"])})
-            if not souq and hero and (g and g.get("sign") or rng.random() < 0.45):
+            no_sign = (g is not None and g.get("sign") is False) or not auto
+            if not souq and hero and not no_sign and (g and g.get("sign") or rng.random() < 0.45):
                 sw = min(w + 0.5, sp - 0.2)
                 cell = g.get("sign") if g and g.get("sign") else rng.choice(SHOP_SIGNS)
                 f["signs"].append({"u0": c - sw / 2, "u1": c + sw / 2, "z0": v1 + 0.25, "z1": v1 + 0.85,
                                    "cell": cell, "d": 0.06})
-            if hero and rng.random() < 0.18:
+            if hero and auto and rng.random() < 0.18:
                 pw = rng.uniform(0.45, 0.6)
                 pu = c + w / 2 + 0.15
                 if pu + pw < (centres[k + 1] - w / 2 - 0.1 if k + 1 < len(centres) else L - 0.3):
@@ -126,18 +131,20 @@ def layout(bld, i, eg, rng, override=None):
             w = g.get("w", 1.3) if g else 1.3
             arch = g.get("arch", "round") if g else "round"
             v0 = eg + thr
-            f["openings"].append({"kind": "door", "u0": c - w / 2, "u1": c + w / 2, "v0": v0, "v1": v0 + 2.75,
+            f["openings"].append({"kind": "door", "u0": c - w / 2, "u1": c + w / 2, "v0": v0,
+                                  "v1": v0 + (g.get("h", 2.75) if g else 2.75),
                                   "arch": arch, "depth": 0.4, "split": None, "lo": g.get("door", "door_wood") if g else
                                   rng.choice(["door_wood", "door_wood", "door_green"]), "frame": frame_w,
                                   "keystone": hero, "threshold": True})
-            if hero and rng.random() < 0.5:                     # house-number / street plaque
+            if hero and auto and rng.random() < 0.5:            # house-number / street plaque
                 f["fixtures"].append({"type": "plaque", "u": c + w / 2 + 0.45, "z": eg + 2.3})
         else:
             w, h = (0.8, 1.15) if not g else (g.get("w", 0.8), g.get("h", 1.15))
-            v0 = eg + 1.6
+            v0 = eg + (g.get("sill", 1.6) if g else 1.6)
             f["openings"].append({"kind": "window", "u0": c - w / 2, "u1": c + w / 2, "v0": v0, "v1": v0 + h,
-                                  "arch": g.get("arch") if g else None, "depth": 0.3, "lo": "glass",
-                                  "frame": frame_w * 0.8, "sill": True, "grille": True})
+                                  "arch": g.get("arch") if g else None, "depth": 0.3,
+                                  "lo": g.get("lo", "glass") if g else "glass",
+                                  "frame": frame_w * 0.8, "sill": True, "grille": g.get("grille", True) if g else True})
     # awning over a row of shops (sheet-metal canopies, photos 010 / 022)
     shop_ops = [o for o in f["openings"] if o["kind"] == "shop"]
     if souq and shop_ops_pre(f):
@@ -155,12 +162,14 @@ def layout(bld, i, eg, rng, override=None):
     for fi, z in enumerate(floors):
         fspec = upper[fi] if upper and fi < len(upper) else {}
         fcent = fspec.get("centres", centres)
+        sill = fspec.get("sill", 0.9)                             # window floor above the storey base
         for k, c in enumerate(fcent):
-            if not fspec and rng.random() < 0.07:
+            if not fspec and auto and rng.random() < 0.07:
                 continue                                          # blind bay
-            w = fspec.get("w", 1.25 if ashlar else 1.1)
-            h = fspec.get("h", min(2.1, storey - 1.3))
-            arch = fspec.get("arch", arch_up if rng.random() < 0.88 else None)
+            w = fspec["ws"][k] if k < len(fspec.get("ws", [])) else fspec.get("w", 1.25 if ashlar else 1.1)
+            h = fspec["hs"][k] if k < len(fspec.get("hs", [])) else fspec.get("h", min(2.1, storey - 1.3))
+            arch = fspec["arches"][k] if k < len(fspec.get("arches", [])) else \
+                fspec.get("arch", arch_up if rng.random() < 0.88 else None)
             balcony = (k in fspec.get("balconies", [])) or (fi == 0 and k in bal_bays) or \
                 (not fspec and hero and ashlar and rng.random() < 0.08)
             if balcony:
@@ -168,7 +177,8 @@ def layout(bld, i, eg, rng, override=None):
                 hh = max(h + 0.75, 2.5)
                 f["openings"].append({"kind": "balcony_door", "u0": c - w / 2, "u1": c + w / 2, "v0": v0,
                                       "v1": v0 + hh, "arch": arch, "depth": 0.3,
-                                      "lo": "glass" if rng.random() < 0.6 else rng.choice(["shutter_green", "shutter_blue"]),
+                                      "lo": fspec.get("lo") or ("glass" if rng.random() < 0.6 else
+                                                                rng.choice(["shutter_green", "shutter_blue"])),
                                       "frame": frame_w, "keystone": hero and arch == "round"})
                 bw = fspec.get("balcony_w", w + 0.9)
                 f["balconies"].append({"u0": c - bw / 2, "u1": c + bw / 2, "z": z, "depth": fspec.get("balcony_d", 0.85)})
@@ -177,46 +187,51 @@ def layout(bld, i, eg, rng, override=None):
                 gap = 0.25
                 for s in (-1, 1):
                     cc = c + s * (w / 2 + gap / 2)
-                    f["openings"].append({"kind": "window", "u0": cc - w / 2, "u1": cc + w / 2, "v0": z + 0.9,
-                                          "v1": z + 0.9 + h, "arch": arch, "depth": 0.3, "lo": "glass",
+                    f["openings"].append({"kind": "window", "u0": cc - w / 2, "u1": cc + w / 2, "v0": z + sill,
+                                          "v1": z + sill + h, "arch": arch, "depth": 0.3, "lo": fspec.get("lo", "glass"),
                                           "frame": frame_w * 0.8, "sill": True})
                 continue
             # rubble houses are irregular: windows wander a little; some arches were walled up long ago
             jit_v = rng.uniform(-0.18, 0.18) if not ashlar else 0.0
             jit_w = rng.uniform(-0.12, 0.08) if not ashlar else 0.0
             w += jit_w
-            if not fspec and rng.random() < (0.05 if ashlar else 0.1):
+            if not fspec and auto and rng.random() < (0.05 if ashlar else 0.1):
                 f["openings"].append({"kind": "window", "u0": c - w / 2, "u1": c + w / 2, "v0": z + 0.9 + jit_v,
                                       "v1": z + 0.9 + jit_v + h, "arch": arch or "round", "depth": 0.07, "lo": "wall",
                                       "frame": frame_w * 0.8 if frame_w else 0.1})
                 continue
             closed = rng.random() < (0.3 if hero else 0.25)
-            f["openings"].append({"kind": "window", "u0": c - w / 2, "u1": c + w / 2, "v0": z + 0.9 + jit_v,
-                                  "v1": z + 0.9 + jit_v + h, "arch": arch, "depth": 0.3,
-                                  "lo": rng.choice(["shutter_green", "shutter_green", "shutter_blue", "shutter_brown"])
-                                  if closed else "glass",
-                                  "shutters": None if closed else ("open" if hero and rng.random() < 0.25 else None),
+            lo = rng.choice(["shutter_green", "shutter_green", "shutter_blue", "shutter_brown"]) if closed else "glass"
+            shut = None if closed else ("open" if hero and rng.random() < 0.25 else None)
+            grille = hero and fi == 0 and rng.random() < 0.35
+            if fspec.get("lo") or not auto:                       # the override decides the infill
+                lo, shut = fspec.get("lo", "glass"), fspec.get("shutters")
+            if "grille" in fspec or not auto:
+                grille = bool(fspec.get("grille", False))
+            v0w = z + (fspec["sill"] if "sill" in fspec else 0.9 + jit_v)
+            f["openings"].append({"kind": "window", "u0": c - w / 2, "u1": c + w / 2, "v0": v0w,
+                                  "v1": v0w + h, "arch": arch, "depth": 0.3, "lo": lo, "shutters": shut,
                                   "frame": frame_w * 0.8, "sill": True, "keystone": hero and ashlar and arch == "round",
-                                  "grille": hero and fi == 0 and rng.random() < 0.35})
+                                  "grille": grille})
             # AC units beside some windows (more on plain back facades)
-            if rng.random() < (0.06 if hero else 0.12) and c + w / 2 + 1.1 < L - 0.3:
+            if auto and rng.random() < (0.06 if hero else 0.12) and c + w / 2 + 1.1 < L - 0.3:
                 f["fixtures"].append({"type": "ac_unit", "u": c + w / 2 + 0.7, "z": z + 0.6})
         if (hero and ashlar) or (override and override.get("bands")):
-            f["bands"].append({"z": z - 0.12 + (i % 2) * 0.002, "h": 0.2, "d": 0.06})
+            f["bands"].append({"z": z - 0.12 + (i % 2) * 0.006, "h": 0.2, "d": 0.06})
     top = bld["top"]
     if hero and (ashlar or (override and override.get("cornice"))):
-        f["cornice"] = {"z": top - 1.25 + (i % 2) * 0.002, "h": 0.32, "d": 0.18}
+        f["cornice"] = {"z": top - 1.25 + (i % 2) * 0.006, "h": 0.32, "d": 0.18}
     # ---- roof drainage: spouts through the parapet + the dark streak they leave
     if tier in ("hero", "mid"):
         u = rng.uniform(1.2, 2.5)
         while u < L - 1.0:
             f["fixtures"].append({"type": "spout", "u": round(u, 2), "z": top - 0.95})
             u += rng.uniform(4.5, 8.0)
-        if rng.random() < 0.45:
+        if auto and rng.random() < 0.45:
             pu = rng.choice([0.35, L - 0.35])
             f["fixtures"].append({"type": "pipe", "u": pu, "z0": eg, "z1": top - 0.9})
     # ---- wall lanterns + cable runs along street facades
-    if hero and L > 6:
+    if hero and auto and L > 6:
         u = rng.uniform(2.0, 4.0)
         while u < L - 1.5:
             if not any(o["u0"] - 0.4 < u < o["u1"] + 0.4 and o["v0"] < eg + 4.6 and o["v1"] > eg + 3.4
@@ -225,7 +240,7 @@ def layout(bld, i, eg, rng, override=None):
                 u += rng.uniform(10, 14)
             else:
                 u += 0.8
-    if tier in ("hero", "mid") and rng.random() < 0.55 and L > 5:
+    if tier in ("hero", "mid") and auto and rng.random() < 0.55 and L > 5:
         zc = eg + (g_storey + 0.35 if shops else 3.3) + rng.uniform(-0.1, 0.25)
         if not any(o["v0"] < zc + 0.1 and o["v1"] > zc - 0.1 for o in f["openings"]):
             f["cables"].append({"z": round(zc, 2), "u0": 0.0, "u1": L, "n": rng.choice([1, 2, 3])})

@@ -1,0 +1,112 @@
+{
+ "building": "w290812408",
+ "name": "Hotel block NW of the Ramparts Walk building",
+ "sources": [
+  "data/photos/099_124589144.jpg",
+  "data/photos_ref/square_north/056_81486232.jpg",
+  "data/photos/053_157136671.jpg",
+  "data/reference/square_north.md"
+ ],
+ "notes": "Low confidence (L): mostly hidden behind the Ramparts building, the Tourist Info and the cypresses. Seen bits: 3 storeys of plain ashlar, flat-headed windows, one iron balcony with laundry, AC units, flat roof with a railing. Height lowered from 16 to 13 m for 3 storeys (GF + 2) plus parapet.",
+ "settings": {
+  "height": 13.0,
+  "wall": "ashlar",
+  "storey": 3.6
+ },
+ "facades": {
+  "2": {
+   "at": [
+    14.75,
+    20.15
+   ],
+   "a": [
+    10.0,
+    26.3
+   ],
+   "b": [
+    19.5,
+    14.0
+   ],
+   "centres": [
+    2.4,
+    5.9,
+    9.5,
+    13.1
+   ],
+   "shops": false,
+   "ground_storey": 4.0,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null
+    },
+    {
+     "kind": "door",
+     "w": 1.2,
+     "arch": null,
+     "door": "door_green2"
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.1,
+     "h": 1.6,
+     "arch": null,
+     "balconies": [
+      2
+     ],
+     "balcony_w": 2.0,
+     "balcony_d": 0.7
+    },
+    {
+     "w": 1.1,
+     "h": 1.6,
+     "arch": null
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "ac_unit",
+     "u": 4.1,
+     "z": 5.0
+    },
+    {
+     "type": "ac_unit",
+     "u": 11.3,
+     "z": 8.6
+    }
+   ],
+   "auto": false
+  },
+  "4": {
+   "at": [
+    20.6,
+    30.4
+   ],
+   "a": [
+    29.4,
+    19.4
+   ],
+   "b": [
+    11.8,
+    41.4
+   ],
+   "arch_up": null
+  }
+ }
+}

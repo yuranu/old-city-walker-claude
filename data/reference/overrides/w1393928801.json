@@ -1,0 +1,304 @@
+{
+ "building": "w1393928801",
+ "name": "Petra Hotel",
+ "sources": [
+  "data/photos_ref/square_north/012_112028474.jpg",
+  "data/photos_ref/square_north/011_112028472.jpg",
+  "data/photos_ref/square_north/029_52441485.jpg",
+  "data/photos_ref/square_north/030_81291012.jpg",
+  "data/photos_ref/square_north/054_36769467.jpg",
+  "data/photos/141_84782472.jpg",
+  "data/reference/square_north.md"
+ ],
+ "notes": "Measured on R:012 by back-projecting the photo through a matched camera (renders/overrides_north/cams.json petra_front; the model corners land within ~8 px of the photo's): 1F balcony slab 3.76 m, 2F slab 7.58 m, 1F window crowns 5.5 m, 2F 9.6 m, coping 11.5-11.65 m, parapet piers 12.6 m, urns 13.6 m. Windows are small round-arched ones behind iron balconies, so they are plain windows with the balconies as extra_balconies (the generator's balcony doors are at least 2.5 m tall). To make them read as French windows behind the railings the window floors are set low (3.0 / 7.0 m, sills 3.9 / 7.9 m, crowns 5.5 / 9.6 m as photographed); the generator's string courses therefore sit at ~2.9 m (behind the canopy) and ~6.9 m instead of the real ~3.9 / ~7.7 m. Twin windows are two close bays (>= 1.12 m apart so their sills do not overlap). Shops shown shut (grey steel doors, 2014 R:053/R:054). Edge 1 faces a ~1 m slot against w1393938083: blank.",
+ "settings": {
+  "height": 12.75,
+  "wall": "ashlar",
+  "parapet": "balustrade",
+  "storey": 3.5,
+  "tint": [
+   1.03,
+   0.97,
+   0.87
+  ]
+ },
+ "facades": {
+  "6": {
+   "at": [
+    96.8,
+    13.4
+   ],
+   "a": [
+    84.6,
+    13.0
+   ],
+   "b": [
+    109.0,
+    13.8
+   ],
+   "centres": [
+    1.9,
+    5.15,
+    8.1,
+    14.6,
+    20.9
+   ],
+   "shops": true,
+   "ground_storey": 3.0,
+   "storey": 4.0,
+   "awning": false,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.75,
+     "h": 2.45,
+     "arch": null,
+     "door": "rolldown_grey",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 1.4,
+     "h": 2.2,
+     "arch": null,
+     "door": "glass",
+     "sign": "sign_exchange"
+    },
+    {
+     "kind": "shop",
+     "w": 4.0,
+     "h": 2.45,
+     "arch": null,
+     "door": "rolldown_grey",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 5.0,
+     "h": 2.45,
+     "arch": null,
+     "door": "rolldown_grey",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 5.5,
+     "h": 2.45,
+     "arch": null,
+     "door": "rolldown_grey",
+     "sign": false
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      1.57,
+      2.69,
+      6.69,
+      10.37,
+      14.49,
+      19.96,
+      21.14
+     ],
+     "w": 0.85,
+     "h": 1.6,
+     "arch": "round"
+    },
+    {
+     "centres": [
+      1.77,
+      2.89,
+      7.04,
+      10.44,
+      14.54,
+      19.2,
+      21.38
+     ],
+     "w": 0.85,
+     "h": 1.7,
+     "arch": "round"
+    }
+   ],
+   "extra_balconies": [
+    {
+     "u0": 0.2,
+     "u1": 3.3,
+     "z": 3.78,
+     "depth": 0.65
+    },
+    {
+     "u0": 5.4,
+     "u1": 17.2,
+     "z": 3.78,
+     "depth": 0.65
+    },
+    {
+     "u0": 17.3,
+     "u1": 24.25,
+     "z": 3.78,
+     "depth": 0.65
+    },
+    {
+     "u0": 0.65,
+     "u1": 3.45,
+     "z": 7.6,
+     "depth": 0.6
+    },
+    {
+     "u0": 6.15,
+     "u1": 7.95,
+     "z": 7.6,
+     "depth": 0.6
+    },
+    {
+     "u0": 9.55,
+     "u1": 11.35,
+     "z": 7.6,
+     "depth": 0.6
+    },
+    {
+     "u0": 13.65,
+     "u1": 15.45,
+     "z": 7.6,
+     "depth": 0.6
+    },
+    {
+     "u0": 18.4,
+     "u1": 22.2,
+     "z": 7.6,
+     "depth": 0.6
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.3,
+     "u1": 24.1,
+     "z": 3.1,
+     "depth": 1.0
+    }
+   ],
+   "extra_signs": [
+    {
+     "u0": 17.7,
+     "u1": 23.3,
+     "z0": 3.3,
+     "cell": "sign_welcome",
+     "d": 0.66
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "plaque",
+     "u": 0.45,
+     "z": 3.0
+    },
+    {
+     "type": "caper",
+     "u": 1.6,
+     "z": 11.2
+    },
+    {
+     "type": "caper",
+     "u": 13.2,
+     "z": 11.2
+    },
+    {
+     "type": "caper",
+     "u": 21.6,
+     "z": 11.2
+    },
+    {
+     "type": "ac_unit",
+     "u": 8.0,
+     "z": 3.95
+    },
+    {
+     "type": "ac_unit",
+     "u": 16.4,
+     "z": 3.95
+    }
+   ],
+   "auto": false
+  },
+  "5": {
+   "at": [
+    83.95,
+    18.1
+   ],
+   "a": [
+    83.3,
+    23.2
+   ],
+   "b": [
+    84.6,
+    13.0
+   ],
+   "centres": [
+    3.0,
+    6.6
+   ],
+   "shops": false,
+   "ground_storey": 3.0,
+   "storey": 4.0,
+   "ground": [
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      6.8,
+      7.92
+     ],
+     "w": 0.85,
+     "h": 1.6,
+     "arch": "round"
+    },
+    {
+     "centres": [
+      6.8,
+      7.92
+     ],
+     "w": 0.85,
+     "h": 1.7,
+     "arch": "round"
+    }
+   ],
+   "extra_balconies": [
+    {
+     "u0": 5.9,
+     "u1": 8.8,
+     "z": 7.6,
+     "depth": 0.6
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "ac_unit",
+     "u": 7.0,
+     "z": 6.2
+    }
+   ],
+   "auto": false
+  },
+  "0": {
+   "at": [
+    108.8,
+    22.9
+   ],
+   "a": [
+    109.0,
+    13.8
+   ],
+   "b": [
+    108.6,
+    32.0
+   ],
+   "blank": true
+  }
+ }
+}

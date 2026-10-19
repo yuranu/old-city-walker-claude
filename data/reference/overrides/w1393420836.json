@@ -1,0 +1,109 @@
+{
+ "building": "w1393420836",
+ "name": "Tall block behind the New Imperial Hotel (Latin Patriarchate Rd)",
+ "sources": [
+  "data/photos_ref/square_north/008_112027939.jpg",
+  "data/photos/056_151742634.jpg",
+  "data/photos_ref/square_north/044_52535448.jpg",
+  "data/reference/square_north.md"
+ ],
+ "notes": "Low confidence (L): lines the east side of Latin Patriarchate Rd behind the NIH; 4-5 storeys of plain ashlar with flat rectangular windows, white louvred shutters and small iron balconies; only its south end shows from the square next to the NIH west facade. Spec height 16.5 m kept.",
+ "settings": {
+  "wall": "ashlar",
+  "storey": 3.6
+ },
+ "facades": {
+  "1": {
+   "at": [
+    25.75,
+    30.95
+   ],
+   "a": [
+    22.0,
+    35.9
+   ],
+   "b": [
+    29.5,
+    26.0
+   ],
+   "centres": [
+    1.9,
+    4.9,
+    7.9,
+    10.8
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.5,
+     "arch": null
+    },
+    {
+     "kind": "door",
+     "w": 1.3,
+     "arch": null,
+     "door": "door_blue2"
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.5,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.5,
+     "arch": null
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.1,
+     "h": 1.7,
+     "arch": null,
+     "balconies": [
+      1
+     ],
+     "balcony_w": 1.9,
+     "balcony_d": 0.6
+    },
+    {
+     "w": 1.1,
+     "h": 1.7,
+     "arch": null,
+     "balconies": [
+      2
+     ],
+     "balcony_w": 1.9,
+     "balcony_d": 0.6
+    },
+    {
+     "w": 1.1,
+     "h": 1.7,
+     "arch": null
+    }
+   ],
+   "auto": false
+  },
+  "2": {
+   "at": [
+    30.75,
+    24.5
+   ],
+   "a": [
+    29.5,
+    26.0
+   ],
+   "b": [
+    32.0,
+    23.0
+   ],
+   "arch_up": null
+  }
+ }
+}
