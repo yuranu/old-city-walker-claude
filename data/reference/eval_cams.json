@@ -1,0 +1,115 @@
+{
+ "_about": "Photo evaluation cameras (docs/EVALUATION.md). Local frame: x east, y north, metres from the Jaffa Gate OSM node 561157424; heading compass deg (0 N, 90 E); pitch deg above horizon; fov = vertical FOV deg; z_eye = eye height above the ground under the camera.",
+ "cams": {
+  "outside_gate": {
+   "photo": "data/photos/062_157136657.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-0530.jpg",
+   "x": -25.75,
+   "y": -32,
+   "z_eye": 1.6,
+   "heading": 50,
+   "pitch": 13,
+   "fov": 44.4
+  },
+  "gate_outer": {
+   "photo": "data/photos/065_157136656.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-0618.jpg",
+   "x": -12,
+   "y": 2,
+   "z_eye": 1.6,
+   "heading": 100,
+   "pitch": 17,
+   "fov": 53.1
+  },
+  "passage": {
+   "photo": "data/photos/053_157136671.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-1250.jpg",
+   "x": 3,
+   "y": -2,
+   "z_eye": 1.6,
+   "heading": 50,
+   "pitch": 5,
+   "fov": 67.3
+  },
+  "inside_square": {
+   "photo": "data/photos/087_124589152.jpg",
+   "credit": "ישראל פרקר Israel Preker, CC BY 2.5, https://commons.wikimedia.org/wiki/File:91279_jaffa_gate_in_jerusalem_PikiWiki_Israel.jpg",
+   "x": 12.4,
+   "y": -2.5,
+   "z_eye": 1.6,
+   "heading": 82,
+   "pitch": 20.2,
+   "fov": 51.3
+  },
+  "imperial_west": {
+   "photo": "data/photos/103_124589146.jpg",
+   "credit": "ישראל פרקר Israel Preker, CC BY 2.5, https://commons.wikimedia.org/wiki/File:91269_jaffa_gate_in_jerusalem_PikiWiki_Israel.jpg",
+   "x": 72,
+   "y": 11,
+   "z_eye": 1.6,
+   "heading": 262,
+   "pitch": 10,
+   "fov": 81
+  },
+  "north_side": {
+   "photo": "data/photos/141_84782472.jpg",
+   "credit": "Bahnfrend, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Omar_Ibn_El-Khattab_Square,_2019_(01).jpg",
+   "x": 82,
+   "y": -12,
+   "z_eye": 1.6,
+   "heading": 335,
+   "pitch": 7,
+   "fov": 46.5
+  },
+  "east_end_david": {
+   "photo": "data/photos/142_84782473.jpg",
+   "credit": "Bahnfrend, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Omar_Ibn_El-Khattab_Square,_2019_(03).jpg",
+   "x": 90,
+   "y": -3,
+   "z_eye": 1.6,
+   "heading": 50,
+   "pitch": 5,
+   "fov": 44.9
+  },
+  "citadel_moat": {
+   "photo": "data/photos/113_110483072.jpg",
+   "credit": "Sasha1506, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Tower_of_David_20210924_093210.jpg",
+   "x": 96,
+   "y": -11,
+   "z_eye": 1.6,
+   "heading": 280,
+   "pitch": 9,
+   "fov": 51.3
+  },
+  "back_to_gate": {
+   "photo": "data/photos/072_157136654.jpg",
+   "credit": "Bukvoed, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem-Jaffa-Gate-RIH-0310.jpg",
+   "x": 66,
+   "y": 0,
+   "z_eye": 1.6,
+   "heading": 246,
+   "pitch": 4,
+   "fov": 53.1
+  },
+  "citadel_east": {
+   "photo": "data/photos/041_185219889.jpg",
+   "credit": "מקף־עברי, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Jerusalem,_21_December_2025_268.jpg",
+   "x": 103,
+   "y": 2,
+   "z_eye": 1.6,
+   "heading": 185,
+   "pitch": 3,
+   "fov": 47.9
+  },
+  "david_street": {
+   "photo": "data/photos_ref/eval/58944795.jpg",
+   "credit": "Rhododendrites, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:David_Street_(20041).jpg",
+   "x": 112,
+   "y": 9.5,
+   "z_eye": 1.6,
+   "heading": 89,
+   "pitch": -5,
+   "fov": 72.6
+  }
+ }
+}
