@@ -94,19 +94,21 @@ GATEHOUSE = {"ring": [(3.4, 3.2), (-3.8, -3.7), (2.9, -11.1), (9.5, -4.7)], "hei
 # The wall NW of the gate steps: low stretch with the blind arch, a taller stretch, then the long wall
 # (gate.md section 2 / 9; photos from the plaza and Schick's 1898 plan)
 CITY_WALLS = [
-    {"name": "wall_nw", "pts": [(-52.0, 57.5), (-11.8, 18.0), (-6.99, 13.32)], "height": 11.25, "thick": 3.2},
-    {"name": "tall_stretch", "pts": [(-6.99, 13.32), (-0.54, 7.04)], "height": 13.3, "thick": 3.8},
-    {"name": "blind_arch_stretch", "pts": [(-0.54, 7.04), (3.4, 3.2)], "height": 10.8, "thick": 3.2},
-]   # points run NW -> SE so the outside (south-west) is on the right of each segment
+    {"name": "wall_nw", "pts": [(-50.88, 58.65), (-10.68, 19.15), (-5.87, 14.47)], "height": 11.25, "thick": 3.2},
+    {"name": "tall_stretch", "pts": [(-5.87, 14.47), (0.58, 8.19)], "height": 16.0, "thick": 3.8},
+    {"name": "blind_arch_stretch", "pts": [(0.58, 8.19), (4.52, 4.35)], "height": 12.8, "thick": 3.2},
+]   # points run NW -> SE so the outside (south-west) is on the right of each segment. Heights measured
+#     on photo 062 with its calibrated eval pose (fort_notes.md); the line is shifted 1.6 m inwards so
+#     the outer face passes through gate corner A (3.4, 3.2) and the gate's whole NW face shows.
 MOAT_DEPTH = 5.0
 CITADEL_WALL_H = 13.0
 MOAT_W = 6.0
 TOWERS = [
-    {"kind": "box", "name": "phasael", "c": (66.0, -23.0), "size": (20.0, 17.0), "rot": 24.0, "h": 21.0,
-     "top": {"size": (14.0, 12.0), "h": 3.0}},       # east side by the east ditch (citadel_east.md A5, eval north_side)
+    {"kind": "box", "name": "phasael", "c": (66.0, -23.0), "size": (20.0, 17.0), "rot": 24.0, "h": 18.0,
+     "top": {"size": (14.0, 12.0), "h": 3.0}},       # 21 m in all with the set-back top storey       # east side by the east ditch (citadel_east.md A5, eval north_side)
     {"kind": "box", "name": "nw_tower", "c": (27.0, -27.0), "size": (17.0, 15.0), "rot": 35.0, "h": 18.0,
      "machicolations": 3},                           # by the 1898 breach (eval back_to_gate / outside_gate)
-    {"kind": "minaret", "c": (24.0, -79.0), "r": 2.6, "h": 30.0},
+    {"kind": "minaret", "c": (24.0, -79.0), "r": 2.6, "h": 22.0},   # 8-10 m above the walls (fort_notes.md)
 ]
 DAVID = {"pts": [(96.7, 2.8), (106.4, 9.1), (115.4, 9.3), (135.9, 8.7), (159.0, 8.2), (175.6, 9.4)],
          "start_s": 16.0, "riser": 0.13, "tread": 2.2, "width": 7.0}
@@ -214,7 +216,8 @@ def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0)
     rest = linemerge(rest) if rest.geom_type == "MultiLineString" else rest
     inside = CITY.union(HARAM).buffer(-0.5)
     out = []
-    for ln in getattr(rest, "geoms", [rest]):
+    taken = []                     # OSM draws some stretches twice (city wall + Haram enclosure, faces)
+    for ln in sorted(getattr(rest, "geoms", [rest]), key=lambda g: -g.length):
         if ln.geom_type != "LineString" or ln.length < 2.0:
             continue
         n = max(1, int(math.ceil(ln.length / seg_len)))
@@ -223,6 +226,10 @@ def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0)
             (tx, ty), (nx, ny), L = edge_frame(a, b)
             if L < 0.5:
                 continue
+            seg = LineString([a, b])
+            if any(seg.intersection(t_).length > 0.4 * L for t_ in taken if t_.intersects(seg)):
+                continue
+            taken.append(seg.buffer(thick + 0.5, cap_style="flat"))
             m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
             if inside.contains(Point(m[0] + nx * 5, m[1] + ny * 5)):     # right side must be outside
                 a, b = b, a

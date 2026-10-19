@@ -67,6 +67,15 @@ def obb(ring):
     return best[1:]
 
 
+def roof_tone(bd):
+    """Weathered roof deck: grey lime/concrete, darker and more varied than the walls; the domes
+    (vernacular_domes) stay whiter, which is what makes them read from above."""
+    h = (zlib.crc32(("roof" + bd["id"]).encode()) % 1000) / 1000.0
+    g = 0.66 + 0.24 * h
+    warm = 0.03 * ((h * 7) % 1.0 - 0.5)
+    return (g * (1 + warm), g, g * (1 - warm))
+
+
 def roof_flat(mb, bd, wall_mat, col, gen=None):
     ring = [tuple(p) for p in bd["ring"]]
     top = bd["top"]
@@ -76,7 +85,7 @@ def roof_flat(mb, bd, wall_mat, col, gen=None):
     roofs = bd.get("roof") or []
     if not roofs:
         fl, ft = mk.tess2d([ring])
-        mb.tris([(p[0], p[1], top) for p in fl], ft, "lime", UP)
+        mb.tris([(p[0], p[1], top) for p in fl], ft, "lime", UP, col=roof_tone(bd))
         return []
     holes = [r["ext"] for r in roofs]
     try:
@@ -91,7 +100,7 @@ def roof_flat(mb, bd, wall_mat, col, gen=None):
             mb.poly([(a[0], a[1], rz), (b[0], b[1], rz), (b[0], b[1], top), (a[0], a[1], top)], wall_mat,
                     Vector((-(b[1] - a[1]), b[0] - a[0], 0)), col=col)
         fl, ft = mk.tess2d([ext] + r["holes"])
-        mb.tris([(p[0], p[1], rz) for p in fl], ft, "lime", UP)
+        mb.tris([(p[0], p[1], rz) for p in fl], ft, "lime", UP, col=roof_tone(bd))
     return roofs
 
 
@@ -123,7 +132,7 @@ def roof_balustrade(mb, bd, wall_mat, col, gen):
             p0, p1 = a + t * (L * j / k), a + t * (L * (j + 1) / k)
             mk.card(mb, ((p0 + p1) / 2 + nin * 0.16).to_3d() + UP * plinth, t.to_3d(), UP, (p1 - p0).length,
                     top - 0.14 - plinth, "cut", rect, col=STONE, double=True)
-        dz = 0.002 * (i % 2)
+        dz = 0.006 * (i % 2)                               # > audit tolerance (4 mm)
         mk.box(mb, c, t, nin, L, 0.34, top - 0.14 + dz, top + dz, "dressed", bottom=True, col=STONE)
         n_posts = max(1, round(L / 3.0))
         for j in range(n_posts + 1):
@@ -136,7 +145,7 @@ def roof_balustrade(mb, bd, wall_mat, col, gen):
             mb.poly([(a[0], a[1], rz), (b[0], b[1], rz), (b[0], b[1], plinth), (a[0], a[1], plinth)], wall_mat,
                     Vector((-(b[1] - a[1]), b[0] - a[0], 0)), col=col)
         fl, ft = mk.tess2d([ext] + r["holes"])
-        mb.tris([(p[0], p[1], rz) for p in fl], ft, "lime", UP)
+        mb.tris([(p[0], p[1], rz) for p in fl], ft, "lime", UP, col=roof_tone(bd))
     return roofs
 
 
@@ -371,11 +380,72 @@ def build_steps(mb, steps):
             mb.poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
 
 
-def build_walls_generic(mb, walls):
-    """OSM wall circuit outside the hand-modelled Jaffa Gate stretch: stepped, crenellated."""
+def build_walls_generic(mb, walls, merlons=(0.9, 0.75, 1.4, 0.6)):
+    """OSM wall circuit outside the hand-modelled Jaffa Gate stretch. Consecutive segments form
+    runs built as one mitred slab: faces meet on the mitre line (no overlapping boxes), a step in
+    the terrain-following top gets a riser, merlons on the outer (right-hand) edge keep clear of
+    the joints."""
+    runs = []
     for w in walls:
-        mk.thick_wall(mb, [tuple(w["a"]), tuple(w["b"])], w["z0"], w["z1"], w["thick"], "fort",
-                      merlons=(0.9, 0.75, 1.4, 0.6), outside="right")
+        if runs and math.dist(runs[-1][-1]["b"], w["a"]) < 0.02:
+            runs[-1].append(w)
+        else:
+            runs.append([w])
+    Z = lambda z: Vector((0, 0, z))  # noqa: E731
+    mw, gap, mh, md = merlons
+    for ri, run in enumerate(runs):
+        n = len(run)
+        lift = 0.015 * (ri % 3)                 # runs meeting at T-junctions: tops never coplanar
+        run = [dict(w, z1=w["z1"] + lift) for w in run]
+        pts = [Vector((*run[0]["a"], 0))] + [Vector((*w["b"], 0)) for w in run]
+        closed = n > 2 and (pts[0] - pts[-1]).length < 0.02
+        tan = [(pts[i + 1] - pts[i]).normalized() for i in range(n)]
+        nrm = [Vector((t.y, -t.x, 0)) for t in tan]               # right = outside
+        R, L = [], []
+        for k in range(n + 1):
+            i0, i1 = k - 1, k
+            if closed:
+                i0, i1 = (k - 1) % n, k % n
+            if i0 < 0 or i1 >= n:
+                m, f = nrm[max(0, min(i1, n - 1))], 1.0
+            else:
+                m = nrm[i0] + nrm[i1]
+                m = m.normalized() if m.length > 1e-6 else nrm[i0]
+                f = 1.0 / max(0.5, m.dot(nrm[i0]))
+            h = run[min(k, n - 1)]["thick"] / 2
+            R.append(pts[k] + m * h * f)
+            L.append(pts[k] - m * h * f)
+        for i, w in enumerate(run):
+            z0, z1 = w["z0"], w["z1"]
+            ar, br, al, bl = R[i], R[i + 1], L[i], L[i + 1]
+            mb.poly([ar + Z(z0), br + Z(z0), br + Z(z1), ar + Z(z1)], "fort", nrm[i])
+            mb.poly([bl + Z(z0), al + Z(z0), al + Z(z1), bl + Z(z1)], "fort", -nrm[i])
+            mb.poly([ar + Z(z1), br + Z(z1), bl + Z(z1), al + Z(z1)], "fort", UP)
+            nxt = run[(i + 1) % n] if (i + 1 < n or closed) else None
+            if nxt is not None and abs(nxt["z1"] - z1) > 0.01:
+                lo, hi = min(z1, nxt["z1"]), max(z1, nxt["z1"])
+                mb.poly([br + Z(lo), bl + Z(lo), bl + Z(hi), br + Z(hi)], "fort", tan[i] if nxt["z1"] < z1 else -tan[i])
+            if not closed and i == 0:
+                mb.poly([al + Z(z0), ar + Z(z0), ar + Z(z1), al + Z(z1)], "fort", -tan[i])
+            if not closed and i == n - 1:
+                mb.poly([br + Z(z0), bl + Z(z0), bl + Z(z1), br + Z(z1)], "fort", tan[i])
+            # merlons along the outer edge, clear of the mitred corners
+            a, b = pts[i], pts[i + 1]
+            seg = (b - a).length
+            h = w["thick"] / 2
+            m0 = 0.4 + max(0.0, (ar - a).dot(tan[i])) + 0.0
+            m1 = 0.4 + max(0.0, (b - br).dot(tan[i]))
+            m0 = max(m0, 0.4 + max(0.0, (al - a).dot(tan[i])))
+            m1 = max(m1, 0.4 + max(0.0, (b - bl).dot(tan[i])))
+            avail = seg - m0 - m1
+            if avail < mw:
+                continue
+            k = int((avail + gap) // (mw + gap))
+            u = m0 + (avail - (k * mw + (k - 1) * gap)) / 2
+            for _ in range(k):
+                c = a + tan[i] * (u + mw / 2) + nrm[i] * (h - md / 2)
+                mk.box(mb, c, tan[i], nrm[i], mw, md, z1, z1 + mh, "fort")
+                u += mw + gap
 
 
 def build_lod(mb, bd, gen):
@@ -389,7 +459,7 @@ def build_lod(mb, bd, gen):
         roof_hipped(mb, ring, bd["top"])
     else:
         fl, ft = mk.tess2d([ring])
-        mb.tris([(p[0], p[1], bd["top"]) for p in fl], ft, "lime", UP)
+        mb.tris([(p[0], p[1], bd["top"]) for p in fl], ft, "lime", UP, col=roof_tone(bd))
     context_windows(mb, bd, gen)
     vernacular_domes(mb, bd, bd["top"], seg=8, rings=2, limit=4)
     if bd["style"]["domes"]:
