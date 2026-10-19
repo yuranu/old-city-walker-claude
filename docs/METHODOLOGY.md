@@ -153,3 +153,86 @@ cables, tubes and small fittings.
 evaluation renders did not (floating tufts, black streaks, flat doors). After each build, check
 the fixed viewpoints in the game, including viewpoints that face away from the hero area: the
 horizon has to be filled too, using context massing from an extra OSM extract if needed.
+
+## 9. Scaling to the whole walled city: sectors
+
+The Jaffa Gate area was one scene. The walled city (2,600 buildings, 0.86 km², 35 m of fall) is
+built, loaded and worked on **by sector**.
+
+**Sectors** (`pipeline/sectors.py`, `data/sectors.json`). The walled-city polygon
+(`data/oldcity_polygon.json`, derived from the OSM wall circuit, including the Haram) is cut into 12
+sectors along quarter lines, gates and main streets. The Haram is its own sector, using the exact
+enclosure. A building belongs to the sector holding its centroid; anything outside every sector
+goes to the nearest one (`FORCE_SECTOR` for exceptions). Each sector is a unit of research (notes
+`data/reference/<sector>.md`), building and streaming.
+
+**Spec → parts.** `make_spec.py` writes:
+* `data/spec/base.json`: ground, kerbs, Jaffa Gate fortifications, the OSM wall circuit, context.
+* `data/spec/<sector>.json`: buildings, props, steps, cables, beams, decals.
+* `data/spec/index.json`.
+* The legacy single scene (base + Jaffa Gate) for the evaluation loop.
+
+`build_city.py --part base|<sector>` builds one part. A sector exports `sectors/<id>.glb` at full
+detail plus `sectors/<id>_lo.glb`, a massing LOD (plain walls, roofs, window cards, domes;
+landmarks keep their silhouette). Textures live once in `base/materials.glb`; every other GLB is
+exported without images, and the game swaps materials by name. `build.sh` builds base + 12 sectors
+in parallel (~40 s) and `write_manifest.py` writes `game/public/sectors.json` for streaming.
+
+**Streaming (game).** The game:
+* keeps the base resident;
+* keeps every sector's LOD resident, swapping each 96 m cell between hi and lo by distance;
+* loads a sector's hi when the player comes within ~150 m;
+* builds the collision BVH per chunk in a worker.
+Teleports wait for the hi geometry around the destination.
+
+**Street level from a survey** (`pipeline/terrain_street.py`, `docs/TERRAIN.md`). Open DEMs sit
+metres above the street inside the walls. The street surface is a Gaussian-process fit through 425
+spot heights from the 1865 Ordnance Survey of Jerusalem, with explicit flats (Haram esplanade,
+Western Wall plaza) and local flats in `make_spec.LOCAL_FLATS` (the Sepulchre parvis). Everything
+reads the ground from `street_z`. Never hard-code absolute heights; landmarks measure from
+`bd["ground"]`, and cameras from the ground under them.
+
+**Rules that carry a whole city:**
+* `roofscape.py`: heights from OSM where present, otherwise by footprint and quarter, plus the
+  vernacular field of shallow lime domes. Weathered grey roof decks with whiter domes are what
+  read from the walls and the Mount of Olives.
+* `infill.py`: OSM misses buildings, and inside the walls nearly everything is built up. Street
+  corridors are measured from the existing street walls, mapped areas are kept open, and a 9 m
+  frontage band is filled where nothing is mapped (lowest priority, low heights).
+* `SOUQ_STREETS` (`make_spec.py`): every facade fronting a market street gets the souq profile.
+  Each street sets its share of shop rows and canopies; covered souqs get no canopies.
+* `stairs.py`: lanes steeper than 7 % and every OSM steps way become runs of treads (risers about
+  14 cm), clipped to the open street.
+
+**Landmarks** (`blender/landmarks.py` registry). Hand-modelled buildings replace the generic builder
+through `LANDMARKS = {osm_id: fn(mbs, bd, gen, place, lod)}` in their own modules:
+`landmarks_city.py` (churches, synagogues, minarets), `landmarks_haram.py` (Temple Mount, Western
+Wall) and `landmarks_gates.py` (gates, wall circuit). A module that is missing, mid-edit or failing
+falls back to the generic building with a warning (`LANDMARKS_STRICT=1` makes it fatal), so
+parallel workers never break each other's builds.
+
+**Working in parallel.** One owner per file:
+* researchers write `data/reference/<sector|landmark>.md` and photo indexes;
+* landmark and gate workers own their module and notes;
+* spec changes (records, clips, flats, ground holes, wall heights) go to the spec owner as exact
+  requests, with polygons and ids;
+* the spec owner keeps `make_spec.py`, `dressing.py`, `build_city.py`.
+Every request names its evidence (photo, OSM id, survey value).
+
+**Checking a part of the city.** `blender/render_city.py` loads the exported GLBs near the cameras
+(as the game would) and renders named viewpoints with heights relative to the ground. In-game,
+`window.game.teleport()` and `bench()`, and the F3 overlay (sectors in hi, memory).
+
+### Lessons from the expansion
+* **Key overrides by position, not index.** Footprint cleaning moves where rings start. A facade
+  override carries `"at"`, the edge midpoint, and is matched to the nearest edge.
+* **Let a photo-matched facade switch off the rules** (`"auto": false`). Otherwise random signs and
+  shutters reappear on facades that were measured from photographs.
+* **Measure heights against a calibrated camera.** Plain image ratios understate a wall 10 m
+  behind the gate face by 20-25 %.
+* **Watch for duplicated OSM features**: walls drawn twice, enclosure boundaries tagged as walls,
+  marketplace areas over covered souqs. Dedupe and exclude explicitly, with the reason in a comment.
+* **Everything at city scale needs an index.** A per-item loop over all steps or all buildings
+  turns a 10 s spec into minutes. Use STRtrees, local clipping and vectorised terrain lookups.
+* **Budget the whole, not the part.** 5.5M triangles at full detail is fine streamed, but the
+  per-frame draw calls and shadow passes decide whether an integrated GPU keeps up.
