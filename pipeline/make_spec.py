@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 import dressing
 import facades
 import hero
+import infill
 import roofscape
 from geo import LineString, Point, Polygon, ccw, clean, edge_frame, poly_json, polys_of, unary_union
 from shapely import STRtree, clip_by_rect, constrained_delaunay_triangles, prepare
@@ -441,6 +442,14 @@ def main():
         HEIGHTS[m["id"]] = m["height"]
         SHOPS.add(m["id"])
     blocked = unary_union([citadel_body, moat, gate_poly] + wall_polys)
+    # buildings OSM does not map along the streets (pipeline/infill.py), lowest priority of all
+    fill = infill.infill(d, [p for _, p, t in cands if t != "context"], CITY.buffer(-16.5),
+                         unary_union([HARAM.buffer(2.0), HERO_ZONE.buffer(3.0), blocked.buffer(2.0),
+                                      LineString(ROAD).buffer(ROAD_HALF + 1.0)]))
+    for k, fp in enumerate(fill):
+        cands.append(({"id": "f%d" % k, "tags": {"building": "yes", "note": "infill"}, "outer": [list(fp.exterior.coords)[:-1]]},
+                      fp, "mid"))
+    print("infill:", infill.stats(fill))
     prepare(blocked)
     taken = []
     grid = {}                                  # 20 m cells -> indices into taken
