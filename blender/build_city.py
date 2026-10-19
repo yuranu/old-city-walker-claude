@@ -400,7 +400,7 @@ def main():
 
     gmbs = {"ground": mk.MeshBuilder(tiles)}
     build_ground(gmbs, spec)
-    gmbs["ground"].to_object("ground", mats, col_city)
+    gmbs["ground"].to_object("ground", mats, col_city)["ground"] = 1      # exact height field in the game
 
     gd = mk.MeshBuilder(tiles)
     for k, dcl in enumerate(spec.get("ground_decals", [])):

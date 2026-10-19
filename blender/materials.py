@@ -47,9 +47,18 @@ def _textured(name, diff, nor=None, rough=0.88, alpha=False):
     tex = nt.nodes.new("ShaderNodeTexImage")
     tex.image = _img(diff)
     nt.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
-    if alpha:
-        nt.links.new(tex.outputs["Alpha"], bsdf.inputs["Alpha"])
+    if alpha == "mask":                                    # glTF alphaMode MASK, cutoff 0.5
+        gt = nt.nodes.new("ShaderNodeMath")
+        gt.operation = "GREATER_THAN"
+        gt.inputs[1].default_value = 0.5
+        nt.links.new(tex.outputs["Alpha"], gt.inputs[0])
+        nt.links.new(gt.outputs[0], bsdf.inputs["Alpha"])
         m.use_backface_culling = False
+    elif alpha:
+        nt.links.new(tex.outputs["Alpha"], bsdf.inputs["Alpha"])
+        m.use_backface_culling = True
+    else:
+        m.use_backface_culling = True                      # closed shells: single-sided in glTF
     if nor:
         tn = nt.nodes.new("ShaderNodeTexImage")
         tn.image = _img(nor, non_color=True)
@@ -72,11 +81,11 @@ def build(root: Path):
         mats[role] = _textured(role, root / gen[role]["diff"], root / gen[role]["nor"], rough=0.8)
         tiles[role] = gen[role]["tile"]
     mats["doors"] = _textured("doors", root / gen["doors"]["diff"], root / gen["doors"]["nor"], rough=0.6)
-    mats["cut"] = _textured("cut", root / gen["cutout"]["img"], alpha=True, rough=0.7)
+    mats["cut"] = _textured("cut", root / gen["cutout"]["img"], alpha="mask", rough=0.7)
     mats["decal"] = _textured("decal", root / gen["decal"]["img"], alpha=True, rough=0.9)
     signs = root / "data/textures/gen/signs.png"
     if signs.exists():
-        mats["signs"] = _textured("signs", signs, alpha=True, rough=0.6)
+        mats["signs"] = _textured("signs", signs, alpha="mask", rough=0.6)
     for name, (col, rough, metal) in FLAT.items():
         m = bpy.data.materials.new(name)
         m.use_nodes = True
@@ -84,6 +93,7 @@ def build(root: Path):
         bsdf.inputs["Base Color"].default_value = (*col, 1.0)
         bsdf.inputs["Roughness"].default_value = rough
         bsdf.inputs["Metallic"].default_value = metal
+        m.use_backface_culling = True
         mats[name] = m
         tiles[name] = 2.0
     return mats, tiles, gen
