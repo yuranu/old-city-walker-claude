@@ -6,6 +6,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=.venv/bin/python
+# render on the discrete GPU when there is one (Mesa PRIME offload; harmless otherwise)
+if [ "$(ls /dev/dri | grep -c renderD)" -gt 1 ]; then export DRI_PRIME=1; fi
 $PY pipeline/osm_to_local.py
 $PY pipeline/make_spec.py
 [ -f data/textures/gen/manifest.json ] || $PY pipeline/gen_textures.py
