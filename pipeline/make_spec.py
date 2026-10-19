@@ -108,7 +108,28 @@ SUNKEN = [{"poly": box(884.0, 249.0, 892.0, 266.0), "dz": -4.5, "name": "golden_
 # footprints that OSM draws across a street: clip them back to the street wall (way id, half-width)
 CLIP_STREETS = {"w1022672085": [(26492706, 2.2)]}     # Holy Sepulchre over Christian Quarter St
 # level areas the terrain field does not know about: (OSM way, point whose street level they take)
-LOCAL_FLATS = [(612045223, (208.2, 183.4))]           # Holy Sepulchre parvis, at the main door
+LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, at the main door
+               # the Western Wall prayer-area level carried north to the front of Wilson's Arch hall
+               (Polygon([(621.91, 30.53), (646.06, 35.24), (647.21, 29.35), (623.06, 24.64)]), -43.58)]
+
+
+# covered streets: passages under buildings (OSM tunnel=yes|building_passage, covered=yes) are carved
+# out of the footprints and vaulted; the covered souqs are vaulted between their facades
+COVERED_SOUQS = {"Suq Al La'h'hamin", "Suq Al Attarin", "Suq Al-Khawajat", "Suq El-Quatta"}
+
+
+def covered_ways(d):
+    out = []
+    for w in d["ways"]:
+        t = w["tags"]
+        pts = w.get("pts") or []
+        if not t.get("highway") or len(pts) < 2 or t.get("area") == "yes":
+            continue
+        named = t.get("name:en") in COVERED_SOUQS
+        lay = int(t.get("layer", "0") or 0)
+        if named or (lay >= 0 and (t.get("tunnel") in ("yes", "building_passage") or t.get("covered") == "yes")):
+            out.append((w, LineString(pts), "souq" if named else "passage"))
+    return out
 
 
 def landmark_ids():
@@ -232,7 +253,7 @@ def write_sectors(spec):
                 return sid
         return None
 
-    per = {sid: {"buildings": [], "props": [], "steps": [], "cables": [], "beams": [], "ground_decals": []}
+    per = {sid: {"buildings": [], "props": [], "steps": [], "cables": [], "beams": [], "ground_decals": [], "vaults": []}
            for sid, _, _ in secs}
     base_b, base_props, base_dec = [], [], []
     for b in spec["buildings"]:
@@ -258,6 +279,9 @@ def write_sectors(spec):
         for it in spec[key]:
             m = ((it["a"][0] + it["b"][0]) / 2, (it["a"][1] + it["b"][1]) / 2)
             per[sector_or_nearest(*m)][key].append(it)
+    for v in spec.get("vaults", []):
+        m = v["pts"][len(v["pts"]) // 2]
+        per[sector_or_nearest(m[0], m[1])]["vaults"].append(v)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
                                   "walls_generic", "spawn", "sources")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": [], "cables": [],
@@ -386,7 +410,10 @@ _FLATS = []                                    # [(polygon, z)] filled by setup_
 
 
 def setup_flats(d):
-    for wid, at in LOCAL_FLATS:
+    for wid, at in LOCAL_FLATS:                # (OSM way, point it takes its level from) or (polygon, z)
+        if isinstance(wid, Polygon):
+            _FLATS.append((wid, float(at)))
+            continue
         w = next((w_ for w_ in d["ways"] if w_["id"] == wid), None)
         if w and _terrain is not None:
             _FLATS.append((Polygon(w["pts"]).buffer(0), float(_terrain.street_z(*at))))
@@ -486,6 +513,9 @@ LANDMARK_IDS = landmark_ids()
 def main():
     d = json.loads((ROOT / "data/osm_local.json").read_text())
     rng = random.Random(1898)
+    for w in d["ways"]:            # the covered souqs are mapped as layer -1 (under the buildings above):
+        if w["tags"].get("name:en") in COVERED_SOUQS:        # they are the street level here
+            w["tags"] = dict(w["tags"], layer="0")
     setup_flats(d)
     # the Dome of the Rock's upper platform (OSM retaining wall w137725307): no trees on it
     PLATFORM = next((Polygon(w["pts"]).buffer(0) for w in d["ways"] if w["id"] == 137725307), Polygon())
@@ -559,6 +589,16 @@ def main():
     walls_generic = generic_walls(d, cit_outer, gate_poly)
     wall_slabs = unary_union([LineString([w_["a"], w_["b"]]).buffer(w_["thick"] + 0.05, single_sided=True,
                                                                      cap_style="flat") for w_ in walls_generic])
+    cov = [(w_, ln_, k_) for w_, ln_, k_ in covered_ways(d) if CITY.intersects(ln_)
+           and not HERO_ZONE.intersects(ln_) and not any(g_ in str(w_["id"]) for g_ in ())]
+    cov_hw = {}
+    for w_, ln_, k_ in cov:                       # passages ~3 m wide, souqs measured later from the facades
+        try:
+            cov_hw[w_["id"]] = float(w_["tags"]["width"]) / 2
+        except (KeyError, ValueError):
+            cov_hw[w_["id"]] = 1.6 if k_ == "passage" else 2.2
+    passages = unary_union([ln_.buffer(cov_hw[w_["id"]], cap_style="flat") for w_, ln_, k_ in cov] or [Polygon()])
+    prepare(passages)
     gids = gate_ids()
     # Dung and New Gate are sections of crenellated curtain (landmarks_gates builds them): still wall
     cuts = [p_.convex_hull.buffer(1.0) for b_, p_, _ in cands
@@ -592,6 +632,8 @@ def main():
                 rest = rest.difference(LineString(wpts).buffer(hw_))
         if b["id"] not in LANDMARK_IDS and wall_slabs.intersects(rest):
             rest = rest.difference(wall_slabs)
+        if b["id"] not in LANDMARK_IDS and passages.intersects(rest):      # covered passages stay walkable
+            rest = rest.difference(passages)
         near = {k for c_ in cells_of(p) for k in grid.get(c_, ())}
         near = [taken[k] for k in near if taken[k].intersects(rest)]
         if near:
@@ -626,7 +668,7 @@ def main():
     bld_union = unary_union([bd["poly"] for bd in buildings])
     # stepped streets (pipeline/stairs.py): David Street from its first step, every OSM steps way,
     # and any lane steeper than 7 %, all from the terrain
-    open_street = ctx.difference(bld_union).difference(cit_outer)
+    open_street = ctx.difference(bld_union).difference(cit_outer).difference(unary_union(GROUND_HOLES))
     fp_list = [bd["poly"] for bd in buildings]
     fp_tree = STRtree(fp_list)
     david = LineString(DAVID["pts"])
@@ -822,6 +864,25 @@ def main():
                                                        roofscape.main_axis(q))
         out_b.append(rec)
 
+    # ---------------------------------------------------------------- vaults over the covered streets
+    vaults = []
+    rec_tree = STRtree([Polygon(r_["ring"]) for r_ in out_b])
+    for w_, ln_, kind in cov:
+        hw = cov_hw[w_["id"]]
+        if kind == "souq" and "width" not in w_["tags"]:
+            hw = min(3.2, infill.street_halfwidth(w_["tags"], ln_, fp_tree, fp_list) + 0.1)
+        n = max(1, int(math.ceil(ln_.length / 3.0)))
+        pts = [ln_.interpolate(ln_.length * k / n).coords[0] for k in range(n + 1)]
+        pts = [(x, y, round(street_z(x, y), 3)) for x, y in pts]
+        near = [out_b[k] for k in rec_tree.query(ln_.buffer(hw + 1.0))]
+        spring = 3.0 if kind == "passage" else 4.4
+        crown = max(p[2] for p in pts) + spring + 1.25 * hw
+        tops = sorted(r_["top"] for r_ in near)
+        top = max(tops[len(tops) // 2] if (tops and kind == "passage") else crown + 0.6, crown + 0.5)
+        vaults.append({"kind": kind, "name": w_["tags"].get("name:en", ""), "osm": w_["id"], "hw": round(hw, 2),
+                       "spring": spring, "top": round(top, 2), "pts": [[round(x, 3), round(y, 3), z] for x, y, z in pts]})
+    print("vaults:", len(vaults), "covered ways, %.0f m" % sum(ln_.length for _, ln_, _ in cov))
+
     # ---------------------------------------------------------------- street-name plaques from OSM names
     signs_meta = {}
     sj = ROOT / "data/textures/gen/signs.json"
@@ -892,6 +953,7 @@ def main():
     spec = {
         "poc_box": POC, "context_box": CONTEXT,
         "walls_generic": walls_generic,
+        "vaults": vaults,
         "buildings": out_b,
         "gatehouse": GATEHOUSE, "city_walls": CITY_WALLS,
         "citadel": {"outer": cit_outer_r, "mass": [list(p) for p in cit_mass_r], "inner": cit_inner_r,

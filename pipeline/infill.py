@@ -20,7 +20,19 @@ from shapely import STRtree
 from shapely.geometry import LineString, Polygon
 from shapely.ops import unary_union
 
-AREA_KEYS = ("place", "landuse", "leisure", "amenity", "natural", "historic", "man_made", "tourism")
+# mapped areas that are open ground (kept free of infill). Built-up landuse (retail, residential,
+# religious: e.g. the souq block between the three parallel market streets) is NOT open.
+OPEN_TAGS = {"landuse": {"grass", "forest", "meadow", "recreation_ground", "cemetery", "orchard", "village_green",
+                         "greenfield", "construction", "brownfield"},
+             "leisure": {"park", "garden", "playground", "pitch", "common", "nature_reserve"},
+             "amenity": {"parking", "grave_yard"}, "place": {"square", "plaza"},
+             "historic": {"archaeological_site"}}
+
+
+def is_open_area(t):
+    if t.get("natural") or (t.get("highway") and t.get("area") == "yes"):
+        return True
+    return any(t.get(k) in v for k, v in OPEN_TAGS.items())
 # the largest half-width a street is given where one side is unmapped: lanes and souqs are 3-7 m wide
 HW_MAX = {"footway": 3.5, "pedestrian": 3.5, "steps": 3.0, "path": 3.0, "living_street": 3.5, "corridor": 2.5}
 DEPTH = 9.0
@@ -76,7 +88,7 @@ def infill(d, footprints, domain, keep_open):
         pts = w.get("pts") or []
         if not w.get("closed") or len(pts) < 4 or "building" in t:
             continue
-        if t.get("highway") or any(k in t for k in AREA_KEYS) or t.get("area") == "yes":
+        if is_open_area(t):
             p = Polygon(pts).buffer(0)
             if p.area > 15 and domain.intersects(p):
                 areas.append(p)

@@ -448,6 +448,64 @@ def build_walls_generic(mb, walls, merlons=(0.9, 0.75, 1.4, 0.6)):
                 u += mw + gap
 
 
+def build_vaults(mb, vaults, segs=7):
+    """Covered streets: a pointed barrel vault along the way (springing `spring` above the street,
+    crown ~1.25 hw higher), the mass above it up to `top` (flat roof deck, spandrels at the ends),
+    and outer side walls inset 15 cm so they only show from the rooftops (facades hide them below)."""
+    Z = lambda z: Vector((0, 0, z))  # noqa: E731
+    for v in vaults:
+        pts = [Vector((p[0], p[1], 0)) for p in v["pts"]]
+        zs = [p[2] for p in v["pts"]]
+        n = len(pts) - 1
+        if n < 1:
+            continue
+        hw, rise, top = v["hw"], 1.25 * v["hw"], v["top"]
+        tan = [(pts[i + 1] - pts[i]).normalized() for i in range(n)]
+        side = []
+        for k in range(n + 1):
+            if k == 0 or k == n:
+                t = tan[min(k, n - 1)]
+                m, f = Vector((t.y, -t.x, 0)), 1.0
+            else:
+                n1, n2 = Vector((tan[k - 1].y, -tan[k - 1].x, 0)), Vector((tan[k].y, -tan[k].x, 0))
+                m = (n1 + n2).normalized() if (n1 + n2).length > 1e-6 else n1
+                f = 1.0 / max(0.5, m.dot(n1))
+            side.append(m * f)
+        # cross-section: right springing -> crown -> left springing, pointed (two arcs meeting at the crown)
+        prof = []
+        for j in range(2 * segs + 1):
+            u = j / segs - 1.0                     # -1 (right) .. 0 (crown) .. 1 (left)
+            x = -u * hw
+            z = rise * math.sin(math.acos(min(1.0, abs(u)))) ** 0.75
+            prof.append((x, z))
+        rings = []
+        for k in range(n + 1):
+            base = zs[k] + v["spring"]
+            rings.append([pts[k] + side[k] * x + Z(base + z) for x, z in prof])
+        for k in range(n):
+            mid_axis = (pts[k] + pts[k + 1]) / 2 + Z((zs[k] + zs[k + 1]) / 2 + v["spring"])
+            for j in range(len(prof) - 1):
+                q = [rings[k][j], rings[k + 1][j], rings[k + 1][j + 1], rings[k][j + 1]]
+                c = (q[0] + q[2]) / 2
+                mb.poly(q, "rubble", mid_axis - c)                  # inner surface faces the axis
+            # roof deck over the corridor and outer side walls (inset), visible from above only
+            r0, r1 = pts[k] + side[k] * (hw - 0.15), pts[k + 1] + side[k + 1] * (hw - 0.15)
+            l0, l1 = pts[k] - side[k] * (hw - 0.15), pts[k + 1] - side[k + 1] * (hw - 0.15)
+            mb.poly([r0 + Z(top), r1 + Z(top), l1 + Z(top), l0 + Z(top)], "lime", UP, col=(0.78, 0.77, 0.75))
+            sp0, sp1 = zs[k] + v["spring"], zs[k + 1] + v["spring"]
+            nr = Vector((tan[k].y, -tan[k].x, 0))
+            mb.poly([r0 + Z(sp0), r1 + Z(sp1), r1 + Z(top), r0 + Z(top)], "rubble", nr)
+            mb.poly([l1 + Z(sp1), l0 + Z(sp0), l0 + Z(top), l1 + Z(top)], "rubble", -nr)
+        # spandrels at both ends: vertical strips from the arch up to the deck
+        for k, sgn in ((0, -1), (n, 1)):
+            t = tan[min(k, n - 1)] * sgn
+            for j in range(len(prof) - 1):
+                a, b = rings[k][j], rings[k][j + 1]
+                q = [a, b, Vector((b.x, b.y, top)), Vector((a.x, a.y, top))]
+                if (q[3].z - q[0].z) > 0.01 or (q[2].z - q[1].z) > 0.01:
+                    mb.poly(q, "rubble", t)
+
+
 def build_lod(mb, bd, gen):
     """Cheap massing for distant sectors: plain walls, flat or hipped roof, window cards, domes."""
     ring = [tuple(p) for p in bd["ring"]]
@@ -598,6 +656,10 @@ def main():
         gd.poly(q, "decal", UP, uv=[(u0, v0), (u1, v0), (u1, v1), (u0, v1)])
     if not gd.empty():
         gd.to_object("ground_decals", mats, col("ground") if part == "base" else hi)["nocol"] = 1
+    vb = mk.MeshBuilder(tiles)
+    build_vaults(vb, spec.get("vaults", []))
+    if not vb.empty():
+        vb.to_object("vaults", mats, hi)
     bm_ = mk.MeshBuilder(tiles)
     for bmz in spec.get("beams", []):
         mk.tube(bm_, [bmz["a"], bmz["b"]], 0.05, "metal_green", sides=6, col=fb.GREEN)
