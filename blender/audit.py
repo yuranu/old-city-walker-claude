@@ -77,7 +77,7 @@ def main():
         p = t[3]
         n = (p[1] - p[0]).cross(p[2] - p[0]).normalized()
         d = n.dot(p[0])
-        key = (round(n.x * 50), round(n.y * 50), round(n.z * 50), round(d / 0.004))
+        key = (round(n.x * 50), round(n.y * 50), round(n.z * 50), round(d / 0.02))   # coarse prefilter
         buckets[key].append((t, n))
 
     issues = []
@@ -100,6 +100,9 @@ def main():
             ti, tj = cand[i][0], cand[j][0]
             if ti[0] == tj[0] and ti[1] == tj[1]:
                 continue                                  # same source polygon
+            ci, cj = sum(ti[3], Vector()) / 3, sum(tj[3], Vector()) / 3
+            if abs(cand[i][1].dot(cj - ci)) > 0.004 or cand[i][1].dot(cand[j][1]) < 0.999:
+                continue                                  # precise local test: not within 4 mm of one plane
             if "decal" in (ti[2], tj[2]):
                 continue                                  # blended, no depth write + polygon offset in the game
             ov = polys[i].intersection(polys[j]).area
