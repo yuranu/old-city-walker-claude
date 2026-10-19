@@ -24,8 +24,13 @@ def dress(c, rng):
     sz = c["street_z"]
     road = c["road_area"]
     walk = street.buffer(-0.05)
-    from shapely import prepare as _prepare
+    from shapely import STRtree as _STRtree, prepare as _prepare
+    from shapely.geometry import Polygon as _P
     _prepare(walk)
+    step_polys = [_P(st["poly"]["ext"], st["poly"]["holes"]) for st in c["steps"]]
+    step_tree = _STRtree(step_polys) if step_polys else None
+    haram = c.get("haram") or _P()
+    landmark_ids = c.get("landmark_ids", set())
 
     def zat(x, y):
         q = Point(x, y)
@@ -36,12 +41,10 @@ def dress(c, rng):
         z = sz(x, y)
         if road.contains(q):
             z -= c["kerb"]
-        for st in c["steps"]:
-            ext = st["poly"]["ext"]
-            if min(p[0] for p in ext) - 0.1 < x < max(p[0] for p in ext) + 0.1:
-                from shapely.geometry import Polygon
-                if Polygon(ext).contains(q):
-                    return st["top"]
+        if step_tree is not None:
+            for k in step_tree.query(q):
+                if step_polys[k].contains(q):
+                    return c["steps"][k]["top"]
         return z
 
     def free(x, y, r):
@@ -57,11 +60,12 @@ def dress(c, rng):
     osm = json.loads((ROOT / "data/osm_local.json").read_text())
     for n in osm["nodes"]:
         x, y = n["p"]
-        if not (-90 < x < 240 and -140 < y < 130):
-            continue
         t = n["tags"]
+        if t.get("natural") != "tree" and not (-90 < x < 240 and -140 < y < 130):
+            continue                                   # furniture: hero surroundings; trees: everywhere
         if t.get("natural") == "tree" and street.contains(Point(x, y)):
-            kind = "tree_young" if x < 0 and -30 < y < 30 else ("tree_olive" if rng.random() < 0.6 else "tree_ficus")
+            kind = "tree_young" if x < 0 and -30 < y < 30 else rng.choice(
+                ["tree_olive", "tree_olive", "tree_olive", "tree_ficus", "tree_young", "palm"])
             add(kind, x, y, rng.uniform(0, 360), rng.uniform(0.6, 0.8) if kind == "tree_young" else rng.uniform(0.85, 1.2),
                 col=True, r=1.0)                       # plaza trees are thin and young (~4 m, eval gate_outer)
         elif t.get("amenity") == "bench" and street.contains(Point(x, y)):
@@ -70,6 +74,19 @@ def dress(c, rng):
             add("info_board", x, y, _face_open(street, x, y), col=True, r=0.6)
         elif t.get("amenity") in ("waste_disposal", "waste_basket"):
             add("dumpster", x, y, _face_open(street, x, y), col=True, r=1.0)
+
+    # ---- mapped woods, groves and gardens (the Haram's cypresses, pines and olives; monastery gardens)
+    for g in c.get("woods", []):
+        area = g.intersection(walk)
+        if area.is_empty:
+            continue
+        n_t = int(area.area / 55)
+        for _ in range(n_t):
+            q = _rand_in(area, rng)
+            if q is None or not free(q.x, q.y, 2.2):
+                continue
+            kind = rng.choice(["tree_olive", "tree_olive", "tree_olive", "tree_ficus", "tree_young", "tree_young", "palm"])
+            add(kind, q.x, q.y, rng.uniform(0, 360), rng.uniform(0.85, 1.3), col=True, r=1.6)
 
     # ---- kerb-side furniture in the hero zone
     for k in c_kerbs(c):
@@ -123,6 +140,8 @@ def dress(c, rng):
             (tx, ty), (nx, ny), L = edge_frame(a, bb)
             yaw = math.degrees(math.atan2(nx, ny))
             dens = 0.18 if b["tier"] == "hero" else 0.035          # city-wide: sparse litter outside the hero area
+            if haram.contains(Point(b["c"])):
+                dens = 0.0                                          # the Haram is swept
             u = rng.uniform(0.2, 1.5)
             while u < L - 0.2:
                 corner = u < 1.2 or u > L - 1.2                      # wind piles litter into corners
@@ -213,6 +232,8 @@ def dress(c, rng):
     for b in c["buildings"]:
         if b["style"]["roof"] != "flat" or not b.get("roof"):
             continue
+        if b["osm"] in landmark_ids or haram.contains(Point(b["c"])):
+            continue                                                # domes and porticoes: no heaters
         from shapely.geometry import Polygon
         rz = b["top"] - 0.9
         for rp in b["roof"]:

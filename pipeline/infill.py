@@ -34,6 +34,20 @@ def _polys(g):
     return [p for p in getattr(g, "geoms", []) if p.geom_type == "Polygon"]
 
 
+def street_halfwidth(t, ln, tree, footprints):
+    """Half-width of a street: OSM width, else measured from the mapped street walls."""
+    try:
+        return float(np.clip(float(t["width"]) / 2, 1.2, 8.0))
+    except (KeyError, ValueError):
+        pass
+    ds = []
+    for s in np.arange(0, ln.length + 0.01, 3.0):
+        p = ln.interpolate(s)
+        k = tree.nearest(p)
+        ds.append(footprints[k].distance(p))
+    return float(np.clip(np.percentile(ds, 25), 1.4, HW_MAX.get(t.get("highway"), 5.5))) if ds else 2.5
+
+
 def infill(d, footprints, domain, keep_open):
     """d: osm_local.json; footprints: shapely polygons of the mapped buildings;
     domain: where infill may go (inside the walls, clear of them); keep_open: extra open areas.
@@ -53,16 +67,7 @@ def infill(d, footprints, domain, keep_open):
         if w.get("closed") and t.get("area") == "yes":          # pedestrian area / square
             corridors.append(Polygon(pts).buffer(0))
             continue
-        ds = []
-        for s in np.arange(0, ln.length + 0.01, 3.0):
-            p = ln.interpolate(s)
-            k = tree.nearest(p)
-            ds.append(footprints[k].distance(p))
-        hw = float(np.clip(np.percentile(ds, 25), 1.4, HW_MAX.get(t["highway"], 5.5))) if ds else 2.5
-        try:
-            hw = float(np.clip(float(t["width"]) / 2, 1.2, 8.0))
-        except (KeyError, ValueError):
-            pass
+        hw = street_halfwidth(t, ln, tree, footprints)
         corridors.append(ln.buffer(hw))
         fronts.append(ln.buffer(hw + DEPTH))
     areas = []

@@ -561,7 +561,18 @@ def main():
         for k, mb in fmbs.items():
             mb.to_object(k, mats, col("walls"))
         wg = mk.MeshBuilder(tiles)
-        build_walls_generic(wg, spec.get("walls_generic", []))
+        wb = landmarks.walls_builder()
+        try:
+            if wb:
+                wb(wg, spec.get("walls_generic", []), gen)
+            else:
+                build_walls_generic(wg, spec.get("walls_generic", []))
+        except Exception:  # noqa: BLE001
+            import traceback
+            print("WALLS WARNING: landmarks_gates.build_walls failed, generic walls instead")
+            traceback.print_exc()
+            wg = mk.MeshBuilder(tiles)
+            build_walls_generic(wg, spec.get("walls_generic", []))
         if not wg.empty():
             wg.to_object("city_walls_osm", mats, col("walls"))
         gmbs = {"ground": mk.MeshBuilder(tiles)}

@@ -54,3 +54,15 @@ def build(mbs, bd, gen, place, lod=False):
         traceback.print_exc()
         return False      # (geometry already added by the failed builder may remain)
     return True
+
+
+def walls_builder():
+    """The wall-circuit builder from landmarks_gates (clips the circuit around the gates, crenellated
+    profile matching them), or None to use build_city.build_walls_generic."""
+    try:
+        fn = getattr(importlib.import_module("landmarks_gates"), "build_walls", None)
+    except Exception:  # noqa: BLE001
+        if STRICT:
+            raise
+        return None
+    return fn

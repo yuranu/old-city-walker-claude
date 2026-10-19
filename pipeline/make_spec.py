@@ -10,11 +10,14 @@ Blender only builds what the spec lists:
 
     .venv/bin/python pipeline/make_spec.py
 """
+import functools
 import json
 import math
 import random
 import zlib
 from pathlib import Path
+
+import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -23,6 +26,7 @@ import facades
 import hero
 import infill
 import roofscape
+import stairs
 from geo import LineString, Point, Polygon, ccw, clean, edge_frame, poly_json, polys_of, unary_union
 from shapely import STRtree, clip_by_rect, constrained_delaunay_triangles, prepare
 from shapely.geometry import box
@@ -77,6 +81,42 @@ MANUAL_BUILDINGS = [
     {"id": "m_david_s1", "ring": [(124.3, 8.75), (124.5, -3.2), (131.1, -2.2), (130.9, 8.4)], "height": 9.0,
      "why": "continuous shopfronts on the south side of David St at x 124-131 (citadel_east.md C1; photos C01, C04, C05)"},
 ]
+# Herod's Gate is not a building in OSM: the tower of wall way 137726904 (vertices 50-53), extended to
+# the curtain's inner face (gates.md); modelled by blender/landmarks_gates.py
+MANUAL_BUILDINGS.append({"id": "m_herods_gate", "ring": [(577.0, 697.3), (587.7, 700.8), (585.5, 709.0), (574.7, 706.1)],
+                         "height": 15.2, "shops": False, "name": "Herod's Gate",
+                         "why": "gate tower on the north wall (landmarks_gates.HEROD_RECORD)"})
+# buildings whose centroid lies on the wall line, outside every sector: force their sector (tier mid)
+FORCE_SECTOR = {"w1393450805": "s03_christian_w"}           # New Gate (landmarks_gates)
+# gate passages: OSM door points (outer, inner); the passage floor runs between the street levels
+# sampled 1 m outside each door, so the paving meets it without a step
+GATE_DOORS = {"w616186088": [(265.8, 558.2), (275.4, 551.8)], "w288395731": [(893.6, 468.0), (882.4, 466.3)],
+              "m_herods_gate": [(580.1, 707.6), (582.3, 699.0)], "w290671706": [(198.4, -418.2), (210.7, -415.7)]}
+
+
+# ground the landmark builders replace: no ground mesh here (Wilson's Arch hall under Chain Street,
+# whose roof is the walking surface; landmarks_haram.WILSON_HALL)
+GROUND_HOLES = [Polygon([(621.91, 30.53), (646.06, 35.24), (640.68, 62.55), (639.28, 62.27), (626.48, 59.77),
+                         (629.03, 46.85), (619.07, 44.91)])]
+# sunken courts: paving at street level + dz (the Golden Gate's court, 4.5 m below the esplanade;
+# retaining walls, railing and stairs by landmarks_haram)
+SUNKEN = [{"poly": box(884.0, 249.0, 892.0, 266.0), "dz": -4.5, "name": "golden_gate_court"}]
+
+
+def landmark_ids():
+    """OSM ids registered by the landmark builders (blender/landmarks_*.py LANDMARKS dicts)."""
+    import re
+    ids = set()
+    for fn in (ROOT / "blender").glob("landmarks_*.py"):
+        src = fn.read_text()
+        i = src.find("LANDMARKS = {")
+        if i < 0:
+            continue
+        j = src.find("}", i)
+        ids |= set(re.findall(r'"([wrnm][\w]+)"\s*:', src[i:j]))
+    return ids
+
+
 SHOPS = {"w290812336", "w290812408", "w1392903902", "w1393928801", "w126781854",
          "w1549766140", "w126782745", "w290692953", "w1393938082", "w1393938083", "w1393938081"}
 ASHLAR = {"w290812336", "w290812408", "w1393420836", "w1393928801", "w126781854", "w126782745",
@@ -170,7 +210,9 @@ def write_sectors(spec):
     out_dir = ROOT / "data/spec"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    def sector_of(x, y):
+    def sector_of(x, y, osm=None):
+        if osm in FORCE_SECTOR:
+            return FORCE_SECTOR[osm]
         pt = Point(x, y)
         if HERO_ZONE.contains(pt):
             return "s00_jaffa"
@@ -183,7 +225,10 @@ def write_sectors(spec):
            for sid, _, _ in secs}
     base_b, base_props, base_dec = [], [], []
     for b in spec["buildings"]:
-        sid = sector_of(*b["c"]) if b["tier"] != "context" else None
+        sid = sector_of(*b["c"], osm=b["osm"]) if b["tier"] != "context" else None
+        if sid is None and b["tier"] != "context":            # centroid on the wall line: nearest sector
+            pt = Point(b["c"])
+            sid = min(secs, key=lambda s_: s_[1].distance(pt))[0]
         b["sector"] = sid
         (per[sid]["buildings"] if sid else base_b).append(b)
     for key, arr in (("props", spec["props"]), ("ground_decals", spec["ground_decals"])):
@@ -193,13 +238,15 @@ def write_sectors(spec):
                 per[sid][key].append(it)
             else:
                 (base_props if key == "props" else base_dec).append(it)
+    def sector_or_nearest(x, y):
+        return sector_of(x, y) or min(secs, key=lambda s_: s_[1].distance(Point(x, y)))[0]
     for st in spec["steps"]:
         e = st["poly"]["ext"][0]
-        per[sector_of(*e) or "s00_jaffa"]["steps"].append(st)
+        per[sector_or_nearest(*e)]["steps"].append(st)
     for key in ("cables", "beams"):
         for it in spec[key]:
             m = ((it["a"][0] + it["b"][0]) / 2, (it["a"][1] + it["b"][1]) / 2)
-            per[sector_of(*m) or "s00_jaffa"][key].append(it)
+            per[sector_or_nearest(*m)][key].append(it)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
                                   "walls_generic", "spawn", "sources")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": [], "cables": [],
@@ -225,12 +272,19 @@ def write_sectors(spec):
     print("sectors:", ", ".join("%s %d" % (i["id"], i["buildings"]) for i in index), "| base context", len(base_b))
 
 
+# OSM ways tagged city_wall that are not a crenellated wall: the Haram enclosure boundary on the west
+# and north sides (lined with porticoes and madrasas) and the Little Western Wall (landmarks_haram)
+NOT_WALLS = {26554724, 291970363}
+HARAM_WALL_H = 7.0     # the Haram's east and south walls: merlons ~7 m above the esplanade (Golden Gate photos)
+
+
 def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0):
     """City-wall segments from OSM outside the hand-modelled Jaffa Gate stretch: terrain-following,
     outside (beyond the walls) on the right-hand side of each segment."""
     from shapely.ops import linemerge
     lines = unary_union([LineString(w["pts"]) for w in d["ways"]
-                         if "multipolygon" not in w and w["tags"].get("barrier") == "city_wall"])
+                         if "multipolygon" not in w and w["tags"].get("barrier") == "city_wall"
+                         and w["id"] not in NOT_WALLS])
     custom = unary_union([LineString(w["pts"]).buffer(w["thick"] / 2 + 2.0) for w in CITY_WALLS]
                          + [gate_poly.buffer(3.0), cit_outer.buffer(3.0)])
     rest = lines.difference(custom)
@@ -241,8 +295,11 @@ def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0)
     for ln in sorted(getattr(rest, "geoms", [rest]), key=lambda g: -g.length):
         if ln.geom_type != "LineString" or ln.length < 2.0:
             continue
-        n = max(1, int(math.ceil(ln.length / seg_len)))
-        pts = [ln.interpolate(ln.length * k / n).coords[0] for k in range(n + 1)]
+        cs = list(ln.coords)                    # keep OSM vertices (towers project from the curtain)
+        pts = [cs[0]]
+        for a_, b_ in zip(cs, cs[1:]):
+            n = max(1, int(math.ceil(math.dist(a_, b_) / seg_len)))
+            pts += [(a_[0] + (b_[0] - a_[0]) * k / n, a_[1] + (b_[1] - a_[1]) * k / n) for k in range(1, n + 1)]
         for a, b in zip(pts, pts[1:]):
             (tx, ty), (nx, ny), L = edge_frame(a, b)
             if L < 0.5:
@@ -257,8 +314,9 @@ def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0)
                 nx, ny = -nx, -ny
             z_in = street_z(m[0] - nx * 5, m[1] - ny * 5)
             z_out = street_z(m[0] + nx * 5, m[1] + ny * 5)
+            h = HARAM_WALL_H if HARAM.buffer(-2.0).contains(Point(m[0] - nx * 5, m[1] - ny * 5)) else height
             out.append({"a": [round(a[0], 2), round(a[1], 2)], "b": [round(b[0], 2), round(b[1], 2)],
-                        "z0": round(min(z_in, z_out) - 2.5, 2), "z1": round(z_in + height, 2), "thick": thick})
+                        "z0": round(min(z_in, z_out) - 2.5, 2), "z1": round(z_in + h, 2), "thick": thick})
     return out
 
 
@@ -313,12 +371,21 @@ def david_drop(s):
     return max(0.0, s - DAVID["start_s"]) * DAVID["riser"] / DAVID["tread"]
 
 
+@functools.lru_cache(maxsize=1 << 21)          # ground vertices are shared by ~6 triangles
 def street_z(x, y):
     if _terrain is not None:
-        return _terrain.street_z(x, y)
+        return float(_terrain.street_z(x, y))
     if x > 100 and y > 3.5:
         return -david_drop(polyline_s(DAVID["pts"], (x, y))[0])
     return 0.0
+
+
+def street_z_v(xs, ys):
+    """street_z over arrays (one vectorised terrain lookup for a whole ground tile set)."""
+    xs, ys = np.asarray(xs, float), np.asarray(ys, float)
+    if _terrain is not None:
+        return np.asarray(_terrain.street_z(xs, ys), float)
+    return np.array([street_z(x, y) for x, y in zip(xs, ys)])
 
 
 def cell_size(x, y):
@@ -359,11 +426,16 @@ def tess_regions(region, zfun, cell=None, tile=32.0):
                         piece = sub.intersection(box(tx0 + i * c, ty0 + j * c, tx0 + (i + 1) * c, ty0 + (j + 1) * c))
                     if piece.is_empty:
                         continue
-                    _tri_piece(piece, zfun, tris)
+                    _tri_piece(piece, tris)
+    if tris:                                               # z for every vertex in one vectorised call
+        xy = np.array(tris, float).reshape(-1, 2)
+        z = np.round(zfun(xy[:, 0], xy[:, 1]), 3)
+        tris = [[[round(xy[3 * k + m, 0], 3), round(xy[3 * k + m, 1], 3), float(z[3 * k + m])] for m in range(3)]
+                for k in range(len(tris))]
     return tris
 
 
-def _tri_piece(piece, zfun, tris):
+def _tri_piece(piece, tris):
     if True:
         if True:
             for p in polys_of(piece, 1e-4):
@@ -377,12 +449,17 @@ def _tri_piece(piece, zfun, tris):
                     pts = list(t.exterior.coords)[:3]
                     if (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0]) < 0:
                         pts = [pts[0], pts[2], pts[1]]
-                    tris.append([[round(x, 3), round(y, 3), round(zfun(x, y), 3)] for x, y in pts])
+                    tris.append([(x, y) for x, y in pts])
+
+
+LANDMARK_IDS = landmark_ids()
 
 
 def main():
     d = json.loads((ROOT / "data/osm_local.json").read_text())
     rng = random.Random(1898)
+    # the Dome of the Rock's upper platform (OSM retaining wall w137725307): no trees on it
+    PLATFORM = next((Polygon(w["pts"]).buffer(0) for w in d["ways"] if w["id"] == 137725307), Polygon())
     souq_lines = [(LineString(w["pts"]), SOUQ_STREETS[w["tags"]["name:en"]]) for w in d["ways"]
                   if w["tags"].get("highway") and w["tags"].get("name:en") in SOUQ_STREETS
                   and len(w.get("pts") or []) > 1 and int(w["tags"].get("layer", "0") or 0) >= 0]
@@ -432,19 +509,31 @@ def main():
         if not box(*CONTEXT).contains(c):
             continue
         tier = "hero" if HERO_ZONE.contains(c) else ("mid" if (box(*POC).contains(c) or CITY.contains(c)) else "context")
+        if b["id"] in FORCE_SECTOR:
+            tier = "mid"
         cands.append((b, p, tier))
     prio = {"hero": 0, "mid": 1, "context": 2}
     cands.sort(key=lambda t: (prio[t[2]], -t[1].area))
     for m in MANUAL_BUILDINGS:                                  # gap fillers go last
         mp = Polygon(m["ring"])
-        cands.append(({"id": m["id"], "tags": {"name": "", "building": "yes", "note": m["why"]}, "outer": [m["ring"]]},
+        tags = {"name": m.get("name", ""), "building": "yes", "note": m["why"]}
+        if m.get("name"):
+            tags["name:en"] = m["name"]
+        cands.append(({"id": m["id"], "tags": tags, "outer": [m["ring"]]},
                       mp, "hero" if HERO_ZONE.contains(mp.centroid) else "mid"))
         HEIGHTS[m["id"]] = m["height"]
-        SHOPS.add(m["id"])
+        if m.get("shops", True):
+            SHOPS.add(m["id"])
     blocked = unary_union([citadel_body, moat, gate_poly] + wall_polys)
+    # the OSM wall circuit: its line is the walls' OUTER face (landmarks_gates.WALL_LINE), so the slab
+    # occupies the 3 m inside it; ordinary footprints drawn up against the wall are clipped to it
+    walls_generic = generic_walls(d, cit_outer, gate_poly)
+    wall_slabs = unary_union([LineString([w_["a"], w_["b"]]).buffer(w_["thick"] + 0.05, single_sided=True,
+                                                                     cap_style="flat") for w_ in walls_generic])
+    prepare(wall_slabs)
     # buildings OSM does not map along the streets (pipeline/infill.py), lowest priority of all
     fill = infill.infill(d, [p for _, p, t in cands if t != "context"], CITY.buffer(-16.5),
-                         unary_union([HARAM.buffer(2.0), HERO_ZONE.buffer(3.0), blocked.buffer(2.0),
+                         unary_union([HARAM.buffer(2.0), HERO_ZONE.buffer(3.0), blocked.buffer(2.0), wall_slabs.buffer(0.5),
                                       LineString(ROAD).buffer(ROAD_HALF + 1.0)]))
     for k, fp in enumerate(fill):
         cands.append(({"id": "f%d" % k, "tags": {"building": "yes", "note": "infill"}, "outer": [list(fp.exterior.coords)[:-1]]},
@@ -462,6 +551,8 @@ def main():
     buildings = []
     for b, p, tier in cands:
         rest = p.difference(blocked) if blocked.intersects(p) else p
+        if b["id"] not in LANDMARK_IDS and wall_slabs.intersects(rest):
+            rest = rest.difference(wall_slabs)
         near = {k for c_ in cells_of(p) for k in grid.get(c_, ())}
         near = [taken[k] for k in near if taken[k].intersects(rest)]
         if near:
@@ -494,47 +585,36 @@ def main():
     ctx = box(*CONTEXT)
     road = LineString(ROAD).buffer(ROAD_HALF, cap_style="flat", join_style="round")
     bld_union = unary_union([bd["poly"] for bd in buildings])
-    # David Street steps (footprints clipped to the open street)
-    steps = []
-    pts = DAVID["pts"]
-    total = sum(math.dist(a, b) for a, b in zip(pts, pts[1:]))
-    s, k = DAVID["start_s"], 0
+    # stepped streets (pipeline/stairs.py): David Street from its first step, every OSM steps way,
+    # and any lane steeper than 7 %, all from the terrain
     open_street = ctx.difference(bld_union).difference(cit_outer)
-    while s + DAVID["tread"] < total:
-        acc = 0.0
-        for a, b in zip(pts, pts[1:]):
-            L = math.dist(a, b)
-            if acc + L >= s:
-                t = (s - acc) / L
-                p = (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
-                dirn = ((b[0] - a[0]) / L, (b[1] - a[1]) / L)
-                break
-            acc += L
-        k += 1
-        side = (-dirn[1], dirn[0])
-        hw, ln = DAVID["width"] / 2, DAVID["tread"] + 0.01
-        quad = Polygon([(p[0] + side[0] * hw, p[1] + side[1] * hw), (p[0] - side[0] * hw, p[1] - side[1] * hw),
-                        (p[0] - side[0] * hw + dirn[0] * ln, p[1] - side[1] * hw + dirn[1] * ln),
-                        (p[0] + side[0] * hw + dirn[0] * ln, p[1] + side[1] * hw + dirn[1] * ln)])
-        top = round(-(k - 1) * DAVID["riser"], 3)
-        for q in polys_of(quad.intersection(open_street), 0.05):
-            steps.append({"poly": poly_json(q), "top": top, "bottom": round(-david_drop(s + DAVID["tread"]) - 0.4, 3),
-                          "dir": [round(dirn[0], 4), round(dirn[1], 4)]})
-        s += DAVID["tread"]
-    steps_union = unary_union([Polygon(st["poly"]["ext"]) for st in steps]).buffer(0.001)
+    fp_list = [bd["poly"] for bd in buildings]
+    fp_tree = STRtree(fp_list)
+    david = LineString(DAVID["pts"])
+    st_recs = stairs.build(d["ways"], street_z, open_street,
+                           lambda w, ln: infill.street_halfwidth(w["tags"], ln, fp_tree, fp_list),
+                           skip=david.buffer(DAVID["width"] / 2 + 1.0).union(box(*CONTEXT).difference(CITY.buffer(80.0))),
+                           extra=[(david, DAVID["width"] / 2, DAVID["start_s"], david.length)])
+    steps = [{"poly": poly_json(r_["poly"]), "top": r_["top"], "bottom": r_["bottom"], "dir": r_["dir"]}
+             for r_ in st_recs]
+    steps_union = unary_union([r_["poly"].buffer(0) for r_ in st_recs] or [Polygon()]).buffer(0.001)
 
-    street = ctx.difference(bld_union).difference(cit_outer).difference(steps_union)
+    sunken = unary_union([sk["poly"] for sk in SUNKEN])
+    street = ctx.difference(bld_union).difference(cit_outer).difference(steps_union) \
+        .difference(unary_union(GROUND_HOLES)).difference(sunken)
     road_area = street.intersection(road)
     paving_all = street.difference(road)
     kerb_band = paving_all.intersection(road.buffer(KERB_BAND))
     paving = paving_all.difference(kerb_band)
     courtyard = cit_inner.difference(bld_union)
     regions = [
-        ("paving", paving, street_z),
-        ("kerb_band", kerb_band, street_z),
-        ("setts", road_area, lambda x, y: street_z(x, y) - KERB),
-        ("grass", moat.buffer(-0.01), lambda x, y: -MOAT_DEPTH),
-        ("paving", courtyard, lambda x, y: 1.0),
+        ("paving", paving, street_z_v),                    # z functions take arrays
+        ("kerb_band", kerb_band, street_z_v),
+        ("setts", road_area, lambda x, y: street_z_v(x, y) - KERB),
+        ("grass", moat.buffer(-0.01), lambda x, y: np.full(len(x), -MOAT_DEPTH)),
+        ("paving", courtyard, lambda x, y: np.full(len(x), 1.0)),
+    ] + [
+        ("paving", sk["poly"].difference(bld_union), lambda x, y, dz=sk["dz"]: street_z_v(x, y) + dz) for sk in SUNKEN
     ]
     ground = []
     for mat, reg, zf in regions:
@@ -582,6 +662,10 @@ def main():
             if cit_inner.contains(Point(m)):
                 z = 1.0
             eground.append(round(z, 3))
+        for door in GATE_DOORS.get(osm, []):              # gate passages: level at the doors
+            i_ = min(range(len(r)), key=lambda k_: LineString([r[k_], r[(k_ + 1) % len(r)]]).distance(Point(door)))
+            _, (nx_, ny_), _ = edge_frame(r[i_], r[(i_ + 1) % len(r)])
+            eground[i_] = round(street_z(door[0] + nx_, door[1] + ny_), 3)
         zs = [street_z(*p) for p in r]
         g_hi = max(zs) if not cit_inner.contains(q.centroid) else 1.0
         g_lo = min(min(zs), min(eground))
@@ -679,7 +763,7 @@ def main():
                         z += 3.6
         # skyline: rooftop rooms (some with red-tile roofs) and lime-washed domes
         rec["roof_rooms"] = []
-        if style["roof"] == "flat" and rec["roof"]:
+        if style["roof"] == "flat" and rec["roof"] and osm not in LANDMARK_IDS and not HARAM.contains(q.centroid):
             rp = max(rec["roof"], key=lambda p_: Polygon(p_["ext"]).area)
             roofpoly = Polygon(rp["ext"], rp["holes"]).buffer(-0.6)
             if roofpoly.area > 90 and brng.random() < (0.45 if rec["tier"] != "context" else 0.3):
@@ -757,11 +841,14 @@ def main():
                "road_area": road_area, "obstacles": obstacles, "moat": moat, "cit_outer": cit_outer,
                "cit_outer_r": cit_outer_r, "moat_edges": moat_edges, "hero": HERO_ZONE, "david": DAVID,
                "street_z": street_z, "kerb": KERB, "gate": GATEHOUSE, "walls": CITY_WALLS, "steps": steps,
-               "courtyard": courtyard}
+               "courtyard": courtyard, "haram": HARAM, "landmark_ids": LANDMARK_IDS,
+               "woods": [Polygon(w["pts"]).buffer(0) for w in d["ways"] if w.get("closed") and len(w.get("pts") or []) > 3
+                         and (w["tags"].get("landuse") in ("forest", "orchard") or w["tags"].get("natural") in ("wood", "scrub")
+                              or w["tags"].get("leisure") in ("park", "garden"))
+                         and not Polygon(w["pts"]).buffer(0).intersects(PLATFORM)]}
     props, cables, ground_decals, beams = dressing.dress(ctxinfo, rng)
 
     # ---------------------------------------------------------------- the rest of the wall circuit (OSM)
-    walls_generic = generic_walls(d, cit_outer, gate_poly)
 
     spec = {
         "poc_box": POC, "context_box": CONTEXT,
