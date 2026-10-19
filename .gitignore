@@ -43,3 +43,4 @@ data/photos_ref/*/*.jpg
 game/src/legacy/
 data/spec/
 build/logs/
+data/terrain_street.json

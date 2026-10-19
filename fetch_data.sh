@@ -16,7 +16,7 @@ mkdir -p data/raw/terrain
   'https://api.openstreetmap.org/api/0.6/map?bbox=35.2215,31.7715,35.2256,31.7815'
 
 # Elevation: AWS Terrain Tiles (terrarium encoding, SRTM-derived here), z15
-for t in 15/19590/13330 15/19591/13330 15/19590/13331 15/19591/13331; do
+for t in 15/19590/13329 15/19591/13329 15/19590/13330 15/19591/13330 15/19590/13331 15/19591/13331; do
   f="data/raw/terrain/$(echo $t | tr / _).png"
   [ -f "$f" ] || curl -sS -o "$f" "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/$t.png"
 done

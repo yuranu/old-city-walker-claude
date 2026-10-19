@@ -14,6 +14,7 @@ PY=.venv/bin/python
 if [ "$(ls /dev/dri | grep -c renderD)" -gt 1 ]; then export DRI_PRIME=1; fi
 $PY pipeline/osm_to_local.py
 [ -f data/sectors.json ] || $PY pipeline/sectors.py
+$PY pipeline/terrain_street.py > /dev/null      # street levels (1865 OS spot heights + DEM; 4 s)
 $PY pipeline/make_spec.py
 [ -f data/textures/gen/manifest.json ] || $PY pipeline/gen_textures.py
 [ -f pipeline/gen_signs.py ] && [ ! -f data/textures/gen/signs.png ] && $PY pipeline/gen_signs.py

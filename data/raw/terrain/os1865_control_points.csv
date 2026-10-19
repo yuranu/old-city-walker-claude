@@ -1,0 +1,24 @@
+# Control points tying the 1865 Ordnance Survey 1:2500 scan (pixel frame of
+# os1865_spot_heights.csv) to the local frame (x east, y north, metres from the Jaffa Gate node).
+# Local coordinates come from OSM features in data/osm_local.json / data/oldcity_polygon.json
+# (gate buildings, Haram corners as wall-line intersections, sharp corners of the city wall ring).
+# A plain affine is fitted by least squares; RMS residual ~6 m (scan of a linen-mounted folding map).
+name,px,py,x,y,osm_feature
+jaffa,440,2370,0.0,0.0,node 561157424 Jaffa Gate
+damascus,1320,640,268.4,557.4,building w616186088 Damascus Gate centroid
+lions,3258,955,888.6,467.3,building w288395731 Lions' Gate centroid
+golden,3285,1612,904.3,258.3,building w291836693 Golden Gate centroid
+dome,2770,1935,733.5,154.0,way 291836699 Dome of the Rock centroid
+haram_se,3425,2590,948.17,-60.37,haram polygon SE corner (wall-line intersection)
+haram_ne,3275,1195,901.21,406.94,haram polygon NE corner (wall-line intersection)
+zion,1062,3682,203.7,-414.7,building w290671706 Zion Gate centroid
+dung,2425,3045,627.9,-199.3,building w1545285986 Dung Gate centroid
+chain,2490,2195,643.7,73.3,building w291836687 Gate of the Chain centroid
+hezekiah,872,2203,138.5,60.8,way 126086870 Hezekiah's Pool centroid
+edicule,1045,1750,186.3,203.4,node 939092040 Holy Sepulchre (rotunda centre)
+kibrit,1880,3515,452.4,-355.8,city wall ring corner (Burj al-Kibrit)
+wall_s2,1910,3300,472.8,-290.0,city wall ring corner
+wall_s3,2230,3050,569.7,-208.6,city wall ring corner
+city_sw,495,3675,30.0,-410.0,city wall ring SW corner
+st_anne,3110,770,842.9,526.7,building w126864879 Saint Anne Church centroid
+wall_n_jog,1935,330,471.5,664.0,city wall ring jog between Damascus and Herod's gates
