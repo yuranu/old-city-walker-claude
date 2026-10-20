@@ -1,0 +1,759 @@
+{
+ "sector": "s01_armenian",
+ "sources": [
+  "data/photos_ref/s01_armenian/01_195104368.jpg",
+  "data/photos_ref/s01_armenian/02_195104530.jpg",
+  "data/photos_ref/s01_armenian/03_195104793.jpg",
+  "data/photos_ref/s01_armenian/04_195105576.jpg",
+  "data/photos_ref/s01_armenian/05_195154357.jpg",
+  "data/photos_ref/s01_armenian/13_75891750.jpg",
+  "data/photos_ref/s01_armenian/15_85750135.jpg",
+  "data/photos_ref/s01_armenian/16_85750136.jpg",
+  "data/photos_ref/s01_armenian/17_85750150.jpg",
+  "data/photos_ref/s01_armenian/20_85630597.jpg",
+  "data/photos_ref/s01_armenian/21_128370222.jpg",
+  "data/photos_ref/s01_armenian/23_52659378.jpg",
+  "data/photos_ref/s01_armenian/24_52659390.jpg",
+  "data/photos_ref/s01_armenian/28_63461937.jpg",
+  "data/photos_ref/s01_armenian/33_133184349.jpg",
+  "data/photos_ref/s01_armenian/34_85630582.jpg",
+  "data/reference/s01_armenian.md"
+ ],
+ "notes": "No market streets in this sector: the Armenian Quarter is a walled-compound quarter along one service road (notes section 1), with a handful of shops that are hand facades (overrides), so souq_streets is empty on purpose (a souq profile would also merge canopies into the hand facades). The two road tunnels are OSM layer -1 and were not carved at all (the road was blocked twice); listing them in covered_streets opens them, at the cost of souq-kind vault proportions (see requests). Open areas stop the infill from narrowing the road: the infill corridor for way 26506007 is only 1.4 m half-width, which put a 3 m band of infill in front of the mapped west row and closed the parking strip of P5.",
+ "souq_streets": {},
+ "covered_streets": [
+  "44376249",
+  "290669005"
+ ],
+ "open_areas": [
+  {
+   "ring": [
+    [
+     85.0,
+     -43.0
+    ],
+    [
+     109.0,
+     -43.0
+    ],
+    [
+     110.2,
+     -52.0
+    ],
+    [
+     108.6,
+     -70.0
+    ],
+    [
+     108.3,
+     -77.0
+    ],
+    [
+     113.5,
+     -83.5
+    ],
+    [
+     116.8,
+     -90.3
+    ],
+    [
+     114.3,
+     -90.4
+    ],
+    [
+     90.1,
+     -92.2
+    ],
+    [
+     85.0,
+     -92.5
+    ]
+   ],
+   "why": "west side of the Christ Church stretch and the Kishle forecourt: photo 33 (from the Citadel) shows the road edged by the moat parapet and railing over the excavation pit, then the ~20 x 15 m sett forecourt closed by the police block w290669980; nothing built there (infill f11 was a 6.8 m block on it)"
+  },
+  {
+   "ring": [
+    [
+     114.0,
+     -90.4
+    ],
+    [
+     115.3,
+     -106.3
+    ],
+    [
+     117.3,
+     -116.4
+    ],
+    [
+     116.2,
+     -117.1
+    ],
+    [
+     114.0,
+     -146.3
+    ],
+    [
+     113.7,
+     -147.6
+    ],
+    [
+     111.1,
+     -169.7
+    ],
+    [
+     109.5,
+     -173.6
+    ],
+    [
+     108.6,
+     -177.4
+    ],
+    [
+     103.3,
+     -178.8
+    ],
+    [
+     103.4,
+     -181.5
+    ],
+    [
+     105.5,
+     -185.0
+    ],
+    [
+     111.8,
+     -185.5
+    ],
+    [
+     116.0,
+     -185.8
+    ],
+    [
+     116.6,
+     -180.4
+    ],
+    [
+     116.6,
+     -171.5
+    ],
+    [
+     117.4,
+     -166.0
+    ],
+    [
+     118.2,
+     -160.0
+    ],
+    [
+     118.7,
+     -154.4
+    ],
+    [
+     119.2,
+     -148.5
+    ],
+    [
+     120.1,
+     -144.3
+    ],
+    [
+     121.5,
+     -125.0
+    ],
+    [
+     121.8,
+     -112.2
+    ],
+    [
+     121.5,
+     -104.6
+    ],
+    [
+     120.2,
+     -101.2
+    ],
+    [
+     119.9,
+     -94.3
+    ],
+    [
+     119.6,
+     -93.3
+    ],
+    [
+     117.3,
+     -84.1
+    ],
+    [
+     113.5,
+     -83.5
+    ]
+   ],
+   "why": "the narrow stretch of Armenian Patriarchate Rd (y -90..-180) between the faces of the mapped rows: west w290669980/w1394899938/w1394458560/w1394458561, east w1550194749 .. w1392907911. Photos 05, 13, 21 show one car width + a 1.6-2 m pavement (5.2-5.9 m wall to wall, notes P2 R4); the infill band put walls 1.4 m off the centre line (2.8 m street). Gaps in the rows stay fillable behind this line (05: walls continuous). At the south end it takes in the junction space at the head of St James St between w1394458561, w1545817482, w1550194752 and the north face of the tunnel building (notes P3, R4: 7-34 m between footprints), which the infill had closed in front of the tunnel mouth"
+  },
+  {
+   "ring": [
+    [
+     108.4,
+     -211.1
+    ],
+    [
+     114.4,
+     -211.6
+    ],
+    [
+     112.9,
+     -212.8
+    ],
+    [
+     112.4,
+     -223.7
+    ],
+    [
+     112.3,
+     -224.8
+    ],
+    [
+     111.8,
+     -236.4
+    ],
+    [
+     109.8,
+     -265.4
+    ],
+    [
+     106.4,
+     -265.1
+    ],
+    [
+     105.9,
+     -256.2
+    ],
+    [
+     107.0,
+     -222.8
+    ]
+   ],
+   "why": "east half of P5 and the pavement in front of the St James convent wall (y -211..-265): 03, 15, 17, 30 show the wall rising straight from a 1.6-2.5 m pavement; the infill had put a rubble sliver with a door 0.5-1 m in front of the wall north of the gate"
+  },
+  {
+   "ring": [
+    [
+     101.6,
+     -208.4
+    ],
+    [
+     108.3,
+     -209.0
+    ],
+    [
+     107.6,
+     -216.0
+    ],
+    [
+     107.0,
+     -222.8
+    ],
+    [
+     106.0,
+     -256.2
+    ],
+    [
+     105.7,
+     -265.0
+    ],
+    [
+     101.4,
+     -267.5
+    ],
+    [
+     101.3,
+     -245.5
+    ],
+    [
+     102.5,
+     -241.3
+    ],
+    [
+     102.3,
+     -235.3
+    ],
+    [
+     100.9,
+     -230.1
+    ],
+    [
+     101.4,
+     -219.8
+    ],
+    [
+     92.0,
+     -219.6
+    ],
+    [
+     92.0,
+     -218.0
+    ],
+    [
+     101.6,
+     -218.0
+    ]
+   ],
+   "why": "west side of P5 (y -208..-267): the sett square at the south mouth of the north tunnel (15, camera on it) and the slab/sett parking strip with chamfered bollards in front of the green garden fence (01, 03, 17; notes P5 R10, R20); infill f0 had built a wall along it"
+  }
+ ],
+ "manual_buildings": [
+  {
+   "id": "m_s01_armenian_1",
+   "ring": [
+    [
+     103.66,
+     -265.18
+    ],
+    [
+     103.62,
+     -292.95
+    ],
+    [
+     110.0,
+     -292.95
+    ],
+    [
+     109.9,
+     -274.55
+    ],
+    [
+     109.8,
+     -265.4
+    ]
+   ],
+   "height": 11.0,
+   "shops": false,
+   "name": "south arch building over Armenian Patriarchate Rd",
+   "why": "replaces OSM w1394456881 (building=roof over the road, same footprint cut 0.2 m short at the south end): the building stands over the road (01, 02, 03, 17, 20; notes P6/L9), but carving tunnel 290669005 out of the OSM ring left a 0.1 m x 3 m sliver of wall across the south mouth (the ring ends 0.1 m beyond the way's flat cap), which blocked 3 of the 4.6 m of the passage. Cut at y -292.95 the carve leaves two clean strips."
+  },
+  {
+   "id": "m_s01_armenian_2",
+   "ring": [
+    [
+     105.65,
+     -185.27
+    ],
+    [
+     103.83,
+     -210.81
+    ],
+    [
+     114.35,
+     -210.95
+    ],
+    [
+     116.16,
+     -186.01
+    ]
+   ],
+   "height": 11.4,
+   "shops": false,
+   "name": "north tunnel building over Armenian Patriarchate Rd",
+   "why": "replaces OSM w1392907903 (same footprint, south edge moved 0.1-0.6 m north): the 3-storey building over the north tunnel (04, 05, 13, 21, 39; notes P4/L8). Carving tunnel 44376249 out of the OSM ring left a 0.13 m sliver of wall across the west half of the south mouth (the way's flat cap is skewed against the footprint edge). With the south edge north of the cap the carve leaves two clean pieces."
+  }
+ ],
+ "remove_buildings": {
+  "w1394456881": "replaced by m_s01_armenian_1 (same building, footprint trimmed 0.2 m at the south end) so that the carved road tunnel 290669005 is not closed by a sliver wall; see manual_buildings and requests",
+  "w1392907903": "replaced by m_s01_armenian_2 (same building, south edge trimmed <= 0.6 m) so that the carved road tunnel 44376249 is not half-closed by a sliver wall; see manual_buildings and requests"
+ },
+ "props": [
+  {
+   "type": "bollard",
+   "p": [
+    110.78,
+    -220.9
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    110.5,
+    -226.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    110.37,
+    -229.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    110.24,
+    -232.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    110.11,
+    -235.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    109.94,
+    -238.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    109.73,
+    -241.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    109.53,
+    -244.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    109.32,
+    -247.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    109.11,
+    -250.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    108.91,
+    -253.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    108.7,
+    -256.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    108.49,
+    -259.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    108.28,
+    -262.0
+   ],
+   "rot": 0,
+   "s": 0.72,
+   "col": true,
+   "r": 0.12,
+   "why": "black steel bollards (~0.65 m, R6) on the convent-side kerb line ~1.7 m off the wall, ~3 m apart (03, 17, 30, 01)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    105.43,
+    -211.8
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    105.09,
+    -215.1
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    104.75,
+    -218.4
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    104.41,
+    -221.7
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    104.23,
+    -225.0
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    104.12,
+    -228.3
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    104.01,
+    -231.6
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.9,
+    -234.9
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.79,
+    -238.2
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.68,
+    -241.5
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.58,
+    -244.8
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.47,
+    -248.1
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.36,
+    -251.4
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.25,
+    -254.7
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.08,
+    -258.0
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    103.26,
+    -261.3
+   ],
+   "rot": 0,
+   "col": true,
+   "r": 0.2,
+   "why": "white limestone chamfered bollards along the west sett parking strip and the sett square south of the north tunnel (15, 17; notes P5 R10)"
+  },
+  {
+   "type": "lamp_modern",
+   "p": [
+    103.9,
+    -236.0
+   ],
+   "rot": 90,
+   "s": 0.85,
+   "col": true,
+   "r": 0.2,
+   "why": "anthracite inverted-L LED pole on the west kerb of P5, arm over the road (01, 03, 17; notes P5)"
+  },
+  {
+   "type": "lamp_modern",
+   "p": [
+    103.4,
+    -256.5
+   ],
+   "rot": 90,
+   "s": 0.85,
+   "col": true,
+   "r": 0.2,
+   "why": "second LED pole on the west kerb near the south arch (01: pole beside the parked car)"
+  }
+ ],
+ "requests": [
+  "TUNNELS (spec owner, make_spec covered_ways): the two road tunnels of Armenian Patriarchate Rd are OSM layer -1 (44376249 north, under w1392907903; 290669005 south, under w1394456881 building=roof) and were skipped by covered_ways, so both buildings stood across the road and blocked it. This profile lists them in covered_streets, which opens them but makes them 'souq' vaults (spring 4.4 m, top = crown + 0.6, so a slot opens in the building above). Wanted: passage-kind vaults whose mass reaches the building top. North tunnel 44376249: clear width ~2.9 m (OSM width tag says 2.2; photo 04 scaled from a pedestrian gives ~2.9 m), crown ~3.5 m (OSM maxheight 2.9 m), so hw 1.45, spring ~1.7, top = building top ~11.4 m above the street; plastered vault and walls inside (10, 43). South tunnel 290669005: semicircular arch ~5 m wide, crown ~5.5 m (01, 03, 17), so hw 2.5, spring ~2.4-3.0, top ~11 m (cornice); inside a plastered pointed barrel vault in 2-3 bays with ashlar transverse arches (22, 04, 06). Both carry cars: keep the axis straight so the vista through the south tunnel to the Dormition tower works (18, 20).",
+  "PASSAGE CARVE SLIVERS (make_spec): a covered street is carved with a flat-capped buffer of its centre line, so where a footprint reaches a few cm past the end of the way (or the cap is skewed against the footprint edge) a sliver wall 0.1-0.2 m thick survives across the tunnel mouth, gets a facade and blocks walking: 0.1 x 3 m across the south mouth of 290669005 (w1394456881), 0.13 x 1.1 m across the south mouth of 44376249 (w1392907903). Worked around here with remove_buildings + trimmed manual_buildings (m_s01_armenian_1/2); a carve extended to the footprint edge (or dropping pieces thinner than ~0.5 m) would let those two entries go.",
+  "BASE REBUILD: the ground under the two tunnels only exists once data/spec/base.json is rebuilt with this profile (render_city loads game/public/base); until then the tunnel floors render as holes.",
+  "ROAD SURFACE: Armenian Patriarchate Rd south of (113,-83) is asphalt (OSM surface=asphalt on 26506007, 44376249, 44376240, 290669005, 26492736; photos 01-05, 13, 17, 21), ~3.2-5 m carriageway with pale limestone slab pavements (0.5 x 0.8-1.0 m) and long low kerbs (<=5 cm); currently the whole width is generic paving. North of (113,-83) and on the Kishle forecourt (x 92-116, y -78..-92) it is grey setts (33, 34), as on the square (the ROAD setts stop at (108.1,-78.4)). The west parking strip of P5 and the sett square at (100-106, -209..-220) are rough grey setts (15, 17).",
+  "MOAT EXCAVATION (ground): west of the road at x ~86-105, y -48..-78 the ground is a pit some 4-6 m below the road (the Kishle/moat excavations, photo 33: rubble retaining wall with plants, cypresses standing in it), behind a low parapet with a steel railing along the west road edge. Now it is street level and flat; OSM retaining_wall 290669977 ends at (104.1,-71.7). Needs a sunken region + parapet (like SUNKEN / rail_moat).",
+  "MESH SECURITY FENCE (new parapet feature): a ~2 m steel mesh fence on angled brackets along the parapet of the west wall of the narrow stretch (w290669980 east face, w1394899938, w1394458560, w1394458561 and the infill between; 05, 13, 21) and on the east retaining wall south of the south tunnel (w290668993 west face / OSM wall 1056503911; 02, 20).",
+  "GARDEN EDGE: dark green steel bar fence ~1.8 m on a ~0.6 m stone plinth along the east edge of garden 1394066412 (x 101-102.5, y -219.8 .. -267.5) (01, 03, 17), with a hedge behind it (01); the garden and the seminary grounds (1394066412, 290670297) are lawn with olive/ash trees (14), not paving.",
+  "TREES: the big trees on the west side of P5 are Aleppo/stone pines whose crowns overhang the road (01, 03, 17, 30), OSM natural=tree (93.5,-235.7), (97.6,-244.1), (92.1,-259.5), (105.0,-261.4); now olives. A pine (tall bare trunk, flat umbrella crown ~8-10 m wide, 12-15 m high) and a cypress prop are needed; cypresses also stand in the moat pit (33).",
+  "FLYING ARCHES (new street feature): St James St (26492729) from x ~150 to ~213 has a series of segmental stone arches spanning wall to wall every 4-8 m, springing at 3-4 m, crown 4.5-5.5 m, one ring of voussoirs ~0.5 m deep and 0.6-0.8 m thick, some with a lamp, dry plants on top (24, 27, 28; 25/26 same type). The lane is 3-3.5 m wide between walls, slab-paved with round cast-iron manholes on the centre line and galvanised tube handrails on the walls at ~0.9 m (23, 24, 26, 27).",
+  "ST JAMES ST STEPS (stairs.py): St James St (26492729) gets runs of treads east of x ~175 (e.g. 5.31 -> 4.78 m at (183,-164)) because its fall exceeds 7 % locally, but OSM has no steps on it and photos 23, 24, 26, 27 show a sloping slab lane with wall handrails and no treads (notes P7). A per-way 'no steps' (ramp) exception is wanted.",
+  "WINDOW HARDWARE (new facade features), the Armenian Quarter motif on the convent wall (w290678899, w612002272) and elsewhere: (1) sheet-metal pent hoods with a scalloped/pierced fringe over most windows (03, 07, 15, 16, 30); (2) projecting iron cage windows ~0.4 m deep with lozenge/scroll grilles and flower pots (15, 16, 30; ~1.6 x 1.9 m over the gate); (3) bellied (curved-bar) grilles (06, 37). The overrides use plain grilled windows as stand-ins.",
+  "CONVENT GATE (landmark-type modelling, w290678899 at (112.5,-223.4)): the gate is the mouth of building passage 722675059, so it renders as a plain 3.2 m vault mouth. The real gate is a pointed (slightly horseshoe) recess ~5.8 m wide, apex ~7 m, ~1 m deep, with a plain ashlar conch, a sawtooth/muqarnas band at ~4 m and a small ~1.7 x 2.5 m doorway; white enamel sign 'COUVENT ARMENIEN St JACQUES' (~1.6 x 0.5 m) over the door, carved niches either side, a cage window above, two scroll-bracket lamps at ~3 m, polished pink/cream slabs in front (07, 16, 30, 03; notes section 3).",
+  "SOUTH ARCH BUILDING (w1394456881 + w1394456882), the set piece closing the vista of P5: north face = neoclassical pedimented front over a semicircular arch ~5 m wide (crown ~5.5 m) with a heavy moulded archivolt and keystone console, three tall grilled windows above, cornice ~11 m, pediment apex ~13 m; west block with an external stair of ~7 steps and a steel handrail up to a grey door; low grey dome behind the parapet over the passage (01, 03, 17, 02). South face: three round-arched windows with white louvred shutters over the arch (02). With the passage carved, w1394456881 is only two 0.9 m strips, so its facades cannot carry this: it needs a landmark-style builder (or a facade feature for a pediment + archivolt on a vault mouth).",
+  "PILLOW WALL TEXTURE: the east side of the narrow stretch from about y -150 to -180 is faced with raised cement 'pillow' pointing with incised reliefs (eagle, dove, cross) (05, 11; notes P2 R21): a wall material variant.",
+  "SIGN CELLS for data/textures/gen/signs.json: 'ARMENIAN TAVERN' tile panel + vertical banner (12, 13, 21); navy 'SANDROUNI' sign with a yellow arrow (10, 43); 'BULGHOURJI Armenian Bar Restaurant' dark board (08, 19); grey scalloped 'CHRIST CHURCH' awning valance (34); turquoise 'WESTERN WALL / THE JEWISH QUARTER' direction tiles (44); 'WELCOME TO THE JEWISH QUARTER' tile plaque (45); 'COUVENT ARMENIEN St JACQUES' (16). plaque_armenian is used as is.",
+  "PROPS: red Israel Post parcel-locker kiosk at OSM node (116.2,-54.1) and wall post box (117.5,-48.7) (34); red-and-white boom barrier at the south arch mouth (17); blue police barrier panels and two flagpoles in front of the Kishle (33); a scroll-bracket wall lamp with a cross tip (07, 16, 30).",
+  "AWNINGS INVISIBLE FROM BELOW (facade_build.py): facade awnings (extra_awnings / 'awning': true) and souq canopies are built as a quad plus the same quad reversed; the reversed one does not survive (build/s01_armenian.blend has only the upward face of the Armenian Tavern awning at (120.3,-129.5), normal z +0.96), and the material is back-face culled, so from the street the Tavern canopy and the two Christ Church awnings are invisible. Needs a thin box or separate vertices.",
+  "CHECK_OVERRIDES on split buildings: check_overrides resolves anchors only against the piece whose id equals the OSM id, so facades anchored on the other pieces of a building split by a passage (w290678899_1 south of the convent gate, m_s01_armenian_1_1, m_s01_armenian_2_1) are reported as errors although make_spec applies them correctly.",
+  "FOR THE s02_zion OWNER (photos 02, 18, 20; notes R11): just south of the sector edge the west side of the road is a ~3-4 m garden wall with bougainvillea (w290669003, now 14.2 m, and the infill strip west of the road at x 92-102.6, y -293..-334), and the east side is the ~4-5 m retaining wall of w290668993 / OSM wall 1056503911 with a mesh fence on top; the infill sliver f-piece at x 112.6-114.3, y -295..-323 stands in front of that wall. The vista through the south tunnel (crenellated south wall + Dormition tower, 18/20) depends on that stretch staying low.",
+  "RENDERING NOTE: from ~03:20 on 2026-10-20 render_city with DRI_PRIME=1 produced all-black frames (every camera, also a 480x270 test); the same renders without DRI_PRIME are correct, so the later renders of this pass were made without it.",
+  "DOMES flag: settings 'domes': 0 does not stop roofscape's vernacular domes (make_spec only skips them for osm in HEIGHTS); a way to say 'no domes' from an override would help for hipped-roof neighbours and the convent street block."
+ ]
+}

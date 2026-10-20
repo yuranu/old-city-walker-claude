@@ -1,0 +1,18 @@
+{
+ "building": "w1393419056",
+ "name": "Al-Wad north shop building",
+ "sources": [
+  "OpenStreetMap node Sweets confectionery (9833781819)"
+ ],
+ "why": "OSM shop node Sweets confectionery (9833781819) in/at this footprint on Al-Wad: the Al-Wad front is a shop row (the street rule gives one only 70 % of the time). No street-level photo of this stretch (notes 1.7); D14 just south shows closed shop fronts. Rule-based shop bays, nothing else changed.",
+ "settings": {},
+ "facades": {
+  "0": {
+   "at": [
+    329.9,
+    483.4
+   ],
+   "shops": true
+  }
+ }
+}

@@ -978,3 +978,149 @@ No code was edited and git was not run.
   (e50-e52); unverified.
 - HS bell tower height (eaves 23-24 m, apex ~26 m): one scaled photo against OSM's 30 m; not re-solved.
 - The north-east part of the box: OSM only, as the author stated.
+
+---------------------------------------------------------------------------------------------------------------
+
+## Sector pass
+
+Sector pass of 2026-10-20 (no code edited; nothing committed). Deliverables:
+`data/reference/profiles/s04_sepulchre.json` (profile) and 26 building overrides in `data/reference/overrides/`
+(`m_s04_sepulchre_1`, `m_s04_sepulchre_2`, `r3864634`, `w1022672084`, `w1392856696`, `w1392856697`, `w1392903904`,
+`w1392903908`, `w1393364237`, `w1393928804`-`07`, `w1394593883`, `w1394593884`, `w1553088733`, `w290821789`, `w290821801`,
+`w620317526`-`34`). Generators (scratch, rerunnable): `build/spec_s04_sepulchre/gen/gen_profile.py` and
+`gen_overrides.py`. Renders: `renders/sectors/s04_sepulchre/` (`r0_baseline/`, `r1`-`r4/` iterations, `final/`),
+comparison sheets (photo left, render right) in `renders/sectors/s04_sepulchre/sheets/`.
+
+### What the baseline showed (r0, before any change)
+- **Christian Quarter Rd was filled in.** OSM tags the street (way 26492706) layer=-1, so make_spec treats it as
+  neither a street for the infill nor a souq street: infill stood on its centreline at the David St entry (y 43-66)
+  and from y 107 to St Helena Rd (s03's f175), and three s03 pieces stood on it at y 209-260. The building=roof
+  w1393169897 closed it at y 228-238.
+- **The Muristan lanes and the fountain square were half built over**: the square (OSM 620317524) is tagged only
+  surface=sett, so infill f317/f324-f327 filled its west half and narrowed every lane; slivers lined the Suq Aftimos
+  NE diagonal and the north half of Suq ed-Dabbagha. D07's GPS camera position stood inside infill.
+- **The parvis south side was missing**: OSM maps nothing between the Mosque of Omar and the SE gate, so the parvis
+  looked out over a 5 m drop to the street level behind (-14.9).
+- No Christian Quarter Rd souq (the layer -1 street gets no SOUQ_STREETS profile), Muristan blocks 11-13 m with
+  generic windows and 3-8 lime domes each, Papa Andreas at 9 m, the YASSER block at 11.5 m.
+
+### What this pass decided (evidence in the profile `why` fields and the override `notes`)
+- **Open areas** (infill kept off, OSM buildings untouched): Christian Quarter Rd +-3.0 m from y 12 to 206 and +-1.9 m
+  to y 262; the whole Muristan market (OSM 620317519); the Muristan lanes, Suq Aftimos NE diagonal (+-4.2 m), Muristan
+  St, Suq ed-Dabbagha (+-4.3 m) and the south lanes; the Martin Luther School garden (E05: pines at the street line); the Mosque of Omar forecourt (C01, C03; infill
+  f471 rose 10 m behind the parvis terrace); the tree garden behind the parvis south side (OSM trees);
+  four OSM-only layer=-1 lanes in the north-east (way 4710079 = the Suq al-Khawajat line, Al-Battikh Ascent, steps
+  1104186996, footway 257617645). The open areas reach the mapped street walls: a narrower corridor left 0.5-1 m
+  infill slivers standing in front of real facades (f167, f314, f319; request).
+- **Kept** (checked against photos): the infill street wall between the Redeemer and the Propstei (f192 area): E05
+  shows a continuous wall with a red-tiled eave along Muristan St, not the "18 m forecourt" of the G table.
+- **Manual buildings**: `m_s04_sepulchre_1`, the parvis south terrace (x 206-216, top -8.96 = 4.3 m above the
+  requested parvis level, 2.5 m above the lower St Helena run; A06, A09, A10, C02) and `m_s04_sepulchre_2`, the
+  Metochion of Gethsemane (x 216-225, 2 storeys, top -5.8 = 7.5 m above the requested parvis; A09 left, F01,
+  F03), both with photo-matched north faces.
+- **Removed**: five OSM building=roof (layer=1) footprints drawn across street centrelines (w1393169897 on Christian
+  Quarter Rd, w1393408273 on Khan ez-Zeit, w1392513709 on the Via Dolorosa steps, w1392513713 on Qanater Khudair,
+  w1393966574 on way 4710079): they are roofs over the street, not closed buildings. Request: rebuild them as
+  sabats/vaults.
+- **Props**: three square limestone bollards across Muristan St (E05; barrier_post x1.4), the date palm of the parvis
+  terrace (palm x3.6 so its crown shows over the terrace wall), the blue hand cart on Dabbagha (G05).
+- **Christian Quarter Rd souq by hand** (11 buildings, s04 side only): closed dukkan rows (teal panelled steel doors,
+  a few olive and green roll-downs, 2.0-2.6 x 2.8-3.2 m, raised thresholds), shed canopies at 2.9-3.6 m on green hoop
+  brackets, 1.3 m deep (B03, B05, B06); the ceramic street tile at the David St end; the pockets at y 87-106 get shop
+  rows without canopies. St Helena Rd (w290821801 e6): olive and blue steel doors behind 0.38 m x 0.9 m stone
+  platforms (C06), only in the middle 8 m because the edge drops 3.3 m (request).
+- **Muristan photo-matched facades** (`"auto": false`): north block w620317526 (D07/D08: 3 round-arched shops, upper
+  round-arched windows, balcony across the south face, eaves ~10 m), west block w620317527 (D01/D08 east face with
+  2 balconies; D04 SW-lane face with grey-green steel doors under a hoop-bracket canopy), Papa Andreas w620317530
+  (D04: 3 storeys + roof terrace, 12.5 m, green doors, grilled round-arched windows), the D03 corner block
+  w620317531 (single storey 6 m, tall round-arched teal/red/green doors, maroon canopy, red-tile hip), the YASSER
+  block w620317532 (D07: one tall storey, 3 round arches with pale grey doors, awning, 7 m). Rule-based market rows
+  with measured heights for w620317534, w290821789 (D05 left: grey roll-downs under 2.1 m awnings, raised kerb),
+  w1392856697 (D05 right, 9 m instead of 13.3), the y-118 lane blocks, the Alexander block on Dabbagha (10 m above
+  its NW corner = shops + 2 storeys on the street, G04) and the Propstei (clean pale ashlar, small windows, E05).
+- **Roofs**: the Muristan blocks have long red-tile hipped roofs (F01, F03, D07, D08) but are left flat because
+  roof_hipped() uses the oriented bounding box (16-65 % overhang on these trapezoids); only w620317531 is hipped.
+  `"domes": 1` on three of them only stops the 3-8-dome vernacular field (requests).
+
+### Viewpoints (render_city `--cam` strings with absolute z for `--abs`; heights above ground in parentheses)
+Rendered with the scratch `build/spec_s04_sepulchre/gen/render_local.py` (a copy of blender/render_city.py that
+replaces the shared base ground inside the sector with this spec's ground, because game/public/base/ground.glb still
+has holes where the removed infill stood, and, with `S04_PARVIS_Z=-13.3`, puts the parvis at the requested level),
+on the integrated GPU (the Arc GPU returned black frames for every new process after 03:13 while other renders ran).
+
+| name | photo(s) | `--cam` (absolute z, `--abs`; lens 24 unless noted) | sheet |
+|---|---|---|---|
+| cqr_entry | B05 (B03) | `cqr_entry:172.60,50.00,-6.27:170.30,95.00,-4.42` | final_cqr_entry.jpg |
+| cqr_mid | B05, B03 | `cqr_mid:170.30,97.00,-5.64:172.60,52.00,-4.96` | final_cqr_mid.jpg |
+| sthelena | C04, C06 | `sthelena:174.00,148.40,-6.15:196.00,150.60,-6.29` (on the step run) | final_sthelena.jpg |
+| parvis_a09 | A09 (A06) | `parvis_a09:223.50,171.50,-11.70:206.90,145.80,0.78` (parvis at -13.3) | final_parvis_a09.jpg |
+| parvis_sw | A09 GPS pose | `parvis_sw:219.70,163.80,-11.70:207.00,146.00,-5.21` | final_parvis_sw.jpg |
+| parvis_n | A01, A03 | `parvis_n:215.20,159.50,-11.70:212.00,184.00,-1.05` | final_parvis_n.jpg |
+| fountain_n_wide | D07 (D08) | `fountain_n_wide:225.90,81.30,-13.43:237.40,119.60,-12.44` (lens 19) | final_fountain_n_wide.jpg |
+| fountain_ssw | D01, D02 | `fountain_ssw:220.70,91.80,-13.31:205.00,56.00,-7.29` | final_fountain_ssw.jpg |
+| d04b | D04 (D03) | `d04b:209.30,59.00,-11.24:231.00,93.00,-10.84` | final_d04b.jpg |
+| aftimos_ne | D05 (D06) | `aftimos_ne:259.30,155.20,-14.76:232.00,102.00,-13.23` | final_aftimos_ne.jpg |
+| dabbagha_w | G04 | `dabbagha_w:282.00,153.80,-15.30:240.00,155.00,-10.64` | final_dabbagha_w.jpg |
+| muristan_s | E05 | `muristan_s:261.50,147.50,-15.40:262.50,100.00,-14.91` | final_muristan_s.jpg |
+
+Entries covered: from David St up Christian Quarter Rd (cqr_entry) and into the Muristan from the south (d04b);
+from Suq ed-Dabbagha into Suq Aftimos (aftimos_ne) and along Dabbagha from the east (dabbagha_w); down St Helena Rd
+from Christian Quarter Rd (sthelena); Muristan St from the north (muristan_s). Baseline frames of the same places are
+in `r0_baseline/` (several of them float above the roofs: the base ground had holes under the old infill).
+
+### Comparison with the photos (final sheets) and what remains
+- **Reads as itself now**: Christian Quarter Rd as a closed souq of teal steel doors under canopies with hoop
+  brackets (B05); the Muristan as 2-storey arcaded blocks round an open square, the north block behind the fountain
+  with its 3 arches and balcony (D07, D08), the YASSER block, the Papa Andreas block, the D03 corner shop; Suq Aftimos
+  as a 7 m market lane with shop rows and deep shades on both sides (D05); the parvis south side as a low terrace wall
+  with small grilled windows and lamps beside the 2-storey Metochion (A09).
+- **Missing features (requests)**: the green rib arches over Christian Quarter Rd; the Aftimos fountain and the dark
+  paving disc; the red-tile hipped roofs of the Muristan blocks (flat here); the cypress (and a real palm) on the parvis
+  terrace; beige fabric awnings (grey corrugated sheet here); the pink-pier arcade; café tables, goods and signs
+  (no YASSER fascia cell).
+- **Levels (requests)**: the parvis is 3.1 m too high in the spec (the parvis renders here simulate -13.3); the
+  fountain square slopes 2.2 m; doors on the St Helena step run.
+- **Landmarks (requests)**: the Mosque of Omar block is a 14 m wall right behind the parvis terrace and its minaret
+  hardly shows (A09, G04, C04); with the parvis lowered, the Holy Sepulchre portal and its columns stand at the right
+  height (parvis_n).
+- **Geometry conflicts left as OSM has them**: Muristan St beside the Redeemer is 3-6 m in OSM against ~7 m in E05
+  (Review R13), so muristan_s is tighter than the photo; the D04 camera is probably ~10 m south-west of its GPS fix
+  (the Redeemer tower shows past the Papa Andreas corner in D04, not from the GPS spot).
+- **Neighbours not rebuilt**: s03's GLB still has infill on Christian Quarter Rd at y 107-151 (removed by this
+  profile's open area in the merged spec; it disappears when s03 is rebuilt) and base/ground.glb still has holes.
+- **Render caveat**: on the integrated GPU the canopy sheets of the Christian Quarter Rd and Dabbagha shops do not
+  show (brackets only); they rendered on the Arc GPU (r2 aftimos_ne) and in aftimos_ne/muristan_s here.
+- **Not done**: the north-east part (Aqabat el-Khanqa, Khan ez-Zeit, Via Dolorosa VII-IX) has no photo-based
+  overrides; only blocked streets were opened there.
+
+### Requests (also in the profile)
+1. (Done upstream during the pass: make_spec's profile merge used to run before `SOUQ_STREETS` was defined, a
+   NameError for any profile with `souq_streets`.) The profile now carries Christian Quarter Street [0.95, 0.9],
+   Saint Helena Road [0.9, 0.0], Suq Aftimos [0.9, 0.7], Suq Ed-Dabbagha [0.85, 0.6], Muristan Street [0.15, 0.3]
+   (west side only, overridden; E05).
+2. Christian Quarter Street (layer=-1) as street level for souq_lines and infill, without a stone vault south of
+   y 205; vault/sabat north of y 150 (P1b).
+3. Green open rib arches over Christian Quarter Rd y 48-150 (crown 6-7 m, spacing 1.5-2 m; B05, B06).
+4. Parvis LOCAL_FLAT at z = -13.3 (now -9.74, 3.1 m above the St Helena strip; OSM steps 616344391 go down into it).
+5. Fountain square LOCAL_FLAT at z = -15.46 (street_z falls 2.2 m across a level square, D07/D08).
+6. Footprint-following hipped roofs; then roof=hipped on w620317527, w620317526, w620317534, w620317532, w620317530,
+   w290821789.
+7. Per-opening ground on stepped streets (and stepping shop platforms, C06).
+8. Props on the parvis terrace (z offset) and a cypress prop; the cypress, palm and broadleaf tree at (213,147),
+   (218.4,147.4), (218.3,142.5).
+9. The Aftimos fountain and paving disc; the pink-pier arcade over the east lane; parvis column drums.
+10. Infill width test after the priority clip (slivers f167, f314, f319).
+11. A way to switch off the vernacular dome field ("domes": 1 used as a stop-gap on three tile-roofed blocks).
+12. Cream fabric awnings (Suq Aftimos NE lane; café awnings at the square).
+13. Sign cells: YASSER T. BARAKAT fascia, ceramic street tiles (Suq Aftimos, St Helena Rd, Suq ed-Dabbagha), the two
+    HOLY SEPULCHRE signs; street plaques outside the POC box.
+14. Sabats/vaults where five building=roof footprints were removed; vaults over the layer=-1 lanes kept open.
+15. Rebuild base (ground holes under the removed infill).
+16. Landmarks: Mosque of Omar too tall behind the terrace, minaret hardly visible; Holy Sepulchre: Arch of the
+    Virgin Mary in CQR's east wall at y ~222 and the St Helena gate arch.
+
+### Audit (final build, `build/s04_sepulchre.blend`)
+`blender -b build/s04_sepulchre.blend -P blender/audit.py -- --top 8 --json build/spec_s04_sepulchre/audit.json`:
+ignoring pairs with `lod_s04_sepulchre`, 19 coplanar overlaps, 6.63 m2 in all, all of them rule-based infill roofs
+and step runs in the OSM-only north part (f440 at (225.6,275.8) 4.9 m2, f389 at (400.4,285.4) 1.1 m2, the rest under
+0.3 m2), outside every area this pass changed. None involves an overridden or manual building.

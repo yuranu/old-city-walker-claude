@@ -1,0 +1,25 @@
+{
+ "building": "w1394456873",
+ "name": "house on the east side of the narrow stretch",
+ "sources": [
+  "data/photos_ref/s01_armenian/13_75891750.jpg",
+  "data/photos_ref/s01_armenian/21_128370222.jpg",
+  "data/reference/s01_armenian.md#P2"
+ ],
+ "notes": {
+  "height": "rule height was 13.0/10.0 m; 13 and 21 show the east side north of the Tavern as 2-3 storey houses of rough weathered rubble, about as high as the Tavern (~9 m). Facades left to the rules."
+ },
+ "settings": {
+  "height": 9.5,
+  "wall": "rubble",
+  "tint": [
+   0.97,
+   0.94,
+   0.87
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {}
+}

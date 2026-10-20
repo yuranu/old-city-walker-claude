@@ -1,0 +1,246 @@
+{
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/09_lgst_2019.jpg",
+  "data/photos_ref/s10_herod_lions/12_lgst_tractor_2014.jpg",
+  "data/photos_ref/s10_herod_lions/13_lgst_faisal_2016.jpg",
+  "data/photos_ref/s10_herod_lions/14_lgst_muazz_2020.jpg",
+  "data/photos_ref/s10_herod_lions/15_lgst_muazz_2021.jpg",
+  "data/photos_ref/s10_herod_lions/18_lgst_ramparts_2011.jpg",
+  "data/photos_ref/s10_herod_lions/20_ghazali_2011.jpg",
+  "data/photos_ref/s10_herod_lions/26_seminary_2021.jpg",
+  "data/photos_ref/s10_herod_lions/28_bethesda_2019.jpg",
+  "data/photos_ref/s10_herod_lions/29_bethesda_2021.jpg",
+  "data/photos_ref/s10_herod_lions/30_babhutta_2022a.jpg",
+  "data/photos_ref/s10_herod_lions/32_babhutta_2022c.jpg",
+  "data/photos_ref/s10_herod_lions/35_hg_2025c.jpg",
+  "data/photos_ref/s10_herod_lions/36_hg_inside_2026.jpg",
+  "data/photos_ref/s10_herod_lions/40_hga_2016b.jpg",
+  "data/photos_ref/s10_herod_lions/41_darwish_steps_2014.jpg",
+  "data/photos_ref/s10_herod_lions/42_hga_2011.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "covered_streets": [
+  "123254013",
+  "744670522",
+  "744665958"
+ ],
+ "open_areas": [
+  {
+   "ring": [
+    [
+     763.0,
+     420.0
+    ],
+    [
+     779.0,
+     420.0
+    ],
+    [
+     775.5,
+     433.0
+    ],
+    [
+     793.5,
+     436.0
+    ],
+    [
+     794.0,
+     449.5
+    ],
+    [
+     763.0,
+     443.5
+    ]
+   ],
+   "why": "car park 290986915 entrance and its west strip: R:12 (cam (803, 455.7) looking west) shows the stone gate pillars and steel fence at the street edge and the tile-roofed w290986908's east face seen across the open car park; the infill strip f128 (6.5 m) closed both"
+  },
+  {
+   "ring": [
+    [
+     575.5,
+     688.0
+    ],
+    [
+     596.0,
+     687.5
+    ],
+    [
+     604.0,
+     691.5
+    ],
+    [
+     604.0,
+     699.0
+    ],
+    [
+     588.5,
+     701.5
+    ],
+    [
+     575.5,
+     697.5
+    ]
+   ],
+   "why": "Herod's Gate inner plaza (~25 x 10 m, notes 1.5): R:35 / R:36 (cam (577.4, 692.4)) show the paved space south of the tower's inner exit with lanes leaving east and south"
+  },
+  {
+   "ring": [
+    [
+     681.45,
+     426.84
+    ],
+    [
+     640.69,
+     418.55
+    ],
+    [
+     606.32,
+     411.36
+    ],
+    [
+     588.47,
+     407.15
+    ],
+    [
+     570.54,
+     404.14
+    ],
+    [
+     560.49,
+     402.05
+    ],
+    [
+     559.51,
+     406.75
+    ],
+    [
+     569.66,
+     408.86
+    ],
+    [
+     587.53,
+     411.85
+    ],
+    [
+     605.28,
+     416.04
+    ],
+    [
+     639.71,
+     423.25
+    ],
+    [
+     680.55,
+     431.56
+    ]
+   ],
+   "why": "Via Dolorosa (OSM 44830379, the sector's south boundary from x 560 to the Lions' Gate junction at (679, 429)): OSM tags it layer=-1, so infill.py does not treat it as a street corridor and infill blocks it (f122 at x 668-681 by the junction; more pieces on the s09 side at x 558-630). 2.4 m half-width (street 4.3-6.3 m wall to wall, notes 1.0). R:47 / R:14 context; OSM geometry"
+  }
+ ],
+ "manual_buildings": [
+  {
+   "id": "m_s10_lgst_s1",
+   "name": "South side of Lions' Gate Street at the Muazzamiyya (x 714-729)",
+   "ring": [
+    [
+     713.7,
+     425.2
+    ],
+    [
+     716.7,
+     425.0
+    ],
+    [
+     729.7,
+     428.7
+    ],
+    [
+     728.6,
+     435.3
+    ],
+    [
+     715.1,
+     433.8
+    ],
+    [
+     713.6,
+     434.3
+    ]
+   ],
+   "height": 11.5,
+   "shops": false,
+   "why": "R:14 (cam (729.1, 439.9) looking west) and R:15 show a continuous tall plain ashlar wall (~4 storeys, small grilled windows high up) on the south side between King Faisal and w1394480978; OSM maps nothing there and the 8.5 m infill under-reads it ([Rev. 1])"
+  }
+ ],
+ "remove_buildings": {
+  "r3826424": "excavated ruin outline inside the Pool of Bethesda archaeological area 126864878: R:28 / R:29 show an open ruin field (low walls 1-3 m, cisterns, the re-erected column), no roofed structure",
+  "w1392508822": "building=roof, layer=1 drawn over the open footway Aqabat Darwish 26496670 at (669, 475): as a solid building it blocks the lane; it is the vault over the lane seen north of the stair tunnel (R:41). Removed so the lane stays walkable; the vault is a request",
+  "r3826423": "ragged 46-vertex ruin outline inside the same excavation (Pool of Bethesda 126864878): R:28 / R:29 show nothing standing above the rim, while the spec built it as a 12 m block"
+ },
+ "props": [
+  {
+   "type": "bollard",
+   "p": [
+    725.7,
+    438.9
+   ],
+   "rot": 0,
+   "why": "R:15: short black steel bollards in front of the teal shop doors of w1393164309"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    729.1,
+    439.4
+   ],
+   "rot": 0,
+   "why": "R:15 (second bollard)"
+  }
+ ],
+ "souq_streets": {
+  "744664057": [
+   0.25,
+   0.2
+  ],
+  "290986904": [
+   0.0,
+   0.0
+  ],
+  "288395745": [
+   0.0,
+   0.0
+  ],
+  "744664059": [
+   0.6,
+   0.0
+  ],
+  "Bab Hutta Street": [
+   0.2,
+   0.15
+  ],
+  "Herod's Gate Ascent": [
+   0.5,
+   0.25
+  ],
+  "Aqabat Darwish": [
+   0.3,
+   0.1
+  ]
+ },
+ "requests": [
+  "Arch over Lions' Gate Street at x 784-789 (notes 2.9, [Rev. 4]): a pointed arch ~4.5 m wide, apex ~5 m, springing from w288395736's east end (north pier at (788.6, 452.5)) to an unmapped south pier at y ~446-448; above it a room with a large round-arched window with a white/grey iron grille, ~10 m in all, and two low grey domes behind. Needs a bridge building over the street (a short covered passage polygon ~ (783.5, 446)-(789.5, 453)). Evidence R:18, R:12, R:17.",
+  "Vaulted stretches of Herod's Gate Ascent / Aqabat Darwish that OSM does not map as covered: pointed vaults at the Al-Bustami junction (~(647-652, 584-596), R:40 cam (649.3, 593.4), R:39 cam (649.9, 585.5)) and further south (~(655-657, 548-558), R:42 cam (656.7, 553)). Needs a covered-segment feature (split ways or a polygon list); the whole ways cannot be marked covered.",
+  "Layer -1 tunnels added through covered_streets (123254013 King Faisal, 744670522 Aqabat Darwish stair, 744665958 Bab Hutta) become kind 'souq' (4.4 m spring, 4.4 m carve). They are passages (~3 m wide, R:41 apex ~4.5 m): please treat covered_streets ids that are tunnel/building_passage as kind 'passage'. King Faisal continues as 744664359 (layer -1) to the Haram's Bab al-Atm at (719.7, 387.5) through r3865791; not added here because it ends in s11_haram.",
+  "dressing.py: OSM trees tagged taxon=Arecaceae / taxon:en=Palm should become 'palm' (St Anne fan palms 2919578844 (821.6, 461.5), 2919578872, 2919578882, 2919580140; R:18, R:23, R:25); OSM bollards outside the Jaffa bbox are skipped (2953456085, 5904662071 at the Lions' Gate inner face are ~0.45 m stone cubes, R:06: needs a stone-cube bollard prop).",
+  "Paving: Lions' Gate Street is OSM surface=sett (ways 290986904, 744664057, 744664059, 26492728) and every photo shows rough grey-cream setts with smooth slab kerb strips (R:12, R:09, R:13, R:18), not the slab paving used now.",
+  "Atlas: a pale mint / pale blue louvred shutter cell (~RGB 0.66, 0.80, 0.78) for the French buildings of St Anne (gatehouse w288395720 R:26, east range w288395735 R:25, seminary); shutter_green / shutter_blue are dark.",
+  "Facade feature: a frieze of small blind round arches under the cornice (w288395734 upper floor, R:18) and a pierced parapet with small round-headed openings (St Anne gatehouse/courtyard, R:22).",
+  "Terrain / ground: (a) the raised terrace (OSM pedestrian area 1544948036) on the south side of the seminary plaza, ~1.5 m above the street with a broad stair of long steps along the street (2 steps at x ~793, ~10 risers further east; R:12, R:18); (b) the Group Meeting Point stage 744670112 raised ~2 m with a 15-step stair 1395044677 (OSM only); (c) the Pool of Bethesda excavation 126864878 is 5-8 m deep with steel stairs and railings (R:28, R:29): a SUNKEN region (~dz -6) for its polygon.",
+  "Gates (landmarks_gates): Herod's Gate tower m_herods_gate is 15.2 m; the notes measure the wall top at ~12 m and the total at 12.5-13 m (R:43 at 79 px/m, confirmed in the review: policemen 1.84 m, wall top 11.8-12.7 m). In render hg_out the tower reads much taller than R:44. The passage also looks straight through to a building inside; R:34-R:36 show the vaulted chamber and a low exit arch (~2.2 x 2.8 m) just east of centre in the south face.",
+  "Walkability (spec owner): (a) the Via Dolorosa 44830379 is tagged layer=-1 in OSM and infill.py (line 74) skips layer<0 ways as corridors, so infill fills the street: f118/f119/f126 on the s09 side at x 558-630 and one in this sector at x 668-681 (this profile keeps x 560-681 open with an open area; the rest, x 494-560, still needs the fix). (b) The St Anne entrance passage 288395740 (building_passage, layer -1, (843, 471)->(844, 462)) through the gatehouse w288395720 is blocked, so the whole St Anne / Bethesda domain is unreachable; it is a 1.4 x 2.9 m pointed passage (R:26). Adding it to covered_streets would carve 4.4 m and split the gatehouse facade, so it is requested as a 1.6 m passage instead. (c) building=roof layer=1 footprints over open footways block them (w1392508822 over Aqabat Darwish, removed here; w1393163048 over Ash Sheikh Rihan 26492740, which OSM tags layer=-2 and infill f66 covers for 18 m: verify whether that lane is a tunnel). They should become vaulted passages.",
+  "Domes: an explicit settings 'domes': 0 is read as 'not set', so the vernacular dome field still goes on roofs the photos show flat: w290986909 (roof terraces with railings, chairs and black water tanks in R:20; 4-5 domes in render lg_top). Please let an explicit 0 switch the field off; this pass would then set it on w290986909, w290986927 and w1393176152 (R:18 / R:20 flat roof terraces).",
+  "Muazzamiyya passage 744664059 (x 688-715): it is ~4.5-5 m wide with a pointed east arch ~4.5 m wide and ~5.5 m to the apex (R:14, R:15, notes 2.11); the spec uses the default passage half-width 1.6 m (3.2 m). Its floor is a ramp of setts with a steel handrail (R:13, ~10-13 %), but stairs.py turns it into treads (render muazz r2). Same for King Faisal 123254013 (ramped, R:13).",
+  "Props: a French tricolour flagpole on the south-west of St Anne (~(832, 510), R:24, R:27) (the flagpole prop carries an Israeli flag); the free-standing ancient column (~2.5 m on a 0.9 m square base) in the corner at the arch's north-east pier (~(789.5, 453.5), R:17, R:18)."
+ ]
+}

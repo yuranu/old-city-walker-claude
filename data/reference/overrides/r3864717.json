@@ -1,0 +1,188 @@
+{
+ "building": "r3864717",
+ "name": "Khan ez-Zeit north, west row (y 431-457)",
+ "sources": [
+  "data/photos_ref/s08_damascus/D41_39705483.jpg"
+ ],
+ "why": "D41 (KeZ north looking S from the fork, shops closed): openings ~2.2-3 m x 2.8-3.2 m under flat steel lintels, multi-leaf panelled steel doors (4-6 leaves) painted grey, beige and olive (atlas door_olive, the multi-leaf cell) and grey roll-downs, no teal or green; raised stone thresholds 0.15-0.2 m; corrugated canopies from both sides over the open bays; white hanging boards. Right side of D41 at 30-55 m from the camera, too far to read single doors: the colours follow the nearer KeZ doors in D41 (assumption). OSM shop nodes in this row: shoes x2, clothes 'Dakkak' (44 Beit HaBad St), confectionery, jewellery (5832848063/67/76/83, 5832849093). Bays start 9.8 m from the S end, where the sector boundary and the s04 infill begin; the canopy is one stepped awning per bay over the shops only, so no sheet runs over the blank south end into the s04 infill in front of it.",
+ "settings": {
+  "wall": "rubble"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    303.14,
+    439.81
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    9.8,
+    12.9,
+    16.0,
+    19.1,
+    22.2,
+    25.3,
+    28.4,
+    31.5
+   ],
+   "ground_storey": 4.2,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": 0.35,
+     "lo": "door_olive",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.0,
+     "door": "rolldown_grey",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.0,
+     "door": "door_olive",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.0,
+     "door": "door_olive",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": -0.07,
+     "lo": "rolldown_grey",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": -0.21,
+     "lo": "door_olive",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": -0.33,
+     "lo": "rolldown_grey",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": -0.44,
+     "lo": "door_olive",
+     "arch": null,
+     "grille": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.5,
+   "canopy": null,
+   "floors": [
+    {
+     "centres": [
+      9.8,
+      12.9,
+      16.0,
+      19.1,
+      22.2,
+      25.3,
+      28.4,
+      31.5
+     ],
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null,
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "u": 20.65,
+     "z": -21.7,
+     "h": 0.6,
+     "out": 1.15,
+     "cell": null
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 8.2,
+     "u1": 11.35,
+     "z": -20.12,
+     "depth": 1.1
+    },
+    {
+     "u0": 11.35,
+     "u1": 14.45,
+     "z": -20.29,
+     "depth": 1.1
+    },
+    {
+     "u0": 14.45,
+     "u1": 17.55,
+     "z": -20.29,
+     "depth": 1.1
+    },
+    {
+     "u0": 17.55,
+     "u1": 20.65,
+     "z": -20.29,
+     "depth": 1.1
+    },
+    {
+     "u0": 20.65,
+     "u1": 23.75,
+     "z": -20.54,
+     "depth": 1.1
+    },
+    {
+     "u0": 23.75,
+     "u1": 26.85,
+     "z": -20.68,
+     "depth": 1.1
+    },
+    {
+     "u0": 26.85,
+     "u1": 29.95,
+     "z": -20.8,
+     "depth": 1.1
+    },
+    {
+     "u0": 29.95,
+     "u1": 33.1,
+     "z": -20.91,
+     "depth": 1.1
+    }
+   ]
+  }
+ }
+}

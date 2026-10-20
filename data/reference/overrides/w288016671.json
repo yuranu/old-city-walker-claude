@@ -1,0 +1,121 @@
+{
+ "building": "w288016671",
+ "name": "SW-corner excavation: ruin walls by the park path",
+ "sources": [
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/photos_ref/s07_kotel/032_110722986.jpg",
+  "data/photos_ref/s07_kotel/028_97327499.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Low excavated walls of rough masonry along footway w44376170 W of the corner (K:032 foreground: rough rubble walls; K:044 foreground right of the walkway). Visible 2.4-4.0 m.",
+ "settings": {
+  "height": 2.5,
+  "wall": "rubble",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    635.14,
+    -101.92
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    634.19,
+    -106.39
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "4": {
+   "at": [
+    636.09,
+    -111.66
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "5": {
+   "at": [
+    638.04,
+    -107.86
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "6": {
+   "at": [
+    640.03,
+    -111.33
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "7": {
+   "at": [
+    644.15,
+    -115.05
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "9": {
+   "at": [
+    645.48,
+    -112.67
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "12": {
+   "at": [
+    641.03,
+    -109.51
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "13": {
+   "at": [
+    642.41,
+    -108.09
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "18": {
+   "at": [
+    642.08,
+    -103.04
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "19": {
+   "at": [
+    639.95,
+    -101.86
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "20": {
+   "at": [
+    637.79,
+    -104.5
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

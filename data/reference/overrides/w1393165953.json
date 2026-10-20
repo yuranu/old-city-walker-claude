@@ -1,0 +1,74 @@
+{
+ "building": "w1393165953",
+ "name": "Madrasa al-Muazzamiyya, north pier of the east arch (wall fountain)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/14_lgst_muazz_2020.jpg",
+  "data/photos_ref/s10_herod_lions/15_lgst_muazz_2021.jpg",
+  "data/photos_ref/s10_herod_lions/13_lgst_faisal_2016.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Fountain niche as a shallow pointed blind recess; small rectangular grilled windows above (R:14).",
+ "settings": {
+  "height": 11.1,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   0.97,
+   0.85
+  ],
+  "storey": 3.8,
+  "shops": false
+ },
+ "facades": {
+  "0": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 4.8,
+   "storey": 3.6,
+   "centres": [
+    2.6
+   ],
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.1,
+     "sill": 0.9,
+     "arch": "pointed",
+     "lo": "wall",
+     "grille": false
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.6
+     ],
+     "w": 0.7,
+     "h": 1.0,
+     "sill": 1.2,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      2.6
+     ],
+     "w": 0.7,
+     "h": 1.0,
+     "sill": 1.2,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    714.12,
+    439.17
+   ]
+  }
+ }
+}

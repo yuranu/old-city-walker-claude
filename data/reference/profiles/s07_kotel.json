@@ -1,0 +1,620 @@
+{
+ "sector": "s07_kotel",
+ "sources": [
+  "data/reference/s07_kotel.md",
+  "data/photos_ref/s07_kotel/021_58373804.jpg",
+  "data/photos_ref/s07_kotel/022_85630787.jpg",
+  "data/photos_ref/s07_kotel/028_97327499.jpg",
+  "data/photos_ref/s07_kotel/029_97327493.jpg",
+  "data/photos_ref/s07_kotel/031_72196475.jpg",
+  "data/photos_ref/s07_kotel/032_110722986.jpg",
+  "data/photos_ref/s07_kotel/033_172464910.jpg",
+  "data/photos_ref/s07_kotel/035_172452290.jpg",
+  "data/photos_ref/s07_kotel/036_172452299.jpg",
+  "data/photos_ref/s07_kotel/037_172452292.jpg",
+  "data/photos_ref/s07_kotel/038_172471257.jpg",
+  "data/photos_ref/s07_kotel/041_52613635.jpg",
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/photos_ref/s07_kotel/045_58944798.jpg"
+ ],
+ "notes": "Sector pass 2026-10-20 (fix round 1 after review). s07 as drawn (x >= 600, y <= -40) is not a street sector: the south lobe of the Western Wall plaza and the fenced bridge approach, the ramp foot, Robinson's Arch and the Herodian street, the Ophel / Davidson archaeological park and the Dung Gate road. No market streets, no covered streets. Everything that stands here is mapped in OSM except the café kiosk inside the gate; the OSM 'buildings' of the park are excavated ruins and are lowered to wall height by their override files; r3820187 (one record over 12 m of fall) is replaced by three manual pieces.",
+ "souq_streets": {},
+ "covered_streets": [],
+ "open_areas": [
+  {
+   "ring": [
+    [
+     600.3,
+     -41.7
+    ],
+    [
+     600.3,
+     -112.0
+    ],
+    [
+     771.2,
+     -112.0
+    ],
+    [
+     771.4,
+     -105.7
+    ],
+    [
+     768.5,
+     -99.4
+    ],
+    [
+     764.1,
+     -95.6
+    ],
+    [
+     760.3,
+     -94.2
+    ],
+    [
+     757.2,
+     -93.8
+    ],
+    [
+     670.5,
+     -108.3
+    ],
+    [
+     666.0,
+     -78.7
+    ],
+    [
+     659.1,
+     -40.3
+    ],
+    [
+     590.0,
+     -40.3
+    ],
+    [
+     590.0,
+     -41.7
+    ]
+   ],
+   "why": "bridge approach, ramp foot, Robinson's Arch, Herodian street and the SW-corner ruins: open excavation and paths behind the white hoarding, no buildings (K:021 overview, K:029 and K:033 along the west face, K:045 right side, K:031 Ezrat Yisrael deck); OSM footways w44376170, w44376171, w288016649 (Herodian), steps w44376173 run through it. Infill f364/f365/f96/f97 were multi-storey houses here."
+  },
+  {
+   "ring": [
+    [
+     630.6,
+     -199.0
+    ],
+    [
+     630.2,
+     -185.3
+    ],
+    [
+     618.2,
+     -112.0
+    ],
+    [
+     600.3,
+     -112.0
+    ],
+    [
+     600.3,
+     -204.0
+    ]
+   ],
+   "why": "Dung Gate road (Batei Mahase w290693162 / w935501037), the walkway with bollards and the terrace above the south entrance (steps w288065154, bus stop n1803023878): roads and paving only (K:036 through the arch, K:037, K:041, K:045 is taken standing on this terrace). Infill f390 stood on the terrace."
+  },
+  {
+   "ring": [
+    [
+     618.2,
+     -112.0
+    ],
+    [
+     630.2,
+     -185.3
+    ],
+    [
+     630.6,
+     -199.0
+    ],
+    [
+     764.3,
+     -177.6
+    ],
+    [
+     768.3,
+     -176.3
+    ],
+    [
+     770.9,
+     -174.7
+    ],
+    [
+     773.7,
+     -171.8
+    ],
+    [
+     775.8,
+     -168.0
+    ],
+    [
+     776.5,
+     -165.1
+    ],
+    [
+     776.4,
+     -160.8
+    ],
+    [
+     769.7,
+     -116.0
+    ],
+    [
+     771.2,
+     -112.0
+    ]
+   ],
+   "why": "Ophel / Davidson archaeological park: lawns (OSM landuse=grass w288016650-662), low ruin walls, olive trees and cypress rows, steel pergolas, Umayyad Palace Square w44376174 (K:044, K:032, K:038 from the wall walk, K:028). Infill f98/f99/f257/f391 were houses on the lawns."
+  }
+ ],
+ "manual_buildings": [
+  {
+   "id": "m_s07_kotel_1",
+   "ring": [
+    [
+     632.31,
+     -196.32
+    ],
+    [
+     637.05,
+     -195.56
+    ],
+    [
+     636.4,
+     -191.52
+    ],
+    [
+     631.66,
+     -192.27
+    ]
+   ],
+   "height": 3.2,
+   "shops": true,
+   "name": "Dung Gate café kiosk",
+   "why": "single-storey kiosk (sign 'קפה') against the inner face of the wall just E of the Dung Gate, flat roof with a rooftop unit, smooth cream stone cladding, shop opening on its N side, a low ashlar block and a grey generator box in front: K:037 (inner face from the N; kiosk front ~4.8 m visible, ~3.1 m to the roof edge at ~72 px/m, W end ~1-2.5 m E of the east jamb, front ~4 m N of the inner face); notes s07_kotel.md section 3 'Inside (N)'. Not in OSM. E end trimmed to 4.8 m so it stops 0.3-0.5 m W of the parapet line w394161622."
+  },
+  {
+   "id": "m_s07_kotel_5",
+   "ring": [
+    [
+     756.976,
+     -91.563
+    ],
+    [
+     758.739,
+     -104.13
+    ],
+    [
+     760.046,
+     -103.975
+    ],
+    [
+     761.95,
+     -102.5
+    ],
+    [
+     765.995,
+     -101.258
+    ],
+    [
+     781.302,
+     -98.559
+    ],
+    [
+     778.708,
+     -87.725
+    ]
+   ],
+   "height": 12.0,
+   "shops": false,
+   "name": "Ophel: arched corner block at the Southern Wall",
+   "why": "replaces the north part of r3820187 (removed): the tall ashlar block against the Southern Wall inside the Ottoman wall junction, two tall round-headed arches in its W face and a row of small windows above them (K:032 and K:044: the block rises above the Ottoman wall's crenellations, its top ~0.3 of its own height below the Southern Wall top; K:038 from the wall walk). Ring: the OSM outer ring of r3820187 north of the courtyard (w288016662), kept 0.15 m off the Southern Wall face and 3.06 m inside the Ottoman wall line (the slab), clear of the layer-1 stairs by 1.5 m. Top -30.7 (L-M)."
+  },
+  {
+   "id": "m_s07_kotel_4",
+   "ring": [
+    [
+     782.213,
+     -102.363
+    ],
+    [
+     781.325,
+     -98.657
+    ],
+    [
+     766.006,
+     -101.359
+    ],
+    [
+     767.34,
+     -113.181
+    ],
+    [
+     775.774,
+     -112.021
+    ],
+    [
+     774.663,
+     -103.305
+    ]
+   ],
+   "height": 4.47,
+   "shops": false,
+   "name": "Ophel: ruin wing inside the wall jog",
+   "why": "replaces the east part of r3820187 between the courtyard (w288016662) and the Ottoman wall jog (x 766-776, y -101..-113): lower masonry right of the arched block in K:032 and K:044, under the wall walk; top -40.0, ~5 m on its high side, below the Ottoman wall top (-35.4) (L). Clear of the layer-1 stone stairs w755420496 by 1.5 m."
+  },
+  {
+   "id": "m_s07_kotel_3",
+   "ring": [
+    [
+     769.689,
+     -136.541
+    ],
+    [
+     769.319,
+     -135.133
+    ],
+    [
+     749.286,
+     -139.003
+    ],
+    [
+     749.494,
+     -139.956
+    ]
+   ],
+   "height": 2.0,
+   "shops": false,
+   "name": "Ophel: ruin wall by the path to the wall gate",
+   "why": "replaces the E-W arm of r3820187 (OSM, ~1 m wide, (749.4,-139.5)-(769.5,-135.8)): a low excavated wall beside footway w44416112 to the tunnel through the Ottoman wall (w288016688); ground falls 0.8 m along it, so one 2.0 m piece (pass 1 built it as a 14-18 m blade, review). Height L (OSM only, no photo of it)."
+  }
+ ],
+ "remove_buildings": {
+  "w277508272": "OSM building=roof (layer 1): the flat roof of the south entrance portal 'MEN ENTRANCE / WOMEN ENTRANCE' carried on stone-clad pillars over the security lanes (K:045). Built as a closed 11 m block it walled off the south entrance to the plaza; see requests for the open portal structure.",
+  "r3820187": "OSM multipolygon (with a courtyard the spec fills) mixing the arched corner block at the Southern Wall with ruin wings and thin walls running 50 m down 12-17 m of fall along the inside of the Ottoman wall: one record has one top, so its southern arms stood as 14-18 m blank blades above the city wall (review: renders verify/v_parke.png, corner_ene.png) and two layer-1 stairs (w288016716, w755420496) ran through it. Replaced by m_s07_kotel_5 (block), m_s07_kotel_4 (east wing) and m_s07_kotel_3 (E-W arm); the N-S arm along the wall lies inside the wall slab and is left out."
+ },
+ "props": [
+  {
+   "type": "bollard",
+   "p": [
+    630.0,
+    -195.8
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    629.09,
+    -194.02
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    628.18,
+    -192.24
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    627.27,
+    -190.46
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    626.6,
+    -188.58
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    626.01,
+    -186.67
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    625.43,
+    -184.75
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    624.84,
+    -182.84
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    624.26,
+    -180.93
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    623.67,
+    -179.02
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    623.09,
+    -177.11
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    622.5,
+    -175.19
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    621.97,
+    -173.26
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    621.45,
+    -171.33
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    620.92,
+    -169.4
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    620.4,
+    -167.47
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    619.87,
+    -165.55
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    619.31,
+    -163.62
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    618.75,
+    -161.71
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the east kerb of the road inside the Dung Gate (K:036, K:037, K:041; notes P3)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    624.83,
+    -196.33
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    624.14,
+    -194.45
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    623.45,
+    -192.57
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    622.76,
+    -190.7
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    622.07,
+    -188.82
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    621.38,
+    -186.94
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    620.69,
+    -185.06
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    620.0,
+    -183.19
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "bollard",
+   "p": [
+    619.32,
+    -181.31
+   ],
+   "rot": 0,
+   "why": "grey steel bollards ~0.9 m at ~2 m along the west kerb of the road inside the Dung Gate, from the wall W of the arch northwards (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row on the left of the road beyond the arch)"
+  },
+  {
+   "type": "lamp_modern",
+   "p": [
+    628.46,
+    -178.0
+   ],
+   "rot": 110,
+   "why": "grey square-section inverted-L LED pole (~8 m) by the walkway parapet, arm over the road; four in a row beyond the arch in K:036 (notes P3 lighting)"
+  },
+  {
+   "type": "lamp_modern",
+   "p": [
+    626.47,
+    -165.0
+   ],
+   "rot": 110,
+   "why": "grey square-section inverted-L LED pole (~8 m) by the walkway parapet, arm over the road; four in a row beyond the arch in K:036 (notes P3 lighting)"
+  },
+  {
+   "type": "lamp_modern",
+   "p": [
+    624.27,
+    -152.0
+   ],
+   "rot": 110,
+   "why": "grey square-section inverted-L LED pole (~8 m) by the walkway parapet, arm over the road; four in a row beyond the arch in K:036 (notes P3 lighting)"
+  },
+  {
+   "type": "lamp_modern",
+   "p": [
+    622.08,
+    -139.0
+   ],
+   "rot": 110,
+   "why": "grey square-section inverted-L LED pole (~8 m) by the walkway parapet, arm over the road; four in a row beyond the arch in K:036 (notes P3 lighting)"
+  },
+  {
+   "type": "bin_slatted",
+   "p": [
+    623.28,
+    -196.85
+   ],
+   "rot": 0,
+   "why": "dark grey round bin W of the arch against the inner face (K:037)"
+  },
+  {
+   "type": "tree_olive",
+   "p": [
+    665.6,
+    -162.3
+   ],
+   "rot": 40,
+   "s": 1.25,
+   "why": "the large olive right of centre in K:044 (crown ~6.8 x 5.3 m): camera on the Davidson Center roof (642,-174), eye ~-38.5, f ~880 px, heading 41.9 deg (fitted to the SW corner and the Al-Aqsa dome); trunk at x 990 px -> bearing 63.6 deg, foot at y 775 px, 250 px under the horizon (y 525, vanishing point of the Southern Wall courses) -> 26 m: on the S edge of lawn w288016653, 4 m N of the Davidson Center"
+  }
+ ],
+ "requests": [
+  "HIGH. STAIRS ACROSS THE DUNG GATE ROAD (stairs.py / spec owner; review): the vehicle road through the gate is a staircase. Treads lie across the carriageway, in the gate passage, at the Batei Mahase bend and over the crossings outside: along the w935501037 centreline 13 treads with tops -49.92 .. -47.09 over 13 m (22 % grade) from (634,-212) to the passage (628.7,-199.3), then -46.38 / -46.24 just inside the passage (a ~0.6 m ledge at its inner end); bend (605-612,-149..-157); tread counts w288016717 25, w378233947 19, w1550608916 11, w1545305463 11. K:036 and K:041 show smooth asphalt with red-white kerbs, K:035 smooth sloped paving with bollards, K:037 smooth paving in front of the kiosk (renders verify/gate_road.png, v_k035.png, dung_out.png). Suggest: clip treads to the footway's own width, not street_halfwidth (which spans the carriageway); never tread footway=crossing, footway=sidewalk, a footway within ~4 m of a highway=residential/service centreline, or a footway inside a gate passage; re-check terrain_street outside the gate (22 % where the photos show a gentle ramp). Landmarks_gates: the passage floor must meet the street on both sides.",
+  "HIGH. GROUND WEDGES AT THE HARAM WALL FOOT (terrain / tess_regions; raised from pass 1 after review): base.json has ground triangles along the west face south of the bridge, at the SW corner and along the Southern Wall foot (x 640-700, y -120..-40) with one vertex at the esplanade flat level (-33.51) and the others at -43..-45, e.g. (668,-100,-44.6) (672,-96,-33.5) (668,-96,-44.5); ground -44.08 at (662,-89) and -41.52 at (665,-89) (2.6 m over 3 m), -36.45 at (662,-60) (5 m above the plaza flat). At Robinson's Arch the paving ramps up over the lower ~8 m of the west face and buries the springer zone and the Herodian courses: from the plaza an 8 m sloping paved plane climbs the wall. Clearest evidence: renders/sectors/s07_kotel/verify/v_k030.png and v_k033.png against K:030 / K:033 (springer 8-10 m above the street), also herodian.png, tower.png, sw_corner.png. Suggest evaluating z_ground (not the flat) at vertices outside the flat polygon's interior, or clipping the cells to the flat boundary before sampling.",
+  "TERRAIN (low confidence, verify first): the Herodian street is modelled only 2-3 m below the plaza flat: street_z 726.8 m ASL at Robinson's Arch (660.7,-79.9), 725.8 at (666.2,-111.1), 728.5 at the north end (652.7,-46.9). Notes section 5 (L) put it 5-8 m below the plaza, ~720-722.5 m ASL (z ~ -48.5..-50.5): K:029/K:033 show the whole lower Herodian masonry and the heap of fallen blocks below plaza level; on the left of K:029 a 4-5 m retaining wall with steel stairs (OSM steps w44376173, 34 m) drops from the western terrace; K:031 shows the Ezrat Yisrael deck with a railing over the drop. Suggest a pinned profile along w288016649 at ~721.5 m ASL with a retaining edge on its west side, once a survey value confirms it.",
+  "SUNKEN EXCAVATION PITS (spec owner, make_spec.SUNKEN or GROUND_HOLES; review): the excavations are modelled as walls on continuous paving, but they are pits below path level with the wall tops at about path height: K:032 foreground (a 3-5 m deep pit with rubble walls, seen from the path above), K:044 (lawns and ruins below the walkway). Polygons from the ruin rings: the SW-corner pit inside w288016671 / w288016673 (about x 640-668, y -112..-125, dz ~ -3.5) and the Umayyad palace interior inside w288016678 (about x 676-720, y -106..-144, dz ~ -2). Until then the ruins are kept low (pass fix round 1).",
+  "PORTAL (replaces removed w277508272): an open south-entrance structure over the OSM roof footprint (x 584-617, y -109..-94): stone-clad square pillars ~0.8 m (3 bays across, 2 deep), a beam at ~3.5 m lettered 'כניסה לגברים MEN ENTRANCE' over the W lane and 'כניסה לנשים WOMEN ENTRANCE' over the E lane, an open upper frame to ~7.5 m with a glazed room over the W part, flat roof; walkable lanes underneath (OSM w288016689, w288016694, w1044731105, w26492735 are tunnel layer -1 lanes under it; checkpoints n2915691087, n2603716727). Evidence K:045 (scale from people), notes L4.",
+  "BARRIERS (not built by any module): (a) white hoarding ~3.5-4 m (white panels over brown timber boards on steel posts) along fence w394161620 from (613.8,-94.7) to (607.3,-40.7) in s07 and on to (651.8,-15.1) in s09: it separates the plaza from the bridge approach and is the plaza's south-east edge (K:021, K:022, K:004); (b) ashlar parapet ~1.2 m with a railing along w394161622 (617.5,-103.3)->(637.6,-197.4), east side of the walkway (K:036 through the arch, right; notes P3); (c) wall w288016728 (607.8,-95.8)->(601.7,-62.2) between the plaza corridor and the police parking (K:021).",
+  "MUGHRABI BRIDGE: no module builds the timber stair tower at (613,-42) (straddles the s07/s09 line at y=-40) nor the covered timber bridge w277508271 on X-braced steel bents; the most visible object from the south half of the plaza (K:021, K:022, K:023, K:013; notes L3).",
+  "EZRAT YISRAEL DECK (new; review): a raised deck at plaza level beside the west face N of the SW corner, around x 645-662, y -65..-100 (extent L; it must not cover Robinson's springer zone at the wall foot): dark composite decking, a black steel railing along its E edge over the drop to the Herodian street, white square parasols ~4 m on white poles with stone weights, black seating boxes ~2.5 x 2.5 x 0.5 m signed 'לישיבה בלבד', steel tables (K:031). Coordinate with the Herodian-street TERRAIN request (the deck stands over the drop).",
+  "BOARDWALK: the raised timber walkway w147608627 along the Southern Wall (666.2,-111.1)->(709.7,-103.6) and the timber steps w147608631 / w288016716: dark-brown vertical balusters on timber posts (K:028, K:044 right).",
+  "LAYER-1 STAIRS (new): the elevated stairs w288016716 (timber) and w755420496 (stone) run on top of the ruins of r3820187 to the excavations-gate viewpoint n2915690864 (770,-133); stairs.py skips layer != 0, so they are not built at all. Their corridor is now kept 1.5 m clear of the replacement pieces (m_s07_kotel_5/4).",
+  "RUIN FLAG (needs code): a building setting such as \"ruin\": true for excavated walls: no rooftop clutter (dressing.py puts water heaters/dishes on every flat roof), no roof deck 0.9 m below a parapet (solid cap instead), no spouts, no LOD window cards, and the top following the terrain instead of g_hi + height (on the park slope a wall set to its photo height on the high side still shows 3-5 m on the low side: w288016678 1.2 m -> 2.2..4.4 m visible, w288016670 1.5 m -> 1.4..4.9, w394161624 0.8 m -> 0.7..2.9). Applies to w288016669, w288016671, w288016673, w288016670, w288016678, w394161624, w394161625, m_s07_kotel_3, m_s07_kotel_4 (K:032, K:033, K:044).",
+  "ROOF ROOMS / CLUTTER (needs code): an explicit \"domes\": 0 is honoured, but rooftop rooms and rooftop clutter cannot be switched off: the Davidson Center w147608624 gets a roof room plus water heaters, tanks and a dish; the ruins w288016669 (tank, antenna), w288016670 (dish, antenna) and the arched corner block m_s07_kotel_5 (a medieval monument) carry rooftop props. Suggest \"roof_rooms\": 0 and \"clutter\": false settings (or the \"ruin\" flag above). The Davidson Center roof is a walkable public terrace (K:044 is taken from it: planter box lower left, railing and stair down to the park at right): planters and a railing, no heaters, tanks or roof room.",
+  "LOD WINDOW CARDS (spec owner / build_city; review): build_lod() calls context_windows(bd) unconditionally, so the LOD (s07_kotel_lo.glb) shows rows of window cards on 'blank' buildings: pass 1 counted 282 'doors' faces (~141 cards) on the Davidson Center (cwin 36), r3820187 (99), w288016670 (3), w288016673 (2) and the kiosk (1); from the JQ observation point (K:024/K:026) or the Mount of Olives these read as houses. Suggest: make_spec skips cwin on edges whose override is blank or \"auto\": false, or a per-building \"no_windows\" flag.",
+  "SPIKE EDGES (spec owner, clean()): zero-area spikes (the same segment drawn there and back) survive footprint cleaning, e.g. the old r3820187 ring had one at (771.48,-136.34) (edges 4/5) and, in an earlier ring, at (771.92,-149.31) (edges 2/3); an \"at\" anchor cannot tell the two edges apart, so index keys drift when the ring changes. Suggest clean() drops them.",
+  "FALLEN STONES: a prop type for rough limestone blocks (1-3 m) to lay the heap of fallen Herodian blocks along the foot of the west face from (662,-66) to (668,-100), 3-5 m wide, behind galvanised barriers (K:029, K:033, K:030; notes P4 / L5).",
+  "PARK PROPS (new; review): prop types for an Italian cypress (narrow column, ~8-12 m) and the dark steel pergola (flat slatted roof ~3.5 m on square posts, ~12 x 6 m). Cypress rows stand by the pergola at about (720-740,-115..-125) and along the paths (K:032 right: two rows of ~10, K:044 right: by the pergola; K:038); single cypresses at the SW corner (K:031 right, K:030) and in front of the Southern Wall (K:044 x 755 px, K:032 centre). One olive is placed from K:044 in this profile; the OSM trees cover only x 707-770.",
+  "GROUND MATERIALS (needs code): (a) the park lawns are paved: OSM landuse=grass w288016650, w288016651, w288016653, w288016654 (garden), w288016655, w288016657, w288016658, w288016660, w288016661, w288016662 should be grass ground like the citadel moat (K:044 and K:032: mown bright-green lawns between the ruin walls; K:038 from the wall walk); (b) the vehicle road through the Dung Gate (Batei Mahase w290693162 / service road w935501037, ~4 m) is dark asphalt with red-white painted kerbs at the gate, not slab paving (K:036, K:037, K:041; notes P3).",
+  "NO STEPS ON PARK PATHS (stairs.py; review): footways in the park become large single tread slabs that read as broken paving shelves: w288025706 (644-652,-142..-136, one big raised slab with an exposed edge in verify/corner_ene.png), w44376178 (23 treads), w44376185 (9). K:032 and K:044 show smooth paths. Extend the roadside-walk exemption to these, or cap the tread area.",
+  "DUNG GATE (landmarks_gates owner, w1545285986): the inner face is a plain plane; K:037 shows the Ramparts Walk railing (black steel) along the top, the backs of the merlons with pointed-arch embrasure niches (one large arched niche E of the gate at ~8 m), plants in the joints, and the green-framed ceramic name tile E of the arch at ~3.5 m (K:040, K:043; notes section 3). The outer hood moulding and the lobed band read weakly at the K:041 distance (30 m); jambs ~3.0-3.2 m and crown ~4.0-4.3 m per R7 (module: 3.7 / 4.4 m).",
+  "HARAM DETAILS SEEN FROM s07 (landmarks_haram / wall circuit owner; review): the SW corner, the west face south of the bridge and the Southern Wall are built with Ottoman-style merlons (verify/v_k033.png, v_k030.png); K:030, K:033 and K:044 show a straight coping with small grilled windows below it and a cypress on top. Robinson's Arch springer is missing: a projecting row of voussoirs ~12-15 m wide with a ledge, ~8-10 m above the Herodian street at (668,-89) (K:030, K:033, notes L5).",
+  "DUNG GATE outside (base, context): w1550608919 is built as a ~7 m ashlar tower W of the gate; it is the guard booth: white, ~3 x 3 m, ~2.7 m with an overhanging flat roof in 2015 (K:041), replaced by a glazed police kiosk ~5 x 2 m x 2.8 m by 2025 (K:035). It blocks the view through the gate and hides it from the SW (verify/dung_in.png, v_k035.png).",
+  "BASE REBUILD: removing the infill, w277508272 and r3820187 leaves holes in game/public/base/ground.glb (built before this pass) until base is rebuilt from the merged spec: the ground under the old footprints is missing and the sky shows through (renders/sectors/s07_kotel/r1). The pass renders use a ground exported from the private spec (build/spec_s07_kotel/export_ground.py) and show no holes.",
+  "S09 RAMP INFILL: with infill kept out of s07, the infill piece that covered the old Mughrabi ramp under the bridge is now generated in s09 (~464 m2 at x 616-657, y -40..-20, ~6-7 m tall; its f-number changes from run to run: f247, f253, f271, f373 so far). That ground is the remains of the earth ramp (rubble mound with shrubs, a palm and timber shoring rising toward the Mughrabi Gate) behind the white hoarding, not a building (K:021, K:022, K:007; s07_kotel.md L3). The s09 pass should keep it open (or request a ramp mound), not leave a house there."
+ ]
+}

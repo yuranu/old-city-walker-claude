@@ -1,0 +1,153 @@
+{
+ "building": "w1393175027",
+ "name": "West side of the inner square (shop row under a deep stall shed)",
+ "sources": [
+  "data/photos_ref/s08_damascus/D29_39705495.jpg",
+  "data/photos_ref/s08_damascus/D01_164505902.jpg",
+  "data/photos_ref/s08_damascus/D43_94931416.jpg",
+  "data/photos_ref/s08_damascus/D31_92015420.jpg"
+ ],
+ "why": "D29 (camera at its geotag (285.3,527.9), 2.4 m from this wall) and D01 left: shops with blue/green steel frames under a deep corrugated shed on beams (it covers the camera position, clothes hang from the beams, a lantern and hanging boards under it); from above (D43 right of the street, D31) the west half of the square is roofed by continuous sheet roofs, leaving a canopied street ~9-10 m wide here: shed depth 5 m. Ashlar with plain windows above (no photo of the upper floors: rectangular, no arches). Street front ~11.8 m (eg -22.56).",
+ "settings": {
+  "height": 10.8,
+  "wall": "ashlar",
+  "tint": [
+   1.0,
+   0.96,
+   0.88
+  ],
+  "storey": 3.6
+ },
+ "facades": {
+  "1": {
+   "at": [
+    283.03,
+    526.78
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.9,
+    5.3,
+    8.6,
+    11.9
+   ],
+   "ground_storey": 4.4,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 2.7,
+     "h": 3.0,
+     "sill": -0.33,
+     "lo": "door_blue",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.7,
+     "h": 3.0,
+     "door": "door_green2",
+     "sign": false,
+     "arch": "segment"
+    },
+    {
+     "kind": "shop",
+     "w": 2.7,
+     "h": 3.0,
+     "door": "rolldown_blue",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 2.7,
+     "h": 3.0,
+     "sill": 0.56,
+     "lo": "door_blue2",
+     "arch": "segment",
+     "grille": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 5.0,
+    "z_front": 3.01,
+    "z_wall": 3.71
+   },
+   "floors": [
+    {
+     "centres": [
+      1.9,
+      5.3,
+      8.6,
+      11.9
+     ],
+     "ws": [
+      1.1,
+      1.1,
+      1.1,
+      1.1
+     ],
+     "hs": [
+      1.4,
+      1.4,
+      1.4,
+      1.4
+     ],
+     "arches": [
+      null,
+      null,
+      null,
+      null
+     ],
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    },
+    {
+     "centres": [
+      3.6,
+      10.2
+     ],
+     "ws": [
+      1.0,
+      1.0
+     ],
+     "hs": [
+      1.3,
+      1.3
+     ],
+     "arches": [
+      null,
+      null
+     ],
+     "lo": "shutter_brown",
+     "grille": false,
+     "sill": 0.9
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "u": 3.6,
+     "z": -20.8,
+     "h": 0.55,
+     "out": 1.2,
+     "cell": "sign_textiles"
+    },
+    {
+     "type": "blade",
+     "u": 10.25,
+     "z": -20.21,
+     "h": 0.55,
+     "out": 1.2,
+     "cell": null
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "building": "w290668993",
+ "name": "building above the east retaining wall south of the south arch",
+ "sources": [
+  "data/photos_ref/s01_armenian/02_195104530.jpg",
+  "data/photos_ref/s01_armenian/20_85630597.jpg",
+  "data/photos_ref/s01_armenian/01_195104368.jpg",
+  "data/photos_ref/s01_armenian/03_195104793.jpg",
+  "data/reference/s01_armenian.md#5"
+ ],
+ "notes": {
+  "height": "was 15.4 m (rule). In 01 and 03 nothing rises above the convent wall and the arch building's dome on this side, so it is under ~11 m; in 02/20 its road side is the ~4-5 m retaining wall with a mesh fence and a building above (R11). 9.0 m.",
+  "e7": "west face behind the east strip of the carved south arch (w1394456881): hidden, so blank."
+ },
+ "settings": {
+  "height": 9.0,
+  "wall": "ashlar",
+  "tint": [
+   1.02,
+   0.99,
+   0.92
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {
+  "7": {
+   "blank": true,
+   "at": [
+    109.94,
+    -283.95
+   ],
+   "auto": false
+  }
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "building": "w291742568",
+ "name": "Tile-roofed house on Bab Hutta Street",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/30_babhutta_2022a.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Hipped tile roof per OSM; pointed twin windows (R:30).",
+ "settings": {
+  "height": 10.35,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   1.02,
+   0.95
+  ],
+  "roof": "hipped",
+  "shops": false
+ },
+ "facades": {
+  "0": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 4.0,
+   "storey": 3.4,
+   "centres": [
+    2.5,
+    6.8
+   ],
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.5,
+     "arch": "pointed",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.2,
+     "sill": 1.6,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.5,
+      6.8
+     ],
+     "w": 0.6,
+     "h": 1.4,
+     "sill": 0.9,
+     "arch": "pointed",
+     "pair": true,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "at": [
+    744.82,
+    524.65
+   ]
+  }
+ }
+}

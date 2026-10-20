@@ -1,0 +1,142 @@
+{
+ "building": "w288395735",
+ "name": "St Anne domain, east range (behind the Lavigerie bust)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/25_stanne_2019b.jpg",
+  "data/photos_ref/s10_herod_lions/23_stanne_2021b.jpg",
+  "data/photos_ref/s10_herod_lions/22_stanne_2021a.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Shutters are pale blue in R:25; the atlas only has dark blue (request).",
+ "settings": {
+  "height": 8.47,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   1.02,
+   0.95
+  ],
+  "storey": 4.2,
+  "shops": false
+ },
+ "facades": {
+  "8": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 5.0,
+   "storey": 4.2,
+   "bands": true,
+   "cornice": true,
+   "centres": [
+    2.6,
+    5.9,
+    9.2,
+    12.499999999999998,
+    15.799999999999999,
+    19.1,
+    22.4,
+    25.7,
+    29.0
+   ],
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.2,
+     "sill": 0.25,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.1,
+     "h": 2.0,
+     "sill": 0.9,
+     "arch": "round",
+     "lo": "shutter_blue",
+     "grille": false
+    }
+   ],
+   "at": [
+    858.24,
+    501.81
+   ]
+  }
+ }
+}

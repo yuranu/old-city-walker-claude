@@ -1,0 +1,80 @@
+{
+ "building": "w394161624",
+ "name": "Ophel park: low ruin walls by the walkway",
+ "sources": [
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/photos_ref/s07_kotel/032_110722986.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Low reconstructed walls 0.5-1.5 m beside the walkway (K:044 foreground, K:032 foreground; notes P4). Fix round 1: 1.5 -> 0.8 m (the edge grounds sit up to 0.12 m above its g_hi, so 1.5 m showed 1.4-3.6 m; now 0.7-2.9 m).",
+ "settings": {
+  "height": 0.8,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    626.1,
+    -113.72
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "3": {
+   "at": [
+    624.53,
+    -116.28
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "4": {
+   "at": [
+    630.87,
+    -117.6
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "5": {
+   "at": [
+    625.73,
+    -121.86
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "7": {
+   "at": [
+    628.44,
+    -122.96
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "9": {
+   "at": [
+    634.51,
+    -119.85
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "10": {
+   "at": [
+    631.87,
+    -117.35
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "building": "w290986927",
+ "name": "low compound on the seminary plaza terrace (Stations plaques)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/18_lgst_ramparts_2011.jpg",
+  "data/photos_ref/s10_herod_lions/12_lgst_tractor_2014.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Low (R:18 left side: flat roofs a storey above the raised terrace). Facades by rule.",
+ "settings": {
+  "height": 5.03,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   0.98,
+   0.89
+  ],
+  "shops": false
+ },
+ "facades": {}
+}

@@ -1,0 +1,143 @@
+{
+ "building": "w288395720",
+ "name": "St Anne compound gatehouse (no. 19), Peres Blancs / Greek-Catholic seminary entrance",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/26_seminary_2021.jpg",
+  "data/photos_ref/s10_herod_lions/16_lgst_stanne_2022.jpg",
+  "data/photos_ref/s10_herod_lions/09_lgst_2019.jpg",
+  "data/photos_ref/s10_herod_lions/18_lgst_ramparts_2011.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "The lunette over the passage is a second bay at the same centre (a shallow round-headed blind panel above the door). The west-part recesses (R:09: deep, tall, round-headed) are modelled as tall barred windows. Pale mint shutters are not in the atlas (request); shutter_green stands in.",
+ "settings": {
+  "height": 10.51,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   1.02,
+   0.95
+  ],
+  "storey": 5.0,
+  "shops": false
+ },
+ "facades": {
+  "2": {
+   "auto": false,
+   "shops": false,
+   "souq": false,
+   "ground_storey": 6.0,
+   "storey": 5.0,
+   "bands": true,
+   "cornice": true,
+   "thr": 0.12,
+   "centres": [
+    3.0,
+    6.5,
+    10.0,
+    13.85,
+    13.85,
+    18.4,
+    22.9
+   ],
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.4,
+     "sill": 0.7,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.4,
+     "sill": 0.7,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 1.3,
+     "h": 3.4,
+     "sill": 0.7,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "door",
+     "w": 1.4,
+     "h": 2.9,
+     "arch": "pointed",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 1.9,
+     "h": 1.3,
+     "sill": 3.3,
+     "arch": "round",
+     "lo": "wall",
+     "grille": false
+    },
+    {
+     "kind": "door",
+     "w": 2.5,
+     "h": 4.3,
+     "arch": "pointed",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.65,
+     "h": 1.25,
+     "sill": 1.75,
+     "arch": "pointed",
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      3.0,
+      6.5,
+      10.0,
+      13.4,
+      18.4,
+      23.0
+     ],
+     "w": 1.2,
+     "h": 2.6,
+     "sill": 0.7,
+     "arch": null,
+     "lo": "shutter_green",
+     "grille": false,
+     "balconies": [
+      4
+     ],
+     "balcony_w": 2.1,
+     "balcony_d": 0.8
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "house_number",
+     "u": 15.3,
+     "z": -34.292,
+     "w": 0.16,
+     "h": 0.13
+    }
+   ],
+   "at": [
+    842.8,
+    461.81
+   ]
+  }
+ }
+}

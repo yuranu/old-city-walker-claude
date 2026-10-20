@@ -1,0 +1,296 @@
+{
+ "building": "w1022672084",
+ "name": "Alexander Compound main block (north side of Suq ed-Dabbagha)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/G04_47922079.jpg",
+  "data/photos_ref/s04_sepulchre/G01_193971239.jpg",
+  "data/photos_ref/s04_sepulchre/F01_67247179.jpg",
+  "data/photos_ref/s04_sepulchre/F02_127215876.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "North side of Dabbagha (G04 right side, looking W towards the minaret): shops under green steel canopies on hoop brackets with beige canvas, teal shopfronts; above them 2 storeys of rectangular windows (notes 2.5: 3 storeys, red-tile hipped roof on the eastern range, F01 right foreground). Edges 3-6 face the street; edge 2 faces the parvis SE corner.",
+  "roof": "the footprint is a long irregular polygon (824 m2): left flat (profile request on hip roofs).",
+  "height": "10.0 above the building ground (-13.19, its highest corner, to the north-west): ~13 m = shops + 2 storeys on Dabbagha, whose street is 3-3.6 m lower (G04)."
+ },
+ "settings": {
+  "height": 10.0,
+  "wall": "ashlar",
+  "tint": [
+   1.0,
+   0.95,
+   0.86
+  ],
+  "storey": 3.9
+ },
+ "facades": {
+  "5": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.04,
+    5.32,
+    8.59,
+    11.87,
+    15.15,
+    18.42
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_olive"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "rolldown_grey"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.0,
+    "z_wall": 3.7
+   },
+   "floors": [
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    },
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    }
+   ],
+   "at": [
+    236.32,
+    156.92
+   ]
+  },
+  "6": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.92,
+    4.96,
+    8.0,
+    11.04
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.49,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.49,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "rolldown_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.49,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.49,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.0,
+    "z_wall": 3.7
+   },
+   "floors": [
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    },
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    }
+   ],
+   "at": [
+    253.02,
+    156.49
+   ]
+  },
+  "7": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.01,
+    5.22,
+    8.43,
+    11.64,
+    14.85
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_olive"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.0,
+    "z_wall": 3.7
+   },
+   "floors": [
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    },
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    }
+   ],
+   "at": [
+    267.92,
+    156.3
+   ]
+  },
+  "8": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.97,
+    5.1
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.58,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.58,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.0,
+    "z_wall": 3.7
+   },
+   "floors": [
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    },
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null
+    }
+   ],
+   "at": [
+    279.87,
+    156.26
+   ]
+  }
+ }
+}

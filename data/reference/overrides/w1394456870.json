@@ -1,0 +1,61 @@
+{
+ "building": "w1394456870",
+ "name": "Christ Church compound, south end of the street block",
+ "sources": [
+  "data/photos_ref/s01_armenian/33_133184349.jpg",
+  "data/reference/s01_armenian.md#P1"
+ ],
+ "notes": {
+  "height": "one storey continuing the street block south of the cafe projection (33: door with a lamp beside it)"
+ },
+ "settings": {
+  "height": 6.0,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   0.97,
+   0.86
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 4.2
+ },
+ "facades": {
+  "0": {
+   "centres": [
+    1.6,
+    3.7
+   ],
+   "shops": false,
+   "ground_storey": 6.0,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.6,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 2.6,
+     "z": 6.8
+    }
+   ],
+   "at": [
+    113.96,
+    -74.83
+   ],
+   "auto": false
+  }
+ }
+}

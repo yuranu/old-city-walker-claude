@@ -1,0 +1,157 @@
+{
+ "building": "w612002272",
+ "name": "Armenian Patriarchate Administration (convent street front south of the gate)",
+ "sources": [
+  "data/photos_ref/s01_armenian/01_195104368.jpg",
+  "data/photos_ref/s01_armenian/03_195104793.jpg",
+  "data/photos_ref/s01_armenian/17_85750150.jpg",
+  "data/photos_ref/s01_armenian/30_90904092.jpg",
+  "data/reference/s01_armenian.md#P5",
+  "data/reference/s01_armenian.md#L1"
+ ],
+ "notes": {
+  "height": "the convent wall reads as one ~11-12 m flat-topped wall; at the south end its top is level with the arch building's cornice (01, ~11 m). 11.5 m.",
+  "facade": "e21 = the 29 m street front facing west, u from the north end (111.8,-236.4). 01 (left wall), 17 (left wall) and 03 (receding): tall bar-grilled windows at ~2.2-3.7 m, small hooded windows at ~5 m, a row of cage windows / hooded balconies at ~8-9.5 m, dark downpipes. Sparse and irregular."
+ },
+ "settings": {
+  "height": 11.5,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   1.06,
+   1.07
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.3
+ },
+ "facades": {
+  "21": {
+   "centres": [
+    3.0,
+    9.0,
+    15.5,
+    21.0,
+    26.5
+   ],
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 3.3,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.5,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.5,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.5,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.5,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.5,
+     "sill": 2.2,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "lo": "glass",
+     "grille": true,
+     "centres": [
+      6.0,
+      12.0,
+      18.5,
+      24.0
+     ],
+     "ws": [
+      0.8,
+      0.7,
+      0.85,
+      0.75
+     ],
+     "hs": [
+      1.0,
+      0.9,
+      1.0,
+      0.95
+     ],
+     "sill": 1.6,
+     "arch": null
+    },
+    {
+     "lo": "glass",
+     "grille": true,
+     "centres": [
+      1.5,
+      4.5,
+      10.5,
+      14.0,
+      20.0,
+      23.0,
+      27.5
+     ],
+     "ws": [
+      1.1,
+      1.0,
+      1.2,
+      0.9,
+      1.1,
+      1.0,
+      1.1
+     ],
+     "hs": [
+      1.4,
+      1.4,
+      1.5,
+      1.2,
+      1.4,
+      1.4,
+      1.5
+     ],
+     "sill": 1.3,
+     "arch": null
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "pipe",
+     "u": 8.0,
+     "z0": 4.81,
+     "z1": 15.31
+    },
+    {
+     "type": "pipe",
+     "u": 19.0,
+     "z0": 4.81,
+     "z1": 15.31
+    }
+   ],
+   "at": [
+    110.81,
+    -250.88
+   ],
+   "auto": false
+  }
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "building": "w1394456871",
+ "name": "house with a hipped tile roof at the SE corner of the Kishle forecourt",
+ "sources": [
+  "data/photos_ref/s01_armenian/33_133184349.jpg"
+ ],
+ "notes": {
+  "settings": "33 (crop, upper left of the forecourt): white 2-storey block with a hipped red-tile roof and dark-shuttered windows just east of the narrow stretch's north end (x 119.6-131, y -94..-105)."
+ },
+ "settings": {
+  "height": 8.0,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   1.04,
+   0.99
+  ],
+  "shops": false,
+  "roof": "hipped",
+  "storey": 3.6
+ },
+ "facades": {}
+}

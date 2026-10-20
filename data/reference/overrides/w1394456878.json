@@ -1,0 +1,84 @@
+{
+ "building": "w1394456878",
+ "name": "Armenian Theological Seminary (facing the garden west of the road)",
+ "sources": [
+  "data/photos_ref/s01_armenian/14_81480626.jpg",
+  "data/photos_ref/s01_armenian/03_195104793.jpg",
+  "data/photos_ref/s01_armenian/17_85750150.jpg",
+  "data/reference/s01_armenian.md#L10"
+ ],
+ "notes": {
+  "facade": "14 (geotag (106,-225) on the road, looking west across the lawn): modern 2-storey golden-cream ashlar building with tall round-arched windows, a wavy parapet (not modelled) and raised Armenian lettering; low-med confidence that this footprint is the one in 14 (nearest building on that bearing, 27 m away). Rule height was 12.8 m; 2 storeys = 9 m.",
+  "tint": "warm golden-cream stone in 14."
+ },
+ "settings": {
+  "height": 9.0,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   1.0,
+   0.88
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 4.2
+ },
+ "facades": {
+  "1": {
+   "centres": [
+    2.6,
+    5.65,
+    8.7
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.8,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.1,
+     "h": 2.2,
+     "sill": 0.9,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 1.1,
+     "h": 2.2,
+     "sill": 0.9,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 1.1,
+     "h": 2.2,
+     "sill": 0.9,
+     "arch": "round",
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.6,
+      5.65,
+      8.7
+     ],
+     "w": 1.1,
+     "h": 2.0,
+     "arch": "round",
+     "sill": 0.6,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "at": [
+    88.06,
+    -226.64
+   ],
+   "auto": false
+  }
+ }
+}

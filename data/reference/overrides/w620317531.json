@@ -1,0 +1,136 @@
+{
+ "building": "w620317531",
+ "name": "single-storey shop block with the chamfered corner (south lane of the Muristan)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/D03_185219875.jpg",
+  "data/photos_ref/s04_sepulchre/D02_185219870.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "D03 (cam (210.0,67.5), looking SSE ~164 deg at the NW chamfered corner (215.0,56.5)-(211.8,53.7)): a single tall storey (~5.5-6 m) of rough honey ashlar with tall round-arched openings (teal boarded door with a radial fanlight on the chamfer, dark-red and green doors), a deep maroon steel canopy on iron hoop brackets wrapping the corner at ~3.6-4.2 m, and a low red-tile hipped roof (also seen in front of the St John dome in D02). The chamfer edges are under 2.4 m, so their openings cannot be built; edges 7 (north, 23 m) and 2 (west) carry the row.",
+  "roof": "hipped: the footprint is nearly rectangular (bounding-box overhang ~8 %)"
+ },
+ "settings": {
+  "height": 6.0,
+  "wall": "ashlar",
+  "tint": [
+   1.02,
+   0.94,
+   0.84
+  ],
+  "storey": 4.2,
+  "shops": true,
+  "roof": "hipped"
+ },
+ "facades": {
+  "1": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.0,
+    5.21,
+    8.42,
+    11.63,
+    14.84,
+    18.05,
+    21.26
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_green2"
+    }
+   ],
+   "ground_storey": 5.0,
+   "awning": false,
+   "thr": 0.15,
+   "thr_out": 0.4,
+   "canopy": {
+    "depth": 1.7,
+    "z_front": 3.6,
+    "z_wall": 4.2
+   },
+   "auto": false,
+   "floors": [],
+   "at": [
+    226.66,
+    56.72
+   ]
+  },
+  "4": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.0
+   ],
+   "ground_storey": 5.0,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_green2"
+    }
+   ],
+   "canopy": {
+    "depth": 1.7,
+    "z_front": 3.6,
+    "z_wall": 4.2
+   },
+   "awning": false,
+   "thr": 0.15,
+   "thr_out": 0.4,
+   "auto": false,
+   "at": [
+    211.84,
+    51.69
+   ]
+  }
+ }
+}

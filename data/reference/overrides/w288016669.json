@@ -1,0 +1,105 @@
+{
+ "building": "w288016669",
+ "name": "SW-corner excavation: terrace walls by the steps to the Herodian street",
+ "sources": [
+  "data/photos_ref/s07_kotel/029_97327493.jpg",
+  "data/photos_ref/s07_kotel/033_172464910.jpg",
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Excavated walls on the terrace W of the Herodian street, where steps w44376173 go down: rough rubble masonry with re-used blocks, 2-3 m (K:029 left: rubble-and-ashlar retaining wall with steel stairs; K:033 left). Not a roofed building. Visible 2.4-3.6 m (top over the edge grounds).",
+ "settings": {
+  "height": 2.5,
+  "wall": "rubble",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    647.46,
+    -83.72
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    644.47,
+    -85.5
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "6": {
+   "at": [
+    650.32,
+    -84.64
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "7": {
+   "at": [
+    653.57,
+    -87.13
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "8": {
+   "at": [
+    651.5,
+    -90.23
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "10": {
+   "at": [
+    651.93,
+    -92.18
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "11": {
+   "at": [
+    654.87,
+    -94.93
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "12": {
+   "at": [
+    657.23,
+    -97.65
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "13": {
+   "at": [
+    657.98,
+    -89.68
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "14": {
+   "at": [
+    654.96,
+    -82.4
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

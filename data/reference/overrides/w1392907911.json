@@ -1,0 +1,141 @@
+{
+ "building": "w1392907911",
+ "name": "Bulghourji Armenian bar restaurant (NE corner of the St James St junction)",
+ "sources": [
+  "data/photos_ref/s01_armenian/19_52634146.jpg",
+  "data/photos_ref/s01_armenian/08_128666582.jpg",
+  "data/photos_ref/s01_armenian/09_128666584.jpg",
+  "data/photos_ref/s01_armenian/36_128666591.jpg",
+  "data/reference/s01_armenian.md#L6"
+ ],
+ "notes": {
+  "placement": "Bulghourji's building is unverified in the notes (R17): the OSM node (108.5,-175.9) lies in w1545817482, whose faces (4.0/4.9 m) cannot hold the >= 6 m facade of 19. This override puts it on the west face of w1392907911 (8.8 m, y -171.8..-180.6): the node's y matches this face's centre (-176.2) exactly, the facade carries the 'ARMENIAN ORTHODOX PATRIARCHATE RD.' plaque so it fronts the road, and 19 (door 550 px = 2.8 m, so ~5 m from the facade) fits the junction space west of it. Confidence low-med.",
+  "wall": "19/08: irregular weathered grey blocks: the coursed 'rubble' texture with a neutral grey tint.",
+  "facade": "19 (frontal, 2016) / 08 (2023): round-arched studded double door ~1.25 x 2.8 m (dark brown-black in 2023), flanking round-arched windows with scroll grilles and solid shutters, white tile street plaque (5 x 3 tiles, ~0.85 x 0.5 m) left of the door at the door crown, marble inscription panel and an oval oculus with a scroll grille above the door, LED floodlight (wall_lantern stand-in). u from the north end."
+ },
+ "settings": {
+  "height": 8.5,
+  "wall": "rubble",
+  "tint": [
+   0.96,
+   0.96,
+   0.97
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 4.4
+ },
+ "facades": {
+  "3": {
+   "centres": [
+    2.5,
+    4.5,
+    6.5
+   ],
+   "shops": false,
+   "ground_storey": 4.6,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.95,
+     "h": 1.75,
+     "sill": 0.9,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "door",
+     "w": 1.25,
+     "h": 2.8,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.95,
+     "h": 1.75,
+     "sill": 0.9,
+     "arch": "round",
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      4.5
+     ],
+     "w": 0.9,
+     "h": 0.5,
+     "arch": "round",
+     "sill": 0.5,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "plaque_armenian",
+     "u": 3.3,
+     "z": 8.46,
+     "w": 0.85,
+     "h": 0.5
+    },
+    {
+     "type": "wall_lantern",
+     "u": 5.7,
+     "z": 8.81
+    }
+   ],
+   "at": [
+    116.32,
+    -176.19
+   ],
+   "auto": false
+  },
+  "0": {
+   "centres": [
+    2.2,
+    6.0
+   ],
+   "shops": false,
+   "ground_storey": 4.6,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.1,
+     "h": 2.4,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.6,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.2,
+      6.0
+     ],
+     "w": 0.9,
+     "h": 1.4,
+     "sill": 1.0,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    120.63,
+    -180.64
+   ],
+   "auto": false
+  }
+ }
+}

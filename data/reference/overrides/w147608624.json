@@ -1,0 +1,89 @@
+{
+ "building": "w147608624",
+ "name": "Davidson Center",
+ "sources": [
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/photos_ref/s07_kotel/046_172461683.jpg",
+  "data/photos_ref/s07_kotel/047_172461681.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Low rough-ashlar mass in Umayyad vaults, one storey above the walkway, flat roof, modern glazed entrance on the west side facing the walkway (notes L6; lobby K:046/K:047 glass doors). Fix round 1: height 5.0 -> 3.2 m (top -39.96, 3.2 m above the walkway at the NW corner, 4.6 m on the W face over its edge ground, up to 7 m on the S face down the slope). K:044 is taken from its roof terrace (planter box lower left, railing and stair down to the park at right): the vanishing point of the Southern Wall courses puts the eye at about -38.5, so the roof is at about -40. The entrance is three glazed bays in the middle of the W face (position L); other faces blank (vault walls; the S face is against the city wall).",
+ "settings": {
+  "height": 3.2,
+  "wall": "rubble",
+  "tint": [
+   1.03,
+   0.97,
+   0.88
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    657.52,
+    -167.44
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "1": {
+   "at": [
+    640.87,
+    -182.27
+   ],
+   "auto": false,
+   "shops": false,
+   "ground_storey": 4.2,
+   "centres": [
+    9.98,
+    12.18,
+    14.38
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.0,
+     "h": 2.9,
+     "arch": null,
+     "door": "glass",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.0,
+     "h": 2.9,
+     "arch": null,
+     "door": "glass",
+     "sign": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.0,
+     "h": 2.9,
+     "arch": null,
+     "door": "glass",
+     "sign": false
+    }
+   ]
+  },
+  "2": {
+   "at": [
+    660.89,
+    -191.35
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "3": {
+   "at": [
+    677.54,
+    -176.51
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

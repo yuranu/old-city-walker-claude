@@ -1,0 +1,79 @@
+{
+ "building": "m_s04_sepulchre_2",
+ "name": "Metochion of Gethsemane (parvis south side, east part)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/A09_50026842.jpg",
+  "data/photos_ref/s04_sepulchre/F01_67247179.jpg",
+  "data/photos_ref/s04_sepulchre/F03_127215908.jpg",
+  "data/reference/s04_sepulchre.md#1.5"
+ ],
+ "notes": {
+  "method": "North face (A09 left, cam (219.7,163.8) looking SW): 2 storeys of coursed ashlar: at parvis level a large blind round arch (west part) and the round-arched 'METOCHION GETHSEMANE' doorway near the junction with the terrace wall; upper floor two big round-arched grilled windows; a small white dome on the roof (A09, F01). Floodlights at ~4.5 m."
+ },
+ "settings": {
+  "wall": "ashlar",
+  "tint": [
+   1.0,
+   0.95,
+   0.86
+  ],
+  "shops": false,
+  "storey": 3.9,
+  "domes": 1
+ },
+ "facades": {
+  "5": {
+   "shops": false,
+   "centres": [
+    3.6,
+    7.9
+   ],
+   "ground_storey": 4.0,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 3.0,
+     "h": 2.6,
+     "sill": 0.5,
+     "arch": "round",
+     "lo": "wall",
+     "grille": false
+    },
+    {
+     "kind": "door",
+     "w": 1.4,
+     "h": 2.6,
+     "arch": "round",
+     "door": "door_wood"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.8,
+      6.8
+     ],
+     "w": 1.3,
+     "h": 1.8,
+     "sill": 0.7,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "awning": false,
+   "auto": false,
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 5.6,
+     "z": -9.99
+    }
+   ],
+   "at": [
+    220.6,
+    155.27
+   ]
+  }
+ }
+}

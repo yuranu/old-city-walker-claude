@@ -1,0 +1,80 @@
+{
+ "building": "m_s04_sepulchre_1",
+ "name": "Holy Sepulchre parvis south terrace",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/A06_113247476.jpg",
+  "data/photos_ref/s04_sepulchre/A09_50026842.jpg",
+  "data/photos_ref/s04_sepulchre/A10_48575165.jpg",
+  "data/reference/s04_sepulchre.md#1.5"
+ ],
+ "notes": {
+  "method": "North face (on the St Helena level strip / parvis): plain coursed ashlar, 3 small round-arched grilled windows and 2 black floodlights (A09, A06); the terrace railing, cypress and palm on top are requests.",
+  "z": "floodlight z are absolute (street datum) from the spec edge ground -12.70"
+ },
+ "settings": {
+  "wall": "ashlar",
+  "tint": [
+   0.98,
+   0.93,
+   0.84
+  ],
+  "shops": false,
+  "storey": 3.6
+ },
+ "facades": {
+  "0": {
+   "shops": false,
+   "centres": [
+    2.2,
+    5.0,
+    7.8
+   ],
+   "ground_storey": 4.4,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.75,
+     "h": 1.0,
+     "sill": 1.3,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.75,
+     "h": 1.0,
+     "sill": 1.3,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.75,
+     "h": 1.0,
+     "sill": 1.3,
+     "arch": "round",
+     "grille": true
+    }
+   ],
+   "floors": [],
+   "awning": false,
+   "auto": false,
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 3.6,
+     "z": -10.0
+    },
+    {
+     "type": "wall_lantern",
+     "u": 6.4,
+     "z": -10.0
+    }
+   ],
+   "at": [
+    211.15,
+    154.57
+   ]
+  }
+ }
+}

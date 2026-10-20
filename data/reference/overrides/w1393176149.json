@@ -1,0 +1,101 @@
+{
+ "building": "w1393176149",
+ "name": "Bab Hutta junction, south-west corner block (The Message Cafe, no. 14)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/32_babhutta_2022c.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Shops and the cafe on the Lions' Gate face (OSM shop/cafe nodes); rough-faced masonry as R:32.",
+ "settings": {
+  "height": 11.55,
+  "wall": "rubble",
+  "tint": [
+   0.99,
+   0.95,
+   0.88
+  ],
+  "storey": 3.5,
+  "shops": true
+ },
+ "facades": {
+  "6": {
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "ground_storey": 4.3,
+   "storey": 3.5,
+   "canopy": {
+    "depth": 0.9,
+    "z_front": 3.0,
+    "z_wall": 3.5
+   },
+   "centres": [
+    2.3,
+    5.4,
+    8.9,
+    12.3,
+    15.4
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 2.9,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 2.9,
+     "arch": "segment",
+     "door": "door_olive"
+    },
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 2.9,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 2.9,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.4,
+     "arch": "pointed",
+     "door": "door_green"
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.0,
+     "h": 1.5,
+     "sill": 1.0,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "w": 1.0,
+     "h": 1.5,
+     "sill": 1.0,
+     "arch": null,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "at": [
+    748.87,
+    438.49
+   ]
+  }
+ }
+}

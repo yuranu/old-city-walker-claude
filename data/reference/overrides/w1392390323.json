@@ -1,0 +1,196 @@
+{
+ "building": "w1392390323",
+ "name": "East side of the foot of the Damascus Gate street",
+ "sources": [
+  "data/photos_ref/s08_damascus/D30_87978670.jpg",
+  "data/photos_ref/s08_damascus/D22_39705472.jpg",
+  "data/photos_ref/s08_damascus/D39_85895113.jpg"
+ ],
+ "why": "D30 right: deep tan canvas sheds (~2 m projection, front ~3 m over the steps) over clothes shops, stepping down with the street; D39 right: shop row with 2 storeys above; D22 left: the 'NABIL H. BAKERY' board on a bracket at ~4 m. Street front ~12.2 m (eg -25.74). The 16 m frontage falls 1.6 m: per-bay door sills and one shed per bay.",
+ "settings": {
+  "height": 10.8,
+  "wall": "ashlar",
+  "tint": [
+   0.98,
+   0.93,
+   0.85
+  ],
+  "storey": 3.6
+ },
+ "facades": {
+  "5": {
+   "at": [
+    307.87,
+    507.15
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.7,
+    4.9,
+    8.1,
+    11.3,
+    14.5
+   ],
+   "ground_storey": 4.4,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 2.7,
+     "h": 3.0,
+     "sill": 0.91,
+     "lo": "door_green",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.7,
+     "h": 3.0,
+     "sill": 0.49,
+     "lo": "door_blue2",
+     "arch": "segment",
+     "grille": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.7,
+     "h": 3.0,
+     "door": "rolldown_grey",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 2.7,
+     "h": 3.0,
+     "sill": -0.08,
+     "lo": "door_green2",
+     "arch": "segment",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.7,
+     "h": 3.0,
+     "sill": -0.45,
+     "lo": "door_blue",
+     "arch": null,
+     "grille": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.45,
+   "canopy": null,
+   "floors": [
+    {
+     "centres": [
+      1.7,
+      4.9,
+      8.1,
+      11.3,
+      14.5
+     ],
+     "ws": [
+      1.1,
+      1.1,
+      1.1,
+      1.1,
+      1.1
+     ],
+     "hs": [
+      1.5,
+      1.5,
+      1.5,
+      1.5,
+      1.5
+     ],
+     "arches": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    },
+    {
+     "centres": [
+      3.3,
+      9.7,
+      14.5
+     ],
+     "ws": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "hs": [
+      1.3,
+      1.3,
+      1.3
+     ],
+     "arches": [
+      null,
+      null,
+      null
+     ],
+     "lo": "shutter_brown",
+     "grille": false,
+     "sill": 0.9
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "u": 12.9,
+     "z": -22.12,
+     "h": 0.7,
+     "out": 1.3,
+     "cell": "sign_bakery"
+    },
+    {
+     "type": "ac_unit",
+     "u": 9.7,
+     "z": -19.44
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.15,
+     "u1": 3.3,
+     "z": -21.53,
+     "depth": 1.9
+    },
+    {
+     "u0": 3.3,
+     "u1": 6.5,
+     "z": -21.95,
+     "depth": 1.9
+    },
+    {
+     "u0": 6.5,
+     "u1": 9.7,
+     "z": -22.26,
+     "depth": 1.9
+    },
+    {
+     "u0": 9.7,
+     "u1": 12.9,
+     "z": -22.52,
+     "depth": 1.9
+    },
+    {
+     "u0": 12.9,
+     "u1": 16.05,
+     "z": -22.89,
+     "depth": 1.9
+    }
+   ]
+  }
+ }
+}

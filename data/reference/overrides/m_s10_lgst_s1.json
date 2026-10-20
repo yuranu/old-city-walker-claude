@@ -1,0 +1,75 @@
+{
+ "building": "m_s10_lgst_s1",
+ "name": "South side of Lions' Gate Street at the Muazzamiyya (manual)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/14_lgst_muazz_2020.jpg",
+  "data/photos_ref/s10_herod_lions/15_lgst_muazz_2021.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Height from the profile manual building (11.5 m). Almost blind, as R:14 / R:15 show.",
+ "settings": {
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   0.97,
+   0.85
+  ],
+  "storey": 3.6,
+  "shops": false
+ },
+ "facades": {
+  "3": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 4.4,
+   "storey": 3.6,
+   "centres": [
+    3.0,
+    8.0
+   ],
+   "ground": [
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "door",
+     "w": 1.1,
+     "h": 2.3,
+     "arch": null,
+     "door": "door_green2"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      5.5
+     ],
+     "w": 0.7,
+     "h": 1.0,
+     "sill": 1.5,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      3.0,
+      8.0
+     ],
+     "w": 0.8,
+     "h": 1.2,
+     "sill": 1.1,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    722.97,
+    434.68
+   ]
+  }
+ }
+}

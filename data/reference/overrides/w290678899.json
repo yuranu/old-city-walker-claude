@@ -1,0 +1,223 @@
+{
+ "building": "w290678899",
+ "name": "St James Convent, gate block (street front north of the gate)",
+ "sources": [
+  "data/photos_ref/s01_armenian/03_195104793.jpg",
+  "data/photos_ref/s01_armenian/15_85750135.jpg",
+  "data/photos_ref/s01_armenian/16_85750136.jpg",
+  "data/photos_ref/s01_armenian/30_90904092.jpg",
+  "data/photos_ref/s01_armenian/07_195154591.jpg",
+  "data/reference/s01_armenian.md#P5",
+  "data/reference/s01_armenian.md#3"
+ ],
+ "notes": {
+  "height": "~11 m flat-topped wall without cornice: 15 (gate apex ~7 m, wall top at ~1.5x the apex height above the pavement = ~10.6 m), notes P5/L1 (11-12 m); w290678899_1 (south of the gate passage) inherits it.",
+  "facade": "e0 = street front north of the gate, u from the north end (112.9,-212.8); the gate itself is the mouth of building passage 722675059 at u ~9-11. From 03 (foreground wall) and 15: three rows of sparse windows: small square bar-grilled windows at ~3 m, hooded grilled windows at ~5 m, cage windows at ~8-9.5 m (hoods and cages are plain grilled windows here; features requested). APR street plaque (white tiles, dark frame) ~4 m north of the recess at ~3.5 m (03, 30); scroll-bracket gate lamp (wall_lantern stand-in) beside the recess at ~3 m (07, 16, 30); downpipe at the north end (15).",
+  "tint": "very regular pale grey-white limestone, whiter than anywhere on the square (03, 15, 30).",
+  "facade_south": "street front south of the gate (piece w290678899_1 after the passage carve), u from the gate jamb (112.3,-224.8): 03, 16, 30 (small hooded window with a diamond grille right of the recess, cages above), gate lamp on this side too."
+ },
+ "settings": {
+  "height": 11.0,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   1.06,
+   1.07
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.3
+ },
+ "facades": {
+  "0": {
+   "centres": [
+    2.0,
+    5.0,
+    7.0
+   ],
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 3.3,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.6,
+     "h": 0.6,
+     "sill": 2.8,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.4,
+     "h": 0.5,
+     "sill": 2.9,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.4,
+     "h": 0.5,
+     "sill": 2.9,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "lo": "glass",
+     "grille": true,
+     "centres": [
+      2.6,
+      5.4,
+      7.4
+     ],
+     "ws": [
+      0.8,
+      0.75,
+      0.7
+     ],
+     "hs": [
+      1.0,
+      0.95,
+      0.9
+     ],
+     "sill": 1.5,
+     "arch": null
+    },
+    {
+     "lo": "glass",
+     "grille": true,
+     "centres": [
+      1.2,
+      4.0,
+      6.6
+     ],
+     "ws": [
+      1.1,
+      1.0,
+      0.8
+     ],
+     "hs": [
+      1.4,
+      1.4,
+      1.1
+     ],
+     "sill": 1.3,
+     "arch": null
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "sign",
+     "cell": "plaque_armenian",
+     "u": 4.0,
+     "z": 9.0,
+     "w": 0.9,
+     "h": 0.55
+    },
+    {
+     "type": "wall_lantern",
+     "u": 8.5,
+     "z": 8.45
+    },
+    {
+     "type": "pipe",
+     "u": 0.4,
+     "z0": 5.45,
+     "z1": 15.45
+    }
+   ],
+   "at": [
+    112.66,
+    -218.24
+   ],
+   "auto": false
+  },
+  "105": {
+   "centres": [
+    3.0,
+    8.5
+   ],
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 3.3,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.6,
+     "h": 0.6,
+     "sill": 2.8,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.5,
+     "h": 0.6,
+     "sill": 3.0,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "lo": "glass",
+     "grille": true,
+     "centres": [
+      2.4,
+      5.6,
+      9.2
+     ],
+     "ws": [
+      0.7,
+      0.85,
+      0.8
+     ],
+     "hs": [
+      0.9,
+      1.0,
+      1.0
+     ],
+     "sill": 1.5,
+     "arch": null
+    },
+    {
+     "lo": "glass",
+     "grille": true,
+     "centres": [
+      4.0,
+      7.5,
+      10.4
+     ],
+     "ws": [
+      1.1,
+      1.0,
+      0.8
+     ],
+     "hs": [
+      1.5,
+      1.4,
+      1.1
+     ],
+     "sill": 1.2,
+     "arch": null
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 1.4,
+     "z": 8.36
+    },
+    {
+     "type": "pipe",
+     "u": 11.2,
+     "z0": 5.36,
+     "z1": 15.36
+    }
+   ],
+   "at": [
+    112.06,
+    -230.57
+   ],
+   "auto": false
+  }
+ }
+}

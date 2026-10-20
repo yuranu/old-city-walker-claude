@@ -1,0 +1,246 @@
+{
+ "building": "m_s01_armenian_2",
+ "name": "north tunnel building over Armenian Patriarchate Rd",
+ "sources": [
+  "data/photos_ref/s01_armenian/04_195105576.jpg",
+  "data/photos_ref/s01_armenian/39_149516990.jpg",
+  "data/photos_ref/s01_armenian/05_195154357.jpg",
+  "data/photos_ref/s01_armenian/10_74516433.jpg",
+  "data/photos_ref/s01_armenian/43_68022972.jpg",
+  "data/reference/s01_armenian.md#L8"
+ ],
+ "notes": {
+  "height": "3 storeys, ~11.4 m (R7: pedestrian at the south mouth in 04 gives top ~11.4 m, storeys ~4.2/3.7/3.5).",
+  "facades": "The road passage (OSM 44376249, in covered_streets) splits the building into a west and an east piece. South faces (04, 39): two round-arched windows in the top storey (one each side of the passage), one in the middle storey. Passage walls: the Sandrouni ceramics shop fronts (10, 43: dark teal steel-framed glazed doors, one round-arched and one segmental opening, oval bulkhead lamp) on the east wall at mid-length (wall side and position are unverified, R8); a wooden door and a small grilled window opposite. Nothing above the vault springing (hidden by the vault). North face of the west piece (05, 13, 21): plain, small windows.",
+  "replaces": "OSM w1392907903 (removed in the profile, see its manual_buildings entry m_s01_armenian_2: same footprint with the south edge trimmed so the tunnel carve leaves no sliver across the mouth).",
+  "keys": "facade keys are labels only (100+ = edge of the east piece); every facade carries its 'at' anchor, and the two passage-wall anchors sit 1.4 m inside their own piece so the walls (2.2 m apart) keep their own facade."
+ },
+ "settings": {
+  "height": 11.4,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   1.0,
+   0.92
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {
+  "3": {
+   "centres": [
+    1.6496467046007188
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      1.65
+     ],
+     "w": 1.0,
+     "h": 1.6,
+     "arch": "round",
+     "sill": 0.9,
+     "lo": "glass",
+     "grille": false
+    },
+    {
+     "centres": [
+      1.65
+     ],
+     "w": 1.0,
+     "h": 1.7,
+     "arch": "round",
+     "sill": 0.8,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "at": [
+    105.48,
+    -210.83
+   ],
+   "auto": false
+  },
+  "0": {
+   "centres": [
+    9.0,
+    16.0
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.0,
+     "h": 2.3,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.6,
+     "h": 0.8,
+     "sill": 1.7,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": []
+    },
+    {
+     "centres": []
+    }
+   ],
+   "extra_fixtures": [],
+   "at": [
+    108.05,
+    -198.02
+   ],
+   "auto": false
+  },
+  "101": {
+   "centres": [
+    2.4957181832089934
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [],
+     "w": 1.0,
+     "h": 1.6,
+     "arch": "round",
+     "sill": 0.9,
+     "lo": "glass",
+     "grille": false
+    },
+    {
+     "centres": [
+      2.5
+     ],
+     "w": 1.0,
+     "h": 1.7,
+     "arch": "round",
+     "sill": 0.8,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "at": [
+    111.85,
+    -210.92
+   ],
+   "auto": false
+  },
+  "100": {
+   "centres": [
+    11.0,
+    13.6,
+    20.0
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 1.6,
+     "h": 2.6,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 1.6,
+     "h": 2.5,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "door",
+     "w": 1.0,
+     "h": 2.3,
+     "arch": "round",
+     "door": "door_wood"
+    }
+   ],
+   "floors": [
+    {
+     "centres": []
+    },
+    {
+     "centres": []
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 12.3,
+     "z": 8.14
+    }
+   ],
+   "at": [
+    113.02,
+    -198.62
+   ],
+   "auto": false
+  },
+  "1": {
+   "centres": [
+    3.04
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      3.04
+     ],
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.0,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      3.04
+     ],
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.0,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    108.68,
+    -185.48
+   ],
+   "auto": false
+  }
+ }
+}

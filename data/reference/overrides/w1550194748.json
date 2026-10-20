@@ -1,0 +1,23 @@
+{
+ "building": "w1550194748",
+ "name": "one-storey block between the Christ Church street block and the forecourt",
+ "sources": [
+  "data/photos_ref/s01_armenian/33_133184349.jpg"
+ ],
+ "notes": {
+  "height": "33: one storey with a flat roof terrace, like its neighbours."
+ },
+ "settings": {
+  "height": 5.0,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   1.03,
+   0.98
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {}
+}

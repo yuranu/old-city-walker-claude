@@ -715,3 +715,208 @@ Dung Gate profile and its surroundings needed fixes (R6, R7).
 - Wall course counts per zone. K:003 at this resolution supports 7 / ~4 / 12-16 but cannot confirm them exactly.
 - K:021 is not consistent with the OSM stair-tower vertex under my rough resection. K:009 and K:024 agree with OSM,
   so OSM is kept.
+
+---------------------------------------------------------------------------------------------------
+
+## Sector pass
+
+Sector pass, 2026-10-20, with **fix round 1** after the adversarial review of the same day. Files:
+`data/reference/profiles/s07_kotel.json` and the overrides `data/reference/overrides/{w147608624, w288016669,
+w288016670, w288016671, w288016673, w288016678, w394161624, w394161625, m_s07_kotel_1, m_s07_kotel_3,
+m_s07_kotel_4, m_s07_kotel_5}.json`. They are all written by `build/spec_s07_kotel/gen_s07.py` (the pass-1
+generator is kept as `gen_s07_pass1.py`), which reads the facade anchors from the private spec and the wall
+slabs from its base.json. `r3820187.json` is retired (the record is removed; the file is kept as
+`build/spec_s07_kotel/retired_r3820187.json`). Renders and side-by-side sheets are in `renders/sectors/s07_kotel/`:
+`r0b_baseline` is before the pass, `r2` the end of pass 1, `verify` the reviewer's renders, `f1_cal` the K:044
+calibration and `f1` the state after fix round 1.
+
+### What s07 is (as drawn)
+s07 covers x >= 600, y <= -40 (R4). It holds:
+- the south lobe of the plaza and the fenced bridge approach;
+- the foot of the ramp, Robinson's Arch and the Herodian street;
+- the Ophel / Davidson archaeological park;
+- the Dung Gate road.
+
+It is not a street sector: there are no souq streets and no covered streets, so both are empty in the profile.
+Before the pass its spec held 20 records: 11 OSM (one is the Dung Gate landmark) and 9 infill pieces. Now it
+holds 13: 9 OSM (the Dung Gate landmark, the Davidson Center, 7 ruins) and 4 manual pieces.
+
+### Decisions (current state)
+- **Open areas.** Three rings: the sector polygon is cut at y = -112 and along the walkway parapet w394161622.
+  The whole sector is open ground. Before the pass, infill put 6-9 m houses with windows, water heaters and domes
+  in three places:
+  - the ramp foot and Herodian street: f364 (1761 m2), f365, f96, f97;
+  - the park lawns: f98, f99, f257, f391;
+  - the terrace above the south entrance: f390.
+
+  Every photo of these places shows paths, lawns and ruins (K:021, K:029, K:033, K:044, K:032, K:038, K:045).
+- **The park's OSM "buildings" are excavated ruins.** They are lowered to wall height with blank facades (no
+  openings, no random fixtures). make_spec counts a height from g_hi, the highest ring vertex, so the visible
+  wall (top minus the ground 1 m outside each edge) is larger than the setting, and much larger on the low side of
+  a sloping lot. Fix round 1 set three of them so that the high side matches the photo:
+
+  | id | height | visible (high..low side) | wall | evidence |
+  |---|---|---|---|---|
+  | w288016673 | 3.0 m | 3.0..4.3 m | ashlar | K:033 (top ~1.4 m above the 1.6 m camera) |
+  | w288016669 | 2.5 m | 2.4..3.6 m | rubble | K:029 left terrace wall, K:033 |
+  | w288016671 | 2.5 m | 2.4..4.0 m | rubble | K:032 foreground |
+  | w288016678 | 2.2 -> **1.2 m** | 2.2..4.4 m | ashlar | the two-course (~2 x 1 m) palace wall across K:044 / K:032; its g_hi is 0.99 m above its highest edge ground |
+  | w288016670 | 2.0 -> **1.5 m** | 1.4..4.9 m | ashlar | K:038 (L) |
+  | w394161625 | 2.0 m | 2.0..2.2 m | ashlar | K:021, K:045 (L) |
+  | w394161624 | 1.5 -> **0.8 m** | 0.7..2.9 m | ashlar | K:044 / K:032 foreground, notes "0.5-1.5 m" |
+
+  The low sides stay 1-3 m too tall until the requested "ruin" flag lets a top follow the terrain (and the pits
+  are sunk, see the requests). The tint is [1.03, 0.98, 0.90].
+- **Davidson Center w147608624.** A rough-ashlar mass with a flat roof and three glazed bays in the middle of the W
+  face; the other faces are blank. Fix round 1: **3.2 m** (was 5.0 m; 11.3 m before the pass). Its top is -39.96:
+  3.2 m above the walkway at the NW corner, 4.6 m on the W face over its edge ground, up to 7 m on the S face down
+  the slope. Evidence: K:044 is taken from its roof terrace (planter box lower left, railing and stair down to the
+  park at right); the vanishing point of the Southern Wall courses puts the eye at about -38.5, so the roof is at
+  about -40 (review). The roof is a public terrace; its roof room and rooftop props are random (code request).
+- **r3820187 removed and replaced by three manual pieces (fix round 1).** The OSM multipolygon (with a
+  courtyard, lawn w288016662, that the spec filled) mixed the arched corner block at the Southern Wall with ruin
+  wings and thin walls running 50 m down 12-17 m of fall along the inside of the Ottoman wall. One record has one
+  top, so its southern arms stood as 14-18 m blank blades above the city wall (review: verify/v_parke.png,
+  verify/corner_ene.png), and the two layer-1 stairs w288016716 and w755420496 ran through it. The pieces are
+  pre-clipped in gen_s07.py: 0.15 m off the Southern Wall face (its OSM line is the S face; make_spec does not clip
+  there), 3.15 m inside the Ottoman wall line (the 3 m slab plus 15 cm, so make_spec's own 5 cm clip never touches
+  them), the mitred inner corners of the wall jog, and 1.5 m around the layer-1 stairs.
+  - **m_s07_kotel_5, the arched corner block** (257 m2, the OSM ring north of the courtyard; its north edge is
+    run into the wall because OSM draws it 0.74 m short of the face). Top **-30.7** (12.0 m over its g_hi, 12.8 m
+    on the W face). Height from the photos: in K:044 the block is 140 px tall and its top 40 px under the Southern
+    Wall top line at the same depth, in K:032 152 px and 50 px; so its top sits ~0.31 of its own height under the
+    wall top, which with the modelled wall top -26.5 and the ground at its W face (-44.4) gives -30.7. That is above
+    the Ottoman wall top (-33.3..-35.5), as K:038 and K:044 show. **Checked with a calibrated render** (f1_cal,
+    edges_k044.jpg: the K:044 camera fitted to the SW corner and the Al-Aqsa dome): the rendered block top falls on
+    photo y ~450 against ~445, and the rendered arches on the photo's arches. W face: two round-headed arches 3.6
+    x 6.3 m with dark depths (door "void") at 2.6 and 8.4 m from the N end, and three small dark windows 0.6 x 0.7 m
+    at ~9.8 m (K:032 crop: arches ~0.46 of the block height, windows at ~0.71); other faces blank. pass-1's 6 m
+    (top -36.6) was too low: the block stood below the Ottoman wall's merlons. The id is m_s07_kotel_5 rather than
+    _2 because make_spec's per-id random draw gave _2 a 2.5-3 m rooftop room; _5 draws none (the real fix is the
+    requested "roof_rooms": 0).
+  - **m_s07_kotel_4, the ruin wing inside the wall jog** (128 m2, x 766-782, y -98..-113, 0.1 m off the block so
+    no faces are coplanar). Top -40.0, ~4.7 m on its high side, below the wall top: the lower masonry right (S) of
+    the block in K:032 and K:044 (L). Facades blank.
+  - **m_s07_kotel_3, the E-W ruin arm** (OSM, ~1 m x 20 m, (749.4,-139.5)-(769.5,-135.8), beside footway
+    w44416112 to the tunnel through the wall). 2.0 m (the profile checker's minimum for a manual building); the
+    ground falls only 0.8 m along it. Height L (OSM only). Facades blank.
+  - The N-S arm along the wall lies inside the wall slab and is left out; the west strip between the courtyard
+    and the boardwalk stairs is left open (ruins at ground level).
+- **w277508272 removed** (OSM building=roof). It is the portal roof over the security lanes (K:045). Built as a
+  closed 11 m block, it walled off the south entrance to the plaza. It is requested as an open structure.
+- **Manual building m_s07_kotel_1, the café kiosk** against the inner face of the wall just E of the Dung Gate
+  (K:037):
+  - fix round 1: **4.8 x 3.75 m** (was 6.0 m long), so its E end stops 0.3-0.5 m W of the parapet line
+    w394161622 instead of crossing it by 0.7 m; 3.2 m high; front 4.8 m as measured in K:037;
+  - wall frame: u = 4.4..9.2 m E of the gate centre (the W end ~2.2 m E of the east jamb), v = 0..3.8 m N of the
+    inner face. The ring reaches 0.3 m into the wall and make_spec's slab clip leaves its S edge exactly 3.05 m
+    from the outer wall line, i.e. 5 cm off the inner face (the Dung Gate section and the generic wall share that
+    3.0 m slab). The review's "0.4 m gap" does not hold for the current spec; the "bump" look came from its tint;
+  - fix round 1: smooth ashlar with a lighter, warmer tint [1.10, 1.03, 0.86] (K:037: cream cladding against the
+    grey wall); the closed grey roller shutter at the E end of the N face, a slatted awning (extra_awnings, corrugated
+    sheet as built) along the top of the N face, the 'קפה' sign (atlas sign_cafe) high on the W face ~40 % from its
+    N end; no openings on the W face. Its roof is too small for rooftop props.
+- **Props.**
+  - 19 grey steel bollards every 2 m on the east kerb of the road, from the east jamb northwards (K:036, K:037,
+    K:041).
+  - fix round 1: **9 bollards on the west kerb**, every 2 m from 1 m inside the inner face of the wall (624.8,-196.3)
+    to (619.3,-181.3): the out-bound lane's centreline (626.5,-195.7)->(620.9,-180.3) moved 1.8 m to its west
+    (K:037: five in the foreground between the camera and the road, one by the wall W of the arch; K:036: the row
+    on the left of the road beyond the arch). The two rows stand ~4.4 m apart, the width of the gate opening.
+  - 4 inverted-L LED poles (lamp_modern) at the walkway parapet, every 13 m (K:036 shows four beyond the arch).
+  - 1 dark grey bin W of the arch on the inner face (K:037).
+  - fix round 1: **1 large olive** (scale 1.25) at (665.6,-162.3), on the S edge of lawn w288016653, 4 m N of the
+    Davidson Center: the olive right of centre in K:044 (trunk at x 990 px -> bearing 63.6 deg from the K:044
+    camera; foot 250 px under the horizon at y 525 -> ~26 m). The K:044 render puts its crown ~80 px higher than
+    the photo, so it may stand 3-5 m nearer (or the eye is ~1 m higher). Cypress rows and the steel pergola have no
+    prop type (request). The other photos show bushes, not olives, at the pit edges (K:032).
+- **Not added.** The 2015-2018 date palms and olive outside the gate: they are gone in the 2025 photos
+  K:035/K:036 (R6), and outside the walls is base.
+
+### Fix round 1: the review's issues
+| # | issue (severity) | outcome |
+|---|---|---|
+| 1 | r3820187's southern arms as 14-18 m blades (high) | fixed: record removed, three manual pieces (above); verify in f1/v_parke.png and corner_ene.png |
+| 2 | the Dung Gate road is a staircase (high) | code (stairs.py, landmarks_gates): request HIGH with tread counts and grades |
+| 3 | ground wedges bury Robinson's springer zone (high) | code (terrain): request raised to HIGH, citing verify/v_k030.png and v_k033.png |
+| 4 | Davidson Center ~2 m too tall; roof is a terrace (medium) | fixed: 3.2 m; terrace added to the ROOF ROOMS request |
+| 5 | r3820187 facades not blank, anchors from an old ring (medium) | moot: record removed, its override retired |
+| 6 | LOD window cards on blank buildings (medium) | code: request LOD WINDOW CARDS; lower ruins lost theirs (w288016678, w394161624: 0) |
+| 7 | ruins 1-3 m taller than stated (medium) | fixed on the high side (table above); the low side needs the ruin flag |
+| 8 | viewpoints do not match their photos (medium) | fixed: cameras re-taken (table below) |
+| 9 | no olives in the park (medium) | one olive placed from K:044; request PARK PROPS for cypress and pergola |
+| 10 | bollards only on the east kerb (medium) | fixed: 9 on the west kerb |
+| 11 | excavations modelled as walls on paving, not pits (medium) | code: request SUNKEN EXCAVATION PITS with polygons and dz |
+| 12 | layer-1 stairs blocked by r3820187 (medium) | fixed: 1.5 m clear of every piece; stairs.py skips layer != 0, so they are still not built (request) |
+| 13 | Ezrat Yisrael deck missing (medium) | request EZRAT YISRAEL DECK (K:031) |
+| 14 | Haram merlons, Robinson's springer missing (medium) | request HARAM DETAILS (landmarks_haram / wall circuit) |
+| 15 | r3820187 keys "2"/"3" without anchors (low) | moot: record removed; request SPIKE EDGES for clean() |
+| 16 | kiosk gap, tint, sign, crosses the parapet (low) | fixed: trimmed, tinted, sign and awning; the gap is 5 cm in the current spec (above) |
+| 17 | park footways as big tread slabs (low) | code: request NO STEPS ON PARK PATHS |
+
+### Checks (fix round 1)
+- check_profiles: 0 errors, 0 warnings.
+- check_overrides (the 12 files): 0 errors, 1 warning (w288016669 edge 12 is a party wall).
+- make_spec (SPEC_DIR=build/spec_s07_kotel): s07 has 13 buildings, no infill; every override anchor resolves;
+  no generated facade on any ruin or manual piece except the block's W face (2 arches, 3 windows, 1 spout), the
+  kiosk (shutter, awning, sign, spout) and the Davidson W face (3 glazed bays, 2 spouts).
+- audit of build/s07_kotel.blend (`build/spec_s07_kotel/audit_f1.json`): 839 coplanar overlaps, every one paired
+  with lod_s07_kotel; 20 degenerate triangles, all in the stair treads (stairs.py; the 2 from r3820187's ring are
+  gone); 0 open edges.
+
+### Viewpoints
+render_city cameras with absolute z (`--abs`): the ground (base.json triangles, or the tread top) under the point
+plus the eye height, or the photo's own eye estimate. Rendered with `build/spec_s07_kotel/render_f1.sh` (a scratch
+copy of render_city.py, `render_priv.py`, with a ground exported from the private spec; `--lo` for context;
+integrated GPU, the discrete one returns black frames under the other workers' load).
+
+| camera | photo | lens | cam string | how the camera was set |
+|---|---|---|---|---|
+| k044 | K:044 | 24.75 | `k044:642,-174,-38.50:708.8,-99.6,-27.5` | Davidson roof (review), f 880 px and heading 41.9 deg fitted to the SW corner (x 350) and the Al-Aqsa dome (x 810), horizon at the Southern Wall courses' vanishing point (y 525) |
+| k032 | K:032 | 29.1 | `k032:604,-142,-35.98:701.9,-121.6,-39.1` | geotag wrong; position, heading 78.2 deg and f 1035 px solved from four bearings (Fakhriyya minaret, SW corner, the block, Al-Aqsa dome) |
+| k038 | K:038 | 22 | `k038:700,-186.2,-36.3:745.4,-97.1,-41.7` | wall walk E of the gate; f ~775 px from the Dome of the Rock, Al-Aqsa dome and the block |
+| dung_in | K:037 | 26 | `dung_in:615,-185,-40.09:628.0,-197.8,-41.7` | W of the road, 17.7 m from the arch (arch 220 px at f ~924 px), on the stepped sidewalk |
+| v_k035 | K:035 | 26 | `v_k035:617,-218,-47.20:628,-200,-42.30` | the reviewer's camera |
+| gate_road | K:036 | 26 (540x810) | `gate_road:630.3,-212.4,-48.25:628.4,-199.5,-42.8` | portrait; 12 m out on the gate axis (arch 460 px wide, 560 px high at f ~1390 px) |
+| dung_out | K:041 | 40 | `dung_out:634,-223,-50.57:628.2,-198,-41.0` | geotag, 25 m out; merlon period 2.05 m = 140 px needs a ~40-47 mm lens |
+| corner_ene | (K:032) | 24.75 | `corner_ene:640,-150,-39.87:700,-120,-42.36` | pass-1 camera, kept for before/after |
+| v_parke | - | 24.75 | `v_parke:725,-150,-48.92:765,-125,-45.70` | the reviewer's camera, before/after of the blades |
+
+The pass-1 cameras (dung_out 22 mm, dung_in on the bollard line, gate_road 22 mm, sw_corner at 1.7 m beside the
+Davidson NW corner) did not test heights (review). K:024 (`obs`) is still not usable: s09's w1528632636 stands 24 m
+above the plaza and blocks the view from the observation point.
+
+### Requests
+See "requests" in the profile (23 entries, the two HIGH ones first):
+- HIGH: stairs across the Dung Gate road, the gate passage, the bend and the crossings (stairs.py, landmarks_gates);
+- HIGH: ground wedges at the Haram wall foot burying Robinson's springer zone (terrain / tess_regions);
+- terrain of the Herodian street (L, verify first); sunken excavation pits (SUNKEN / ground holes);
+- an open portal for w277508272; the hoarding, the walkway parapet and the barrier wall; the Mughrabi bridge and
+  its stair tower; the Ezrat Yisrael deck; the timber boardwalk; the layer-1 stairs (stairs.py skips them);
+- a "ruin" building flag; switching off roof rooms and rooftop props (the Davidson roof is a terrace); LOD window
+  cards on blank buildings; zero-area spikes in clean();
+- a fallen-blocks prop; cypress and pergola props; grass and asphalt ground; no steps on the park paths;
+- the Dung Gate inner face; Haram details seen from s07 (merlons, Robinson's springer); the guard booth
+  w1550608919 in base; a base rebuild; the s09 infill piece on the old ramp (x 616-657, y -40..-20).
+
+### Differences that remain (f1 against the photos)
+- The Mughrabi bridge, its timber stair tower and the white hoarding are missing. This is the biggest gap in
+  K:021, K:022 and K:045.
+- The south portal is missing (K:045, K:025).
+- The park is grey paving with low walls and one olive. The photos show bright lawns, more olives, rows of
+  cypresses, steel pergolas, fallen blocks, the timber boardwalk and pits below the paths (K:044, K:032, K:028).
+  The ruins' low sides stand 1-3 m too tall on the slope.
+- Paving wedges 5-10 m high stand at the foot of the Haram wall and cover Robinson's springer zone (terrain). The
+  Herodian street is not sunk below the plaza; the ground at the corner block is ~3.6 m higher than the K:044
+  geometry implies.
+- The Dung Gate road is paving, not asphalt, and it and its walks are stepped. The inner face of the gate is a
+  plain plane, and the guard booth outside is a 7 m tower (base).
+- Rooftop props on the Davidson Center (a roof room, heaters, tanks, a dish), on w288016669, w288016670 and the
+  wing m_s07_kotel_4 (code request). The corner block's arches are dark recesses, not open passages, and its upper
+  storey detail (a small arched window at the top, K:044) is not modelled.
+- Other sectors, seen from s07:
+  - an s09 infill house (x 616-657, y -40..-20) sits on the old ramp under the bridge;
+  - the s06 police parking stands ~7.6 m above the plaza in the terrain, and the s06 building w288016676 is
+    ~21 m above the plaza, where K:021 shows a low flat roof.
+- Renders on the shared game/public/base/ground.glb show holes where infill, w277508272 and r3820187 were removed,
+  until base is rebuilt.

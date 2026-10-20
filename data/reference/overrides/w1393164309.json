@@ -1,0 +1,102 @@
+{
+ "building": "w1393164309",
+ "name": "Shops opposite the Muazzamiyya arch (north side, x 718-730)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/15_lgst_muazz_2021.jpg",
+  "data/photos_ref/s10_herod_lions/14_lgst_muazz_2020.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Face height 12 m (R:15: three storeys and a balconied top floor). Canopy from the souq profile (scroll brackets in R:14/R:15).",
+ "settings": {
+  "height": 10.59,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   0.97,
+   0.85
+  ],
+  "storey": 3.6,
+  "shops": true
+ },
+ "facades": {
+  "0": {
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "ground_storey": 4.6,
+   "storey": 3.6,
+   "canopy": {
+    "depth": 1.1,
+    "z_front": 3.3,
+    "z_wall": 3.9
+   },
+   "centres": [
+    3.2,
+    6.2,
+    9.4
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.0,
+     "h": 2.9,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.2,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.3,
+     "h": 3.6,
+     "arch": "round",
+     "door": "door_teal"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      3.2,
+      6.2,
+      9.4
+     ],
+     "w": 1.0,
+     "h": 1.8,
+     "sill": 0.8,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      3.2,
+      6.2,
+      9.4
+     ],
+     "w": 1.0,
+     "h": 2.0,
+     "sill": 0.6,
+     "arch": null,
+     "lo": "glass",
+     "grille": false,
+     "balconies": [
+      1,
+      2
+     ],
+     "balcony_w": 1.9,
+     "balcony_d": 0.7
+    }
+   ],
+   "at": [
+    724.29,
+    439.81
+   ]
+  }
+ }
+}

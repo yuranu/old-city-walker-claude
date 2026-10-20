@@ -1,0 +1,64 @@
+{
+ "building": "w1394593884",
+ "name": "block on the north side of the Muristan's y-118 lane (west part)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/D09_47212727.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "as w1394593883: shop row on lane 620317525, no canopies."
+ },
+ "settings": {
+  "shops": false
+ },
+ "facades": {
+  "3": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.26,
+    5.97,
+    9.68,
+    13.39
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    }
+   ],
+   "ground_storey": 4.4,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "at": [
+    201.76,
+    119.76
+   ]
+  }
+ }
+}

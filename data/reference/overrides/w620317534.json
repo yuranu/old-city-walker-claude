@@ -1,0 +1,292 @@
+{
+ "building": "w620317534",
+ "name": "Muristan north-east block (Suq Aftimos NE diagonal / east lane)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/D05_193978290.jpg",
+  "data/photos_ref/s04_sepulchre/D06_85896725.jpg",
+  "data/photos_ref/s04_sepulchre/D07_52533617.jpg",
+  "data/photos_ref/s04_sepulchre/F01_67247179.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "Muristan block (Greek Orthodox market, 1900s): 2 storeys of honey-cream ashlar, ground-floor round-arched shopfronts with fanlights and teal/green steel doors or grey roll-downs, upper floor of round-arched windows and small balconies with black railings (notes 1.6, 1.7, 2.6; F01 from the Redeemer tower shows the blocks and their long red-tile hipped roofs). Edge 4 (NW face on the NE diagonal) is the far left of D05: shops under the big beige retractable awnings (shown as shed canopies at 3.4-4.1 m, 2.1 m deep), grey roll-downs. Edge 1 (south, on the east lane) meets the pink-pier arcade at its west end (D07, request).",
+  "roof": "Real roof: red-tile hipped (F01, F03, D07, D08). Left flat here: build_city's hip roof uses the oriented bounding box and would overhang this footprint by metres (profile request). 'domes': 1 where set only keeps the vernacular lime-dome field (5-8 domes) off a roof that is really tiled."
+ },
+ "settings": {
+  "height": 9.5,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.97,
+   0.88
+  ],
+  "storey": 4.3,
+  "shops": true,
+  "domes": 1
+ },
+ "facades": {
+  "1": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.93,
+    4.98,
+    8.03,
+    11.09,
+    14.14
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    }
+   ],
+   "ground_storey": 5.0,
+   "awning": false,
+   "thr": 0.15,
+   "thr_out": 0.9,
+   "canopy": {
+    "depth": 2.1,
+    "z_front": 3.4,
+    "z_wall": 4.1
+   },
+   "at": [
+    238.48,
+    109.85
+   ]
+  },
+  "3": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.93,
+    5.0,
+    8.06,
+    11.13,
+    14.19,
+    17.26,
+    20.32,
+    23.39
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.52,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    }
+   ],
+   "ground_storey": 5.0,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.6,
+    "z_front": 3.3,
+    "z_wall": 4.0
+   },
+   "at": [
+    246.92,
+    100.05
+   ]
+  },
+  "0": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.98,
+    5.15,
+    8.32,
+    11.49,
+    14.66
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": null,
+     "door": "door_teal"
+    }
+   ],
+   "ground_storey": 5.0,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "at": [
+    250.88,
+    116.9
+   ]
+  },
+  "4": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.0,
+    5.21,
+    8.41,
+    11.62,
+    14.82
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    }
+   ],
+   "ground_storey": 5.0,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.5,
+    "z_front": 3.1,
+    "z_wall": 3.8
+   },
+   "at": [
+    259.4,
+    108.62
+   ]
+  }
+ }
+}

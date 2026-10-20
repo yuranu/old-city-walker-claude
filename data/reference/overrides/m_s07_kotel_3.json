@@ -1,0 +1,54 @@
+{
+ "building": "m_s07_kotel_3",
+ "name": "Ophel: ruin wall by the path to the wall gate",
+ "sources": [
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "OSM arm of r3820187: a ~1 m excavated wall, 2.0 m (L; the profile checker's minimum for a manual building). Facades blank.",
+ "settings": {
+  "height": 2.0,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    759.59,
+    -138.25
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "1": {
+   "at": [
+    769.5,
+    -135.84
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    759.3,
+    -137.07
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "3": {
+   "at": [
+    749.39,
+    -139.48
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

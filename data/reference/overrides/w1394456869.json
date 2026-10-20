@@ -1,0 +1,195 @@
+{
+ "building": "w1394456869",
+ "name": "Christ Church compound street block (post office, souvenir shop, Christ Church cafe)",
+ "sources": [
+  "data/photos_ref/s01_armenian/34_85630582.jpg",
+  "data/photos_ref/s01_armenian/33_133184349.jpg",
+  "data/photos/006_146551207.jpg",
+  "data/reference/s01_armenian.md#P1"
+ ],
+ "notes": {
+  "height": "one tall storey (~5-5.5 m) with roof terraces: 33 (from the Citadel, the street block reads as one storey under the Guest House loggia), 006; notes P1/L3. The 2-storey tiled volume with solar panels in 34 is w290690288 north of the gate passage (R2), not this block.",
+  "wall": "34: honey blocks with drafted margins and pitched faces, closer to the coursed 'rubble' texture than to the smooth 'ashlar' one.",
+  "edges": "e6 = main west face on the road, u from the north end (116.7,-49.5); e0 = north face of the projecting south end (cafe entrance: round arch + stone roundel, 33/R3); e1 = west face of the projection.",
+  "order": "Order along e6 from OSM nodes (post office (118.4,-51.8) -> u 2.3, parcel locker (116.2,-54.1) -> u 4.6, cafe (116.2,-64.6) -> u 15.1) and 34 (parcel locker beside a wall with an oculus and an AC unit, then the round arch with the black scroll grille). The souvenir shop with dark green doors and the corrugated shed awning is placed south of the arch (low confidence on its position). Cafe awning ('CHRIST CHURCH', grey scalloped) as a generic awning over the terrace in the angle with the projection (33)."
+ },
+ "settings": {
+  "height": 5.5,
+  "wall": "rubble",
+  "tint": [
+   1.04,
+   0.97,
+   0.86
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 4.2
+ },
+ "facades": {
+  "6": {
+   "centres": [
+    1.5,
+    3.3,
+    4.6,
+    7.0,
+    10.3,
+    13.0,
+    15.6
+   ],
+   "shops": false,
+   "ground_storey": 5.5,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.6,
+     "arch": "round",
+     "door": "door_green"
+    },
+    {
+     "kind": "window",
+     "w": 0.7,
+     "h": 1.1,
+     "sill": 1.4,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.55,
+     "h": 0.28,
+     "sill": 3.5,
+     "arch": "round",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.4,
+     "h": 3.0,
+     "sill": 0.5,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "shop",
+     "w": 2.3,
+     "h": 3.0,
+     "arch": "round",
+     "door": "door_green"
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    }
+   ],
+   "awning": false,
+   "extra_awnings": [
+    {
+     "u0": 9.0,
+     "u1": 11.6,
+     "z": 6.18,
+     "depth": 1.4
+    },
+    {
+     "u0": 13.9,
+     "u1": 16.8,
+     "z": 5.93,
+     "depth": 2.2
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "ac_unit",
+     "u": 5.5,
+     "z": 5.73
+    }
+   ],
+   "at": [
+    117.26,
+    -58.04
+   ],
+   "auto": false
+  },
+  "0": {
+   "centres": [
+    2.4,
+    4.3
+   ],
+   "shops": false,
+   "ground_storey": 5.5,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.5,
+     "h": 2.9,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.7,
+     "h": 0.35,
+     "sill": 3.4,
+     "arch": "round",
+     "grille": false
+    }
+   ],
+   "at": [
+    115.08,
+    -66.77
+   ],
+   "auto": false
+  },
+  "1": {
+   "centres": [
+    2.7
+   ],
+   "shops": false,
+   "ground_storey": 5.5,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    }
+   ],
+   "at": [
+    112.59,
+    -69.75
+   ],
+   "auto": false
+  },
+  "5": {
+   "centres": [
+    1.9
+   ],
+   "shops": false,
+   "ground_storey": 5.5,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.6,
+     "grille": true
+    }
+   ],
+   "at": [
+    118.68,
+    -49.49
+   ],
+   "auto": false
+  }
+ }
+}

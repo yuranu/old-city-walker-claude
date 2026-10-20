@@ -1,0 +1,47 @@
+{
+ "building": "w1393175032",
+ "name": "Cafe Rimon (west side of the inner square)",
+ "sources": [
+  "data/photos_ref/s08_damascus/D29_39705495.jpg",
+  "data/photos_ref/s08_damascus/D01_164505902.jpg"
+ ],
+ "why": "OSM amenity=cafe 'Cafe Rimon' (node 2297496858) in this footprint; D29/D01 left: the west side of the square is a row of one-storey shop fronts under corrugated canopies. Kept low (5.6 m, OSM-size rule).",
+ "settings": {
+  "wall": "rubble",
+  "shops": true
+ },
+ "facades": {
+  "1": {
+   "at": [
+    293.4,
+    518.62
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.0
+   ],
+   "ground_storey": 4.4,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "door": "rolldown_grey",
+     "sign": false,
+     "arch": null
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.5,
+    "z_front": 2.9,
+    "z_wall": 3.6
+   },
+   "floors": []
+  }
+ }
+}

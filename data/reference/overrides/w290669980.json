@@ -1,0 +1,163 @@
+{
+ "building": "w290669980",
+ "name": "Kishle / police station north block (forecourt)",
+ "sources": [
+  "data/photos_ref/s01_armenian/33_133184349.jpg",
+  "data/photos_ref/s01_armenian/44_33488388.jpg",
+  "data/reference/s01_armenian.md#L4"
+ ],
+ "notes": {
+  "facade": "e5 = north face on the forecourt, u from the east end (114.3,-90.4). 33 (crop): 2 storeys + hipped red-tile roof, eaves ~9 m (wall ~290 px at ~31 px/m), seven round-arched upper windows (u 1.9-16.3 on the scale given by the roof ends) and an arched vehicle gate; the photo puts the gate at u ~14, OSM gate node 9937882129 / service tunnel 1085709199 at u ~11.7 (R16): u 13.0 used. The west third is hidden by a cypress in 33: two more upper windows there (u 18.8, 21.4) and two ground windows are assumed.",
+  "e4": "east face on the narrow stretch (y -90..-106): not in any photo (behind the cameras of 13/21); given the police row's tall round-arched windows with dark louvred shutters (05, 21) on both storeys."
+ },
+ "settings": {
+  "height": 9.0,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   0.97,
+   0.86
+  ],
+  "shops": false,
+  "roof": "hipped",
+  "storey": 4.0
+ },
+ "facades": {
+  "5": {
+   "centres": [
+    2.0,
+    4.2,
+    13.0,
+    18.8,
+    21.6
+   ],
+   "shops": false,
+   "ground_storey": 4.6,
+   "storey": 4.0,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.7,
+     "h": 1.1,
+     "sill": 1.5,
+     "arch": "round",
+     "grille": true
+    },
+    {
+     "kind": "door",
+     "w": 3.8,
+     "h": 4.1,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.2,
+     "sill": 1.5,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      1.9,
+      4.5,
+      8.1,
+      10.3,
+      13.1,
+      14.7,
+      16.3,
+      18.8,
+      21.4
+     ],
+     "w": 1.0,
+     "h": 1.8,
+     "arch": "round",
+     "sill": 0.8,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "bands": true,
+   "at": [
+    102.21,
+    -91.31
+   ],
+   "auto": false
+  },
+  "4": {
+   "centres": [
+    3.0,
+    8.0,
+    13.0
+   ],
+   "shops": false,
+   "ground_storey": 4.6,
+   "storey": 4.0,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.7,
+     "sill": 2.6,
+     "arch": "round",
+     "lo": "shutter_brown",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.7,
+     "sill": 2.6,
+     "arch": "round",
+     "lo": "shutter_brown",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.7,
+     "sill": 2.6,
+     "arch": "round",
+     "lo": "shutter_brown",
+     "grille": false
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      3.0,
+      8.0,
+      13.0
+     ],
+     "w": 1.0,
+     "h": 1.7,
+     "arch": "round",
+     "sill": 0.8,
+     "lo": "shutter_brown",
+     "grille": false
+    }
+   ],
+   "at": [
+    114.92,
+    -98.33
+   ],
+   "auto": false
+  }
+ }
+}

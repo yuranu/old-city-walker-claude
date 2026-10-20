@@ -1,0 +1,78 @@
+{
+ "building": "m_s01_armenian_1",
+ "name": "south arch building over Armenian Patriarchate Rd (roof over the road)",
+ "sources": [
+  "data/photos_ref/s01_armenian/01_195104368.jpg",
+  "data/photos_ref/s01_armenian/17_85750150.jpg",
+  "data/photos_ref/s01_armenian/02_195104530.jpg",
+  "data/photos_ref/s01_armenian/22_22028839.jpg",
+  "data/photos_ref/s01_armenian/04_195105576.jpg",
+  "data/reference/s01_armenian.md#P6"
+ ],
+ "notes": {
+  "replaces": "OSM w1394456881 (building=roof; removed in the profile, see manual_buildings m_s01_armenian_1).",
+  "height": "cornice ~11 m (pediment apex ~13 m) from the 2.2 m door in 01 and the R6-scaled bollards; the pediment, archivolt and keystone are requested in the profile (with the passage carved this footprint is only two 0.9 m strips beside the vault).",
+  "facades": "the passage walls (22, 04): ashlar with small bellied grilled windows, a narrow round-arched doorway with a dark door, iron lantern brackets (wall_lantern stand-ins)."
+ },
+ "settings": {
+  "height": 11.0,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   1.0,
+   0.9
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 4.5
+ },
+ "facades": {
+  "101": {
+   "centres": [
+    8.0,
+    18.0
+   ],
+   "shops": false,
+   "ground_storey": 4.5,
+   "storey": 4.5,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.5,
+     "h": 0.7,
+     "sill": 1.6,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.5,
+     "h": 0.7,
+     "sill": 1.6,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": []
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 9.6,
+     "z": 7.47
+    },
+    {
+     "type": "wall_lantern",
+     "u": 19.6,
+     "z": 7.47
+    }
+   ],
+   "at": [
+    104.51,
+    -279.07
+   ],
+   "auto": false
+  }
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "building": "w1393172387",
+ "name": "Khan ez-Zeit north entrance, east side",
+ "sources": [
+  "data/photos_ref/s08_damascus/D41_39705483.jpg"
+ ],
+ "why": "D41 (KeZ north looking S from the fork, shops closed): openings ~2.2-3 m x 2.8-3.2 m under flat steel lintels, multi-leaf panelled steel doors (4-6 leaves) painted grey, beige and olive (atlas door_olive, the multi-leaf cell) and grey roll-downs, no teal or green; raised stone thresholds 0.15-0.2 m; corrugated canopies from both sides over the open bays; white hanging boards. This row is the left side of D41 within ~5-15 m of the camera: a two-leaf door painted yellow and grey (nearest cell door_olive; a yellow cell is requested) and grey multi-leaf doors; white boards with Arabic text hang under the canopy (D41). The east side rises 0.6 m along the row (street model).",
+ "settings": {
+  "wall": "rubble"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    304.78,
+    478.91
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.6,
+    4.5,
+    7.4,
+    10.3,
+    13.2
+   ],
+   "ground_storey": 4.2,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": -0.2,
+     "lo": "door_olive",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": -0.05,
+     "lo": "rolldown_grey",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.0,
+     "door": "door_olive",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "shop",
+     "w": 2.5,
+     "h": 3.0,
+     "door": "door_olive",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 2.5,
+     "h": 3.0,
+     "sill": 0.35,
+     "lo": "rolldown_grey",
+     "arch": null,
+     "grille": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.5,
+   "canopy": {
+    "depth": 1.1,
+    "z_front": 3.0,
+    "z_wall": 3.5
+   },
+   "floors": [
+    {
+     "centres": [
+      1.6,
+      4.5,
+      7.4,
+      10.3,
+      13.2
+     ],
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null,
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    },
+    {
+     "centres": [
+      1.6,
+      4.5,
+      7.4,
+      10.3,
+      13.2
+     ],
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null,
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "u": 5.95,
+     "z": -23.11,
+     "h": 0.6,
+     "out": 1.15,
+     "cell": null
+    }
+   ]
+  }
+ }
+}

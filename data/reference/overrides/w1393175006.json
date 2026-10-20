@@ -1,0 +1,107 @@
+{
+ "building": "w1393175006",
+ "name": "Kiosk at the inner portal (west of the exit)",
+ "sources": [
+  "data/photos_ref/s08_damascus/D24_150821448.jpg",
+  "data/photos_ref/s08_damascus/D29_39705495.jpg",
+  "data/photos_ref/s08_damascus/D01_164505902.jpg"
+ ],
+ "why": "D24 left of the inner portal: a one-storey kiosk (~3.5-4 m) with a steel frame and grille, toys hung out, and a corrugated stall roof reaching out over the goods (D24, D29: sheet roofs in front of the gate tower; D01 left); it must not hide the portal from the square (D29 sees the portal past it). Height cut from the 6.5 m rule to 3.7 m; street-side shed 3 m deep (leaves a ~6 m canopied street at the gate, D01).",
+ "settings": {
+  "height": 3.7,
+  "wall": "rubble",
+  "tint": [
+   0.96,
+   0.93,
+   0.87
+  ],
+  "shops": true
+ },
+ "facades": {
+  "1": {
+   "at": [
+    277.67,
+    541.56
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.0,
+    5.6
+   ],
+   "ground_storey": 3.6,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 2.8,
+     "h": 2.7,
+     "sill": -0.12,
+     "lo": "rolldown_green",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 2.8,
+     "h": 2.7,
+     "sill": 0.33,
+     "lo": "door_blue",
+     "arch": null,
+     "grille": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.12,
+   "thr_out": 0.3,
+   "canopy": null,
+   "floors": [],
+   "extra_awnings": [
+    {
+     "u0": 0.15,
+     "u1": 3.8,
+     "z": -18.13,
+     "depth": 3.0
+    },
+    {
+     "u0": 3.8,
+     "u1": 7.58,
+     "z": -17.68,
+     "depth": 3.0
+    }
+   ]
+  },
+  "0": {
+   "at": [
+    278.42,
+    537.45
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.6
+   ],
+   "ground_storey": 3.6,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 2.7,
+     "door": "rolldown_grey",
+     "sign": false,
+     "arch": null
+    }
+   ],
+   "awning": false,
+   "thr": 0.12,
+   "thr_out": 0.3,
+   "canopy": {
+    "depth": 1.0,
+    "z_front": 2.7,
+    "z_wall": 3.1
+   },
+   "floors": []
+  }
+ }
+}

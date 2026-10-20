@@ -1,0 +1,176 @@
+{
+ "building": "w288016673",
+ "name": "SW-corner excavation: large-block ruin walls",
+ "sources": [
+  "data/photos_ref/s07_kotel/033_172464910.jpg",
+  "data/photos_ref/s07_kotel/028_97327499.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Walls of huge squared blocks ~3 m high just W of the SW corner (K:033 left edge, camera (659,-109) looking NE: the wall top is ~1.4 m above the 1.6 m camera; K:028 left). Visible 3.0-4.3 m (the low side needs the ruin flag).",
+ "settings": {
+  "height": 3.0,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    654.95,
+    -99.27
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "1": {
+   "at": [
+    650.37,
+    -102.2
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "3": {
+   "at": [
+    651.72,
+    -102.68
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "4": {
+   "at": [
+    652.88,
+    -101.1
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "8": {
+   "at": [
+    656.71,
+    -100.42
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "9": {
+   "at": [
+    658.73,
+    -101.87
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "10": {
+   "at": [
+    657.41,
+    -103.9
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "14": {
+   "at": [
+    653.23,
+    -104.71
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "17": {
+   "at": [
+    650.89,
+    -106.44
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "20": {
+   "at": [
+    653.67,
+    -105.61
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "24": {
+   "at": [
+    657.67,
+    -104.88
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "25": {
+   "at": [
+    659.61,
+    -106.01
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "26": {
+   "at": [
+    654.23,
+    -108.44
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "28": {
+   "at": [
+    647.55,
+    -107.61
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "29": {
+   "at": [
+    646.88,
+    -109.62
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "30": {
+   "at": [
+    649.62,
+    -111.28
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "32": {
+   "at": [
+    655.2,
+    -111.63
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "34": {
+   "at": [
+    659.87,
+    -109.73
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "35": {
+   "at": [
+    660.59,
+    -103.83
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

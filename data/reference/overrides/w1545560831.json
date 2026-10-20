@@ -1,0 +1,21 @@
+{
+ "building": "w1545560831",
+ "name": "low building at the car park entrance",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/12_lgst_tractor_2014.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "R:12: one storey behind the fence; the tile-roofed w290986908 is seen above it.",
+ "settings": {
+  "height": 4.18,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   0.98,
+   0.89
+  ],
+  "shops": false
+ },
+ "facades": {}
+}

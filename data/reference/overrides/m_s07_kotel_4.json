@@ -1,0 +1,64 @@
+{
+ "building": "m_s07_kotel_4",
+ "name": "Ophel: ruin wing inside the wall jog",
+ "sources": [
+  "data/photos_ref/s07_kotel/032_110722986.jpg",
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Lower masonry right (S) of the arched block, under the Ottoman wall walk (K:032, K:044); top -40.0, below the wall top (L). Facades blank.",
+ "settings": {
+  "height": 4.47,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    778.44,
+    -102.83
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "1": {
+   "at": [
+    781.77,
+    -100.51
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "3": {
+   "at": [
+    766.67,
+    -107.27
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "4": {
+   "at": [
+    771.56,
+    -112.6
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "5": {
+   "at": [
+    775.22,
+    -107.66
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

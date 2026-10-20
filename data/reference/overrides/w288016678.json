@@ -1,0 +1,89 @@
+{
+ "building": "w288016678",
+ "name": "Umayyad palace: reconstructed W and N walls",
+ "sources": [
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/photos_ref/s07_kotel/032_110722986.jpg",
+  "data/photos_ref/s07_kotel/038_172471257.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "The long wall of large smooth ashlar blocks (two ~1 m courses) across the park in front of the SW corner, with lawns inside (K:044 middle ground, K:032 middle, K:038 from the wall walk); notes L6 'roofless ashlar walls 1-4 m high around lawns'. Fix round 1: 2.2 -> 1.2 m: its g_hi (-44.855, highest ring vertex) is 0.99 m above its highest edge ground (-45.845), so 2.2 m showed 3.2-5.4 m; now 2.2 m on the high side (two courses, K:044), 4.4 m on the low side until the ruin flag exists.",
+ "settings": {
+  "height": 1.2,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    675.04,
+    -128.83
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "1": {
+   "at": [
+    678.74,
+    -145.66
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    677.56,
+    -129.11
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "3": {
+   "at": [
+    696.1,
+    -109.71
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "4": {
+   "at": [
+    718.34,
+    -115.15
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "5": {
+   "at": [
+    721.0,
+    -123.99
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "6": {
+   "at": [
+    720.76,
+    -113.31
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "7": {
+   "at": [
+    695.85,
+    -107.05
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

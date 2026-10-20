@@ -1,0 +1,154 @@
+{
+ "building": "w1393172385",
+ "name": "Taha greengrocer / Halawani building (west side at the foot of the Damascus Gate street)",
+ "sources": [
+  "data/photos_ref/s08_damascus/D28_52098509.jpg",
+  "data/photos_ref/s08_damascus/D30_87978670.jpg",
+  "data/photos_ref/s08_damascus/D22_39705472.jpg",
+  "data/photos_ref/s08_damascus/D39_85895113.jpg"
+ ],
+ "why": "D28: Taha greengrocer (blue steel shopfront, yellow fascia, green-white awning) with Halawani (green) to its north, facing E onto the steps; OSM greengrocer node 5835977094 in this footprint. D30: white enclosed box window over the Halawani canopy on the 1st floor, rough-faced coursed stone over a rubble ground floor (wall: rubble), white downpipe, old box floodlight high on the wall, the terracotta-pipe screen parapet on top at ~8-10 m. OSM convenience/olives node 13538906069 on the Khan ez-Zeit side. Street front ~9.8 m (eg -25.51).",
+ "settings": {
+  "height": 8.7,
+  "wall": "rubble",
+  "tint": [
+   0.97,
+   0.93,
+   0.86
+  ],
+  "storey": 3.4
+ },
+ "facades": {
+  "7": {
+   "at": [
+    300.24,
+    504.08
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.2,
+    6.2
+   ],
+   "ground_storey": 4.3,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 3.6,
+     "h": 3.2,
+     "door": "door_blue",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "window",
+     "w": 2.9,
+     "h": 3.2,
+     "sill": 0.3,
+     "lo": "door_green",
+     "arch": null,
+     "grille": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.15,
+    "z_wall": 3.65
+   },
+   "floors": [
+    {
+     "centres": [
+      2.2,
+      6.2
+     ],
+     "ws": [
+      1.0,
+      2.4
+     ],
+     "hs": [
+      1.4,
+      1.8
+     ],
+     "arches": [
+      null,
+      null
+     ],
+     "lo": "glass",
+     "grille": false,
+     "sill": 0.5
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "pipe",
+     "u": 7.75,
+     "z0": -25.51,
+     "z1": -16.43
+    },
+    {
+     "type": "wall_lantern",
+     "u": 7.6,
+     "z": -18.91
+    }
+   ]
+  },
+  "3": {
+   "at": [
+    296.82,
+    491.9
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.7,
+    4.8
+   ],
+   "ground_storey": 4.3,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 3.0,
+     "door": "door_olive",
+     "sign": false,
+     "arch": "segment"
+    },
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 3.0,
+     "door": "rolldown_grey",
+     "sign": false,
+     "arch": "segment"
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.2,
+    "z_front": 3.0,
+    "z_wall": 3.5
+   },
+   "floors": [
+    {
+     "centres": [
+      1.7,
+      4.8
+     ],
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null,
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    }
+   ]
+  }
+ }
+}

@@ -700,3 +700,105 @@ These were checked against OSM and at least two photos with known viewpoints:
 - Sandrouni's wall side (east or west).
 - Whether the south-mouth arch of the south tunnel is round or slightly pointed (02 is ambiguous).
 - Cathedral dome height.
+
+---------------------------------------------------------------------------------------------------------------
+
+## Sector pass
+
+Pass of 2026-10-20 (profile + building overrides). Files: `data/reference/profiles/s01_armenian.json` and 25
+override files in `data/reference/overrides/` (listed below). Renders and side-by-side sheets (photo left, render
+right) are in `renders/sectors/s01_armenian/`: `r0_baseline/` (before), `r1`-`r3` (iterations), `r4/` (final,
+`r4/sheet.jpg`, plus `pair_*.jpg` per viewpoint). Scratch generators (the profile and overrides are written by
+scripts, so the anchors and the absolute fixture heights come from the spec) are in `build/spec_s01_armenian/`.
+
+### What the baseline showed (r0)
+
+- **The road was blocked twice.** Both road tunnels are OSM `layer -1` (44376249 north, 290669005 south) and
+  `covered_ways` skips negative layers, so w1392907903 and w1394456881 stood across Armenian Patriarchate Rd.
+- **The infill closed the street.** The infill corridor of 26506007 got the minimum 1.4 m half-width (the OSM
+  centre line hugs the east row), so a 3 m band of infill stood in front of the mapped west row. The narrow
+  stretch was ~2.8 m wide (05, 13, 21 show 5.2-5.9 m). Infill also covered the moat edge and the Kishle forecourt
+  (f11, 6.8 m), the sett square and parking strip on the west side of P5 (15, 17), a sliver 0.5-1 m in front of the
+  convent wall north of the gate, and the junction space in front of the north tunnel.
+- Rule heights of 11-15 m everywhere: the police row (real 6.5-7.5 m, R5), the seminary buildings and the building
+  SE of the south arch (15.4 m) stood above the convent wall and the arch building.
+
+### Profile
+
+- `souq_streets`: none, on purpose. There are no market streets here, and the few shops are hand facades. A souq
+  profile would also merge canopy keys into those facades.
+- `covered_streets`: 44376249 and 290669005. This opens both tunnels. They become souq-kind vaults (spring 4.4 m,
+  top = crown + 0.6), which leaves a notch above each arch, so passage-kind vaults are requested.
+- `open_areas` (all photo-backed):
+  1. moat edge + Kishle forecourt (33);
+  2. the narrow stretch between the faces of the mapped rows, plus the junction space at the head of St James St
+     (05, 13, 21; R4). Gaps in the rows are still filled behind that line, which matches the continuous walls in 05.
+  3. west side of P5: sett square + parking strip (15, 17, R10/R20);
+  4. east half of P5 and the pavement in front of the convent wall (03, 15, 17, 30).
+- `remove_buildings` + `manual_buildings`: w1392907903 and w1394456881 are replaced by m_s01_armenian_2 / _1. These
+  are the same footprints, trimmed by 0.1-0.6 m at the south end. Carving the tunnels out of the OSM rings left
+  sliver walls 0.1-0.2 m thick across both south mouths: 3 of the 4.6 m of the south tunnel closed, and half of the
+  north tunnel's mouth. The trimmed rings carve cleanly (requested: a carve that reaches the footprint edge).
+- `props`: 14 black steel bollards (scale 0.72, ~0.65 m, R6) on the convent-side kerb ~1.75 m off the wall, two
+  of them flanking the gate. 16 white chamfered limestone posts (`barrier_post`) along the west sett strip and the
+  sett square (15, 17). Two anthracite LED poles (`lamp_modern`, scale 0.85) on the west kerb of P5, arm over the
+  road (01, 03, 17).
+
+### Building overrides (heights, wall, tint, facades; photo-matched facades have `"auto": false`)
+
+| building | what | evidence |
+|---|---|---|
+| w290678899 (+ piece _1 after the gate passage) | convent street front north and south of the gate: 11.0 m, ashlar, whitest neutral tint. Three sparse rows of grilled windows (small ~3 m, hooded ~5 m, cage ~8-9.5 m), APR plaque ~4 m north of the recess, gate lamps both sides, downpipes | 03, 15, 16, 30, 07 |
+| w612002272 | convent front south of the gate (29 m): 11.5 m, same rows, downpipes | 01, 03, 17, 30 |
+| m_s01_armenian_1 (was w1394456881) | south arch building: 11 m cornice, cream ashlar. Passage walls with small grilled windows, a doorway, lantern brackets | 01, 17, 02, 22, 04 |
+| w1394456882 | west block of the arch: 11 m, three tall grilled windows upstairs, small arched window, grey door, green-door annexe | 01, 17, 03 |
+| m_s01_armenian_2 (was w1392907903) | north tunnel building: 11.4 m (R7). South faces with round-arched windows, plain north face. Sandrouni teal shop fronts inside the passage (east wall, position unverified) | 04, 39, 05, 10, 43 |
+| w290669980 | Kishle north block: 9 m + hipped tile roof. Forecourt face with 9 round-arched upper windows (7 seen in 33, 2 assumed behind the cypress) and the arched vehicle gate at u 13 (photo ~14, OSM ~11.7) | 33 |
+| w1394899938, w1394458560, w1394458561 | police row, the blind west wall of the narrow stretch: 7.0 m, coursed `rubble` texture (matches the weathered courses better than the smooth `ashlar`), sparse tall round-arched windows with brown shutters (sill 2.7 m), spouts | 05, 21, 13; R5 |
+| w1392907916 | Armenian Tavern: 9 m, rough rubble, steel doors, canopy u 0.5-8.6 at 3 m (invisible from below, see requests), floodlights, barred windows upstairs | 12, 13, 21 |
+| w1392907908/09/10 | east side y -150..-180: 10.5 m, whitish (pillow pointing), few small windows, a green-shuttered one high up | 05, 11 |
+| w1392907911 | **Bulghourji**, placed on this building's west face (reasoning in its notes: the node's y matches the face centre, the plaque says APR, and 19's ~5 m distance fits the junction): door, two scroll-grilled arched windows, plaque, oculus, lamp; grey rubble | 19, 08, 09, 36 |
+| w1394456869, w1394456870 | Christ Church street block: one 5.5 m storey, honey stone. Post-office door, small window + oculus, big arch with scroll grille, souvenir shop with green doors, cafe entrance and roundel in the projection's north face, awnings | 34, 33, 006 |
+| w1550194749, w1550194748, w1394456871 | forecourt east side: 1-storey terraces (5-5.5 m); the white 2-storey house with a hipped tile roof (8 m) | 33 |
+| w1394456873, w1394456874 | east side north of the Tavern: 9-9.5 m rough rubble (rule gave 10-13 m) | 13, 21 |
+| w1394456878, w290669016 | seminary buildings west of the garden: 9 m (rule 12.8/15.4 m). w1394456878 has tall round-arched windows facing the lawn | 14, 03, 17 |
+| w290668993 | building over the east retaining wall south of the arch: 9 m (rule 15.4 m; nothing rises above the arch/convent line in 01/03). The face hidden behind the arch strip is blank | 02, 20, 01, 03 |
+| w1084488112 | police guard booth: 2.8 m (rule 5.7 m made a tower in front of the Kishle) | 33 |
+
+Fixture and awning heights in the overrides are absolute (facades.py appends them as given): they were computed
+from the spec's edge ground and must be regenerated (`build/spec_s01_armenian/write_overrides.py`) if the terrain
+changes.
+
+### Viewpoints (render_city `--cam`, matching photo)
+
+- `v01_arch:104.5,-242,1.6:105.5,-266,4.5` (01); `v03_gate:108.6,-212.5,1.6:106.5,-262,3.5` (03);
+  `v05_narrow:119.0,-141,1.6:112,-185,2.5` (05); `v21_tavern:118.6,-122,1.6:113,-184,3` (21);
+  `v13_tavern:119.6,-116.5,1.6:114,-160,3` (13); `v20_tunnel:106.5,-258,1.6:107.5,-300,3` (20);
+  `v_north_entry:112.5,-36,1.6:111,-85,3` (33 crop / approach from Jaffa Gate);
+  `v34_christchurch:109.5,-45,1.6:117.3,-56,3` (34); `aerial33:84,-28,26:122,-92,0` (33);
+  `v28_stjames:154.7,-180,1.6:156.3,-163,3.5` (28).
+- With `--abs` (z = street level + eye height, from make_spec.street_z; these stand where the not-yet-rebuilt base has
+  no ground, or on the generated steps of St James St): `v15_wall:103.0,-213.8,7.25:113,-224,9.9` (15);
+  `v04_tunnel_n:106.8,-288,6.2:107.6,-240,7.4` (04); `v02b_southmouth:107.5,-305,5.95:107,-290,8.57` (02);
+  `v19_bulghourji:111.4,-176.5,6.86:116.3,-176.3,8.6` (19); `v23_stjames_e:183.2,-164.3,6.91:214,-155.5,5.63` (23).
+
+### Remaining differences (see the profile's requests)
+
+- Ground: no asphalt carriageway, slab pavements or setts (everything is generic paving). Until base.json is
+  rebuilt, the renders show holes where the removed infill stood and under both tunnels. There is no moat
+  excavation pit west of the road.
+- South arch building: no pediment, archivolt or keystone, and no dome. The souq-kind vault top (~8 m) leaves a
+  notch between 11 m strips. The north tunnel is likewise taller and narrower than the real 2.9 m-wide, 3.5 m-crown arch.
+- Convent: the ashlar texture stays beige and its joints are faint next to the pale grey-white, sharply jointed wall
+  of 03/15/30. The scalloped tin hoods and projecting cage windows are plain grilled windows, and the gate is a plain
+  3.2 m vault mouth instead of the 5.8 m muqarnas recess.
+- St James St: walled 3-3.5 m lane as in 23/28, but without its flying arches. It also gets stair treads east of
+  x ~175 that the photos do not show.
+- Missing: the mesh security fences on the police row and on the south retaining wall; the green garden fence and
+  hedge; Aleppo/stone pines (olives stand in); the flying arches of St James St; the pillow-pointed wall texture;
+  the Tavern banner/tile panel/flags; the cafe and Tavern awnings from street level (a build bug); cars and the
+  parcel locker.
+
+Audit (`blender/audit.py` on `build/s01_armenian.blend`): leaving out the pairs with `lod_s01_armenian`, one
+coplanar overlap remains, 0.05 m2 between infill f451 and w290687982 (yeshiva, x ~227), which this pass did not
+touch. Nothing involves the manual buildings, the overridden buildings or the vaults.

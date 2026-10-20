@@ -1,0 +1,115 @@
+{
+ "building": "r3864634",
+ "name": "Propstei (Lutheran provost's house)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/E05_39705487.jpg",
+  "data/photos_ref/s04_sepulchre/F01_67247179.jpg",
+  "data/reference/s04_sepulchre.md#2.4"
+ ],
+ "notes": {
+  "method": "Clean pale 1890s Romanesque-revival ashlar like the Redeemer (notes 1.0c, 2.4): plain wall with small windows, institutional (no shops), OSM building:levels=4 kept (15.6 m). Edge 12 is its 27.6 m west front on Muristan St (E05, distant: smooth pale wall, small openings; low-med confidence on the bays)."
+ },
+ "settings": {
+  "wall": "ashlar",
+  "tint": [
+   1.07,
+   1.03,
+   0.95
+  ],
+  "shops": false,
+  "storey": 3.6
+ },
+ "facades": {
+  "0": {
+   "shops": false,
+   "centres": [
+    2.2,
+    5.9,
+    9.6,
+    13.3,
+    17.0,
+    20.7,
+    24.4
+   ],
+   "ground_storey": 4.4,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "door",
+     "w": 1.6,
+     "h": 3.0,
+     "arch": "round",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 2.2,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 2.2,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": "round",
+     "lo": "glass"
+    },
+    {
+     "w": 1.0,
+     "h": 1.7,
+     "arch": null,
+     "lo": "glass"
+    },
+    {
+     "w": 0.9,
+     "h": 1.4,
+     "arch": null,
+     "lo": "glass"
+    }
+   ],
+   "bands": true,
+   "awning": false,
+   "auto": false,
+   "at": [
+    265.81,
+    108.16
+   ]
+  }
+ }
+}

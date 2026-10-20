@@ -1,0 +1,78 @@
+{
+ "building": "w291742572",
+ "name": "Bab Hutta Street east side, rock-faced block",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/30_babhutta_2022a.jpg",
+  "data/photos_ref/s10_herod_lions/32_babhutta_2022c.jpg",
+  "data/photos_ref/s10_herod_lions/31_babhutta_2022b.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "R:30 right side: a near-blind wall of huge bossed blocks; small grilled windows high up only.",
+ "settings": {
+  "height": 11.56,
+  "wall": "rubble",
+  "tint": [
+   0.99,
+   0.95,
+   0.88
+  ],
+  "storey": 3.6,
+  "shops": false
+ },
+ "facades": {
+  "3": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "centres": [
+    5.4,
+    13.4
+   ],
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.5,
+     "arch": "pointed",
+     "door": "door_wood"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      8.9
+     ],
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.5,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      3.6,
+      9.8,
+      15.2
+     ],
+     "w": 0.9,
+     "h": 1.4,
+     "sill": 1.0,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    758.48,
+    465.64
+   ]
+  }
+ }
+}

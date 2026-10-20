@@ -1,0 +1,76 @@
+{
+ "building": "w1394480978",
+ "name": "Tall house on the south side of Lions' Gate Street (x 729-740)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/15_lgst_muazz_2021.jpg",
+  "data/photos_ref/s10_herod_lions/14_lgst_muazz_2020.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "R:15 left: almost blind lower storeys, a few small grilled windows high up.",
+ "settings": {
+  "height": 11.78,
+  "wall": "ashlar",
+  "tint": [
+   1.06,
+   0.97,
+   0.85
+  ],
+  "storey": 3.6,
+  "shops": false
+ },
+ "facades": {
+  "2": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 4.4,
+   "storey": 3.6,
+   "centres": [
+    2.5,
+    7.5
+   ],
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.1,
+     "h": 2.4,
+     "arch": null,
+     "door": "door_green2"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      5.0
+     ],
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.4,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      2.5,
+      7.5
+     ],
+     "w": 0.9,
+     "h": 1.3,
+     "sill": 1.0,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    734.04,
+    436.28
+   ]
+  }
+ }
+}

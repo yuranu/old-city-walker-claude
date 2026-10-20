@@ -1,0 +1,18 @@
+{
+ "building": "w1393172388",
+ "name": "Al-Wad north shop building",
+ "sources": [
+  "OpenStreetMap node confectionery (5827810494, 1.4 m off its Al-Wad front)"
+ ],
+ "why": "OSM shop node confectionery (5827810494, 1.4 m off its Al-Wad front) in/at this footprint on Al-Wad: the Al-Wad front is a shop row (the street rule gives one only 70 % of the time). No street-level photo of this stretch (notes 1.7); D14 just south shows closed shop fronts. Rule-based shop bays, nothing else changed.",
+ "settings": {},
+ "facades": {
+  "0": {
+   "at": [
+    319.7,
+    486.9
+   ],
+   "shops": true
+  }
+ }
+}

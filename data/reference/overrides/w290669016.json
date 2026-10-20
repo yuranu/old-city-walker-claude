@@ -1,0 +1,24 @@
+{
+ "building": "w290669016",
+ "name": "seminary grounds, south building",
+ "sources": [
+  "data/photos_ref/s01_armenian/03_195104793.jpg",
+  "data/photos_ref/s01_armenian/17_85750150.jpg"
+ ],
+ "notes": {
+  "height": "rule height 15.4 m stood out over the seminary garden in the renders; in 03 and 17 nothing beyond the pines on the west side of P5 rises above the tree crowns (low flat-roofed buildings, 17 far right). 9 m."
+ },
+ "settings": {
+  "height": 9.0,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   1.0,
+   0.92
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {}
+}

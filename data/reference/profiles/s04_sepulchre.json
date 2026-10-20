@@ -1,0 +1,964 @@
+{
+ "sector": "s04_sepulchre",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/A06_113247476.jpg",
+  "data/photos_ref/s04_sepulchre/A09_50026842.jpg",
+  "data/photos_ref/s04_sepulchre/A10_48575165.jpg",
+  "data/photos_ref/s04_sepulchre/B01_79159464.jpg",
+  "data/photos_ref/s04_sepulchre/B03_59820131.jpg",
+  "data/photos_ref/s04_sepulchre/B05_36835148.jpg",
+  "data/photos_ref/s04_sepulchre/B06_34831302.jpg",
+  "data/photos_ref/s04_sepulchre/C02_177432442.jpg",
+  "data/photos_ref/s04_sepulchre/C04_59820270.jpg",
+  "data/photos_ref/s04_sepulchre/C06_16344493.jpg",
+  "data/photos_ref/s04_sepulchre/D01_185219862.jpg",
+  "data/photos_ref/s04_sepulchre/D03_185219875.jpg",
+  "data/photos_ref/s04_sepulchre/D04_185219876.jpg",
+  "data/photos_ref/s04_sepulchre/D05_193978290.jpg",
+  "data/photos_ref/s04_sepulchre/D06_85896725.jpg",
+  "data/photos_ref/s04_sepulchre/D07_52533617.jpg",
+  "data/photos_ref/s04_sepulchre/D08_138396351.jpg",
+  "data/photos_ref/s04_sepulchre/E05_39705487.jpg",
+  "data/photos_ref/s04_sepulchre/F01_67247179.jpg",
+  "data/photos_ref/s04_sepulchre/F03_127215908.jpg",
+  "data/photos_ref/s04_sepulchre/G01_193971239.jpg",
+  "data/photos_ref/s04_sepulchre/G04_47922079.jpg",
+  "data/photos_ref/s04_sepulchre/G05_79176036.jpg"
+ ],
+ "souq_streets": {
+  "Christian Quarter Street": [
+   0.95,
+   0.9
+  ],
+  "Saint Helena Road": [
+   0.9,
+   0.0
+  ],
+  "Suq Aftimos": [
+   0.9,
+   0.7
+  ],
+  "Suq Ed-Dabbagha": [
+   0.85,
+   0.6
+  ],
+  "Muristan Street": [
+   0.15,
+   0.3
+  ]
+ },
+ "covered_streets": [],
+ "open_areas": [
+  {
+   "ring": [
+    [
+     165.14,
+     206.37
+    ],
+    [
+     164.05,
+     206.24
+    ],
+    [
+     162.21,
+     220.83
+    ],
+    [
+     161.28,
+     261.54
+    ],
+    [
+     157.48,
+     261.45
+    ],
+    [
+     158.42,
+     220.65
+    ],
+    [
+     160.28,
+     205.76
+    ],
+    [
+     159.18,
+     205.63
+    ],
+    [
+     162.25,
+     181.2
+    ],
+    [
+     163.79,
+     148.26
+    ],
+    [
+     164.76,
+     132.73
+    ],
+    [
+     166.35,
+     117.38
+    ],
+    [
+     170.04,
+     54.0
+    ],
+    [
+     171.6,
+     19.14
+    ],
+    [
+     172.43,
+     11.79
+    ],
+    [
+     178.41,
+     12.21
+    ],
+    [
+     177.59,
+     19.53
+    ],
+    [
+     176.03,
+     54.32
+    ],
+    [
+     172.34,
+     117.81
+    ],
+    [
+     170.74,
+     133.16
+    ],
+    [
+     169.78,
+     148.61
+    ],
+    [
+     168.24,
+     181.6
+    ]
+   ],
+   "why": "Christian Quarter Rd is a 4-5 m souq street (notes 1.2; B03, B05, B06, B01): OSM tags the way layer=-1, so the infill filled the street (f178 at y 43-66 blocked the entry from David St, f175 at y 107-151 the stretch to St Helena Rd); keep the centreline +-3.0 m (to the street walls, OSM widths 4.0-5.5 m with the line off-centre) from y 12 (the David St mouth, s05, where the same infill continued) (+-1.9 m north of y 205, 3.0 m wall to wall at y 208-214) free"
+  },
+  {
+   "ring": [
+    [
+     268.34,
+     57.56
+    ],
+    [
+     264.99,
+     119.56
+    ],
+    [
+     198.25,
+     118.94
+    ],
+    [
+     199.47,
+     55.83
+    ]
+   ],
+   "why": "Muristan market (OSM 620317519): a 1900s grid of mapped 2-storey blocks with 6-10 m lanes and the fountain square (sett area 620317524, x 217-233, y 82-105, untagged so not seen as open); photos D01, D03, D04, D07, D08 show open lanes and the square where f317/f324-f327 stood"
+  },
+  {
+   "ring": [
+    [
+     231.59,
+     48.15
+    ],
+    [
+     214.3,
+     47.74
+    ],
+    [
+     213.54,
+     48.43
+    ],
+    [
+     212.1,
+     54.95
+    ],
+    [
+     243.42,
+     55.46
+    ],
+    [
+     243.34,
+     60.66
+    ],
+    [
+     208.42,
+     60.09
+    ],
+    [
+     208.46,
+     57.49
+    ],
+    [
+     205.53,
+     56.85
+    ],
+    [
+     207.96,
+     45.9
+    ],
+    [
+     208.39,
+     45.08
+    ],
+    [
+     209.15,
+     44.3
+    ],
+    [
+     208.21,
+     40.78
+    ],
+    [
+     214.0,
+     39.22
+    ],
+    [
+     215.0,
+     42.95
+    ],
+    [
+     231.6,
+     43.35
+    ],
+    [
+     237.2,
+     43.0
+    ],
+    [
+     239.44,
+     41.27
+    ],
+    [
+     242.51,
+     38.35
+    ],
+    [
+     243.52,
+     37.88
+    ],
+    [
+     253.98,
+     35.76
+    ],
+    [
+     267.94,
+     35.88
+    ],
+    [
+     267.9,
+     40.68
+    ],
+    [
+     254.44,
+     40.55
+    ],
+    [
+     245.16,
+     42.44
+    ],
+    [
+     242.48,
+     44.99
+    ],
+    [
+     239.35,
+     47.39
+    ],
+    [
+     238.47,
+     47.72
+    ]
+   ],
+   "why": "Muristan lanes: west lane at x 198 (OSM width 6.0 m), the lane at y 118 (3.2-5.3 m), Suq Aftimos NE diagonal (6.4-7.1 m; D05, D06) and Muristan St (6-7 m, E05): keep the street, up to the mapped street walls, free of infill (f177, f323 lined the NE diagonal; thin slivers left between a narrower corridor and the walls hid the facades, e.g. f314 in front of w1392856697 and f319 round the D03 corner block w620317531); the south lanes of the Muristan (26492716, 126868372, 73403470); Suq ed-Dabbagha (way 256298883, 1.9-5 m at the parvis end, ~9.4 m by the Redeemer, G04, G01): f165 stood in its north half"
+  },
+  {
+   "ring": [
+    [
+     200.48,
+     114.84
+    ],
+    [
+     207.15,
+     114.84
+    ],
+    [
+     233.57,
+     115.8
+    ],
+    [
+     224.73,
+     97.61
+    ],
+    [
+     232.28,
+     93.95
+    ],
+    [
+     243.04,
+     116.02
+    ],
+    [
+     262.42,
+     116.04
+    ],
+    [
+     262.75,
+     97.96
+    ],
+    [
+     265.22,
+     58.05
+    ],
+    [
+     265.61,
+     46.93
+    ],
+    [
+     269.61,
+     47.07
+    ],
+    [
+     269.22,
+     58.27
+    ],
+    [
+     266.75,
+     98.17
+    ],
+    [
+     265.97,
+     148.96
+    ],
+    [
+     300.18,
+     149.75
+    ],
+    [
+     311.76,
+     149.57
+    ],
+    [
+     313.43,
+     149.89
+    ],
+    [
+     315.15,
+     151.14
+    ],
+    [
+     316.05,
+     153.07
+    ],
+    [
+     315.97,
+     167.45
+    ],
+    [
+     317.5,
+     167.69
+    ],
+    [
+     319.77,
+     166.93
+    ],
+    [
+     322.48,
+     175.1
+    ],
+    [
+     318.82,
+     176.29
+    ],
+    [
+     317.59,
+     176.39
+    ],
+    [
+     310.55,
+     175.28
+    ],
+    [
+     309.42,
+     174.81
+    ],
+    [
+     308.47,
+     174.04
+    ],
+    [
+     307.61,
+     172.66
+    ],
+    [
+     307.34,
+     171.47
+    ],
+    [
+     307.47,
+     158.24
+    ],
+    [
+     300.06,
+     158.35
+    ],
+    [
+     264.5,
+     157.53
+    ],
+    [
+     257.93,
+     159.46
+    ],
+    [
+     224.67,
+     160.7
+    ],
+    [
+     224.35,
+     152.1
+    ],
+    [
+     251.34,
+     151.1
+    ],
+    [
+     246.73,
+     140.84
+    ],
+    [
+     236.4,
+     121.5
+    ],
+    [
+     207.0,
+     120.44
+    ],
+    [
+     197.42,
+     120.45
+    ],
+    [
+     197.42,
+     117.65
+    ],
+    [
+     194.42,
+     117.59
+    ],
+    [
+     195.59,
+     59.28
+    ],
+    [
+     176.68,
+     57.35
+    ],
+    [
+     172.88,
+     57.15
+    ],
+    [
+     173.19,
+     51.16
+    ],
+    [
+     177.22,
+     51.37
+    ],
+    [
+     199.25,
+     53.63
+    ],
+    [
+     200.8,
+     54.47
+    ],
+    [
+     201.54,
+     55.75
+    ]
+   ],
+   "why": "Muristan lanes: west lane at x 198 (OSM width 6.0 m), the lane at y 118 (3.2-5.3 m), Suq Aftimos NE diagonal (6.4-7.1 m; D05, D06) and Muristan St (6-7 m, E05): keep the street, up to the mapped street walls, free of infill (f177, f323 lined the NE diagonal; thin slivers left between a narrower corridor and the walls hid the facades, e.g. f314 in front of w1392856697 and f319 round the D03 corner block w620317531); the south lanes of the Muristan (26492716, 126868372, 73403470); Suq ed-Dabbagha (way 256298883, 1.9-5 m at the parvis end, ~9.4 m by the Redeemer, G04, G01): f165 stood in its north half"
+  },
+  {
+   "ring": [
+    [
+     343.3,
+     111.55
+    ],
+    [
+     342.81,
+     115.95
+    ],
+    [
+     338.83,
+     115.5
+    ],
+    [
+     339.31,
+     111.3
+    ],
+    [
+     339.9,
+     98.32
+    ],
+    [
+     338.97,
+     96.81
+    ],
+    [
+     338.77,
+     95.8
+    ],
+    [
+     341.93,
+     47.87
+    ],
+    [
+     345.92,
+     48.13
+    ],
+    [
+     342.81,
+     95.43
+    ],
+    [
+     343.72,
+     96.9
+    ],
+    [
+     343.92,
+     97.88
+    ]
+   ],
+   "why": "OSM-only (no photo): lanes tagged layer=-1, so make_spec's infill did not treat them as streets and put infill on their centrelines: way 4710079 north of David St (x 341-344, y 48-116, the Suq al-Khawajat line beside Suq al-Lahhamin and the Cardo tunnel; f128), Al-Battikh Ascent 617363468/617363470 (108 m of steps, f258/f292/f297), steps 1104186996 (x 348-390, y ~101; f128/f131) and footway 257617645 (x ~338, y 385-405; f361). Kept walkable; they are probably vaulted (request)"
+  },
+  {
+   "ring": [
+    [
+     347.59,
+     101.79
+    ],
+    [
+     347.76,
+     98.8
+    ],
+    [
+     390.5,
+     101.18
+    ],
+    [
+     390.33,
+     104.18
+    ]
+   ],
+   "why": "OSM-only (no photo): lanes tagged layer=-1, so make_spec's infill did not treat them as streets and put infill on their centrelines: way 4710079 north of David St (x 341-344, y 48-116, the Suq al-Khawajat line beside Suq al-Lahhamin and the Cardo tunnel; f128), Al-Battikh Ascent 617363468/617363470 (108 m of steps, f258/f292/f297), steps 1104186996 (x 348-390, y ~101; f128/f131) and footway 257617645 (x ~338, y 385-405; f361). Kept walkable; they are probably vaulted (request)"
+  },
+  {
+   "ring": [
+    [
+     271.4,
+     355.51
+    ],
+    [
+     268.57,
+     365.92
+    ],
+    [
+     284.53,
+     367.59
+    ],
+    [
+     285.26,
+     367.86
+    ],
+    [
+     285.84,
+     368.57
+    ],
+    [
+     285.93,
+     369.49
+    ],
+    [
+     281.26,
+     393.47
+    ],
+    [
+     309.54,
+     396.11
+    ],
+    [
+     309.24,
+     399.3
+    ],
+    [
+     279.2,
+     396.49
+    ],
+    [
+     278.47,
+     396.23
+    ],
+    [
+     277.88,
+     395.52
+    ],
+    [
+     277.78,
+     394.59
+    ],
+    [
+     282.46,
+     370.59
+    ],
+    [
+     266.37,
+     368.9
+    ],
+    [
+     265.53,
+     368.55
+    ],
+    [
+     265.07,
+     367.95
+    ],
+    [
+     264.99,
+     366.89
+    ],
+    [
+     268.18,
+     355.15
+    ],
+    [
+     262.9,
+     353.59
+    ],
+    [
+     262.21,
+     353.18
+    ],
+    [
+     261.78,
+     352.32
+    ],
+    [
+     260.56,
+     345.22
+    ],
+    [
+     256.99,
+     342.76
+    ],
+    [
+     258.81,
+     340.12
+    ],
+    [
+     263.17,
+     343.17
+    ],
+    [
+     263.6,
+     344.01
+    ],
+    [
+     264.76,
+     350.8
+    ],
+    [
+     270.27,
+     352.43
+    ],
+    [
+     275.05,
+     351.81
+    ],
+    [
+     279.21,
+     342.93
+    ],
+    [
+     278.91,
+     340.67
+    ],
+    [
+     277.69,
+     338.9
+    ],
+    [
+     276.85,
+     334.97
+    ],
+    [
+     277.78,
+     324.89
+    ],
+    [
+     280.96,
+     325.19
+    ],
+    [
+     280.06,
+     334.71
+    ],
+    [
+     280.7,
+     337.72
+    ],
+    [
+     281.92,
+     339.49
+    ],
+    [
+     282.4,
+     341.72
+    ],
+    [
+     282.41,
+     343.28
+    ],
+    [
+     277.57,
+     353.96
+    ],
+    [
+     276.64,
+     354.8
+    ]
+   ],
+   "why": "OSM-only (no photo): lanes tagged layer=-1, so make_spec's infill did not treat them as streets and put infill on their centrelines: way 4710079 north of David St (x 341-344, y 48-116, the Suq al-Khawajat line beside Suq al-Lahhamin and the Cardo tunnel; f128), Al-Battikh Ascent 617363468/617363470 (108 m of steps, f258/f292/f297), steps 1104186996 (x 348-390, y ~101; f128/f131) and footway 257617645 (x ~338, y 385-405; f361). Kept walkable; they are probably vaulted (request)"
+  },
+  {
+   "ring": [
+    [
+     336.24,
+     405.37
+    ],
+    [
+     337.26,
+     385.04
+    ],
+    [
+     340.26,
+     385.19
+    ],
+    [
+     339.24,
+     405.52
+    ]
+   ],
+   "why": "OSM-only (no photo): lanes tagged layer=-1, so make_spec's infill did not treat them as streets and put infill on their centrelines: way 4710079 north of David St (x 341-344, y 48-116, the Suq al-Khawajat line beside Suq al-Lahhamin and the Cardo tunnel; f128), Al-Battikh Ascent 617363468/617363470 (108 m of steps, f258/f292/f297), steps 1104186996 (x 348-390, y ~101; f128/f131) and footway 257617645 (x ~338, y 385-405; f361). Kept walkable; they are probably vaulted (request)"
+  },
+  {
+   "ring": [
+    [
+     190.9,
+     140.4
+    ],
+    [
+     206.9,
+     141.7
+    ],
+    [
+     206.3,
+     152.8
+    ],
+    [
+     196.5,
+     151.5
+    ],
+    [
+     190.6,
+     148.0
+    ]
+   ],
+   "why": "the Mosque of Omar forecourt between the mosque's north face e0 (y 140.5-141.8) and the lower St Helena run: ~15 x 8 m of pale slabs, sunk below the gate landing, with the green steel stair on its east side and the glazed entrance arch (C01, C03; notes 2.2, Review R9). Infill f471 filled it and rose 10 m behind the parvis terrace (A09)"
+  },
+  {
+   "ring": [
+    [
+     214.7,
+     136.0
+    ],
+    [
+     224.6,
+     136.0
+    ],
+    [
+     224.6,
+     147.5
+    ],
+    [
+     214.7,
+     147.5
+    ]
+   ],
+   "why": "the tree garden behind the parvis south side and the Metochion: OSM trees at (218.4,147.4), (218.3,142.5), (215.4,136.7); the cypress, palm and broadleaf tree rise over the terrace wall in A06, A09, A10 and F03 (really on the terrace, ~4.5 m above the parvis: see requests)"
+  },
+  {
+   "ring": [
+    [
+     266.0,
+     46.5
+    ],
+    [
+     282.0,
+     46.5
+    ],
+    [
+     282.0,
+     95.5
+    ],
+    [
+     266.2,
+     95.5
+    ]
+   ],
+   "why": "Martin Luther School garden: OSM forest landuse 1085708306 / 1085708308 and trees at (268-294, 54-90) inside school 290824724; E05 shows tall pines and cypresses standing at the street line south of the Propstei, not a building (infill f193 stood there)"
+  }
+ ],
+ "manual_buildings": [
+  {
+   "id": "m_s04_sepulchre_1",
+   "name": "Holy Sepulchre parvis south terrace",
+   "ring": [
+    [
+     206.3,
+     147.0
+    ],
+    [
+     216.0,
+     147.6
+    ],
+    [
+     216.0,
+     154.85
+    ],
+    [
+     206.3,
+     154.3
+    ]
+   ],
+   "height": 3.3,
+   "shops": false,
+   "why": "the parvis south side: a coursed-ashlar wall ~4.5 m above the parvis (3-4 m above the St Helena level strip, way 612045234) with small round-arched grilled windows and floodlights, topped by a terrace with a white tubular railing, the cypress and the date palm; west part x 206-215 (A06, A09, A10, F01, F03; notes 1.5, Review R4). Same terrace seen 1.5-2 m above the lower St Helena run (C02, notes R19). OSM maps nothing here, so the parvis opened onto a 5 m drop to street level -14.9. Top = -8.96 (street datum)"
+  },
+  {
+   "id": "m_s04_sepulchre_2",
+   "name": "Metochion of Gethsemane (parvis south side, east part)",
+   "ring": [
+    [
+     216.0,
+     147.6
+    ],
+    [
+     225.2,
+     148.0
+    ],
+    [
+     225.2,
+     155.7
+    ],
+    [
+     216.0,
+     154.85
+    ]
+   ],
+   "height": 7.5,
+   "shops": false,
+   "why": "the taller 2-storey building on the east part of the parvis south side (x ~215-225): two big round-arched grilled upper windows, a large blind arch and the 'METOCHION GETHSEMANE' doorway (OSM POI (213.4,154.6)) at parvis level, a white domed kiosk on the roof (A09 left, F01, F03; notes 1.5 and Review R4). In A09 its eaves stand ~1.7x the terrace wall (4.3 m), ~7.5 m above the parvis: top -5.8"
+  }
+ ],
+ "remove_buildings": {
+  "w1393408273": "OSM building=roof layer=1: a roof over the street (sabat / covered stretch), not a closed building, drawn across the centreline of Suq Khan al-Zeit (way 256298879) for 29 m at y 297-326 (notes 1.9: the street is vaulted there); as a solid building it closed the street. Request: rebuild it as a vault/sabat over the street",
+  "w1392513709": "OSM building=roof layer=1: a roof over the street (sabat / covered stretch), not a closed building, drawn across the centreline of the Via Dolorosa steps (way 616344389) at x 318-333, y 292-298; as a solid building it closed the street. Request: rebuild it as a vault/sabat over the street",
+  "w1392513713": "OSM building=roof layer=1: a roof over the street (sabat / covered stretch), not a closed building, drawn across the centreline of Qanater Khudair (way 257617674) at x 346-354, y 300-317; as a solid building it closed the street. Request: rebuild it as a vault/sabat over the street",
+  "w1393966574": "OSM building=roof layer=1: a roof over the street (sabat / covered stretch), not a closed building, drawn across the centreline of way 4710079 (the Suq al-Khawajat line) at x 340-345, y 69-80; as a solid building it closed the street. Request: rebuild it as a vault/sabat over the street",
+  "w1393169897": "OSM building=roof (a roof over the street, not a closed building) drawn across the Christian Quarter Rd centreline at y 228-238 (the street, layer -1, runs under it; notes 1.3): as a solid building it closed CQR. Request: rebuild it as a sabat/vault over the street"
+ },
+ "props": [
+  {
+   "type": "barrier_post",
+   "p": [
+    259.9,
+    142.6
+   ],
+   "rot": 0,
+   "s": 1.4,
+   "why": "one of three square limestone bollards with pyramidal caps (~0.4 x 0.9 m) across Muristan St at the Redeemer (E05; notes 1.8, section 4)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    261.7,
+    142.6
+   ],
+   "rot": 0,
+   "s": 1.4,
+   "why": "Muristan St bollard 2 (E05)"
+  },
+  {
+   "type": "barrier_post",
+   "p": [
+    263.5,
+    142.6
+   ],
+   "rot": 0,
+   "s": 1.4,
+   "why": "Muristan St bollard 3 (E05)"
+  },
+  {
+   "type": "palm",
+   "p": [
+    218.4,
+    145.2
+   ],
+   "rot": 20,
+   "s": 3.6,
+   "why": "the date palm of the parvis south terrace (A06, A09, A10, F01, F03; OSM tree (218.4,147.4) +-5 m): scaled so its crown (~7-8 m above the terrace) shows over the terrace wall from the parvis until props can stand on a roof (see requests)"
+  },
+  {
+   "type": "cart",
+   "p": [
+    266.2,
+    155.3
+   ],
+   "rot": 90,
+   "s": 1.0,
+   "why": "blue steel hand cart on bicycle wheels parked on Suq ed-Dabbagha (G05, GPS (265.6,158.8))"
+  }
+ ],
+ "requests": [
+  "Christian Quarter Street (way 26492706) is layer=-1 in OSM (it passes under sabats north of y 205), so make_spec excludes it from souq_lines and infill corridors (layer < 0): the souq profile never reaches it and infill filled the street. Please treat it as street level (like the covered souqs, but WITHOUT a stone vault south of y 205). This pass keeps it open with an open_area and gives the s04 facades on it souq overrides by hand; the s03 side (x < 160) still has none.",
+  "Christian Quarter Rd roof, y 48-150 (P1, notes 1.2, Review R6): a row of green steel arch ribs over the sky slot between the canopies, each a double semicircular ring with radial sunburst bars and knob finials, crown ~6-7 m above the street, spacing ~1.5-2 m, OPEN (sky and upper walls visible between them: B05, B06); a short blue translucent section is the only sheeting (B05). Needs a new street feature (rib arcs from the CQR centreline, span = wall-to-wall width). North of y 150 to 230 (P1b) the street runs under stone vaults/sabats: vault there.",
+  "Holy Sepulchre parvis level: LOCAL_FLATS takes the parvis (way 612045223) level at the main door (208.2,183.4), street_z = -9.74, which puts the parvis 3.1 m ABOVE the St Helena level strip at its south side (street_z -12.64 at (211,156)) and 4.4 m above the Dabbagha gate (224.5,156.4: -14.1). OSM steps 616344391 (4 steps, ramp=yes) go DOWN north from the strip into the parvis, and A06/A09 show the parvis below the south wall. Use z = -13.3 (street datum; = St Helena at the SW entry -12.7 minus 4 risers of ~0.15 m, notes section 5 and Review R7) for the flat.",
+  "Muristan fountain square level: the paved square (sett area 620317524, x 217-233, y 82-105) is level in D07/D08 (fountain kerb, paving disc and café terrace all flat), but street_z falls 2.2 m across it (-14.18 .. -16.38; 1.4 m E-W over 16 m); the Muristan has no 1865 spot height (notes section 5). Add it to LOCAL_FLATS at the fountain's level, z = -15.46 (street_z at node (226.7,91.5)), with the lanes easing into it.",
+  "Hipped red-tile roofs that follow the footprint: the Muristan blocks w620317527, w620317526, w620317534, w620317532, w620317530 and w290821789 have long red-tile hipped roofs (F01, F03 from the Redeemer tower; D07, D08; OSM roof:shape=hipped on 527/532/534 and 290821789), but build_city.roof_hipped() puts the roof on the footprint's oriented bounding box, which overhangs these trapezoids/triangles by 16-50 % (e.g. 7 m triangles over the diagonal lanes for w620317526). This pass leaves them flat (only the near-rectangular w620317531 is hipped). Please clip the hip to the footprint (or straight-skeleton it) and set roof=hipped on those six ids.",
+  "Facades on stepped streets: facades.layout() puts every opening of an edge at the ground of the edge midpoint (edge_ground). The south side of the upper St Helena run (w290821801 e6, 21 m) drops 3.3 m along the edge, so doors at its ends are buried or float. Needed: per-opening ground from street_z at the opening's u (and raised shop platforms that step with the street, C06: 0.35-0.45 m high, 0.8-1.0 m deep). This pass puts the shops of w290821801 e6 only in its middle 8 m.",
+  "Parvis south terrace (m_s04_sepulchre_1, top -8.96): the cypress (~19-21 m above the parvis, top level with the minaret gallery; at about (213,147), A06/A09/A10, Review R18), the date palm (~7-8 m, (218.4,147.4) +-5 m) and a broadleaf tree ((218.3,142.5)) grow ON the terrace, with a white tubular railing (~1.1 m) along its north edge and small white domed kiosks (F03). Props are placed at street_z, so they cannot stand on the terrace, and the prop library has no cypress (the 'cypress' cut-out exists in the atlas). Needs: prop z offset (or 'on roof of <id>') and a columnar cypress prop. The cypress also closes the west vista of Suq ed-Dabbagha (G04).",
+  "Infill slivers: infill.py checks the 2.4 m minimum width (buffer(-1.2)) before the priority pass, so a piece that was wide enough before the OSM footprints clipped it survives as a 0.5-1 m sliver standing just in front of a real facade (it also makes that facade count as unexposed). Seen here as f167 along the west side of Christian Quarter Rd (y 45-65, in front of w1393928807), f314 wrapped round w1392856697 on Suq Aftimos and Dabbagha, f319 round the D03 corner block w620317531. This pass covers the streets with open_areas up to the mapped walls; please re-apply the width test after clipping (city-wide).",
+  "Vernacular domes: settings 'domes': 0 cannot switch off the roofscape dome field (make_spec only skips it when style domes is truthy or the id is in HEIGHTS). The tile-roofed Muristan blocks w620317532, w620317534 and w290821789 got 3-8 lime domes; this pass sets 'domes': 1 on them as a stop-gap (one central dome). Please add a way to say 'no domes' (e.g. 'domes': -1) or skip the field when roof=hipped is requested.",
+  "Fabric awnings: the Suq Aftimos NE lane is shaded by big beige retractable fabric awnings on folding arms at ~3.5-4 m, 2-3 m deep, from both sides (D05, 2026; D06), and the fountain-square cafés have blue (2016) / maroon (2022) fabric awnings (D07, D08); canopies and awnings are all built in the grey corrugated 'awning' material. A cream canvas variant (per-facade 'canopy': {'fabric': true} or similar) would fix the NE lane's look.",
+  "Base ground: game/public/base/ground.glb still has holes where the old infill stood (Christian Quarter Rd y 43-66 and 107-151, the Muristan lanes and the west half of the fountain square, Suq ed-Dabbagha's north half): base must be rebuilt after merging this profile. The sector renders of this pass patch the ground locally (scratch build/spec_s04_sepulchre/gen/render_local.py).",
+  "Aftimos fountain (node (226.7,91.5)) is not modelled: square stepped base on a low octagonal kerb, central square stone pedestal ~1.4 m with a lion-head spout carrying a bowl and an urn finial at 4.5-5.5 m, four ~4.5 m columns on square pedestals with urn tops at the corners, a 1.2 m iron railing (blue, 2022) round the basin, ~9 m across in all (footway ring 620317521); plus the dark grey paving disc with pale concentric arcs (~14-16 m) of the square (D07, D08, D01, F01; notes 1.6). It is the centre of the Muristan.",
+  "Pink-pier arcade at the fountain square (notes 1.6, Review R5): a two-bay round-arched gateway on pink-stone piers with pilasters over the mouth of the east lane (footway 26492718, x ~234.5, y 93-100), between w620317534 and the YASSER block w620317532; arch springing ~4 m, top ~7 m (D07, D08). Not an OSM building: needs a free-standing arcade feature (or a passage through a manual building).",
+  "Holy Sepulchre parvis column stumps: two or three broken column drums (~0.6 m diameter, 0.3-0.8 m high) in the southern half of the parvis (A04, notes 1.5): no prop type for a column drum.",
+  "Signs: no atlas cell for the white 'YASSER T. BARAKAT' fascia with Arabic calligraphy on w620317532 e12 (D07, D08), the ceramic 'SUQ AFTIMOS' / 'ST. HELENA RD.' / 'SUQ ED-DABBAGHA' street tiles (D06, C05, G01), the white marble 'HOLY SEPULCHRE' plaque in a pink frame over the St Helena gate (C05, A07) or the black steel 'HOLY SEPULCHRE' sign over the Dabbagha passage (A08). Street plaques are placed only inside the POC box (make_spec), so plaque_christian never reaches Christian Quarter Rd.",
+  "Sabats / vaults over streets: this profile removes five OSM building=roof (layer=1) footprints that closed streets (w1393169897 over Christian Quarter Rd at y 228-238; w1393408273 over Suq Khan al-Zeit at y 297-326; w1392513709 over the Via Dolorosa steps; w1392513713 over Qanater Khudair; w1393966574 over way 4710079). They should come back as roofs/vaults spanning the street at ~4-5 m (carve a passage instead of a solid block). The layer=-1 lanes kept open by open_areas (way 4710079 north of David St = Suq al-Khawajat, Al-Battikh Ascent 617363468/617363470, steps 1104186996, footway 257617645) are probably vaulted too (OSM only, no photo).",
+  "Landmark w290821793 (Mosque of Omar, landmarks_city.mosque_omar): seen from the parvis (A09 pose, camera (223.5,171.5) looking 213 deg) its north face (y 147.7) rises as a sheer windowed wall to ~+1 m, 14 m above the parvis and 10 m above the terrace in front of it, because the massing top is bd['ground'] + 9 and its ground is taken at its highest corner; and the minaret (node (206.9,145.8)) barely clears it (only the lantern shows from the parvis; nothing reads as the minaret from Dabbagha, G04 pose (282,153.8) looking W, or down St Helena Rd, C04). In A09/A10/G04 the minaret is the tallest thing at the parvis SW corner (top 23-25 m above the parvis, notes 2.2 and Review R19) and only the prayer hall's semicircular gable and grey dome show above the terrace trees.",
+  "Landmark w1022672085 (Holy Sepulchre, landmarks module): its CQR side between y 150 and 230 should carry the Arch of the Virgin Mary in the street's EAST wall at y ~222, facing W (B04; notes 1.3, Review R11), and the St Helena gate arch with timber doors at (193.6,153.7) (C05, A07). Please check both in the landmark build."
+ ],
+ "notes": "Sector pass 2026-10-20 (data/reference/s04_sepulchre.md, '## Sector pass'). souq_streets added at the end of the pass, after make_spec's profile merge was moved below the SOUQ_STREETS table."
+}

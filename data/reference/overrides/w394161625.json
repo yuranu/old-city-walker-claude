@@ -1,0 +1,72 @@
+{
+ "building": "w394161625",
+ "name": "ramp foot: ruin wall E of the bridge approach",
+ "sources": [
+  "data/photos_ref/s07_kotel/021_58373804.jpg",
+  "data/photos_ref/s07_kotel/045_58944798.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Stone walls and timber shoring of the excavated ramp foot behind the hoarding (K:021 right of the stair tower; K:045 right edge). Height L.",
+ "settings": {
+  "height": 2.0,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.98,
+   0.9
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "1": {
+   "at": [
+    619.21,
+    -48.84
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    616.88,
+    -50.85
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "6": {
+   "at": [
+    616.77,
+    -54.33
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "8": {
+   "at": [
+    619.0,
+    -53.75
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "10": {
+   "at": [
+    620.04,
+    -51.7
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "13": {
+   "at": [
+    619.55,
+    -49.6
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

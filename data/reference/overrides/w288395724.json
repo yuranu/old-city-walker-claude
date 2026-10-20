@@ -1,0 +1,63 @@
+{
+ "building": "w288395724",
+ "name": "Pool of Bethesda shelter (steel and glass display box)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/28_bethesda_2019.jpg",
+  "data/photos_ref/s10_herod_lions/29_bethesda_2021.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "R:28/R:29: a low flat-roofed steel-and-glass shelter (~3 m), not an 8 m stone building.",
+ "settings": {
+  "height": 3.0,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   1.02,
+   0.95
+  ],
+  "shops": false
+ },
+ "facades": {
+  "1": {
+   "at": [
+    792.19,
+    522.3
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    802.06,
+    524.66
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "10": {
+   "at": [
+    799.59,
+    526.18
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "11": {
+   "at": [
+    795.78,
+    524.84
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "12": {
+   "at": [
+    791.94,
+    524.34
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

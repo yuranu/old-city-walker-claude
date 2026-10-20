@@ -1,0 +1,89 @@
+{
+ "building": "w1394458560",
+ "name": "Kishle police compound row, middle (blind west wall of the narrow stretch)",
+ "sources": [
+  "data/photos_ref/s01_armenian/05_195154357.jpg",
+  "data/photos_ref/s01_armenian/21_128370222.jpg",
+  "data/photos_ref/s01_armenian/13_75891750.jpg",
+  "data/reference/s01_armenian.md#P2"
+ ],
+ "notes": {
+  "height": "~6.5-7.5 m blind wall (R5: jogger in 21 gives ~6.5 m, 05 sill/wall ratio 0.41, ~18 courses of 0.35-0.45 m); regular pale ashlar, no doors at street level.",
+  "wall": "the photos show regular courses (0.35-0.45 m) of weathered, slightly pitched-face blocks: the 'rubble' texture (coursed rough-faced blocks) matches them better than the smooth 'ashlar' one.",
+  "windows": "sparse tall round-arched windows (~1.6-1.7 m, sill ~2.5-3 m) with dark louvred shutters (05, 21), about 10 m apart; a 2 m mesh fence on the parapet is requested in the profile."
+ },
+ "settings": {
+  "height": 7.0,
+  "wall": "rubble",
+  "tint": [
+   1.03,
+   0.98,
+   0.89
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {
+  "1": {
+   "centres": [
+    5.0,
+    15.0,
+    25.0
+   ],
+   "shops": false,
+   "ground_storey": 7.0,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.7,
+     "sill": 2.7,
+     "arch": "round",
+     "lo": "shutter_brown",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.7,
+     "sill": 2.7,
+     "arch": "round",
+     "lo": "shutter_brown",
+     "grille": false
+    },
+    {
+     "kind": "window",
+     "w": 1.0,
+     "h": 1.7,
+     "sill": 2.7,
+     "arch": "round",
+     "lo": "shutter_brown",
+     "grille": false
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "spout",
+     "u": 7.5,
+     "z": 12.28
+    },
+    {
+     "type": "spout",
+     "u": 17.5,
+     "z": 12.28
+    },
+    {
+     "type": "spout",
+     "u": 27.5,
+     "z": 12.28
+    }
+   ],
+   "at": [
+    115.39,
+    -131.7
+   ],
+   "auto": false
+  }
+ }
+}

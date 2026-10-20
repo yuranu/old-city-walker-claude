@@ -1,0 +1,125 @@
+{
+ "building": "w1392907916",
+ "name": "Armenian Tavern (79 Armenian Patriarchate Rd)",
+ "sources": [
+  "data/photos_ref/s01_armenian/12_81480560.jpg",
+  "data/photos_ref/s01_armenian/13_75891750.jpg",
+  "data/photos_ref/s01_armenian/21_128370222.jpg",
+  "data/reference/s01_armenian.md#L5"
+ ],
+ "notes": {
+  "facade": "e3 = west face on the road, u from the north end (121.2,-125.0). OSM node (124.1,-131.5) and 13 (canopy from ~6 m to ~15 m ahead of a camera at y ~-118) put the Tavern front at u ~0.5-8.6. 12, 13, 21: dark grey flat steel canopy ~1.2 m deep at ~3 m on wheel brackets (generic awning stand-in), floodlights (wall_lantern stand-ins), grey-green steel doors shut (closed state), rough weathered rubble masonry (21 left), barred windows upstairs. The vertical banner, tile name panel and flags need sign cells/props (profile requests)."
+ },
+ "settings": {
+  "height": 9.0,
+  "wall": "rubble",
+  "tint": [
+   0.97,
+   0.94,
+   0.87
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {
+  "3": {
+   "centres": [
+    1.6,
+    4.0,
+    6.6,
+    11.4,
+    14.6,
+    17.2
+   ],
+   "shops": false,
+   "ground_storey": 4.2,
+   "storey": 3.6,
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.3,
+     "h": 2.5,
+     "arch": null,
+     "door": "door_green2"
+    },
+    {
+     "kind": "door",
+     "w": 1.4,
+     "h": 2.6,
+     "arch": "segment",
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 1.9,
+     "h": 2.6,
+     "arch": "segment",
+     "door": "door_green2"
+    },
+    {
+     "kind": "door",
+     "w": 1.1,
+     "h": 2.4,
+     "arch": "pointed",
+     "door": "door_wood"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.6,
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.6,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.4,
+      6.4,
+      11.4,
+      16.0
+     ],
+     "w": 0.9,
+     "h": 1.5,
+     "arch": null,
+     "sill": 1.0,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.5,
+     "u1": 8.6,
+     "z": 9.25,
+     "depth": 1.2
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "wall_lantern",
+     "u": 2.8,
+     "z": 9.75
+    },
+    {
+     "type": "wall_lantern",
+     "u": 7.8,
+     "z": 9.75
+    }
+   ],
+   "at": [
+    120.5,
+    -134.66
+   ],
+   "auto": false
+  }
+ }
+}

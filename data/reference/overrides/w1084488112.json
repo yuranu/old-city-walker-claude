@@ -1,0 +1,23 @@
+{
+ "building": "w1084488112",
+ "name": "police guard booth at the Kishle vehicle gate",
+ "sources": [
+  "data/photos_ref/s01_armenian/33_133184349.jpg"
+ ],
+ "notes": {
+  "height": "OSM building=guardhouse, 17 m2; the rule gave 5.7 m, a tower in front of the Kishle. 33 shows only the blue police barrier panels and flags there, nothing rising above them: a ~2.8 m booth."
+ },
+ "settings": {
+  "height": 2.8,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   1.02,
+   0.97
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 2.8
+ },
+ "facades": {}
+}

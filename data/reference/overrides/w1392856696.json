@@ -1,0 +1,54 @@
+{
+ "building": "w1392856696",
+ "name": "shop block at the parvis SE gate (Suq ed-Dabbagha)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/A08_92178131.jpg",
+  "data/photos_ref/s04_sepulchre/G04_47922079.jpg",
+  "data/reference/s04_sepulchre.md#1.5"
+ ],
+ "notes": {
+  "method": "Edge 4 (north face on Dabbagha, 8.2 m) beside the segmental-arched passage into the parvis: shop row as the rest of the Dabbagha west end (G04 far end), narrow street (1.9-5 m) so a short canopy."
+ },
+ "settings": {
+  "shops": false
+ },
+ "facades": {
+  "0": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.25,
+    5.95
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_grey"
+    }
+   ],
+   "ground_storey": 4.4,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.0,
+    "z_front": 2.9,
+    "z_wall": 3.5
+   },
+   "at": [
+    228.54,
+    155.06
+   ]
+  }
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "building": "w290986908",
+ "name": "Tile-roofed house over the car park (south-west of the junction)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/12_lgst_tractor_2014.jpg",
+  "data/photos_ref/s10_herod_lions/18_lgst_ramparts_2011.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Hipped tile roof per OSM tags. The east face (R:12) is exposed once the car-park strip is kept open (profile open_areas); its facade is added below when present.",
+ "settings": {
+  "height": 10.76,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   0.98,
+   0.89
+  ],
+  "roof": "hipped",
+  "storey": 3.4,
+  "shops": false
+ },
+ "facades": {
+  "3": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 3.4,
+   "centres": [
+    3.0
+   ],
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.4,
+     "arch": null,
+     "door": "door_green2"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      3.0
+     ],
+     "w": 1.0,
+     "h": 1.5,
+     "sill": 0.9,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      3.0
+     ],
+     "w": 1.0,
+     "h": 1.4,
+     "sill": 0.9,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    765.46,
+    442.06
+   ]
+  },
+  "2": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 3.4,
+   "centres": [
+    2.5,
+    5.0,
+    8.5,
+    11.5,
+    14.5,
+    17.5
+   ],
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.6,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.4,
+     "arch": null,
+     "door": "door_green2"
+    },
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.6,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "w": 0.9,
+     "h": 1.4,
+     "sill": 0.9,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "ws": [
+      0.7,
+      0.8,
+      0.95,
+      0.95,
+      0.95,
+      0.95
+     ],
+     "hs": [
+      1.0,
+      1.6,
+      1.4,
+      1.4,
+      1.4,
+      1.4
+     ],
+     "arches": [
+      "round",
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "sill": 0.9,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    769.43,
+    432.64
+   ]
+  }
+ }
+}

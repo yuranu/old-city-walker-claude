@@ -1,0 +1,70 @@
+{
+ "building": "w290986909",
+ "name": "Terrace house inside Lions' Gate (south side)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/09_lgst_2019.jpg",
+  "data/photos_ref/s10_herod_lions/20_ghazali_2011.jpg",
+  "data/photos_ref/s10_herod_lions/06_lg_inside_2012.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "The terrace and the set-back house are one prism here (no terraces in the builder): face 7.8 m, ground floor blind = the retaining wall.",
+ "settings": {
+  "height": 7.25,
+  "wall": "ashlar",
+  "tint": [
+   1.05,
+   0.96,
+   0.86
+  ],
+  "storey": 4.2,
+  "shops": false
+ },
+ "facades": {
+  "9": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 3.4,
+   "storey": 4.2,
+   "centres": [
+    3.0,
+    13.4,
+    15.8,
+    21.5
+   ],
+   "ground": [
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "blind"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      13.4,
+      15.8
+     ],
+     "w": 1.05,
+     "h": 1.9,
+     "sill": 0.7,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    864.72,
+    460.04
+   ]
+  }
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "building": "w1392856697",
+ "name": "block on the NW side of the Suq Aftimos NE diagonal (Aladdin Restaurant)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/D05_193978290.jpg",
+  "data/photos_ref/s04_sepulchre/D06_85896725.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "Edge 4 (SE face on the NE diagonal) is the right side of D05: café/restaurant and shops with grey roll-downs under big beige retractable awnings, a raised kerb with green 'grass' counter fronts; 2 storeys with windows and a balcony rail above the awnings, eaves ~9 m (people 1.7 m, awning front ~3.4 m); the rule height 13.3 m was a storey too high."
+ },
+ "settings": {
+  "height": 9.0,
+  "wall": "ashlar",
+  "tint": [
+   1.03,
+   0.97,
+   0.9
+  ],
+  "storey": 4.2,
+  "shops": true
+ },
+ "facades": {
+  "6": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.13,
+    5.6,
+    9.07,
+    12.53,
+    16.0
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.3,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.3,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.3,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.3,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.3,
+     "arch": null,
+     "door": "door_green2"
+    }
+   ],
+   "ground_storey": 5.0,
+   "awning": false,
+   "thr": 0.15,
+   "thr_out": 1.0,
+   "canopy": {
+    "depth": 2.1,
+    "z_front": 3.4,
+    "z_wall": 4.1
+   },
+   "at": [
+    246.24,
+    139.4
+   ]
+  },
+  "0": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.3,
+    6.11,
+    9.91
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.0,
+    "z_wall": 3.7
+   },
+   "at": [
+    241.53,
+    151.9
+   ]
+  }
+ }
+}

@@ -1,0 +1,88 @@
+{
+ "building": "w1394593883",
+ "name": "block on the north side of the Muristan's y-118 lane",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/D09_47212727.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "Market frontage on the unnamed lane 620317525 (3.2-5.3 m) between the Muristan and the mosque garden: shops hung with textiles (D09, cam (231.7,112.9)); no canopies (narrow lane)."
+ },
+ "settings": {
+  "shops": false
+ },
+ "facades": {
+  "2": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.07,
+    5.4,
+    8.73,
+    12.07,
+    15.4,
+    18.73,
+    22.06
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.0,
+     "arch": null,
+     "door": "door_teal"
+    }
+   ],
+   "ground_storey": 4.4,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "at": [
+    221.63,
+    120.4
+   ]
+  }
+ }
+}

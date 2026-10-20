@@ -1,0 +1,95 @@
+{
+ "building": "m_s07_kotel_1",
+ "name": "Dung Gate café kiosk",
+ "sources": [
+  "data/photos_ref/s07_kotel/037_172452292.jpg",
+  "data/photos_ref/s07_kotel/036_172452299.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "K:037: smooth cream stone cladding, warmer and lighter than the grey wall (tint 1.10/1.03/0.86), flat roof ~3.1 m with a rooftop unit, a white slatted awning over the shop side, closed shop opening at the E end of the N face (u ~1.4-2.7 m from the NE corner, truncated by the photo edge), the black 'קפה' sign high on the W face about 40 % from its N end, W face behind a low ashlar block and a grey generator box. Closed state: grey roller shutter.",
+ "settings": {
+  "height": 3.2,
+  "wall": "ashlar",
+  "tint": [
+   1.1,
+   1.03,
+   0.86
+  ],
+  "shops": true,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    634.62,
+    -195.6
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "1": {
+   "at": [
+    636.72,
+    -193.54
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "2": {
+   "at": [
+    634.03,
+    -191.9
+   ],
+   "auto": false,
+   "shops": true,
+   "ground_storey": 3.2,
+   "centres": [
+    2.0
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 2.3,
+     "arch": null,
+     "door": "rolldown_grey",
+     "sign": false
+    }
+   ],
+   "extra_awnings": [
+    {
+     "u0": 0.3,
+     "u1": 4.5,
+     "z": -42.84,
+     "depth": 1.2
+    }
+   ]
+  },
+  "3": {
+   "at": [
+    631.98,
+    -194.3
+   ],
+   "auto": false,
+   "shops": false,
+   "ground_storey": 3.2,
+   "centres": [
+    1.9
+   ],
+   "ground": [
+    {
+     "kind": "blind"
+    }
+   ],
+   "extra_signs": [
+    {
+     "u0": 1.0,
+     "u1": 2.0,
+     "z0": -43.63,
+     "cell": "sign_cafe"
+    }
+   ]
+  }
+ }
+}

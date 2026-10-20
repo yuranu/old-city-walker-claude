@@ -1,0 +1,245 @@
+{
+ "building": "w620317530",
+ "name": "Papa Andreas (block south of the fountain)",
+ "sources": [
+  "data/photos_ref/s04_sepulchre/D04_185219876.jpg",
+  "data/photos_ref/s04_sepulchre/D03_185219875.jpg",
+  "data/photos_ref/s04_sepulchre/D01_185219862.jpg",
+  "data/reference/s04_sepulchre.md#1.7"
+ ],
+ "notes": {
+  "method": "D04 (cam (211.9,63.6), heading ~31 deg, 27 mm eq.) right side: 3 storeys + a roof terrace with a black railing (Papa Andreas rooftop restaurant, OSM name): ground-floor shops with green steel doors under quarter-round translucent awnings (shown as a shed canopy), café tables; 1st floor 4 round-arched windows with black grilles; 2nd floor taller round-arched windows with grilles and a balcony at the north end. Eaves ~12.5 m (4.6 m ground floor + 2 x 3.9 m).",
+  "other edges": "e4 (north tip on the fountain square), e3 (on the SE diagonal) and e1 (on the David St lane): same storeys, shop rows; no direct photo."
+ },
+ "settings": {
+  "height": 12.5,
+  "wall": "ashlar",
+  "tint": [
+   1.04,
+   0.98,
+   0.9
+  ],
+  "storey": 3.9,
+  "shops": true
+ },
+ "facades": {
+  "0": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.9,
+    5.7,
+    9.5,
+    13.3
+   ],
+   "ground_storey": 4.6,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green2"
+    }
+   ],
+   "canopy": {
+    "depth": 1.5,
+    "z_front": 3.5,
+    "z_wall": 4.1
+   },
+   "awning": false,
+   "thr": 0.15,
+   "thr_out": 0.5,
+   "floors": [
+    {
+     "w": 1.1,
+     "h": 1.9,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "w": 1.2,
+     "h": 2.1,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true,
+     "balconies": [
+      3
+     ],
+     "balcony_w": 2.0
+    }
+   ],
+   "auto": false,
+   "at": [
+    216.17,
+    68.32
+   ]
+  },
+  "5": {
+   "shops": true,
+   "centres": [
+    2.95
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green2"
+    }
+   ],
+   "floors": [
+    {
+     "w": 1.1,
+     "h": 1.9,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "w": 1.2,
+     "h": 2.1,
+     "arch": "round",
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "auto": false,
+   "at": [
+    222.61,
+    75.04
+   ]
+  },
+  "4": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.32,
+    6.16,
+    10.0
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.4,
+     "arch": "round",
+     "door": "door_green2"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.6,
+    "z_front": 3.5,
+    "z_wall": 4.1
+   },
+   "at": [
+    229.01,
+    69.88
+   ]
+  },
+  "2": {
+   "souq": true,
+   "shops": true,
+   "centres": [
+    2.06,
+    5.39,
+    8.72,
+    12.05,
+    15.38
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": null,
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": "round",
+     "door": "door_green2"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": null,
+     "door": "rolldown_grey"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": "round",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.6,
+     "h": 3.2,
+     "arch": null,
+     "door": "door_green2"
+    }
+   ],
+   "ground_storey": 4.6,
+   "awning": false,
+   "thr": 0.2,
+   "thr_out": 0.45,
+   "canopy": {
+    "depth": 1.4,
+    "z_front": 3.2,
+    "z_wall": 3.9
+   },
+   "at": [
+    223.71,
+    60.39
+   ]
+  }
+ }
+}

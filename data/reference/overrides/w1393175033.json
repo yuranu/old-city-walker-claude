@@ -1,0 +1,69 @@
+{
+ "building": "w1393175033",
+ "name": "West side of the inner square, south end (tall blue door, blank board)",
+ "sources": [
+  "data/photos_ref/s08_damascus/D30_87978670.jpg"
+ ],
+ "why": "D30 left, north of the box-window building: rough-faced coursed stone, a tall narrow blue steel door (~1.5 x 3 m) and a blank white board on an S-scroll bracket; ~8 m to the top.",
+ "settings": {
+  "height": 8.0,
+  "wall": "rubble",
+  "tint": [
+   0.95,
+   0.92,
+   0.86
+  ]
+ },
+ "facades": {
+  "1": {
+   "at": [
+    296.61,
+    511.06
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.6
+   ],
+   "ground_storey": 4.2,
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 1.5,
+     "h": 3.0,
+     "door": "door_blue2",
+     "arch": null,
+     "sign": false
+    }
+   ],
+   "awning": false,
+   "thr": 0.15,
+   "thr_out": 0.4,
+   "canopy": null,
+   "floors": [
+    {
+     "centres": [
+      1.9
+     ],
+     "w": 1.0,
+     "h": 1.3,
+     "arch": null,
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    }
+   ],
+   "extra_fixtures": [
+    {
+     "type": "blade",
+     "u": 3.2,
+     "z": -21.7,
+     "h": 0.75,
+     "out": 1.4,
+     "cell": null
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,216 @@
+{
+ "building": "w288395736",
+ "name": "Bab Hutta junction, north-east corner block (arch over Lions' Gate Street at its east end)",
+ "sector": "s10_herod_lions",
+ "sources": [
+  "data/photos_ref/s10_herod_lions/32_babhutta_2022c.jpg",
+  "data/photos_ref/s10_herod_lions/18_lgst_ramparts_2011.jpg",
+  "data/photos_ref/s10_herod_lions/12_lgst_tractor_2014.jpg",
+  "data/photos_ref/s10_herod_lions/17_lgst_column_2022.jpg",
+  "data/reference/s10_herod_lions.md"
+ ],
+ "notes": "Height 11.5 m on the Lions' Gate face (R:32 shows at least 3 storeys; '4 storeys' in the notes is unverified). Shops at the junction end only (R:32 right face); house doors and small grilled windows to the east. The arch itself spans the street and is a request (no bridge-building feature).",
+ "settings": {
+  "height": 10.39,
+  "wall": "rubble",
+  "tint": [
+   0.99,
+   0.95,
+   0.88
+  ],
+  "storey": 3.5,
+  "domes": 2,
+  "shops": false
+ },
+ "facades": {
+  "6": {
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "ground_storey": 4.3,
+   "storey": 3.5,
+   "canopy": {
+    "depth": 1.0,
+    "z_front": 3.0,
+    "z_wall": 3.6
+   },
+   "centres": [
+    2.0,
+    5.0,
+    8.0,
+    11.6,
+    15.2,
+    18.6,
+    22.0,
+    25.4
+   ],
+   "ground": [
+    {
+     "kind": "shop",
+     "w": 2.3,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.3,
+     "h": 3.0,
+     "arch": "segment",
+     "door": "door_teal"
+    },
+    {
+     "kind": "shop",
+     "w": 2.2,
+     "h": 2.9,
+     "arch": null,
+     "door": "door_olive"
+    },
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.4,
+     "arch": "pointed",
+     "door": "door_green2"
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.8,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "window",
+     "w": 0.8,
+     "h": 1.1,
+     "sill": 1.8,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.4,
+     "arch": "pointed",
+     "door": "door_wood"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.0,
+      5.0,
+      8.0,
+      11.6,
+      15.2,
+      18.6,
+      22.0,
+      25.4
+     ],
+     "w": 1.0,
+     "h": 1.5,
+     "sill": 1.0,
+     "arches": [
+      null,
+      null,
+      null,
+      "pointed",
+      null,
+      null,
+      null,
+      "round"
+     ],
+     "ws": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.8
+     ],
+     "hs": [
+      1.5,
+      1.5,
+      1.5,
+      1.6,
+      1.5,
+      1.5,
+      1.5,
+      2.0
+     ],
+     "lo": "glass",
+     "grille": true
+    },
+    {
+     "centres": [
+      3.5,
+      8.0,
+      12.5,
+      17.0,
+      21.5
+     ],
+     "w": 1.0,
+     "h": 1.5,
+     "sill": 1.0,
+     "arch": null,
+     "lo": "glass",
+     "grille": false
+    }
+   ],
+   "at": [
+    775.36,
+    449.57
+   ]
+  },
+  "5": {
+   "auto": false,
+   "souq": false,
+   "shops": false,
+   "ground_storey": 4.3,
+   "storey": 3.5,
+   "centres": [
+    3.0,
+    7.0
+   ],
+   "ground": [
+    {
+     "kind": "door",
+     "w": 1.2,
+     "h": 2.4,
+     "arch": "pointed",
+     "door": "door_green"
+    },
+    {
+     "kind": "blind"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      3.0,
+      7.0
+     ],
+     "w": 1.0,
+     "h": 1.5,
+     "sill": 1.0,
+     "arch": null,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    761.16,
+    451.73
+   ]
+  }
+ }
+}

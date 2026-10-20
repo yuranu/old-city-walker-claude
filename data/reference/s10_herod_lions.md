@@ -904,3 +904,92 @@ Corrections are marked **[Rev. n]** in the body. Struck-through text is the orig
 - The exact x of the south-side stair on the plaza (L-M).
 - The photos not opened in this review: R:01, R:02, R:05, R:19 (unused), R:39 and R:42. R:04 was checked only on a crop
   of the doorway and signs. The author's descriptions of these photos were left as written.
+
+---------------------------------------------------------------------------------------------------------------
+
+## Sector pass
+
+Pass of 2026-10-20 (author: sector worker s10). Files: profile `data/reference/profiles/s10_herod_lions.json`, building
+overrides `data/reference/overrides/<id>.json` (20 files, all carrying `"sector": "s10_herod_lions"`), renders and comparison
+sheets in `renders/sectors/s10_herod_lions/` (`r0` = before, `r2`/`r3` = after; `sheet_*.jpg` = photo left, render right),
+scratch generators in `build/spec_s10_herod_lions/` (`gen_overrides.py` writes the override files from the current private
+spec, `profile_src.py` writes the profile atomically).
+
+**Method.** Heights were set as the height of the *street face* measured on the photos and converted to the spec setting
+(the spec measures from the highest ground vertex of the ring: on this sloping sector the street face is often 1-3 m taller
+than the setting, e.g. +2.9 m on the Greek Orthodox house whose ring climbs the Burj Laqlaq stair). Every facade carries an
+`"at"` anchor and `"auto": false`. Bays were placed from OSM nodes (portal, entrances, cafés) and from the photo order of the
+openings.
+
+### What was used and decided
+| building / item | evidence | decision |
+|---|---|---|
+| w288395734 Greek Orthodox "Birthplace of Mary" | R:08, R:10, R:18 | 11 m face; ashlar, honey tint; ground: 2 windows, round-arched portal at u 11.5 (OSM node 4410141990), 2 tall shuttered windows, the Sabil as a pointed blind niche at the east end; upper floor of 7 tall round-arched dark-shuttered windows, 3 balconies, bands + cornice |
+| w288395720 St Anne gatehouse no. 19 | R:26, R:16, R:09 | 11.5 m; pale cream ashlar; passage (1.4 x 2.9 pointed) with the lunette above, big pointed studded gate (2.5 x 4.3), the Bethesda window; dentil band at 6 m; upper floor of 6 shuttered windows, balcony over the gate |
+| w288395732 seminary (behind its garden) | no photo ([Rev. 7]) | 11.5 m, same style as the gatehouse (L) |
+| w288395736 junction NE block | R:32, R:18, R:12 | 11.5 m rough-faced; teal/olive shops at the junction end with a canopy, house doors east, large round grilled window at the arch end, 2 domes |
+| w1393164309 opposite the Muazzamiyya | R:15, R:14 | 12 m; three pale teal panelled shop doors (one round-arched with fanlight), scroll-bracket canopy, round-arched grilled windows, top-floor balconies |
+| w1393165953 Muazzamiyya north pier | R:14 | 12 m; fountain niche, small grilled windows |
+| m_s10_lgst_s1 (manual) + w1394480978 | R:14, R:15 left | tall (11.5-12 m) near-blind ashlar wall on the south side, small grilled windows high up ([Rev. 1]) |
+| w1393176149 junction SW block | R:32, OSM cafe/shop nodes | 12 m rough; shops and The Message Café |
+| w290986909 terrace house inside the gate | R:09, R:20 | 7.8 m face (3 m blind terrace wall + house), two round-arched grilled windows |
+| w290986927, w1393176152 | R:18 | low (5.5-6 m) flat-roofed buildings on the terrace side |
+| w290986908 tile-roofed house | R:12, OSM roof:shape=hipped | 11.2 m, hipped tile roof, east face over the car park photo-matched (small arched window, lattice window, grilled windows) |
+| w1550187572, w1545560831 | R:12 | one storey (4.2 m) at the car-park entrance |
+| w1392503038, w291742572 Bab Hutta Street east | R:30, R:32 | 12-12.5 m rock-faced bossed blocks, almost blind |
+| w291742568 | R:30, OSM roof tags | hipped tile roof, pointed twin windows |
+| w288395735 St Anne east range | R:25 ([Rev. 7]) | 11.5 m from the garden, round-arched shuttered windows on two storeys |
+| w288395724 Bethesda shelter | R:28, R:29 | 3 m, blank (steel-and-glass box) |
+| open area: car park strip | R:12 | infill f128 removed: the tile-roofed house's east face is seen across the car park |
+| open area: Herod's Gate inner plaza | R:35, R:36 | kept free of infill |
+| open area: Via Dolorosa x 560-681 | OSM | OSM tags 44830379 layer=-1, so infill filled the street (incl. at the Lions' Gate junction) |
+| covered: King Faisal 123254013, stair tunnel 744670522, Bab Hutta tunnel 744665958 | R:13, R:41, R:30 | vaulted (layer -1 tunnels were not built at all) |
+| removed: r3826423, r3826424 | R:28, R:29 | ruin outlines in the Bethesda excavation, built as 7-12 m blocks |
+| removed: w1392508822 | OSM, R:41 | building=roof over the open lane Aqabat Darwish blocked it |
+| souq streets | R:14, R:15, R:32, R:30, R:39-R:42 | Lions' Gate St shops only at the junction (744664057 0.25), none east of x 837 or outside the gate; Muazzamiyya passage 0.6 without canopies; Bab Hutta St 0.2; Herod's Gate Ascent 0.5; Aqabat Darwish 0.3 |
+
+### Left as requests (see the profile's `requests`)
+The arch over Lions' Gate Street at x 784-789 (bridge building), the vaults of Herod's Gate Ascent at Al-Bustami, the
+Muazzamiyya passage width (3.2 m built vs 4.5-5 m) and its ramp (built as steps), layer -1 tunnels as passages, palms for
+OSM palm trees, the stone-cube bollards, setts on Lions' Gate Street, a pale mint shutter cell, the blind-arch frieze, the
+raised terrace + broad stair on the seminary plaza, the meeting-point stage, the Bethesda pit (sunken), explicit `domes: 0`,
+Herod's Gate height (15.2 m vs 12.5-13 m) and passage, the Via Dolorosa layer -1 fix city-wide, the blocked St Anne entrance
+passage 288395740, roof slabs over lanes, the French flag and the ancient column.
+
+### Viewpoints (render_city `--cam`, lens 24, heights above the ground; `sheet_final_a/b/c.jpg` = photo | before | after)
+| name | camera | photo |
+|---|---|---|
+| lg_top | `lg_top:878,465.5,9:845,459.5,0` | R:18 (from the gate top, looking west) |
+| lgst_e | `lgst_e:830,456.7,1.7:878,465.4,4` | R:09 (towards the gate) |
+| lgst_arch | `lgst_arch:803.5,452.6,1.6:770.5,446.1,3.5` | R:12 (arch zone, car park, tile-roofed house) |
+| muazz | `muazz:729.3,438.4,1.6:716.5,436.6,4.5` | R:14 / R:15 (Muazzamiyya arch) |
+| darwish | `darwish:677.9,433.0,-25.7:674.6,447.5,-23.8` with `--abs` (inside the covered stair the relative mode puts the camera on the vault) | R:41 (stair tunnel from the Via Dolorosa junction) |
+| babhutta | `babhutta:748,505,1.6:738.5,556,4` | R:30 |
+| hga | `hga:649.1,593.4,1.6:654.5,560.5,2` | R:40 (Al-Bustami junction) |
+| hg_inner | `hg_inner:581,686,1.6:582,696,4` | R:35 / R:36 |
+| lg_out | `lg_out:909,470.5,1.6:878,465.4,6` | R:04 (approach from outside Lions' Gate) |
+| hg_out | `hg_out:578.5,719,1.6:581,711,5` | R:44 (approach from outside Herod's Gate) |
+| ghazali (r0 only, unchanged) | `ghazali:888.7,457.6,11:878.6,415.1,0` | R:20 |
+
+Renders r3 were made without `DRI_PRIME=1`: on the loaded discrete GPU EEVEE returned fully transparent frames (all
+cameras, ~20 s each), the integrated GPU renders correctly.
+
+### Remaining differences (after r3)
+- No arch over Lions' Gate Street at x 784-789 (R:12, R:18): needs the bridge-building feature (request).
+- The Muazzamiyya passage reads narrow (3.2 m) with steps instead of the 4.5-5 m ramped vault (R:13-R:15); its arch is
+  round-ish, not the tall pointed one; canopy brackets render green, the photos show black scroll brackets.
+- Lions' Gate Street paving is slab, not setts; no raised terrace and broad stair on the south side of the seminary plaza
+  (R:18); no stone gate pillars and fence at the car park (R:12).
+- Vernacular domes on w290986909 (and other flat terrace roofs) where R:20 shows roof terraces: `domes: 0` is not honoured.
+- Shutters are dark green/blue where the St Anne buildings have pale mint (R:25, R:26); the Greek Orthodox blind-arch frieze
+  is missing.
+- Herod's Gate Ascent: no vaults at Al-Bustami (R:39, R:40, R:42) and its frontages are rule-based (shop share now 0.5).
+- The stair tunnel (R:41) is vaulted only over its upper part, the vault is round and the passage walls get windows.
+- Gates (landmark modules): Herod's Gate reads too tall from outside (15.2 m vs 12.5-13 m) and its passage looks straight
+  through; Lions' Gate outer face is plain at the doorway level in lg_out (lion reliefs, slit windows, sail not visible).
+- Rule-based buildings are almost all 'rubble' (rock-faced) with grey-beige tints; the photos show much smooth coursed ashlar
+  and warmer honey/cream stone in the residential lanes (R:30 west side, R:46).
+- Audit (build/s10_herod_lions.blend, LOD pairs ignored): 21 coplanar overlaps, 8.7 m2 in all, every one inside infill
+  pieces (roof self-overlaps of f414 / f270 / f54, infill vs steps at f52 / f272 / f270); none touch the overridden
+  buildings, the manual building or the new vaults. The baseline blend was overwritten, so a strict before/after count
+  is not available.

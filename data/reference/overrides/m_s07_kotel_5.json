@@ -1,0 +1,93 @@
+{
+ "building": "m_s07_kotel_5",
+ "name": "Ophel: arched corner block at the Southern Wall",
+ "sources": [
+  "data/photos_ref/s07_kotel/032_110722986.jpg",
+  "data/photos_ref/s07_kotel/044_52557792.jpg",
+  "data/photos_ref/s07_kotel/038_172471257.jpg",
+  "data/reference/s07_kotel.md"
+ ],
+ "notes": "Tall ashlar block against the Southern Wall where the Ottoman wall meets it, two tall round-headed arches in its W face with dark depths, three small windows above them, plain upper masonry (K:032, K:044, K:038). Height: in K:044 (block 140 px tall, its top 40 px under the Southern Wall top line at the same depth) and K:032 (152 px, 50 px under) the top sits ~0.31 of the block's own height under the wall top; with the modelled wall top -26.5 and the ground at the W face ~-44.4 that is a top of -30.7, above the Ottoman wall top (-33.3..-35.5) as in K:038 and K:044. Wall ashlar, tint of the weathered medieval masonry.",
+ "settings": {
+  "height": 12.0,
+  "wall": "ashlar",
+  "tint": [
+   1.02,
+   0.97,
+   0.88
+  ],
+  "shops": false,
+  "domes": 0,
+  "roof": "flat"
+ },
+ "facades": {
+  "1": {
+   "at": [
+    757.86,
+    -97.85
+   ],
+   "auto": false,
+   "shops": false,
+   "ground_storey": 9.0,
+   "centres": [
+    2.6,
+    8.4
+   ],
+   "ground": [
+    {
+     "kind": "door",
+     "w": 3.6,
+     "h": 6.3,
+     "arch": "round",
+     "door": "void"
+    },
+    {
+     "kind": "door",
+     "w": 3.6,
+     "h": 6.3,
+     "arch": "round",
+     "door": "void"
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      5.1,
+      7.1,
+      8.9
+     ],
+     "w": 0.6,
+     "h": 0.7,
+     "sill": 0.8,
+     "arch": null,
+     "lo": "void",
+     "grille": false
+    }
+   ]
+  },
+  "3": {
+   "at": [
+    761.0,
+    -103.24
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "4": {
+   "at": [
+    763.97,
+    -101.88
+   ],
+   "blank": true,
+   "auto": false
+  },
+  "6": {
+   "at": [
+    780.0,
+    -93.14
+   ],
+   "blank": true,
+   "auto": false
+  }
+ }
+}

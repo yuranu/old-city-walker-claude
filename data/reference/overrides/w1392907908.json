@@ -1,0 +1,70 @@
+{
+ "building": "w1392907908",
+ "name": "house, east side of the narrow stretch (pillow-pointed wall)",
+ "sources": [
+  "data/photos_ref/s01_armenian/05_195154357.jpg",
+  "data/photos_ref/s01_armenian/11_75764417.jpg",
+  "data/reference/s01_armenian.md#P2"
+ ],
+ "notes": {
+  "facade": "05: east side y ~-150..-180 is a continuous 2-3 storey wall faced with whitish raised cement 'pillow' pointing (R21), few small barred windows and one green-shuttered window high up; the pillow texture itself is requested in the profile. Height ~10.5 m from 05 (wall rises out of frame near the camera, ~3 storeys at the tunnel)."
+ },
+ "settings": {
+  "height": 10.5,
+  "wall": "rubble",
+  "tint": [
+   1.03,
+   1.02,
+   0.98
+  ],
+  "shops": false,
+  "roof": "flat",
+  "storey": 3.6
+ },
+ "facades": {
+  "9": {
+   "centres": [
+    2.53
+   ],
+   "shops": false,
+   "ground_storey": 3.6,
+   "storey": 3.3,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 0.6,
+     "h": 0.8,
+     "sill": 2.2,
+     "grille": true
+    }
+   ],
+   "floors": [
+    {
+     "centres": [
+      2.53
+     ],
+     "w": 0.8,
+     "h": 1.2,
+     "sill": 1.0,
+     "lo": "shutter_green",
+     "grille": false
+    },
+    {
+     "centres": [
+      2.53
+     ],
+     "w": 0.8,
+     "h": 1.2,
+     "sill": 1.0,
+     "lo": "glass",
+     "grille": true
+    }
+   ],
+   "at": [
+    118.67,
+    -151.05
+   ],
+   "auto": false
+  }
+ }
+}

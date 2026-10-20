@@ -1,0 +1,89 @@
+{
+ "building": "w1393280743",
+ "name": "Khan ez-Zeit north, east row (y 430-442), Ja'far Sweets",
+ "sources": [
+  "data/photos_ref/s08_damascus/D42_134822462.jpg",
+  "data/photos_ref/s08_damascus/D41_39705483.jpg"
+ ],
+ "why": "D41 (KeZ north looking S from the fork, shops closed): openings ~2.2-3 m x 2.8-3.2 m under flat steel lintels, multi-leaf panelled steel doors (4-6 leaves) painted grey, beige and olive (atlas door_olive, the multi-leaf cell) and grey roll-downs, no teal or green; raised stone thresholds 0.15-0.2 m; corrugated canopies from both sides over the open bays; white hanging boards. D42: Ja'far Sweets, a ~3.2 m opening closed by orange-red two-leaf Z-braced steel doors (nearest atlas cell door_wood; an orange-red cell and the blue JA'FAR SWEETS fascia are requested); its geotag (311.6,435.5) falls inside this footprint and projects to u 6.45 on this front, so the Ja'far bay is centred there. The side of the street is not certain (notes 2.9: position L; an OSM confectionery node 5832848072 lies 9 m further S in s04). Other bays: D41 (far end, indistinct) and OSM clothes node 5832849090.",
+ "settings": {
+  "wall": "rubble"
+ },
+ "facades": {
+  "0": {
+   "at": [
+    307.6,
+    434.99
+   ],
+   "auto": false,
+   "souq": true,
+   "shops": true,
+   "centres": [
+    1.8,
+    6.5,
+    10.0,
+    12.45
+   ],
+   "ground_storey": 4.2,
+   "ground": [
+    {
+     "kind": "window",
+     "w": 2.4,
+     "h": 3.0,
+     "sill": -0.06,
+     "lo": "door_olive",
+     "arch": null,
+     "grille": false
+    },
+    {
+     "kind": "shop",
+     "w": 3.2,
+     "h": 3.0,
+     "door": "door_wood",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "shop",
+     "w": 2.4,
+     "h": 3.0,
+     "door": "rolldown_grey",
+     "sign": false,
+     "arch": null
+    },
+    {
+     "kind": "shop",
+     "w": 1.5,
+     "h": 3.0,
+     "door": "door_olive",
+     "sign": false,
+     "arch": null
+    }
+   ],
+   "awning": false,
+   "thr": 0.18,
+   "thr_out": 0.5,
+   "canopy": {
+    "depth": 1.1,
+    "z_front": 3.0,
+    "z_wall": 3.5
+   },
+   "floors": [
+    {
+     "centres": [
+      1.8,
+      6.5,
+      10.0,
+      12.45
+     ],
+     "w": 1.0,
+     "h": 1.4,
+     "arch": null,
+     "lo": "glass",
+     "grille": true,
+     "sill": 0.9
+    }
+   ]
+  }
+ }
+}
