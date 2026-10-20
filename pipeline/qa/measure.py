@@ -15,6 +15,8 @@ from shapely.ops import unary_union
 sys.path.insert(0, str(Path(__file__).parent))
 from common import ROOT, finding, load_spec, region_geom  # noqa: E402
 
+WALL_PROPS = {"caper"}                         # grow out of walls, high above the ground
+
 
 def main():
     reg = region_geom(sys.argv[1])
@@ -71,9 +73,13 @@ def main():
             F.append(finding("ground_gap", 0, "high", c.x, c.y, what="%.1f m2 with no ground, step or building" % p.area,
                              source="make_spec ground regions / steps_union / buildings", evidence={"area": round(p.area, 1)}))
     # 2 spikes: ground no street could have
+    lm_polys = [p for b, p in blist if b["osm"] in lids]
+    lm_u = unary_union(lm_polys) if lm_polys else None
     for P, t, mat in tris:
         if not reg.intersects(P):
             continue
+        if lm_u is not None and lm_u.contains(P.centroid):
+            continue                                   # ground under a landmark: hidden by its floors
         zs = [q[2] for q in t]
         dz = max(zs) - min(zs)
         L = max(math.dist(t[i][:2], t[(i + 1) % 3][:2]) for i in range(3))
@@ -87,7 +93,8 @@ def main():
     for w in osm["ways"]:
         t = w["tags"]
         pts = w.get("pts") or []
-        if t.get("highway") and len(pts) > 1 and t.get("area") != "yes" and int(t.get("layer", "0") or 0) >= -1:
+        if t.get("highway") and len(pts) > 1 and t.get("area") != "yes" and int(t.get("layer", "0") or 0) >= -1 \
+                and t.get("bridge") != "yes":         # (a wall under a bridge blocks nothing)
             ln = LineString(pts)
             if ln.intersects(rb):
                 streets.append((w, ln))
@@ -96,6 +103,8 @@ def main():
         ln = LineString([r["a"], r["b"]])
         if not ln.intersects(reg):
             continue
+        if lm_u is not None and lm_u.buffer(0.1).contains(ln):
+            continue                                   # the edge of a landmark: its own walls stand there
         h = max(r["hi"][0] - r["lo"][0], r["hi"][1] - r["lo"][1]) - 0.3
         for k in (stree.query(ln) if stree else []):
             if streets[k][1].intersects(ln) and h > 0.4:
@@ -134,7 +143,7 @@ def main():
     for sid, d in secs.items():
         for pr in d.get("props", []):
             x, y, z = pr["p"]
-            if not reg.contains(Point(x, y)):
+            if pr["type"] in WALL_PROPS or not reg.contains(Point(x, y)):
                 continue
             if btree is not None and any(bpolys[k].contains(Point(x, y)) for k in btree.query(Point(x, y))):
                 continue                              # rooftop clutter

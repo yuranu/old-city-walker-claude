@@ -1,0 +1,2968 @@
+{
+ "entries": {
+  "pilot_kotel|hole@159,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     639.5,
+     34.0
+    ],
+    "what": "sky visible below the horizon (322 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_f_hole_470_440.png",
+     "px": 322,
+     "bbox": [
+      470,
+      440,
+      472,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_f",
+    "key": "hole@159,8"
+   }
+  },
+  "pilot_kotel|hole@161,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     644.2,
+     34.9
+    ],
+    "what": "sky visible below the horizon (221 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_b_hole_476_496.png",
+     "px": 221,
+     "bbox": [
+      476,
+      496,
+      478,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_b",
+    "key": "hole@161,8"
+   }
+  },
+  "pilot_kotel|flicker@167,9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     671.9,
+     36.9
+    ],
+    "what": "surface flips between frames 1 cm apart (2093 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_b_flick_509_0.png",
+     "px": 2093,
+     "bbox": [
+      509,
+      0,
+      531,
+      90
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_b",
+    "key": "flicker@167,9"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|flicker@165,9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     662.6,
+     36.1
+    ],
+    "what": "surface flips between frames 1 cm apart (773 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_b_flick_510_291.png",
+     "px": 773,
+     "bbox": [
+      510,
+      291,
+      531,
+      330
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_b",
+    "key": "flicker@165,9"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|flicker@162,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     648.3,
+     35.0
+    ],
+    "what": "surface flips between frames 1 cm apart (2262 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_b_flick_510_333.png",
+     "px": 2262,
+     "bbox": [
+      510,
+      333,
+      531,
+      440
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_b",
+    "key": "flicker@162,8"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|flicker@162,-19": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     651.6,
+     -75.7
+    ],
+    "what": "surface flips between frames 1 cm apart (341 px)",
+    "evidence": {
+     "crop": "crops/w44376170_4_f_flick_899_0.png",
+     "px": 341,
+     "bbox": [
+      899,
+      0,
+      909,
+      47
+     ]
+    },
+    "source": null,
+    "view": "w44376170_4_f",
+    "key": "flicker@162,-19"
+   }
+  },
+  "pilot_kotel|flicker@164,-30": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     657.1,
+     -116.3
+    ],
+    "what": "surface flips between frames 1 cm apart (928 px)",
+    "evidence": {
+     "crop": "crops/w44376170_4_b_flick_2_199.png",
+     "px": 928,
+     "bbox": [
+      2,
+      199,
+      20,
+      276
+     ]
+    },
+    "source": null,
+    "view": "w44376170_4_b",
+    "key": "flicker@164,-30"
+   }
+  },
+  "pilot_kotel|hole@154,-33": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     617.5,
+     -131.1
+    ],
+    "what": "sky visible below the horizon (223 px)",
+    "evidence": {
+     "crop": "crops/w288016682_2_d_hole_766_14.png",
+     "px": 223,
+     "bbox": [
+      766,
+      14,
+      778,
+      40
+     ]
+    },
+    "source": null,
+    "view": "w288016682_2_d",
+    "key": "hole@154,-33"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@154,-35": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     619.8,
+     -138.7
+    ],
+    "what": "sky visible below the horizon (85 px)",
+    "evidence": {
+     "crop": "crops/w288016682_2_d_hole_879_17.png",
+     "px": 85,
+     "bbox": [
+      879,
+      17,
+      890,
+      28
+     ]
+    },
+    "source": null,
+    "view": "w288016682_2_d",
+    "key": "hole@154,-35"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@156,-33": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     625.9,
+     -130.4
+    ],
+    "what": "sky visible below the horizon (137 px)",
+    "evidence": {
+     "crop": "crops/w1044731106_0_d_hole_771_14.png",
+     "px": 137,
+     "bbox": [
+      771,
+      14,
+      781,
+      31
+     ]
+    },
+    "source": null,
+    "view": "w1044731106_0_d",
+    "key": "hole@156,-33"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@154,-31": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     617.2,
+     -121.1
+    ],
+    "what": "sky visible below the horizon (103 px)",
+    "evidence": {
+     "crop": "crops/w1044731108_0_d_hole_866_14.png",
+     "px": 103,
+     "bbox": [
+      866,
+      14,
+      877,
+      25
+     ]
+    },
+    "source": null,
+    "view": "w1044731108_0_d",
+    "key": "hole@154,-31"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@153,-33": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     615.1,
+     -129.2
+    ],
+    "what": "sky visible below the horizon (456 px)",
+    "evidence": {
+     "crop": "crops/w1545238187_0_d_hole_455_14.png",
+     "px": 456,
+     "bbox": [
+      455,
+      14,
+      493,
+      31
+     ]
+    },
+    "source": null,
+    "view": "w1545238187_0_d",
+    "key": "hole@153,-33"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@155,-35": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     620.1,
+     -136.6
+    ],
+    "what": "sky visible below the horizon (108 px)",
+    "evidence": {
+     "crop": "crops/w1545238187_0_d_hole_508_14.png",
+     "px": 108,
+     "bbox": [
+      508,
+      14,
+      530,
+      22
+     ]
+    },
+    "source": null,
+    "view": "w1545238187_0_d",
+    "key": "hole@155,-35"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@172,-34": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     690.8,
+     -132.2
+    ],
+    "what": "sky visible below the horizon (63 px)",
+    "evidence": {
+     "crop": "crops/air_635_-110_hole_281_64.png",
+     "px": 63,
+     "bbox": [
+      281,
+      64,
+      285,
+      85
+     ]
+    },
+    "source": null,
+    "view": "air_635_-110",
+    "key": "hole@172,-34"
+   }
+  },
+  "pilot_kotel|hole@173,-29": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     694.8,
+     -115.0
+    ],
+    "what": "sky visible below the horizon (134 px)",
+    "evidence": {
+     "crop": "crops/air_635_-110_hole_87_69.png",
+     "px": 134,
+     "bbox": [
+      87,
+      69,
+      99,
+      95
+     ]
+    },
+    "source": null,
+    "view": "air_635_-110",
+    "key": "hole@173,-29"
+   }
+  },
+  "pilot_kotel|hole@158,-43": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     634.6,
+     -170.0
+    ],
+    "what": "sky visible below the horizon (96 px)",
+    "evidence": {
+     "crop": "crops/air_635_-110_hole_939_79.png",
+     "px": 96,
+     "bbox": [
+      939,
+      79,
+      948,
+      96
+     ]
+    },
+    "source": null,
+    "view": "air_635_-110",
+    "key": "hole@158,-43"
+   }
+  },
+  "pilot_kotel|hole@157,-32": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     629.8,
+     -124.8
+    ],
+    "what": "sky visible below the horizon (75 px)",
+    "evidence": {
+     "crop": "crops/air_635_-65_hole_92_3.png",
+     "px": 75,
+     "bbox": [
+      92,
+      3,
+      100,
+      21
+     ]
+    },
+    "source": null,
+    "view": "air_635_-65",
+    "key": "hole@157,-32"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@162,2": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     649.0,
+     11.7
+    ],
+    "what": "sky visible below the horizon (46 px)",
+    "evidence": {
+     "crop": "crops/air_635_70_hole_758_2.png",
+     "px": 46,
+     "bbox": [
+      758,
+      2,
+      762,
+      17
+     ]
+    },
+    "source": null,
+    "view": "air_635_70",
+    "key": "hole@162,2"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@160,2": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     642.0,
+     10.4
+    ],
+    "what": "sky visible below the horizon (91 px)",
+    "evidence": {
+     "crop": "crops/air_635_70_hole_838_10.png",
+     "px": 91,
+     "bbox": [
+      838,
+      10,
+      845,
+      30
+     ]
+    },
+    "source": null,
+    "view": "air_635_70",
+    "key": "hole@160,2"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@165,-42": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     662.3,
+     -167.3
+    ],
+    "what": "sky visible below the horizon (70 px)",
+    "evidence": {
+     "crop": "crops/air_680_-110_hole_236_31.png",
+     "px": 70,
+     "bbox": [
+      236,
+      31,
+      242,
+      51
+     ]
+    },
+    "source": null,
+    "view": "air_680_-110",
+    "key": "hole@165,-42"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@167,-43": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     671.2,
+     -169.4
+    ],
+    "what": "sky visible below the horizon (242 px)",
+    "evidence": {
+     "crop": "crops/air_680_-110_hole_134_57.png",
+     "px": 242,
+     "bbox": [
+      134,
+      57,
+      148,
+      87
+     ]
+    },
+    "source": null,
+    "view": "air_680_-110",
+    "key": "hole@167,-43"
+   }
+  },
+  "pilot_kotel|hole@169,-9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     679.7,
+     -35.0
+    ],
+    "what": "sky visible below the horizon (42 px)",
+    "evidence": {
+     "crop": "crops/air_680_25_hole_937_11.png",
+     "px": 42,
+     "bbox": [
+      937,
+      11,
+      945,
+      17
+     ]
+    },
+    "source": null,
+    "view": "air_680_25",
+    "key": "hole@169,-9"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@157,-9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     628.2,
+     -32.6,
+     -42.0
+    ],
+    "what": "ground triangle rises 1.4 m over 1.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@157,-9"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@159,-10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     638.7,
+     -36.1,
+     -39.9
+    ],
+    "what": "ground triangle rises 2.8 m over 4.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@159,-10"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@159,-9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     638.7,
+     -34.7,
+     -41.2
+    ],
+    "what": "ground triangle rises 3.8 m over 5.7 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@159,-9"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@153,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     613.3,
+     34.5,
+     -42.1
+    ],
+    "what": "ground triangle rises 1.6 m over 1.8 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@153,8"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@154,10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     619.0,
+     44.0,
+     -36.9
+    ],
+    "what": "ground triangle rises 9.0 m over 0.6 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@154,10"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@154,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     618.8,
+     44.0,
+     -39.9
+    ],
+    "what": "ground triangle rises 9.0 m over 0.6 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@154,11"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@155,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     622.2,
+     47.2,
+     -39.0
+    ],
+    "what": "ground triangle rises 7.9 m over 4.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@155,11"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@156,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     627.7,
+     47.0,
+     -36.1
+    ],
+    "what": "ground triangle rises 6.6 m over 1.7 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@156,11"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@156,12": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     625.7,
+     48.8,
+     -38.7
+    ],
+    "what": "ground triangle rises 7.2 m over 4.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@156,12"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|spike@156,13": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     627.4,
+     54.3,
+     -37.4
+    ],
+    "what": "ground triangle rises 5.5 m over 2.2 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@156,13"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@156,14": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     627.0,
+     59.9,
+     -36.5
+    ],
+    "what": "ground triangle rises 4.0 m over 1.7 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@156,14"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@156,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     627.9,
+     61.4,
+     -34.8
+    ],
+    "what": "ground triangle rises 2.6 m over 4.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@156,15"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@157,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     632.0,
+     61.0,
+     -34.8
+    ],
+    "what": "ground triangle rises 2.8 m over 0.6 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@157,15"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@158,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     635.9,
+     61.8,
+     -34.5
+    ],
+    "what": "ground triangle rises 1.9 m over 0.8 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@158,15"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@160,-9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.6,
+     -33.3,
+     -39.4
+    ],
+    "what": "ground triangle rises 4.9 m over 4.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@160,-9"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@160,-8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.6,
+     -31.3,
+     -41.2
+    ],
+    "what": "ground triangle rises 5.5 m over 2.2 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@160,-8"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@161,-8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     646.0,
+     -28.6,
+     -42.2
+    ],
+    "what": "ground triangle rises 1.8 m over 0.7 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@161,-8"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@162,-8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     651.7,
+     -29.5,
+     -38.0
+    ],
+    "what": "ground triangle rises 8.3 m over 2.4 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@162,-8"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@162,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     649.1,
+     -27.9,
+     -42.9
+    ],
+    "what": "ground triangle rises 2.0 m over 1.1 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@162,-7"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@163,-8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     654.5,
+     -28.7,
+     -37.1
+    ],
+    "what": "ground triangle rises 9.6 m over 4.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@163,-8"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@163,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     652.2,
+     -27.6,
+     -42.9
+    ],
+    "what": "ground triangle rises 2.0 m over 0.9 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@163,-7"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@164,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     656.5,
+     -26.8,
+     -39.7
+    ],
+    "what": "ground triangle rises 10.1 m over 1.0 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@164,-7"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|wall_across_street@156,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:23",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     624.5,
+     25.0
+    ],
+    "what": "retaining wall 1.5 m high across Western Wall Plaza",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@156,6"
+   },
+   "fixed": "2026-10-21 00:38"
+  },
+  "pilot_kotel|wall_across_street@159,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:23",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     639.0,
+     27.8
+    ],
+    "what": "retaining wall 1.3 m high across 394161636",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@159,6"
+   },
+   "fixed": "2026-10-21 00:38"
+  },
+  "pilot_kotel|wall_across_street@155,7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     623.9,
+     30.9
+    ],
+    "what": "retaining wall 7.4 m high across Western Wall Plaza",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@155,7"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|wall_across_street@160,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.6,
+     34.8
+    ],
+    "what": "retaining wall 9.4 m high across Wilson's Arch",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@160,8"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|wall_across_street@161,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     645.6,
+     35.1
+    ],
+    "what": "retaining wall 9.4 m high across Western Wall Plaza",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@161,8"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|wall_across_street@163,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:23",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     654.1,
+     -27.0
+    ],
+    "what": "retaining wall 1.7 m high across Mughrabi Bridge",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@163,-7"
+   },
+   "fixed": "2026-10-21 00:38"
+  },
+  "pilot_kotel|wall_across_street@164,-6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     656.2,
+     -22.6
+    ],
+    "what": "retaining wall 0.5 m high across Western Wall Plaza",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@164,-6"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|steps_overlap@156,-32": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "steps_overlap",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     624.7,
+     -126.7
+    ],
+    "what": "treads overlap (0.22 m2)",
+    "evidence": {},
+    "source": "stairs.build clipping",
+    "view": null,
+    "key": "steps_overlap@156,-32"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|steps_overlap@155,-33": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "steps_overlap",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     621.6,
+     -128.6
+    ],
+    "what": "treads overlap (0.74 m2)",
+    "evidence": {},
+    "source": "stairs.build clipping",
+    "view": null,
+    "key": "steps_overlap@155,-33"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|steps_overlap@142,-30": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "steps_overlap",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     568.6,
+     -117.7
+    ],
+    "what": "treads overlap (0.42 m2)",
+    "evidence": {},
+    "source": "stairs.build clipping",
+    "view": null,
+    "key": "steps_overlap@142,-30"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|prop_buried@156,14": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "prop_buried",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     624.6,
+     59.6,
+     -38.1
+    ],
+    "what": "cup 1.35 m below the ground",
+    "evidence": {},
+    "source": "dressing zat / profile props",
+    "view": null,
+    "key": "prop_buried@156,14"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|prop_float@156,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "prop_float",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     625.0,
+     60.0,
+     -33.8
+    ],
+    "what": "box_stack 3.00 m above the ground",
+    "evidence": {},
+    "source": "dressing zat / profile props",
+    "view": null,
+    "key": "prop_float@156,15"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|prop_buried@154,10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "prop_buried",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     618.1,
+     43.2,
+     -43.0
+    ],
+    "what": "bag 5.22 m below the ground",
+    "evidence": {},
+    "source": "dressing zat / profile props",
+    "view": null,
+    "key": "prop_buried@154,10"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|prop_float@159,16": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:23",
+   "status": "fixed",
+   "finding": {
+    "kind": "prop_float",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     637.6,
+     67.0,
+     -33.4
+    ],
+    "what": "crate_stack 0.88 m above the ground",
+    "evidence": {},
+    "source": "dressing zat / profile props",
+    "view": null,
+    "key": "prop_float@159,16"
+   },
+   "fixed": "2026-10-21 00:38"
+  },
+  "pilot_kotel|coplanar@160,14": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     641.6,
+     57.8,
+     -38.8
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (4.85 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@160,14"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@161,10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     644.9,
+     41.1,
+     -40.5
+    ],
+    "what": "coplanar faces s11_haram:bld_w817206833 / base:retaining_walls (4.79 m2, ashlar.001/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w817206833 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@161,10"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@160,13": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     642.0,
+     55.7,
+     -37.2
+    ],
+    "what": "coplanar faces s11_haram:bld_w817206833 / base:retaining_walls (4.73 m2, ashlar.001/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w817206833 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@160,13"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@161,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     644.3,
+     44.0,
+     -40.5
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (4.25 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@161,11"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@154,10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     619.9,
+     40.8,
+     -40.4
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (4.17 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@154,10"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@160,12": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     642.9,
+     51.3,
+     -37.2
+    ],
+    "what": "coplanar faces s11_haram:bld_w817206833 / base:retaining_walls (3.76 m2, ashlar.001/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w817206833 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@160,12"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@160,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.8,
+     46.5,
+     -40.5
+    ],
+    "what": "coplanar faces s11_haram:bld_w817206833 / base:retaining_walls (3.27 m2, ashlar.001/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w817206833 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@160,11"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@155,9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     620.1,
+     39.8,
+     -40.2
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (2.97 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@155,9"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@155,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     621.3,
+     33.5,
+     -38.2
+    ],
+    "what": "coplanar faces s11_haram:bld_w817206833 / base:retaining_walls (2.01 m2, ashlar.001/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w817206833 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@155,8"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@161,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     645.4,
+     35.1,
+     -37.2
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (1.70 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@161,8"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@158,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     635.8,
+     33.2,
+     -35.6
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (0.57 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@158,8"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@161,16": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     647.2,
+     67.1,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.07 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@161,16"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@160,16": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     640.6,
+     64.4,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.89 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@160,16"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@154,12": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     616.5,
+     48.0,
+     -28.3
+    ],
+    "what": "coplanar faces s09_wad:bld_f249 / s09_wad:bld_f249 (0.35 m2, rubble.004/rubble.004)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f249 vs bld_f249",
+    "view": null,
+    "key": "coplanar@154,12"
+   }
+  },
+  "pilot_kotel|coplanar@165,-6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     660.6,
+     -22.3,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.89 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,-6"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@153,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     615.4,
+     47.7,
+     -28.3
+    ],
+    "what": "coplanar faces s09_wad:bld_f249 / s09_wad:bld_f249 (0.25 m2, rubble.004/rubble.004)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f249 vs bld_f249",
+    "view": null,
+    "key": "coplanar@153,11"
+   }
+  },
+  "pilot_kotel|coplanar@160,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     640.4,
+     34.1,
+     -35.8
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w817206833 (0.11 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w817206833",
+    "view": null,
+    "key": "coplanar@160,8"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|coplanar@164,-6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:36",
+   "last": "2026-10-20 23:36",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     658.4,
+     -22.7,
+     -35.4
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w291836692 (0.10 m2, ashlar/ashlar.001)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w291836692",
+    "view": null,
+    "key": "coplanar@164,-6"
+   },
+   "fixed": "2026-10-20 23:49"
+  },
+  "pilot_kotel|flicker@153,7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     612.3,
+     29.8
+    ],
+    "what": "surface flips between frames 1 cm apart (7750 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_f_flick_478_0.png",
+     "px": 7750,
+     "bbox": [
+      478,
+      0,
+      500,
+      354
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_f",
+    "key": "flicker@153,7"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|hole@155,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-21 00:23",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     623.3,
+     25.0
+    ],
+    "what": "sky visible below the horizon (43 px)",
+    "evidence": {
+     "crop": "crops/w26492734_21_b_hole_319_469.png",
+     "px": 43,
+     "bbox": [
+      319,
+      469,
+      348,
+      477
+     ]
+    },
+    "source": null,
+    "view": "w26492734_21_b",
+    "key": "hole@155,6"
+   },
+   "fixed": "2026-10-21 00:38"
+  },
+  "pilot_kotel|hole@160,12": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.0,
+     50.3
+    ],
+    "what": "sky visible below the horizon (85 px)",
+    "evidence": {
+     "crop": "crops/w277508273_1_b_hole_108_557.png",
+     "px": 85,
+     "bbox": [
+      108,
+      557,
+      114,
+      609
+     ]
+    },
+    "source": null,
+    "view": "w277508273_1_b",
+    "key": "hole@160,12"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|spike@157,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     628.6,
+     47.9,
+     -36.1
+    ],
+    "what": "ground triangle rises 6.6 m over 0.9 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@157,11"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@157,12": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     628.0,
+     51.8,
+     -37.7
+    ],
+    "what": "ground triangle rises 5.8 m over 0.5 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@157,12"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|spike@159,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     638.2,
+     62.8,
+     -34.2
+    ],
+    "what": "ground triangle rises 1.7 m over 1.6 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@159,15"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|wall_across_street@156,7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-21 00:02",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     624.4,
+     31.1
+    ],
+    "what": "retaining wall 7.4 m high across Western Wall Plaza",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@156,7"
+   },
+   "fixed": "2026-10-21 00:13"
+  },
+  "pilot_kotel|prop_buried@156,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-20 23:49",
+   "last": "2026-10-20 23:49",
+   "status": "fixed",
+   "finding": {
+    "kind": "prop_buried",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     625.2,
+     60.1,
+     -37.9
+    ],
+    "what": "box_stack 1.26 m below the ground",
+    "evidence": {},
+    "source": "dressing zat / profile props",
+    "view": null,
+    "key": "prop_buried@156,15"
+   },
+   "fixed": "2026-10-21 00:02"
+  },
+  "pilot_kotel|hole@156,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:23",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     624.1,
+     24.9
+    ],
+    "what": "sky visible below the horizon (74 px)",
+    "evidence": {
+     "crop": "crops/w26492734_21_b_hole_367_424.png",
+     "px": 74,
+     "bbox": [
+      367,
+      424,
+      391,
+      463
+     ]
+    },
+    "source": null,
+    "view": "w26492734_21_b",
+    "key": "hole@156,6"
+   },
+   "fixed": "2026-10-21 00:38"
+  },
+  "pilot_kotel|hole@163,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     654.6,
+     -27.3
+    ],
+    "what": "sky visible below the horizon (205 px)",
+    "evidence": {
+     "crop": "crops/w277508271_4_f_hole_551_471.png",
+     "px": 205,
+     "bbox": [
+      551,
+      471,
+      560,
+      550
+     ]
+    },
+    "source": null,
+    "view": "w277508271_4_f",
+    "key": "hole@163,-7"
+   }
+  },
+  "pilot_kotel|hole@160,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.5,
+     34.8
+    ],
+    "what": "sky visible below the horizon (1958 px)",
+    "evidence": {
+     "crop": "crops/w277508273_0_b_hole_99_563.png",
+     "px": 1958,
+     "bbox": [
+      99,
+      563,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w277508273_0_b",
+    "key": "hole@160,8"
+   }
+  },
+  "pilot_kotel|hole@159,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     639.3,
+     63.3
+    ],
+    "what": "sky visible below the horizon (218 px)",
+    "evidence": {
+     "crop": "crops/w277508273_1_f_hole_477_331.png",
+     "px": 218,
+     "bbox": [
+      477,
+      331,
+      501,
+      340
+     ]
+    },
+    "source": null,
+    "view": "w277508273_1_f",
+    "key": "hole@159,15"
+   }
+  },
+  "pilot_kotel|hole@159,17": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:38",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     638.0,
+     69.8
+    ],
+    "what": "sky visible below the horizon (170 px)",
+    "evidence": {
+     "crop": "crops/w291836757_0_d_hole_513_457.png",
+     "px": 170,
+     "bbox": [
+      513,
+      457,
+      527,
+      501
+     ]
+    },
+    "source": null,
+    "view": "w291836757_0_d",
+    "key": "hole@159,17"
+   }
+  },
+  "pilot_kotel|wall_across_street@164,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "wall_across_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     657.0,
+     -27.3
+    ],
+    "what": "retaining wall 9.7 m high across 748953237",
+    "evidence": {},
+    "source": "make_spec retaining walls (flat edges)",
+    "view": null,
+    "key": "wall_across_street@164,-7"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,-4": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     663.5,
+     -14.7,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,-4"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,-3": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     662.6,
+     -9.8,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,-3"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,-1": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     661.5,
+     -2.9,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,-1"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,-2": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     662.1,
+     -6.8,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,-2"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,1": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     659.8,
+     7.0,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,1"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,2": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     659.1,
+     10.9,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,2"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,4": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     657.9,
+     17.8,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,4"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,5": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     657.2,
+     21.8,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,5"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     656.4,
+     26.7,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,6"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,0": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     660.8,
+     1.1,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,0"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,3": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     658.6,
+     13.9,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,3"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,8": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     655.2,
+     33.6,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,8"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     654.4,
+     38.5,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,9"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@162,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     650.1,
+     61.7,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@162,15"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@162,16": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     649.5,
+     65.5,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@162,16"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,11": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     655.1,
+     46.0,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.08 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,11"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     654.8,
+     42.7,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.07 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,10"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@160,15": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     640.6,
+     63.3,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.04 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@160,15"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,13": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     652.3,
+     52.6,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.03 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,13"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     655.6,
+     31.5,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.01 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,7"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@166,-5": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     664.3,
+     -19.5,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (1.00 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@166,-5"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,1": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     660.3,
+     4.0,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.99 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,1"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     656.1,
+     28.1,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.97 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,7"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@165,-5": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     663.7,
+     -16.1,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.96 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@165,-5"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,14": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     652.0,
+     58.6,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.95 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,14"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@164,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     656.6,
+     -24.4,
+     -38.1
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.87 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@164,-7"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@163,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     655.5,
+     -28.0,
+     -38.7
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.71 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@163,-7"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@162,-7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     649.7,
+     -27.7,
+     -42.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.22 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@162,-7"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@159,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     637.5,
+     27.5,
+     -42.7
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.20 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@159,6"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@159,-10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     637.0,
+     -36.4,
+     -40.8
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.19 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@159,-10"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@159,16": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     638.0,
+     67.9,
+     -33.7
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.06 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@159,16"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@150,9": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     601.1,
+     38.8,
+     -39.3
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.05 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@150,9"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@149,10": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     599.6,
+     41.3,
+     -38.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.05 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@149,10"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@155,6": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     622.6,
+     27.2,
+     -42.3
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.05 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@155,6"
+   },
+   "fixed": "2026-10-21 00:23"
+  },
+  "pilot_kotel|coplanar@160,7": {
+   "region": "pilot_kotel",
+   "first": "2026-10-21 00:13",
+   "last": "2026-10-21 00:13",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     642.4,
+     28.4,
+     -43.5
+    ],
+    "what": "coplanar faces base:retaining_walls / base:retaining_walls (0.04 m2, ashlar/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs retaining_walls",
+    "view": null,
+    "key": "coplanar@160,7"
+   },
+   "fixed": "2026-10-21 00:23"
+  }
+ }
+}

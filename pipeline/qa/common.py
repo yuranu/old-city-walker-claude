@@ -1,5 +1,6 @@
 """Shared helpers for the QA system (pipeline/qa): regions, spec loading, findings."""
 import json
+import os
 import math
 from pathlib import Path
 
@@ -7,7 +8,7 @@ from shapely import STRtree, make_valid
 from shapely.geometry import Polygon, box, shape
 
 ROOT = Path(__file__).resolve().parents[2]
-SPEC = ROOT / "data/spec"
+SPEC = Path(os.environ["SPEC_DIR"]) if os.environ.get("SPEC_DIR") else ROOT / "data/spec"
 
 
 def region_geom(name):

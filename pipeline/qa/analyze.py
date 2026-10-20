@@ -85,7 +85,10 @@ def main():
         f = (H / 2) / math.tan(math.radians(v.get("fov", 75)) / 2)
         hrow = H / 2 + math.tan(math.radians(v.get("pitch", 0))) * f      # horizon row
         rows = np.arange(H)[:, None]
-        below = rows > hrow + 0.03 * H
+        # more than 5 degrees below the horizon: sky just under it is the world's far edge (seen through
+        # foliage or over low walls from the low parts of the city), not a hole near the camera
+        elev = math.radians(v.get("pitch", 0)) - np.arctan((rows - H / 2) / f)
+        below = elev < -math.radians(10.0 if v.get("z_eye", 1.7) > 5 else 5.0)   # (aerial: the valleys beyond)
         magenta = (k[:, :, 0] > 230) & (k[:, :, 1] < 40) & (k[:, :, 2] > 230)
         cyan = (k[:, :, 0] < 40) & (k[:, :, 1] > 230) & (k[:, :, 2] > 230)
         geom = ~(magenta | cyan)
