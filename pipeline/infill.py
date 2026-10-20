@@ -133,7 +133,12 @@ def infill(d, footprints, domain, keep_open):
             continue
         p = p.buffer(-0.02).simplify(0.25)                       # tidy; the priority pass resolves overlaps
         for q in _polys(p):                  # holes are mapped buildings, open areas or streets: cut, not filled
-            out += [s for s in split_holes(q) if s.area >= 20 and not s.buffer(-1.2).is_empty]
+            for s in split_holes(q):
+                # open the hairline slits split_holes cuts (a ring touching itself builds walls
+                # and parapets on top of each other), keep the parts that are still buildings
+                for t in _polys(s.buffer(-0.08, join_style="mitre")):
+                    if t.area >= 20 and not t.buffer(-1.2).is_empty:
+                        out.append(Polygon(t.exterior))
     return out
 
 

@@ -11,7 +11,7 @@
 //    local ground, read from a height texture raycast from the collision BVH at load
 import * as THREE from 'three';
 
-export const STONE = new Set(['ashlar', 'rubble', 'fort', 'dressed', 'paving', 'setts', 'herodian']);
+export const STONE = new Set(['ashlar', 'rubble', 'fort', 'dressed', 'paving', 'setts']);
 const CUTOUT = new Set(['cut', 'signs']);
 const DECAL = new Set(['decal']);
 

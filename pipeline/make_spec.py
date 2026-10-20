@@ -420,7 +420,7 @@ def write_sectors(spec):
         m = v["pts"][len(v["pts"]) // 2]
         per[sector_or_nearest(m[0], m[1])]["vaults"].append(v)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
-                                  "walls_generic", "spawn", "sources")}
+                                  "walls_generic", "retaining", "spawn", "sources")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": spec["steps"], "cables": [],
                  "beams": []})
     write_json(out_dir / "base.json", base)
@@ -446,6 +446,7 @@ def write_sectors(spec):
 
 # OSM ways tagged city_wall that are not a crenellated wall: the Haram enclosure boundary on the west
 # and north sides (lined with porticoes and madrasas) and the Little Western Wall (landmarks_haram)
+WALL_LANDMARKS = {"w817206833"}      # the Western Wall (landmarks_haram builds its face)
 NOT_WALLS = {26554724, 291970363}
 HARAM_WALL_H = 7.0     # the Haram's east and south walls: merlons ~7 m above the esplanade (Golden Gate photos)
 
@@ -457,7 +458,10 @@ def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0)
     lines = unary_union([LineString(w["pts"]) for w in d["ways"]
                          if "multipolygon" not in w and w["tags"].get("barrier") == "city_wall"
                          and w["id"] not in NOT_WALLS])
-    custom = unary_union([LineString(w["pts"]).buffer(w["thick"] / 2 + 2.0) for w in CITY_WALLS]
+    # wall faces built by landmark modules (the Western Wall): the generic circuit along them would sit
+    # on the same plane and flicker
+    own = [Polygon(b["outer"][0]).buffer(2.0) for b in d["buildings"] if b["id"] in WALL_LANDMARKS and b.get("outer")]
+    custom = unary_union(own + [LineString(w["pts"]).buffer(w["thick"] / 2 + 2.0) for w in CITY_WALLS]
                          + [gate_poly.buffer(3.0), cit_outer.buffer(3.0)])
     rest = lines.difference(custom)
     rest = linemerge(rest) if rest.geom_type == "MultiLineString" else rest
@@ -598,6 +602,16 @@ def street_z_v(xs, ys):
             z = np.where(shapely.contains_xy(poly, xs, ys), zf, z)
         return z
     return np.array([street_z0(x, y) for x, y in zip(xs, ys)])
+
+
+def terrain_z_v(xs, ys):
+    """The continuous terrain without any flat (for ground outside the level areas: a vertex on a
+    flat's edge must not snap up to the flat)."""
+    xs, ys = np.asarray(xs, float), np.asarray(ys, float)
+    if _terrain is None:
+        return street_z_v(xs, ys)
+    d_, zg_, _, _ = _terrain._runtime()
+    return np.asarray(_terrain.bilinear(zg_, (xs - d_["x0"]) / d_["step"], (ys - d_["y0"]) / d_["step"]), float)
 
 
 def cell_size(x, y):
@@ -933,6 +947,20 @@ def main():
               "ez": [round(street_z(*c), 3) for c in poly_json(r_["poly"])["ext"]]}     # street at each corner
              for r_ in st_recs]
     steps_union = unary_union([r_["poly"].buffer(0) for r_ in st_recs] or [Polygon()]).buffer(0.001)
+    # a tread side rises to the street only where it borders ground; against another tread (the next
+    # step, a crossing run) it stays at the tread's own level, or its wall would cut through that stair
+    prepare(steps_union)
+    for st in steps:
+        ext = st["poly"]["ext"]
+        eo = []
+        for i in range(len(ext)):
+            a_, b_ = ext[i], ext[(i + 1) % len(ext)]
+            L_ = math.dist(a_, b_) or 1.0
+            nx_, ny_ = (b_[1] - a_[1]) / L_, -(b_[0] - a_[0]) / L_          # outward for a CCW ring
+            m_ = ((a_[0] + b_[0]) / 2 + nx_ * 0.12, (a_[1] + b_[1]) / 2 + ny_ * 0.12)
+            m2 = ((a_[0] + b_[0]) / 2 - nx_ * 0.12, (a_[1] + b_[1]) / 2 - ny_ * 0.12)
+            eo.append(0 if (steps_union.contains(Point(m_)) and steps_union.contains(Point(m2))) else 1)
+        st["eo"] = eo
 
     sunken = unary_union([sk["poly"] for sk in SUNKEN])
     street = ctx.difference(bld_union).difference(cit_outer).difference(steps_union) \
@@ -951,6 +979,49 @@ def main():
     ] + [
         ("paving", sk["poly"].difference(bld_union), lambda x, y, dz=sk["dz"]: street_z_v(x, y) + dz) for sk in SUNKEN
     ]
+    # level areas (the Haram esplanade, the Western Wall plaza and prayer area, the Sepulchre parvis)
+    # are tessellated on their own at their exact level: a triangle straddling a flat's edge would
+    # slope from the flat down to the terrain beside it (up to 11 m in 4 m: paved pyramids). Where the
+    # flat and the terrain beside it differ, a retaining wall runs along the edge instead.
+    all_flats = ([(fp_, float(fz_)) for fp_, fz_ in _terrain._runtime()[2]] if _terrain else []) + list(_FLATS)
+    split_regions = []
+    for mat, reg, zf in regions[:3]:
+        for fp_, fz_ in all_flats:
+            inside = reg.intersection(fp_)
+            if not inside.is_empty:
+                k_ = KERB if mat == "setts" else 0.0
+                split_regions.append((mat, inside, lambda x, y, fz_=fz_, k_=k_: np.full(len(x), fz_ - k_)))
+                reg = reg.difference(fp_)
+        k_ = KERB if mat == "setts" else 0.0
+        split_regions.append((mat, reg, lambda x, y, k_=k_: terrain_z_v(x, y) - k_))
+    regions = split_regions + regions[3:]
+    retaining = []
+    open_ground = street.buffer(0.05)
+    for fp_, fz_ in all_flats:
+        edge = fp_.exterior.intersection(open_ground)
+        for ln_ in getattr(edge, "geoms", [edge]):
+            if ln_.geom_type != "LineString" or ln_.length < 0.3:
+                continue
+            n_ = max(1, int(math.ceil(ln_.length / 2.0)))
+            pts_ = [ln_.interpolate(ln_.length * k / n_).coords[0] for k in range(n_ + 1)]
+            zo = terrain_z_v([p_[0] for p_ in pts_], [p_[1] for p_ in pts_])     # on the edge: the terrain side
+            prepare(street)
+            for k in range(n_):
+                # only where open ground lies on BOTH sides (not along a wall or building face,
+                # e.g. the prayer area against the Western Wall)
+                (ax_, ay_), (bx_, by_) = pts_[k], pts_[k + 1]
+                L_ = math.hypot(bx_ - ax_, by_ - ay_) or 1.0
+                mx_, my_ = (ax_ + bx_) / 2, (ay_ + by_) / 2
+                nx_, ny_ = (by_ - ay_) / L_ * 0.6, -(bx_ - ax_) / L_ * 0.6
+                if not (street.contains(Point(mx_ + nx_, my_ + ny_)) and street.contains(Point(mx_ - nx_, my_ - ny_))):
+                    continue
+                lo_a, lo_b = min(zo[k], fz_), min(zo[k + 1], fz_)
+                hi_a, hi_b = max(zo[k], fz_), max(zo[k + 1], fz_)
+                if max(hi_a - lo_a, hi_b - lo_b) < 0.15:
+                    continue
+                retaining.append({"a": [round(v, 3) for v in pts_[k]], "b": [round(v, 3) for v in pts_[k + 1]],
+                                  "lo": [round(lo_a - 0.3, 3), round(lo_b - 0.3, 3)], "hi": [round(hi_a, 3), round(hi_b, 3)]})
+    print("retaining walls along level areas: %d segments, %.0f m" % (len(retaining), sum(math.dist(r_["a"], r_["b"]) for r_ in retaining)))
     ground = []
     for mat, reg, zf in regions:
         tri = tess_regions(reg, zf)
@@ -1272,6 +1343,7 @@ def main():
     spec = {
         "poc_box": POC, "context_box": CONTEXT,
         "walls_generic": walls_generic,
+        "retaining": retaining,
         "vaults": vaults,
         "buildings": out_b,
         "gatehouse": GATEHOUSE, "city_walls": CITY_WALLS,

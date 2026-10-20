@@ -285,7 +285,8 @@ def build_ground(mbs, spec):
         ez = s.get("ez") or [s["top"]] * len(ext)
         for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
             a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way
-            za, zb = max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])
+            eo = s.get("eo") or [1] * len(ext)
+            za, zb = (max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])) if eo[i] else (s["top"], s["top"])
             q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], zb), (a[0], a[1], za)]
             mbs["ground"].poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
 
@@ -394,9 +395,28 @@ def build_steps(mb, steps):
         ez = s.get("ez") or [s["top"]] * len(ext)
         for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
             a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way
-            za, zb = max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])
+            eo = s.get("eo") or [1] * len(ext)
+            za, zb = (max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])) if eo[i] else (s["top"], s["top"])
             q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], zb), (a[0], a[1], za)]
             mb.poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
+
+
+def build_retaining(mb, walls, t=0.3):
+    """Retaining walls along the edges of level areas (spec "retaining"): a 0.3 m stone slab from
+    below the lower side up to the higher one, with a coping face on top."""
+    for w in walls:
+        a, b = Vector((*w["a"], 0)), Vector((*w["b"], 0))
+        d = b - a
+        if d.length < 1e-3:
+            continue
+        n = Vector((d.y, -d.x, 0)).normalized() * (t / 2)
+        lo, hi = w["lo"], w["hi"]
+        for sgn in (1, -1):
+            o = n * sgn
+            q = [a + o + UP * lo[0], b + o + UP * lo[1], b + o + UP * hi[1], a + o + UP * hi[0]]
+            mb.poly(q, "ashlar", o, col=(0.86, 0.83, 0.77))
+        mb.poly([a + n + UP * hi[0], b + n + UP * hi[1], b - n + UP * hi[1], a - n + UP * hi[0]], "dressed", UP,
+                col=(0.9, 0.88, 0.83))
 
 
 def wall_runs(walls, tol=0.15):
@@ -734,6 +754,10 @@ def main():
         gmbs = {"ground": mk.MeshBuilder(tiles)}
         build_ground(gmbs, dict(spec, steps=[]))
         gmbs["ground"].to_object("ground", mats, col("ground"))["ground"] = 1
+        rw = mk.MeshBuilder(tiles)
+        build_retaining(rw, spec.get("retaining", []))
+        if not rw.empty():
+            rw.to_object("retaining_walls", mats, col("ground"))
     st = mk.MeshBuilder(tiles)
     build_steps(st, spec.get("steps", []))
     if not st.empty():
