@@ -212,7 +212,7 @@ def _blade(mb, P, t, n, fx, signs):
         S = signs["size"][0]
         rect = (x / S, 1 - (y + hh) / S, (x + ww) / S, 1 - y / S)
     for side in (1, -1):
-        base = c + t * (0.026 * side) - n * (w / 2)
+        base = c + t * (0.04 * side) - n * (w / 2)            # clear of the 5 cm frame box (was 1 mm: flicker)
         if rect:
             mk.card(mb, base + n * (w / 2) + UP * z0 - UP * z0 + Vector((0, 0, z0)), n * side, UP, w, h, "signs",
                     rect if side > 0 else (rect[2], rect[1], rect[0], rect[3]))
