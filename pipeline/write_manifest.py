@@ -32,11 +32,13 @@ def tris(path):
 def main():
     idx = json.loads((ROOT / "data/spec/index.json").read_text())
     always = [p for p in ("base/ground.glb", "base/walls.glb", "base/context.glb") if (PUB / p).exists()]
-    out = {"version": 1, "materials": "base/materials.glb", "always": always, "sectors": []}
+    stamp = max(int((PUB / p).stat().st_mtime) for p in always + ["base/materials.glb"] if (PUB / p).exists())
+    out = {"version": 1, "build": stamp, "materials": "base/materials.glb", "always": always, "sectors": []}
     for s in idx["sectors"]:
         hi, lo = "sectors/%s.glb" % s["id"], "sectors/%s_lo.glb" % s["id"]
         if not (PUB / hi).exists():
             continue
+        out["build"] = max(out["build"], int((PUB / hi).stat().st_mtime))
         rec = {"id": s["id"], "name": s["name"], "bounds": s["bounds"], "hi": hi, "tris_hi": tris(PUB / hi)}
         if (PUB / lo).exists():
             rec.update(lo=lo, tris_lo=tris(PUB / lo))

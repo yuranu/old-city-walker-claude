@@ -205,7 +205,10 @@ export class Streamer {
     if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
     const j = await r.json();                 // the dev server answers index.html for missing files
     if (!j || !Array.isArray(j.sectors)) throw new Error(`${url}: not a sector manifest`);
-    const abs = (p) => (p ? new URL(p, base).href : null);
+    // every build stamps the manifest; the stamp goes on each GLB URL so a rebuilt sector is never
+    // served from the browser cache next to a fresh base (mismatched ground and buildings)
+    const stamp = j.build ? `?b=${j.build}` : '';
+    const abs = (p) => (p ? new URL(p, base).href + stamp : null);
     const always = (j.always || []).map(abs);
     let ground = j.ground ? [].concat(j.ground).map(abs) : always.filter((u) => /ground/i.test(u.split('/').pop()));
     const st = j.stream || {};

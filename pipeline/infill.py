@@ -68,6 +68,15 @@ def split_holes(p, min_hole=1.0):
             for s in split_holes(q, min_hole)]
 
 
+def street_level(t):
+    """Is this highway at street level? OSM puts many real Old City streets at layer=-1 (David St,
+    the Via Dolorosa, Al-Wad: they pass under arches and rooms); only deeper layers and named
+    tunnels (drainage channels, the Western Wall tunnels) are really underground."""
+    lay = int(t.get("layer", "0") or 0)
+    name = (t.get("name:en") or t.get("name") or "").lower()
+    return lay >= -1 and "tunnel" not in name and "drainage" not in name
+
+
 def street_halfwidth(t, ln, tree, footprints):
     """Half-width of a street: OSM width, else measured from the mapped street walls."""
     try:
@@ -93,7 +102,7 @@ def infill(d, footprints, domain, keep_open):
         pts = w.get("pts") or []
         if not t.get("highway") or len(pts) < 2:
             continue
-        if int(t.get("layer", "0") or 0) < 0 or t.get("tunnel") == "yes" and t.get("layer", "0") != "0":
+        if not street_level(t):
             continue
         ln = LineString(pts)
         if not domain.intersects(ln):

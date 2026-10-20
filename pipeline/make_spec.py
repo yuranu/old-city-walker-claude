@@ -181,7 +181,8 @@ def covered_ways(d):
             continue
         named = t.get("name:en") in COVERED_SOUQS or w["id"] in COVERED_IDS
         lay = int(t.get("layer", "0") or 0)
-        if named or (lay >= 0 and (t.get("tunnel") in ("yes", "building_passage") or t.get("covered") == "yes")):
+        under = t.get("tunnel") in ("yes", "building_passage") or t.get("covered") == "yes" or lay == -1
+        if named or (under and infill.street_level(t)):       # layer -1 streets pass under rooms: passages
             out.append((w, LineString(pts), "souq" if named else "passage"))
     return out
 
