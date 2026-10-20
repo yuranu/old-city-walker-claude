@@ -31,6 +31,7 @@ def args():
     p.add_argument("--top", type=int, default=40)
     p.add_argument("--json", default="")
     p.add_argument("--min-area", type=float, default=0.02)
+    p.add_argument("--bbox", default="", help="x0,y0,x1,y1: only triangles whose centre lies inside")
     return p.parse_args(argv)
 
 
@@ -42,6 +43,7 @@ def plane_basis(n):
 
 def main():
     a = args()
+    bb = [float(v) for v in a.bbox.split(",")] if a.bbox else None
     tris = []           # (obj, poly_index, material, [v0,v1,v2] world)
     boundary = []
     degenerate = []
@@ -61,6 +63,10 @@ def main():
                 degenerate.append({"obj": ob.name, "at": [round(c, 2) for c in (sum(p, Vector()) / 3)],
                                    "area": area})
                 continue
+            if bb:
+                cx, cy = (p[0].x + p[1].x + p[2].x) / 3, (p[0].y + p[1].y + p[2].y) / 3
+                if not (bb[0] <= cx <= bb[2] and bb[1] <= cy <= bb[3]):
+                    continue
             tris.append((ob.name, lt.polygon_index, mats[lt.material_index] if mats else "", p))
         bm = bmesh.new()
         bm.from_mesh(me)

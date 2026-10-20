@@ -133,6 +133,7 @@ export class Pipeline {
         sunDir: { value: this.sunDir },
         sunDisc: { value: new THREE.Color(LIGHT.sunColor).multiplyScalar(40) },
         skyScale: U.ocHaze,
+        qaKey: { value: 0 },     // QA: sky below the horizon drawn pure magenta (holes show as magenta)
       },
       vertexShader: /* glsl */`
         varying vec3 vDir;
@@ -146,6 +147,7 @@ export class Pipeline {
         uniform vec3 sunDir;
         uniform vec3 sunDisc;
         uniform vec4 skyScale;
+        uniform float qaKey;
         varying vec3 vDir;
         void main() {
           vec3 d = normalize( vDir );
@@ -155,6 +157,7 @@ export class Pipeline {
           gl_FragColor = vec4( c, 1.0 );
           #include <tonemapping_fragment>
           #include <colorspace_fragment>
+          if ( qaKey > 0.5 ) gl_FragColor = d.y < 0.0 ? vec4( 1.0, 0.0, 1.0, 1.0 ) : vec4( 0.0, 1.0, 1.0, 1.0 );
         }`,
       side: THREE.BackSide, depthWrite: false,
     }));

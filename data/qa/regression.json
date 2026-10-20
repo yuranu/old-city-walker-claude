@@ -1,0 +1,6 @@
+[
+ {"id": "user_ohel_yitzchak_steps", "x": 561.7, "y": 65.5, "z_eye": 6, "heading": 336, "pitch": -30, "fov": 75, "note": "user screenshot 1: crossing stair runs"},
+ {"id": "user_mughrabi_pyramids", "x": 645, "y": -70, "z_eye": 2.5, "heading": 330, "pitch": -12, "fov": 75, "note": "user screenshot 2: paved pyramids"},
+ {"id": "user_western_wall_flicker", "x": 615, "y": 5, "z_eye": 1.7, "z_ground": -41.58, "heading": 80, "pitch": 12, "fov": 80, "note": "user screenshot 3: z-fighting on the Western Wall"},
+ {"id": "user_mughrabi_retaining", "x": 650, "y": -75, "z_eye": 4, "heading": 320, "pitch": -25, "fov": 75, "note": "user screenshot 4: retaining slabs across the plaza, sky hole"}
+]

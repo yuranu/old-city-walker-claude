@@ -289,7 +289,7 @@ async function setCam(c) {
   }
   await useCam(pose);
   renderOnce();
-  return { name: typeof c === 'string' ? c : undefined, ...pose };
+  return { name: typeof c === 'string' ? c : undefined, ...pose, ground: camPose ? camPose._eye - +(pose.z_eye ?? 1.6) : null };
 }
 
 // ------------------------------------------------------------------ input
@@ -507,6 +507,9 @@ window.game = {
   cams: () => evalCams,
   reloadCams: async () => (evalCams = await loadCams()),
   clean: (on = true) => { setClean(on); renderOnce(); },
+  // QA capture: key the sky (magenta below the horizon, cyan above) so holes are machine-detectable
+  qaKey: (on = true) => { pipe.dome.material.uniforms.qaKey.value = on ? 1 : 0; renderOnce(); },
+  qaAO: (on = true) => { pipe.useAO = on; renderOnce(); },
   ready: false,
 };
 
