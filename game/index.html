@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Old City Walker — Jaffa Gate PoC</title>
+  <title>Old City Walker — Jerusalem</title>
   <style>
     html, body { margin: 0; height: 100%; overflow: hidden; background: #b9cde3; font: 14px/1.4 system-ui, sans-serif; color: #fff; }
     canvas#view { display: block; width: 100%; height: 100%; }
@@ -25,6 +25,8 @@
     #loading { position: absolute; bottom: 14px; left: 14px; opacity: 0.85; }
     #crosshair { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 2px; background: rgba(255,255,255,0.7); }
     #perf { left: 12px; bottom: 12px; display: none; white-space: pre; font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
+    #bigmap { position: absolute; inset: 4vh 4vw; display: none; z-index: 20; padding: 6px; }
+    #bigmap canvas { width: 100%; height: 100%; display: block; border-radius: 6px; cursor: crosshair; }
     body.clean #info, body.clean #map, body.clean #photo, body.clean #start, body.clean #loading, body.clean #crosshair, body.clean #perf { display: none !important; }
   </style>
 </head>
@@ -34,14 +36,15 @@
   <div id="info" class="panel">
     <div class="place" id="place">Jaffa Gate</div>
     <div class="coords" id="coords"></div>
-    <div style="margin-top:6px;font-size:12px;opacity:.8"><kbd>P</kbd> nearest real photo · <kbd>G</kbd> open this spot in Google Maps</div>
+    <div style="margin-top:6px;font-size:12px;opacity:.8"><kbd>M</kbd> map · <kbd>+</kbd>/<kbd>-</kbd> zoom minimap · <kbd>P</kbd> nearest real photo · <kbd>G</kbd> Google Maps</div>
   </div>
   <div id="photo" class="panel"><img id="photoImg" alt="" /><div class="meta" id="photoMeta"></div></div>
-  <div id="map" class="panel"><canvas id="mapCanvas" width="230" height="230"></canvas></div>
+  <div id="map" class="panel"><canvas id="mapCanvas" width="240" height="240"></canvas></div>
+  <div id="bigmap" class="panel"><canvas id="bigCanvas"></canvas></div>
   <div id="start" class="panel">
     <div class="box">
-      <h1>Jaffa Gate, Jerusalem Old City</h1>
-      <div>Proof of concept: OpenStreetMap footprints → Blender → walkable scene, geo-registered.</div>
+      <h1>Jerusalem Old City</h1>
+      <div>The walled city from open data: OpenStreetMap footprints, an 1865 survey of street levels and Commons photos → Blender → walkable, geo-registered.</div>
       <p><b>Click to walk.</b> <kbd>WASD</kbd> move · mouse look · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump<br />
         <kbd>P</kbd> nearest geotagged photo (Wikimedia Commons) · <kbd>N</kbd> next photo · <kbd>G</kbd> Google Maps here · <kbd>O</kbd> ambient occlusion · <kbd>F3</kbd> performance · <kbd>Esc</kbd> release mouse</p>
       <div id="gpu" class="gpu"></div>

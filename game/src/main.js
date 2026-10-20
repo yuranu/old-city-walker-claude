@@ -188,6 +188,7 @@ const player = new Player(camera, collider);
 player.spawn = [plan.spawn.p[0], plan.spawn.p[1], plan.spawn.heading];
 player.onFall = () => { goTo(...player.spawn); };
 hud.init(plan, photos);
+hud.onTeleport = (x, y) => window.game.teleport(x, y, player.heading(), 0);     // click on the full map
 
 // start position: ?x=&y=&h=&p= (local metres / compass heading / pitch) or the spec spawn
 if (q.has('x')) player.teleport(+q.get('x'), +q.get('y'), +(q.get('h') || 0), +(q.get('p') || 0));
@@ -306,6 +307,10 @@ document.addEventListener('mousemove', (e) => {
 addEventListener('keydown', (e) => {
   player.keys.add(e.code);
   if (e.code === 'KeyP') hud.togglePhoto(player);
+  if (e.code === 'KeyM') hud.toggleBig(player);
+  if (e.code === 'Escape' && hud.big.open) hud.toggleBig(player);
+  if (e.code === 'Equal' || e.code === 'NumpadAdd') hud.zoomMap(1);
+  if (e.code === 'Minus' || e.code === 'NumpadSubtract') hud.zoomMap(-1);
   if (e.code === 'KeyN') hud.nextPhoto(player);
   if (e.code === 'KeyG') hud.openGoogleMaps(player);
   if (e.code === 'KeyO') pipe.useAO = !pipe.useAO;

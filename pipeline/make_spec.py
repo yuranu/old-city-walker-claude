@@ -410,9 +410,7 @@ def write_sectors(spec):
                 (base_props if key == "props" else base_dec).append(it)
     def sector_or_nearest(x, y):
         return sector_of(x, y) or min(secs, key=lambda s_: s_[1].distance(Point(x, y)))[0]
-    for st in spec["steps"]:
-        e = st["poly"]["ext"][0]
-        per[sector_or_nearest(*e)]["steps"].append(st)
+    # steps live in the base with the ground they are cut into, so the two always load together
     for key in ("cables", "beams"):
         for it in spec[key]:
             m = ((it["a"][0] + it["b"][0]) / 2, (it["a"][1] + it["b"][1]) / 2)
@@ -422,7 +420,7 @@ def write_sectors(spec):
         per[sector_or_nearest(m[0], m[1])]["vaults"].append(v)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
                                   "walls_generic", "spawn", "sources")}
-    base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": [], "cables": [],
+    base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": spec["steps"], "cables": [],
                  "beams": []})
     write_json(out_dir / "base.json", base)
     index = []
@@ -440,7 +438,7 @@ def write_sectors(spec):
     legacy = dict(base)
     legacy["buildings"] = base_b + per["s00_jaffa"]["buildings"]
     for k in ("props", "steps", "cables", "beams", "ground_decals"):
-        legacy[k] = base[k] + per["s00_jaffa"][k] if k in ("props", "ground_decals") else per["s00_jaffa"][k]
+        legacy[k] = base[k] + per["s00_jaffa"][k] if k in ("props", "ground_decals", "steps") else per["s00_jaffa"][k]
     write_json(LEGACY_SPEC, legacy)
     print("sectors:", ", ".join("%s %d" % (i["id"], i["buildings"]) for i in index), "| base context", len(base_b))
 
@@ -930,7 +928,8 @@ def main():
                            lambda w, ln: infill.street_halfwidth(w["tags"], ln, fp_tree, fp_list),
                            skip=david.buffer(DAVID["width"] / 2 + 1.0).union(box(*CONTEXT).difference(CITY.buffer(80.0))),
                            extra=[(david, DAVID["width"] / 2, DAVID["start_s"], david.length)])
-    steps = [{"poly": poly_json(r_["poly"]), "top": r_["top"], "bottom": r_["bottom"], "dir": r_["dir"]}
+    steps = [{"poly": poly_json(r_["poly"]), "top": r_["top"], "bottom": r_["bottom"], "dir": r_["dir"],
+              "ez": [round(street_z(*c), 3) for c in poly_json(r_["poly"])["ext"]]}     # street at each corner
              for r_ in st_recs]
     steps_union = unary_union([r_["poly"].buffer(0) for r_ in st_recs] or [Polygon()]).buffer(0.001)
 

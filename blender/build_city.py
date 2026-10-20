@@ -282,9 +282,11 @@ def build_ground(mbs, spec):
         tile = 4.0
         mbs["ground"].tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,
                            uvfn=lambda p, dx_=dx_, dy_=dy_: ((p[0] * -dy_ + p[1] * dx_) / tile, (p[0] * dx_ + p[1] * dy_) / tile))
-        for i in range(len(ext)):
-            a, b = ext[i], ext[(i + 1) % len(ext)]
-            q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], s["top"]), (a[0], a[1], s["top"])]
+        ez = s.get("ez") or [s["top"]] * len(ext)
+        for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
+            a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way
+            za, zb = max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])
+            q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], zb), (a[0], a[1], za)]
             mbs["ground"].poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
 
 
@@ -389,9 +391,11 @@ def build_steps(mb, steps):
         tile = 4.0
         mb.tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,
                 uvfn=lambda p, dx_=dx_, dy_=dy_: ((p[0] * -dy_ + p[1] * dx_) / tile, (p[0] * dx_ + p[1] * dy_) / tile))
-        for i in range(len(ext)):
-            a, b = ext[i], ext[(i + 1) % len(ext)]
-            q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], s["top"]), (a[0], a[1], s["top"])]
+        ez = s.get("ez") or [s["top"]] * len(ext)
+        for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
+            a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way
+            za, zb = max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])
+            q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], zb), (a[0], a[1], za)]
             mb.poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
 
 
@@ -733,7 +737,7 @@ def main():
     st = mk.MeshBuilder(tiles)
     build_steps(st, spec.get("steps", []))
     if not st.empty():
-        st.to_object("steps", mats, hi)
+        st.to_object("steps", mats, col("ground") if part == "base" else hi)
     gd = mk.MeshBuilder(tiles)
     for dcl in spec.get("ground_decals", []):
         cell = gen["decal"]["cells"].get(dcl["type"])

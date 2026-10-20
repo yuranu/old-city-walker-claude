@@ -25,6 +25,7 @@ from shapely.geometry import LineString, Polygon, box
 from shapely.ops import unary_union
 
 GRADE = 0.07
+GRADE_RULE = False         # step every lane steeper than GRADE (off: only OSM steps ways and given runs)
 PED = {"footway", "pedestrian", "steps", "path", "living_street"}
 TURN = 0.3          # a reversal of the level profile by more than this (m) ends a flight
 CHORD_TOL = 0.25    # equal treads when the profile stays this close (m) to the straight line
@@ -155,6 +156,8 @@ def build(ways, zfun, open_street, halfwidth, skip=None, extra=()):
             continue
         if not open_street.intersects(ln):
             continue
+        if t["highway"] != "steps" and not GRADE_RULE:
+            continue                 # steep lanes stay ramps: inventing steps put stairs where there are none
         for s0, s1 in steep_intervals(ln, zfun, always=t["highway"] == "steps"):
             runs.append((ln, halfwidth(w, ln), s0, s1))
     placed, polys = [], []
