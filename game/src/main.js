@@ -82,7 +82,7 @@ if (q.get('sproxy') === '0') streamOpts.shadowProxy = false;
 const library = new Library(pipe, Math.min(8, renderer.capabilities.getMaxAnisotropy()));
 if (q.get('twins') === '0') library.twins = false;
 const collider = new Collider();
-const streamer = new Streamer({ pipe, library, collider, opts: streamOpts });
+let streamer = new Streamer({ pipe, library, collider, opts: streamOpts });   // replaced if the base fails to load
 
 async function exists(url) {
   try {
@@ -115,9 +115,21 @@ async function openCity() {
   }
 }
 
+// streamer.start with the progress on the loading screen
+async function startCity(at) {
+  const prog = setInterval(() => {
+    loading.textContent = `Loading city… ${Math.round(100 * streamer.startProgress())}%`;
+  }, 100);
+  try {
+    return await streamer.start(at.x, at.y);
+  } finally {
+    clearInterval(prog);
+  }
+}
+
 async function load() {
   const t0 = performance.now();
-  const [manifest, plan, photos, cams] = await Promise.all([
+  let [manifest, plan, photos, cams] = await Promise.all([
     openCity(),
     fetch('/plan.json').then((r) => r.json()),
     fetch('/photos.json').then((r) => r.json()),
@@ -127,14 +139,20 @@ async function load() {
   let start = { x: plan.spawn.p[0], y: plan.spawn.p[1] };
   if (q.has('x')) start = { x: +q.get('x'), y: +q.get('y') };
   else if (q.has('cam') && cams[q.get('cam')]) start = { x: +cams[q.get('cam')].x, y: +cams[q.get('cam')].y };
-  const prog = setInterval(() => {
-    loading.textContent = `Loading city… ${Math.round(100 * streamer.startProgress())}%`;
-  }, 100);
+  const failed = (e) => { loading.textContent = `Could not load the city: ${e.message}`; return e; };
   let timing;
   try {
-    timing = await streamer.start(start.x, start.y);
-  } finally {
-    clearInterval(prog);
+    timing = await startCity(start);
+  } catch (e) {
+    // the always-resident base did not load (the streamer retried it): nothing to walk on. Unless
+    // this manifest was asked for, the single city.glb is the playable city
+    if (manifest.legacy || q.get('sectors')) throw failed(e);
+    console.warn(`${manifest.url}: ${e.message}, falling back to city.glb`);
+    streamer.destroy();
+    library.clear();
+    streamer = new Streamer({ pipe, library, collider, opts: streamOpts });
+    manifest = await streamer.open(null);
+    timing = await startCity(start).catch((e2) => { throw failed(e2); });
   }
   loading.textContent = 'Preparing city…';
   const t1 = performance.now();
@@ -177,19 +195,37 @@ else player.teleport(plan.spawn.p[0], plan.spawn.p[1], plan.spawn.heading);
 
 // teleport, holding the player in place until the sectors around the target are in full
 // detail (the massing LOD collides meanwhile, so nothing can be walked through); the latest
-// teleport wins
-let tpToken = 0;
+// teleport wins, and an earlier one still waiting lets go of its sectors
+let tpToken = 0, tpHold = null;
 async function goTo(x, y, heading = null, pitch = 0, r = streamer.opts.rHold) {
   const tok = ++tpToken;
+  tpHold?.abort();
+  const hold = (tpHold = new AbortController());
   player.teleport(x, y, heading, pitch);
   streamer.update(x, y);
-  if (!streamer.pending(x, y, r).length) { player.held = false; return true; }
-  player.held = true;
-  await streamer.ensure(x, y, r);
-  if (tok !== tpToken) return false;
-  player.teleport(x, y, player.heading(), THREE.MathUtils.radToDeg(player.pitch));   // keeps any look-around
+  // nothing to stand on once the sectors within r are in, or a spot outside every sector's plan
+  // that a sector not loaded yet may still reach: what is there (or lower down, under a wall
+  // walk) may be full detail of a farther sector (stairs and terraces outside its bounds), so
+  // wait for everything the streaming loads around here too
+  for (const rr of [r, Math.max(r, streamer.opts.rIn)]) {
+    if (streamer.pending(x, y, rr).length) {
+      player.held = true;
+      await streamer.ensure(x, y, rr, hold.signal);
+      if (tok !== tpToken) return false;
+      player.teleport(x, y, player.heading(), THREE.MathUtils.radToDeg(player.pitch));   // keeps any look-around
+    }
+    if (standable(x, y) && !streamer.unsure(x, y).length) break;
+  }
+  tpHold = null;
   player.held = false;
   return true;
+}
+
+// an upward-facing surface under (x, y) in the resident collision (as Player.teleport looks)
+function standable(x, y) {
+  const top = Math.max(80, collider.bounds().max.y + 1);
+  const ray = new THREE.Ray(new THREE.Vector3(x, top, -y), new THREE.Vector3(0, -1, 0));
+  return collider.raycast(ray, THREE.DoubleSide).some((h) => h.face && h.face.normal.y >= 0.5);
 }
 
 // ------------------------------------------------------------------ evaluation cameras

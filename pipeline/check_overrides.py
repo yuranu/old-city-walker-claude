@@ -4,7 +4,8 @@
 
 Checks: building id exists and is in the hero/mid tier, edge exists (resolved from the "at" anchor
 when present, as make_spec does) and is exposed, bay centres and opening widths fit the edge,
-floors fit under the roof, sign cells exist, ground list length matches the bays. Reads every
+the floors listed are the floors built (facades.storeys_for on the facade's own ground), sign
+cells exist, extra signs clear the souq canopy, ground list length matches the bays. Reads every
 sector spec (data/spec, or $SPEC_DIR); run make_spec.py first.
 """
 import json
@@ -12,6 +13,8 @@ import math
 import os
 import sys
 from pathlib import Path
+
+import facades
 
 ROOT = Path(__file__).resolve().parent.parent
 GROUND_KINDS = {"shop", "door", "window", "blind"}
@@ -27,7 +30,8 @@ def main():
             if b_["osm"] not in blds or b_["id"] == b_["osm"]:
                 blds[b_["osm"]] = b_
     sj = ROOT / "data/textures/gen/signs.json"
-    cells = set(json.loads(sj.read_text())["signs"]) if sj.exists() else set()
+    atlas = json.loads(sj.read_text())["signs"] if sj.exists() else {}
+    cells = set(atlas)
     files = [Path(a) for a in sys.argv[1:]] or sorted((ROOT / "data/reference/overrides").glob("*.json"))
     errors = warnings = 0
     for fn in files:
@@ -48,8 +52,8 @@ def main():
             warnings += 1
         r = b["ring"]
         h = d.get("settings", {}).get("height", b["top"] - b["ground"])
+        top = b["top"] if abs(b["top"] - b["ground"] - h) < 0.005 else b["ground"] + h    # spec older than the file
         for e, ov in d.get("facades", {}).items():
-            i = int(e)
             tag = "%s edge %s" % (fn.name, e)
             if "at" in ov:                                 # resolve the anchor like hero.facades_for
                 best, bd_ = None, 3.0
@@ -63,6 +67,13 @@ def main():
                     errors += 1
                     continue
                 i = best
+            else:
+                try:
+                    i = int(e)
+                except ValueError:
+                    print("%s: no \"at\" anchor and the key is not an edge index; facade is skipped" % tag)
+                    errors += 1
+                    continue
             if not 0 <= i < len(r):
                 print("%s: edge out of range (ring has %d edges)" % (tag, len(r)))
                 errors += 1
@@ -91,15 +102,24 @@ def main():
                     if gg.get("sign") and gg["sign"] not in cells:
                         print("%s: ground[%d] sign %r not in atlas" % (tag, k, gg["sign"]))
                         errors += 1
-            gs = ov.get("ground_storey", 4.8 if ov.get("shops", b["style"]["shops"]) else b["style"]["storey"])
-            st = ov.get("storey", b["style"]["storey"])
+            # floors: counted exactly as facades.layout builds them, from this facade's own ground
+            # (lower than the building's on a sloping lot, so more floors fit)
+            gs, st = facades.storey_heights(b["style"], ov)
+            eg = b["edge_ground"][i]
+            built = len(facades.storeys_for({"top": top}, eg, gs, st))
             nfl = len(ov.get("floors", []))
-            if nfl:
-                fit = int(max(0, (h - 1.0 - gs - 2.6) // st) + 1)
-                if nfl > fit:
-                    print("%s: %d floors listed but only %d fit under %.1f m (ground %.1f + %.1f per floor)" %
-                          (tag, nfl, fit, h, gs, st))
-                    warnings += 1
+            auto = ov.get("auto", True)
+            if not ov.get("blank") and (nfl or not auto) and nfl != built:
+                if nfl > built:
+                    print("%s: %d floors listed but only %d fit under the roof (top %.1f, facade ground %.1f, "
+                          "ground storey %.1f + %.1f per floor); floors %d.. are not built" %
+                          (tag, nfl, built, top, eg, gs, st, built + 1))
+                else:
+                    print("%s: %d floors listed but %d are built (top %.1f, facade ground %.1f, ground storey "
+                          "%.1f + %.1f per floor); floors %d.. get %s windows" %
+                          (tag, nfl, built, top, eg, gs, st, nfl + 1,
+                           "random" if auto else "plain default"))
+                warnings += 1
             for key in ("extra_signs",):
                 for sg in ov.get(key, []):
                     if sg.get("cell") not in cells:
@@ -109,6 +129,20 @@ def main():
                         print("%s: sign %s spans %.1f..%.1f beyond edge length %.1f" %
                               (tag, sg.get("cell"), sg.get("u0", 0), sg.get("u1", 0), L))
                         errors += 1
+            # souq canopy (in the spec): its brackets reach the wall 0.75 m under the sheet, which meets
+            # the wall at z_wall. layout() lifts named ground signs above it; extra_signs stay as given
+            fac = next((f_ for f_ in b.get("facades", []) if f_["edge"] == i), None)
+            for cp in (fac or {}).get("canopies", []):
+                for sg in ov.get("extra_signs", []):
+                    rect = atlas.get(sg.get("cell"), {}).get("rect")
+                    if not rect or "z0" not in sg:
+                        continue
+                    z1 = sg["z0"] + min(1.1, (sg.get("u1", 0) - sg.get("u0", 0)) * rect[3] / rect[2])   # as built
+                    if sg["z0"] < cp["z_wall"] + 0.05 and z1 > cp["z_wall"] - 0.75:
+                        print("%s: extra sign %s (z %.2f..%.2f) runs into the souq canopy (sheet meets the wall at "
+                              "z %.2f, brackets from %.2f); put z0 above %.2f" %
+                              (tag, sg.get("cell"), sg["z0"], z1, cp["z_wall"], cp["z_wall"] - 0.75, cp["z_wall"] + 0.1))
+                        warnings += 1
             for fx in ov.get("extra_fixtures", []):
                 if fx.get("type") == "sign" and fx.get("cell") not in cells:
                     print("%s: fixture sign %r not in atlas" % (tag, fx.get("cell")))

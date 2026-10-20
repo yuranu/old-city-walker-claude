@@ -119,12 +119,11 @@ def roof_balustrade(mb, bd, wall_mat, col, gen):
     except Exception:  # noqa: BLE001
         pass
     rect = mk.atlas_rect(gen["cutout"]["grid"], gen["cutout"]["cells"]["balustrade"])
-    for i in range(len(ring)):
+    kept = [i for i in range(len(ring)) if math.dist(ring[i], ring[(i + 1) % len(ring)]) >= 0.3]
+    for ki, i in enumerate(kept):
         a, b = Vector(ring[i]), Vector(ring[(i + 1) % len(ring)])
         t = b - a
         L = t.length
-        if L < 0.3:
-            continue
         t.normalize()
         nin = Vector((-t.y, t.x))
         c = (a + b) / 2 + nin * 0.16
@@ -133,7 +132,9 @@ def roof_balustrade(mb, bd, wall_mat, col, gen):
             p0, p1 = a + t * (L * j / k), a + t * (L * (j + 1) / k)
             mk.card(mb, ((p0 + p1) / 2 + nin * 0.16).to_3d() + UP * plinth, t.to_3d(), UP, (p1 - p0).length,
                     top - 0.14 - plinth, "cut", rect, col=STONE, double=True)
-        dz = 0.006 * (i % 2)                               # > audit tolerance (4 mm)
+        # copings overlap at the corners: neighbours never share a height (> audit tolerance, 4 mm),
+        # the last and the first edge of an odd ring included
+        dz = 0.006 * (2 if (len(kept) % 2 and ki == len(kept) - 1) else ki % 2)
         mk.box(mb, c, t, nin, L, 0.34, top - 0.14 + dz, top + dz, "dressed", bottom=True, col=STONE)
         n_posts = max(1, round(L / 3.0))
         for j in range(n_posts + 1):
@@ -394,25 +395,46 @@ def build_steps(mb, steps):
             mb.poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
 
 
+def wall_runs(walls, tol=0.15):
+    """Chain walls_generic segments into runs through their end points, whatever their order in the
+    list (base.json starts mid-circuit and lists some stretches backwards): a segment continues the
+    one whose b lies within tol of its a (closest pair first, the next one in the list on a tie);
+    such short gaps close on the shared point. Returns [(run, closed)]."""
+    nw = len(walls)
+    cand = sorted((math.dist(w["b"], v["a"]), 0 if j == i + 1 else 1, i, j)
+                  for i, w in enumerate(walls) for j, v in enumerate(walls)
+                  if i != j and abs(w["b"][0] - v["a"][0]) < tol and math.dist(w["b"], v["a"]) < tol)
+    nxt, prv = [None] * nw, [None] * nw
+    for _, _, i, j in cand:
+        if nxt[i] is None and prv[j] is None:
+            nxt[i], prv[j] = j, i
+    runs, seen = [], [False] * nw
+    for s0 in [i for i in range(nw) if prv[i] is None] + list(range(nw)):    # open chains, then loops
+        if seen[s0]:
+            continue
+        run, i = [], s0
+        while i is not None and not seen[i]:
+            seen[i] = True
+            run.append(walls[i])
+            i = nxt[i]
+        runs.append((run, i == s0 and len(run) > 2))
+    return runs
+
+
 def build_walls_generic(mb, walls, merlons=(0.9, 0.75, 1.4, 0.6)):
-    """OSM wall circuit outside the hand-modelled Jaffa Gate stretch. Consecutive segments form
-    runs built as one mitred slab: faces meet on the mitre line (no overlapping boxes), a step in
-    the terrain-following top gets a riser, merlons on the outer (right-hand) edge keep clear of
+    """OSM wall circuit outside the hand-modelled Jaffa Gate stretch. Chained segments (wall_runs)
+    form runs built as one mitred slab: faces meet on the mitre line (no overlapping boxes), a step
+    in the terrain-following top gets a riser, merlons on the outer (right-hand) edge keep clear of
     the joints."""
-    runs = []
-    for w in walls:
-        if runs and math.dist(runs[-1][-1]["b"], w["a"]) < 0.02:
-            runs[-1].append(w)
-        else:
-            runs.append([w])
     Z = lambda z: Vector((0, 0, z))  # noqa: E731
     mw, gap, mh, md = merlons
-    for ri, run in enumerate(runs):
+    for ri, (run, closed) in enumerate(wall_runs(walls)):
         n = len(run)
         lift = 0.015 * (ri % 3)                 # runs meeting at T-junctions: tops never coplanar
         run = [dict(w, z1=w["z1"] + lift) for w in run]
         pts = [Vector((*run[0]["a"], 0))] + [Vector((*w["b"], 0)) for w in run]
-        closed = n > 2 and (pts[0] - pts[-1]).length < 0.02
+        if closed:
+            pts[-1] = pts[0].copy()
         tan = [(pts[i + 1] - pts[i]).normalized() for i in range(n)]
         nrm = [Vector((t.y, -t.x, 0)) for t in tan]               # right = outside
         R, L = [], []
@@ -426,7 +448,7 @@ def build_walls_generic(mb, walls, merlons=(0.9, 0.75, 1.4, 0.6)):
                 m = nrm[i0] + nrm[i1]
                 m = m.normalized() if m.length > 1e-6 else nrm[i0]
                 f = 1.0 / max(0.5, m.dot(nrm[i0]))
-            h = run[min(k, n - 1)]["thick"] / 2
+            h = run[k % n if closed else min(k, n - 1)]["thick"] / 2
             R.append(pts[k] + m * h * f)
             L.append(pts[k] - m * h * f)
         for i, w in enumerate(run):
@@ -462,18 +484,63 @@ def build_walls_generic(mb, walls, merlons=(0.9, 0.75, 1.4, 0.6)):
                 u += mw + gap
 
 
-def build_vaults(mb, vaults, segs=7):
+VAULT_WALL = 0.4        # outer side walls this far beyond the springing: inside the flanking buildings
+VAULT_DECK = 0.05       # deck this far below the spec top: under a flanking roof of the same height
+VAULT_SEGS = 7          # arch profile, segments per side (a coarser LOD profile must divide it)
+
+
+def _vault_prof(hw, segs):
+    """Vault cross-section: right springing -> crown -> left springing, pointed (two arcs meeting at
+    the crown, ~1.25 hw above the springing)."""
+    rise, prof = 1.25 * hw, []
+    for j in range(2 * segs + 1):
+        u = j / segs - 1.0                     # -1 (right) .. 0 (crown) .. 1 (left)
+        prof.append((-u * hw, rise * math.sin(math.acos(min(1.0, abs(u)))) ** 0.75))
+    return prof
+
+
+def build_vaults(mb, vaults, segs=VAULT_SEGS):
     """Covered streets: a pointed barrel vault along the way (springing `spring` above the street,
-    crown ~1.25 hw higher), the mass above it up to `top` (flat roof deck, spandrels at the ends),
-    and outer side walls inset 15 cm so they only show from the rooftops (facades hide them below)."""
+    crown ~1.25 hw higher), the mass above it up to `top` (flat roof deck, spandrels at the ends)
+    and outer side walls, which show only from the rooftops: they stand VAULT_WALL beyond the
+    springing, inside the flanking buildings (whose facades are at about hw), and a soffit at the
+    springing closes the vault mass below them. The deck sits VAULT_DECK under `top` (the median
+    height of the flanking roofs for passages), so a flanking roof of the same height covers the
+    strip of it that reaches over. The sector LOD passes segs=1 (a gable for the arch) on the same
+    axis (3 m steps): all that shows from outside (deck, side walls, soffits, end strips, and the
+    spandrels, which always take the full profile) is the hi geometry triangle for triangle, so the
+    game's per-cell swap (by triangle centroid) puts hi and lo of it in the same render cell and the
+    two never overlap or leave a gap."""
+    assert VAULT_SEGS % segs == 0
     Z = lambda z: Vector((0, 0, z))  # noqa: E731
-    for v in vaults:
+    # vaults that meet (junctions, crossings, split ways): decks at least 6 mm apart (> audit
+    # tolerance), and springings too where their soffits can touch (axis points within ow + ow)
+    decks, drops = [], []
+    for i, v in enumerate(vaults):
+        reach, pairs = [], []                       # decks of the vaults met; springing heights (v, w)
+        for j, w in enumerate(vaults[:i]):
+            r = v["hw"] + w["hw"] + 2 * VAULT_WALL
+            near = [(math.dist(p[:2], q[:2]), p, q) for p in v["pts"] for q in w["pts"]]
+            if any(d < r + 3.0 for d, _, _ in near):
+                reach.append(decks[j])
+            pairs += [(p[2] + v["spring"], q[2] + w["spring"] + drops[j]) for d, p, q in near if d < r]
+        z = v["top"] - VAULT_DECK
+        while any(abs(z - q) < 0.006 for q in reach):
+            z -= 0.006
+        dz = 0.0
+        while any(abs(a + dz - b) < 0.006 for a, b in pairs):
+            dz -= 0.006
+        decks.append(z)
+        drops.append(dz)
+    for v, top, drop in zip(vaults, decks, drops):
         pts = [Vector((p[0], p[1], 0)) for p in v["pts"]]
         zs = [p[2] for p in v["pts"]]
+        spring = v["spring"] + drop
         n = len(pts) - 1
         if n < 1:
             continue
-        hw, rise, top = v["hw"], 1.25 * v["hw"], v["top"]
+        hw = v["hw"]
+        ow = hw + VAULT_WALL
         tan = [(pts[i + 1] - pts[i]).normalized() for i in range(n)]
         side = []
         for k in range(n + 1):
@@ -485,39 +552,47 @@ def build_vaults(mb, vaults, segs=7):
                 m = (n1 + n2).normalized() if (n1 + n2).length > 1e-6 else n1
                 f = 1.0 / max(0.5, m.dot(n1))
             side.append(m * f)
-        # cross-section: right springing -> crown -> left springing, pointed (two arcs meeting at the crown)
-        prof = []
-        for j in range(2 * segs + 1):
-            u = j / segs - 1.0                     # -1 (right) .. 0 (crown) .. 1 (left)
-            x = -u * hw
-            z = rise * math.sin(math.acos(min(1.0, abs(u)))) ** 0.75
-            prof.append((x, z))
+        prof, full = _vault_prof(hw, segs), _vault_prof(hw, VAULT_SEGS)
         rings = []
         for k in range(n + 1):
-            base = zs[k] + v["spring"]
+            base = zs[k] + spring
             rings.append([pts[k] + side[k] * x + Z(base + z) for x, z in prof])
         for k in range(n):
-            mid_axis = (pts[k] + pts[k + 1]) / 2 + Z((zs[k] + zs[k + 1]) / 2 + v["spring"])
+            mid_axis = (pts[k] + pts[k + 1]) / 2 + Z((zs[k] + zs[k + 1]) / 2 + spring)
             for j in range(len(prof) - 1):
                 q = [rings[k][j], rings[k + 1][j], rings[k + 1][j + 1], rings[k][j + 1]]
                 c = (q[0] + q[2]) / 2
                 mb.poly(q, "rubble", mid_axis - c)                  # inner surface faces the axis
-            # roof deck over the corridor and outer side walls (inset), visible from above only
-            r0, r1 = pts[k] + side[k] * (hw - 0.15), pts[k + 1] + side[k + 1] * (hw - 0.15)
-            l0, l1 = pts[k] - side[k] * (hw - 0.15), pts[k + 1] - side[k + 1] * (hw - 0.15)
+            # roof deck and outer side walls (beyond the springing), visible from above only
+            r0, r1 = pts[k] + side[k] * ow, pts[k + 1] + side[k + 1] * ow
+            l0, l1 = pts[k] - side[k] * ow, pts[k + 1] - side[k + 1] * ow
             mb.poly([r0 + Z(top), r1 + Z(top), l1 + Z(top), l0 + Z(top)], "lime", UP, col=(0.78, 0.77, 0.75))
-            sp0, sp1 = zs[k] + v["spring"], zs[k + 1] + v["spring"]
+            sp0, sp1 = zs[k] + spring, zs[k + 1] + spring
             nr = Vector((tan[k].y, -tan[k].x, 0))
             mb.poly([r0 + Z(sp0), r1 + Z(sp1), r1 + Z(top), r0 + Z(top)], "rubble", nr)
             mb.poly([l1 + Z(sp1), l0 + Z(sp0), l0 + Z(top), l1 + Z(top)], "rubble", -nr)
-        # spandrels at both ends: vertical strips from the arch up to the deck
+            for sg, w0, w1 in ((1, r0, r1), (-1, l0, l1)):           # soffits: springing -> side wall
+                s0, s1 = pts[k] + side[k] * (sg * hw), pts[k + 1] + side[k + 1] * (sg * hw)
+                mb.poly([s0 + Z(sp0), s1 + Z(sp1), w1 + Z(sp1), w0 + Z(sp0)], "rubble", -UP)
+        # ends: spandrels from the full profile up to the deck (fillers in the end plane close the
+        # LOD's coarse arch up to it), and the mass out to the side walls (5 cm back: most passages
+        # end on the facade line of the building they pass through)
+        step = VAULT_SEGS // segs
         for k, sgn in ((0, -1), (n, 1)):
             t = tan[min(k, n - 1)] * sgn
-            for j in range(len(prof) - 1):
-                a, b = rings[k][j], rings[k][j + 1]
+            sp = zs[k] + spring
+            ring = [pts[k] + side[k] * x + Z(sp + z) for x, z in full]
+            for j in range(len(full) - 1):
+                a, b = ring[j], ring[j + 1]
                 q = [a, b, Vector((b.x, b.y, top)), Vector((a.x, a.y, top))]
                 if (q[3].z - q[0].z) > 0.01 or (q[2].z - q[1].z) > 0.01:
                     mb.poly(q, "rubble", t)
+            if step > 1:
+                for c in range(2 * segs):
+                    mb.poly(ring[c * step:(c + 1) * step + 1], "rubble", t)
+            for sg in (1, -1):
+                a, b = pts[k] + side[k] * (sg * hw) - t * 0.05, pts[k] + side[k] * (sg * ow) - t * 0.05
+                mb.poly([a + Z(sp), b + Z(sp), b + Z(top), a + Z(top)], "rubble", t)
 
 
 def build_lod(mb, bd, gen):
@@ -643,6 +718,8 @@ def main():
             else:
                 build_walls_generic(wg, spec.get("walls_generic", []))
         except Exception:  # noqa: BLE001
+            if landmarks.STRICT:                            # LANDMARKS_STRICT=1: the wall circuit too
+                raise
             import traceback
             print("WALLS WARNING: landmarks_gates.build_walls failed, generic walls instead")
             traceback.print_exc()
@@ -695,6 +772,7 @@ def main():
         for bd in detailed:
             if not landmarks.build(lo4, bd, gen, place, lod=True):
                 build_lod(lo, bd, gen)
+        build_vaults(lo, spec.get("vaults", []), segs=1)    # covered streets keep their roofs
         lo.to_object("lod_%s" % part, mats, col("lod"))
 
     for name, c in cols.items():

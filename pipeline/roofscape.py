@@ -108,6 +108,46 @@ def domes_for(osm, roofpoly, rooms, sid, rng, axis_deg=0.0):
     return out
 
 
+def dome_circles(bd):
+    """[(x, y, r)] of every dome Blender builds on a building's flat roof: the vernacular field
+    (bd["dome_list"]) and the style domes (style["domes"] = 1 or 2), which blender/build_city.py
+    add_domes() puts on the oriented box of the first roof piece. Rooftop clutter keeps clear."""
+    out = [(d["c"][0], d["c"][1], d["r"]) for d in bd.get("dome_list", [])]
+    count = bd["style"].get("domes")
+    if not count or not bd.get("roof"):
+        return out
+    ext = bd["roof"][0]["ext"]
+    best = None                                     # build_city.obb: smallest box along a ring edge
+    for i in range(len(ext)):
+        a, b = ext[i], ext[(i + 1) % len(ext)]
+        ln = math.dist(a, b)
+        if ln < 0.5:
+            continue
+        t = ((b[0] - a[0]) / ln, (b[1] - a[1]) / ln)
+        s = (-t[1], t[0])
+        us = [p[0] * t[0] + p[1] * t[1] for p in ext]
+        vs = [p[0] * s[0] + p[1] * s[1] for p in ext]
+        area = (max(us) - min(us)) * (max(vs) - min(vs))
+        if best is None or area < best[0]:
+            cu, cv = (max(us) + min(us)) / 2, (max(vs) + min(vs)) / 2
+            c = (t[0] * cu + s[0] * cv, t[1] * cu + s[1] * cv)
+            lu, lv = max(us) - min(us), max(vs) - min(vs)
+            best = (area, c, t, lu, lv) if lu >= lv else (area, c, s, lv, lu)
+    if best is None:
+        return out
+    _, c, t, ll, ls = best
+    rad = min(2.6, 0.24 * ls)
+    if rad < 0.9:
+        return out
+    spots = [c] if count == 1 else [(c[0] - t[0] * ll / 4, c[1] - t[1] * ll / 4), (c[0] + t[0] * ll / 4, c[1] + t[1] * ll / 4)]
+    roof = Polygon(ext)
+    for x, y in spots:
+        if all(roof.contains(Point(x + math.cos(k * math.pi / 4) * rad * 1.1, y + math.sin(k * math.pi / 4) * rad * 1.1))
+               for k in range(8)):
+            out.append((x, y, rad))
+    return out
+
+
 def main_axis(poly):
     """Bearing (degrees) of the longest edge of the minimum rotated rectangle."""
     mrr = poly.minimum_rotated_rectangle

@@ -23,6 +23,10 @@
 //    nodes may carry extras.draw_dist (m) from the build
 // When the page is hidden (rAF paused) the pump keeps going on a MessageChannel loop, so
 // teleports, loadAll() and the benches work in background tabs too.
+// A base or LOD chunk that fails to load is retried a few times (the build may be rewriting it);
+// start() fails if the base still is not in. A sector's bounds grow to the extent of what it
+// loaded (the build may give a sector geometry outside its plan bounds, e.g. stairs); until its
+// full detail has been in once, unsure() counts it as possibly reaching spots outside every plan.
 //
 // Manifest (sectors.json, written by pipeline/write_manifest.py; paths relative to it):
 //   { "version": 1, "materials": "base/materials.glb",          palette: every material by name
@@ -41,6 +45,7 @@ import { U } from './materials.js';
 export const STREAM_DEFAULTS = {
   rIn: 150, rOut: 220,      // metres to the sector bounds
   rHold: 40,                // a teleport holds the player until sectors this close are in
+  retries: 3,               // base and LOD chunks: attempts after a failed load (2, 4, 8 s apart)
   workers: Math.min(4, Math.max(2, Math.floor((navigator.hardwareConcurrency || 4) / 4))),
   cell: 96,                 // sector render cells (m): frustum culling and the per-cell LOD swap
   cellBase: 192, minTris: 16000,   // always-resident chunks: coarser cells, small groups unsplit (384 m: -60 calls, +0.4M tris: worse)
@@ -179,7 +184,7 @@ export class Streamer {
       this.pump(30);
       if (this.tasks.length) this.kick();
     };
-    setInterval(() => { if (this.tasks.length || this.waiters.size) this.kick(); }, 500);
+    this._timer = setInterval(() => { if (this.tasks.length || this.waiters.size) this.kick(); }, 500);
     // warm-up: a 1x1 render with a trivial material uploads vertex/index buffers
     this._warmRT = new THREE.WebGLRenderTarget(1, 1, { depthBuffer: false });
     this._warmScene = new THREE.Scene();
@@ -235,7 +240,8 @@ export class Streamer {
       initial.push(c.done);
     }
     for (const s of m.sectors) {
-      const sec = { ...s, hi: null, lo: null, err: null, retryAt: 0, pinned: false, dist: Infinity, swaps: 0 };
+      // bounds: the manifest's, grown to what the sector's chunks turn out to hold (_activate)
+      const sec = { ...s, plan: s.bounds, bounds: [...s.bounds], seen: false, hi: null, lo: null, err: null, retryAt: 0, pinned: false, dist: Infinity, swaps: 0 };
       this.sectors.push(sec);
       if (s.loUrl) {
         sec.lo = new Chunk('lo', s.loUrl, sec);
@@ -245,6 +251,9 @@ export class Streamer {
     }
     this.update(x, y);
     await Promise.all(initial);
+    // without the base (the ground carries every street surface) there is nothing to walk on
+    const lost = this.always.filter((c) => c.state !== 'active');
+    if (lost.length) throw new Error(`base not loaded: ${lost.map((c) => `${c.url.split('/').pop()} (${c.error})`).join(', ')}`);
     const tBase = performance.now();
     await this.ensure(x, y, this.opts.rIn);
     if (!this.ground) this._setGround(null);
@@ -304,22 +313,41 @@ export class Streamer {
 
   // ---------------------------------------------------------------- waiting
   // resolves when every sector within r of (x, y) is resident in full detail (or failed);
-  // the sectors are kept wanted until then
-  ensure(x, y, r = this.opts.rHold) {
+  // the sectors are kept wanted until then. An abort (signal: AbortSignal, e.g. a newer
+  // teleport) lets go of them at once and resolves with false.
+  ensure(x, y, r = this.opts.rHold, signal = null) {
+    if (signal?.aborted) return Promise.resolve(false);
     const h = { x, y, r };
+    const drop = () => this.holds.delete(h);
     this.holds.add(h);
-    return this.waitFor(() => this.sectors.every((s) => distRect(x, y, s.bounds) > r || ['hi', 'error'].includes(this.state(s))))
-      .finally(() => this.holds.delete(h));
+    signal?.addEventListener('abort', drop, { once: true });
+    return this.waitFor(() => this.sectors.every((s) => distRect(x, y, s.bounds) > r || ['hi', 'error'].includes(this.state(s))), signal)
+      .finally(() => { drop(); signal?.removeEventListener('abort', drop); });
   }
 
   pending(x, y, r = this.opts.rHold) {
     return this.sectors.filter((s) => distRect(x, y, s.bounds) <= r && this.state(s) !== 'hi').map((s) => s.id);
   }
 
-  waitFor(pred) {
-    if (pred()) return Promise.resolve();
+  // sectors whose geometry may reach (x, y) although their bounds do not come close: inside a
+  // sector's plan bounds whatever is built belongs to that sector, but outside every plan (beyond
+  // the walls) the build gives geometry to the nearest sector, up to ~80 m past its bounds
+  // (stairs). Until a sector's full detail has been in once, that reach is unknown: the ones
+  // within rIn of here
+  unsure(x, y) {
+    if (this.sectors.some((s) => distRect(x, y, s.plan) === 0)) return [];
+    return this.sectors.filter((s) => !s.seen && distRect(x, y, s.bounds) <= this.opts.rIn).map((s) => s.id);
+  }
+
+  // resolves with true once pred() holds, or with false when signal aborts first
+  waitFor(pred, signal = null) {
+    if (pred()) return Promise.resolve(true);
+    if (signal?.aborted) return Promise.resolve(false);
     return new Promise((resolve) => {
-      this.waiters.add({ pred, resolve });
+      const w = { pred, resolve: () => { signal?.removeEventListener('abort', w.abort); resolve(true); } };
+      w.abort = () => { this.waiters.delete(w); resolve(false); };
+      this.waiters.add(w);
+      signal?.addEventListener('abort', w.abort, { once: true });
       this.update(this.pos.x, this.pos.y);
       this.kick();
     });
@@ -361,7 +389,7 @@ export class Streamer {
       w.postMessage({
         type: 'job', id, url: c.url,
         opts: {
-          ...this._split(c), compact: o.compact, known: this.lib.names(),
+          ...this._split(c), compact: o.compact, known: this._known(),
           height: c.height, allMaterials: this.manifest.legacy, flat: this.lib.flatTable,
           bake: (c.kind === 'lo' && o.bakeLo) || (c.kind === 'always' && o.farLod) ? this.lib.bakeTable : null,
           bakeAll: c.kind === 'lo' && o.bakeLo,
@@ -380,6 +408,15 @@ export class Streamer {
     // (the ground is practically one material: a far copy would not save draws, only memory)
     if (c.kind === 'always') return o.farLod && this.lib.bakeTable && (!c.height || o.farGround) ? { cell: o.cellBase, minTris: 0, far: true } : { cell: o.cellBase, minTris: o.minTris };
     return { cell: o.cell, minTris: o.lod ? 0 : o.minTris, whole: c.kind === 'lo' };
+  }
+
+  // material names a worker may leave out of its material extract: only the palette's (pinned
+  // for the session). A name that some resident chunk registered from its own GLB can be
+  // disposed before this job's result arrives (that chunk unloads), so the job brings its own.
+  _known() {
+    const out = [];
+    for (const e of this.lib.entries.values()) if (e.pinned) out.push(e.name);
+    return out;
   }
 
   // materials whose geometry must keep casting itself (alpha-tested cut-outs) or not at all
@@ -409,8 +446,17 @@ export class Streamer {
 
   _fail(c, message) {
     console.warn(`chunk ${c.key} failed:`, message);
-    this.log.push({ t: Math.round(performance.now()), key: c.key, error: String(message).split('\n')[0] });
+    c.error = String(message).split('\n')[0];
+    this.log.push({ t: Math.round(performance.now()), key: c.key, error: c.error });
     this._dispose(c);
+    // the base and the LODs stay resident for the whole session: try again a few times (the build
+    // may be rewriting the file); whoever waits on c.done keeps waiting meanwhile
+    if (c.kind !== 'hi' && !this.destroyed && (c.tries = (c.tries || 0) + 1) <= this.opts.retries) {
+      c.state = 'retry';
+      c.loaded = c.total = 0;
+      setTimeout(() => { if (!this.destroyed) { this._request(c, c.priority); this._dispatch(); } }, 1000 * 2 ** c.tries);
+      return;
+    }
     c.state = 'failed';
     c._done(false);
     const s = c.sector;
@@ -435,7 +481,8 @@ export class Streamer {
     c.acquired = true;
     if (res.materials) {
       const names = Object.keys(res.materials.index);
-      if (!this.manifest.legacy) console.warn(`${c.key}: material(s) not in the palette, using the GLB's own placeholder: ${names.join(', ')}`);
+      const fresh = names.filter((n) => !this.lib.has(n));     // the rest is held above already
+      if (fresh.length && !this.manifest.legacy) console.warn(`${c.key}: material(s) not in the palette, using the GLB's own placeholder: ${fresh.join(', ')}`);
       await this.lib.addGLB(res.materials.glb, c.url.replace(/[^/]*$/, ''), names, { source: c.url });
     }
     for (const n of res.usedMaterials) {
@@ -501,14 +548,20 @@ export class Streamer {
       return ms;
     };
     const proxied = res.shadow && res.shadow.length ? new Set(this._noProxy()) : null;
+    const { flatTable, bakeTable } = this.lib;
     for (const g of res.groups) {
       const e = this.lib.get(g.name);
+      // a base chunk's far copy only has what draws flat: merged flat materials and textured ones
+      // with a baked palette slot. What it lacks (cut-outs such as foliage and grilles, a texture
+      // the bake could not read) stays drawn at any distance instead of swapping with its cell,
+      // and casts its own shadow (the cell's proxy swaps out with it). Props (nocol) and draw_dist
+      // pieces are left out of the far copy on purpose and swap out with their cell: beyond rFar
+      // they are past their own draw distance (rProps and the build's draw_dist stay within it)
+      const farCopy = (!!flatTable && g.name.startsWith('__flat')) || !!(bakeTable && bakeTable[g.name]);
+      const keep = !!(res.far && res.far.length) && (e.flags.cutout || (!farCopy && !g.nocol && !g.drawDist));
       for (const p of g.pieces) {
         const ms = add(g, e, p);
-        if (proxied && !g.nocol && !g.drawDist && !proxied.has(g.name)) for (const m of ms) m.userData.oc.cast = false, m.castShadow = false;
-        // a base chunk's far copy has no cut-outs (foliage, grilles): those stay drawn at any
-        // distance instead of swapping with their cell
-        const keep = res.far && res.far.length && e.flags.cutout;
+        if (proxied && !keep && !g.nocol && !g.drawDist && !proxied.has(g.name)) for (const m of ms) m.userData.oc.cast = false, m.castShadow = false;
         if (p.cell && !keep) {
           const key = p.cell[0] + ',' + p.cell[1];
           let rec = c.cells.get(key);
@@ -585,6 +638,7 @@ export class Streamer {
       c.colBytes = col.pos.byteLength + (col.bvh.index ? col.bvh.index.byteLength : 0) + col.bvh.roots.reduce((a, r) => a + r.byteLength, 0);
     }
     if (res.height) c.heightField = res.height;
+    c.box = res.box;
     return batches;
   }
 
@@ -717,11 +771,19 @@ export class Streamer {
     } else {
       this.collider.set('sec:' + s.id, c.bvh || (s.lo && s.lo.bvh), c.bvh ? c.colBox : s.lo && s.lo.colBox);
       s.swaps++;
+      s.seen = true;             // its bounds (grown below) now cover everything it holds
       this.events.push({ t: Math.round(performance.now()), id: s.id, in: true, ms: Math.round(performance.now() - c.t0) });
       if (this.events.length > 50) this.events.shift();
     }
     c.state = 'active';
     this._cullDirty = true;
+    if (s && c.box && c.box[0] <= c.box[3]) {
+      // the manifest's bounds come from the plan; the build may give a sector geometry beyond
+      // them (stairs outside the walls go to the nearest sector): streaming, holds and pending()
+      // measure to what the sector actually holds from now on (three (x, z) = (east, -north))
+      const b = s.bounds, x = c.box;
+      b[0] = Math.min(b[0], x[0]); b[1] = Math.min(b[1], -x[5]); b[2] = Math.max(b[2], x[3]); b[3] = Math.max(b[3], -x[2]);
+    }
     if (s) {                     // the swap happens now, before this frame renders
       s.lodMode = null;
       s.cellUnion = null;
@@ -764,6 +826,30 @@ export class Streamer {
     c.state = 'dropped';
     c._done(false);
     this._checkWaiters();
+  }
+
+  // stop the workers and let go of every chunk (start() failed and the caller opens another
+  // city with a new Streamer); the library's materials are the caller's to clear
+  destroy() {
+    this.destroyed = true;
+    for (const w of this.workers) w.terminate();
+    this.workers = [];
+    clearInterval(this._timer);
+    this._mc.port1.onmessage = null;
+    this._mc.port1.close();
+    for (const c of [...this.always, ...this.sectors.flatMap((s) => [s.lo, s.hi])]) {
+      if (!c) continue;
+      c.cancelled = true;
+      this._dispose(c);
+      this.collider.delete(c.kind === 'always' ? c.key : 'sec:' + c.sector.id);
+    }
+    this.queue = [];
+    this.jobs.clear();
+    this.tasks = [];
+    this.waiters.clear();
+    this.holds.clear();
+    this._tracked.clear();
+    this._warmRT.dispose();
   }
 
   _dispose(c) {

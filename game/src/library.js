@@ -157,6 +157,13 @@ export class Library {
     }
   }
 
+  // drop every material, the palette's too (a city that failed to start, before another opens)
+  clear() {
+    for (const e of [...this.entries.values()]) if (e.mat) this._dispose(e); else this.entries.delete(e.name);
+    this.uploads.length = 0;
+    this.flatTable = this.bakeTable = null;
+  }
+
   _dispose(e) {
     this.entries.delete(e.name);
     const m = e.mat;

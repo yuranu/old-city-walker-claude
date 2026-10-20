@@ -9,8 +9,13 @@ Each prop: {"type", "p": [x, y, z], "rot": yaw degrees (0 = facing north), "s": 
 """
 import json
 import math
+import random
+import zlib
 from pathlib import Path
 
+from shapely.ops import unary_union
+
+import roofscape
 from geo import LineString, Point, edge_frame, polys_of
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -47,14 +52,34 @@ def dress(c, rng):
                     return c["steps"][k]["top"]
         return z
 
+    # free() answers the older test, which saw only the last 400 props, so every caller makes the same
+    # random draws as before. It also checks the spot against all the props kept so far (a 4 m grid:
+    # the mapped trees are placed city-wide long before the woods and the shop clutter); when only
+    # that check fails, the next add() leaves its prop out. The props that stood too close are
+    # dropped and no other random prop moves (the older test still counts the dropped ones)
+    grid, cell, r_max, blocked = {}, 4.0, [0.3], [False]
+
     def free(x, y, r):
         q = Point(x, y)
-        return walk.contains(q) and obstacles.distance(q) > r * 0.5 and \
-            all(math.hypot(p["p"][0] - x, p["p"][1] - y) > r + p.get("r", 0.3) for p in props[-400:])
+        blocked[0] = False
+        if not (walk.contains(q) and obstacles.distance(q) > r * 0.5 and
+                all(math.hypot(p["p"][0] - x, p["p"][1] - y) > r + p.get("r", 0.3) for p in props[-400:])):
+            return False
+        n = int(math.ceil((r + r_max[0]) / cell))
+        gx, gy = math.floor(x / cell), math.floor(y / cell)
+        blocked[0] = any(math.hypot(p["p"][0] - x, p["p"][1] - y) <= r + p.get("r", 0.3)
+                         for i in range(gx - n, gx + n + 1) for j in range(gy - n, gy + n + 1) for p in grid.get((i, j), ()))
+        return True
 
     def add(t, x, y, rot=0.0, s=1.0, col=False, r=0.3, z=None):
         props.append({"type": t, "p": [round(x, 3), round(y, 3), round(zat(x, y) if z is None else z, 3)],
                       "rot": round(rot, 1), "s": round(s, 3), "col": col, "r": r})
+        if blocked[0]:                                  # the free() just before found the spot taken
+            blocked[0] = False
+            props[-1]["drop"] = True
+            return
+        grid.setdefault((math.floor(x / cell), math.floor(y / cell)), []).append(props[-1])
+        r_max[0] = max(r_max[0], r)
 
     # ---- real positions from OSM
     osm = json.loads((ROOT / "data/osm_local.json").read_text())
@@ -228,7 +253,25 @@ def dress(c, rng):
                               "rot": round(math.degrees(math.atan2(nx, ny)), 1), "s": round(rng.uniform(0.6, 1.0), 2),
                               "col": False, "r": 0})
 
-    # ---- rooftop clutter on every flat roof (gives the skyline its look)
+    # ---- rooftop clutter on every flat roof (gives the skyline its look), clear of the parapet and
+    #      the rooftop rooms
+    def roof_spot(it, area_, rng_, taken):
+        for _ in range(20):
+            q = _rand_in(area_, rng_)
+            if q is None:
+                return None
+            if all(math.hypot(q.x - px, q.y - py) > 1.6 for px, py in taken):
+                taken.append((q.x, q.y))
+                return q, (180 + rng_.uniform(-15, 15) if it == "water_heater" else rng_.uniform(0, 360))
+        return None
+
+    def on_dome(x, y, domes):
+        return any(math.hypot(x - dx, y - dy) < dr + 0.9 for dx, dy, dr in domes)
+
+    def roof_prop(it, q, rot, rz):
+        props.append({"type": it, "p": [round(q.x, 3), round(q.y, 3), round(rz, 3)], "rot": round(rot, 1),
+                      "s": 1.0, "col": False, "r": 0})
+
     for b in c["buildings"]:
         if b["style"]["roof"] != "flat" or not b.get("roof"):
             continue
@@ -236,7 +279,8 @@ def dress(c, rng):
             continue                                                # domes and porticoes: no heaters
         from shapely.geometry import Polygon
         rz = b["top"] - 0.9
-        for rp in b["roof"]:
+        domes = roofscape.dome_circles(b)
+        for k, rp in enumerate(b["roof"]):
             poly = Polygon(rp["ext"], rp["holes"])
             inner = poly.buffer(-0.9)
             for rm in b.get("roof_rooms", []):
@@ -250,17 +294,24 @@ def dress(c, rng):
             items = ["water_heater"] * min(3, int(area / 60) + (1 if rng.random() < 0.5 else 0)) + \
                 ["water_tank"] * min(3, int(area / 90) + (1 if rng.random() < 0.3 else 0)) + \
                 (["sat_dish"] if rng.random() < 0.55 else []) + (["antenna"] if rng.random() < 0.35 else [])
+            moved = []
             for it in items:
-                for _ in range(20):
-                    q = _rand_in(inner, rng)
-                    if q is None:
-                        break
-                    if all(math.hypot(q.x - px, q.y - py) > 1.6 for px, py in placed):
-                        placed.append((q.x, q.y))
-                        rot = 180 + rng.uniform(-15, 15) if it == "water_heater" else rng.uniform(0, 360)
-                        props.append({"type": it, "p": [round(q.x, 3), round(q.y, 3), round(rz, 3)], "rot": round(rot, 1),
-                                      "s": 1.0, "col": False, "r": 0})
-                        break
+                spot = roof_spot(it, inner, rng, placed)
+                if spot and on_dome(spot[0].x, spot[0].y, domes):
+                    moved.append(it)
+                elif spot:
+                    roof_prop(it, *spot, rz)
+            if moved:
+                # an item that fell on a dome (or within 0.9 m of it) goes to the flat roof around the
+                # domes, drawn from the building's own rng: every other roof keeps its random sequence
+                # (+0.95: the buffered polygon lies a few mm inside its circle)
+                clear = inner.difference(unary_union([Point(dx, dy).buffer(dr + 0.95) for dx, dy, dr in domes]))
+                own = random.Random(zlib.crc32(("%s/%d" % (b["id"], k)).encode()))
+                taken = [p_ for p_ in placed if not on_dome(*p_, domes)]
+                for it in moved:
+                    spot = roof_spot(it, clear, own, taken) if not clear.is_empty else None
+                    if spot:
+                        roof_prop(it, *spot, rz)
 
     # ---- cables strung across David Street (and the alley mouths off the square)
     dpts = c["david"]["pts"]
@@ -334,6 +385,7 @@ def dress(c, rng):
         if hero.contains(Point(x, y)):
             gdec.append({"type": "drain", "p": [round(x, 2), round(y, 2), round(zat(x, y) + 0.006, 3)],
                          "rot": math.degrees(math.atan2(tx, ty)), "w": 0.9, "h": 0.45})
+    props = [p_ for p_ in props if not p_.pop("drop", False)]
     for p_ in props:
         p_.pop("r", None)
     return props, cables, gdec, beams

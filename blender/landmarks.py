@@ -22,17 +22,23 @@ import os
 import traceback
 
 # Landmark modules are written by parallel workers: a module that is missing, mid-edit or failing
-# must not break everybody's build. Its buildings then fall back to the generic builder with a
-# warning. LANDMARKS_STRICT=1 makes errors fatal (use it while working on a landmark).
+# (including one of its own imports not being there yet) must not break everybody's build. Its
+# buildings then fall back to the generic builder with a warning. LANDMARKS_STRICT=1 makes errors
+# fatal (use it while working on a landmark); only a module that is not written yet is skipped then.
 STRICT = os.environ.get("LANDMARKS_STRICT") == "1"
 REG = {}
+
+
+def _not_written(e, name):
+    return isinstance(e, ModuleNotFoundError) and e.name == name
+
+
 for _m in ("landmarks_haram", "landmarks_city", "landmarks_gates"):
     try:
         REG.update(getattr(importlib.import_module(_m), "LANDMARKS", {}))
-    except ModuleNotFoundError as e:
-        if e.name != _m:            # a module that is simply not written yet is fine, even in strict mode
-            raise
-    except Exception:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
+        if _not_written(e, _m):     # a module that is simply not written yet is fine, even in strict mode
+            continue
         if STRICT:
             raise
         print("LANDMARKS WARNING: %s failed to import, using generic buildings:" % _m)
@@ -58,11 +64,16 @@ def build(mbs, bd, gen, place, lod=False):
 
 def walls_builder():
     """The wall-circuit builder from landmarks_gates (clips the circuit around the gates, crenellated
-    profile matching them), or None to use build_city.build_walls_generic."""
+    profile matching them), or None to use build_city.build_walls_generic. Like the registry: a
+    landmarks_gates that is not written yet is fine, any other import error is fatal in strict mode.
+    The caller re-raises the builder's own errors in strict mode too."""
     try:
         fn = getattr(importlib.import_module("landmarks_gates"), "build_walls", None)
-    except Exception:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
+        if _not_written(e, "landmarks_gates"):
+            return None
         if STRICT:
             raise
+        print("WALLS WARNING: landmarks_gates failed to import, generic walls instead")
         return None
     return fn

@@ -18,7 +18,7 @@ space the OSM footprints leave free.
 import numpy as np
 from shapely import STRtree
 from shapely.geometry import LineString, Polygon
-from shapely.ops import unary_union
+from shapely.ops import split, unary_union
 
 # mapped areas that are open ground (kept free of infill). Built-up landuse (retail, residential,
 # religious: e.g. the souq block between the three parallel market streets) is NOT open.
@@ -44,6 +44,28 @@ def _polys(g):
     if g.geom_type == "Polygon":
         return [g]
     return [p for p in getattr(g, "geoms", []) if p.geom_type == "Polygon"]
+
+
+def split_holes(p, min_hole=1.0):
+    """Hole-free pieces covering polygon p. A building takes one ring, and filling a hole would
+    re-cover what was cut out of it (a mapped building, an open area, a street), so each hole is cut
+    through instead, along the shorter of a vertical and a horizontal line across it; holes under
+    min_hole m2 (slivers between neighbours) are filled."""
+    p = Polygon(p.exterior, [h for h in p.interiors if Polygon(h).area >= min_hole])
+    if not p.interiors:
+        return [p]
+    c = Polygon(p.interiors[0]).representative_point()
+    x0, y0, x1, y1 = p.bounds
+    cut = min((LineString([(c.x, y0 - 1), (c.x, y1 + 1)]), LineString([(x0 - 1, c.y), (x1 + 1, c.y)])),
+              key=lambda ln: ln.intersection(p).length)
+    try:
+        parts = _polys(split(p, cut))
+    except Exception:  # noqa: BLE001  (GEOS on degenerate rings)
+        parts = []
+    if len(parts) < 2:                       # a 2 mm slit instead
+        parts = _polys(p.difference(cut.buffer(0.001)))
+    return [s for q in parts if len(q.interiors) < len(p.interiors) or q.area < p.area - 1e-6
+            for s in split_holes(q, min_hole)]
 
 
 def street_halfwidth(t, ln, tree, footprints):
@@ -101,9 +123,8 @@ def infill(d, footprints, domain, keep_open):
         if p.area < 20 or p.buffer(-1.2).is_empty:
             continue
         p = p.buffer(-0.02).simplify(0.25)                       # tidy; the priority pass resolves overlaps
-        for q in _polys(p):
-            if q.area >= 20:
-                out.append(Polygon(q.exterior))
+        for q in _polys(p):                  # holes are mapped buildings, open areas or streets: cut, not filled
+            out += [s for s in split_holes(q) if s.area >= 20 and not s.buffer(-1.2).is_empty]
     return out
 
 

@@ -44,3 +44,4 @@ game/src/legacy/
 data/spec/
 build/logs/
 data/terrain_street.json
+data/landmark_ids.json

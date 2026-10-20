@@ -15,7 +15,8 @@ Each building that has been researched gets one JSON file in data/reference/over
 Edge indices move when footprint cleaning changes (where a ring starts, vertices merged or split).
 Give every facade an anchor, "at": [x, y] = the midpoint of the edge in the local frame. When
 present it wins: the facade goes to the ring edge whose midpoint is nearest (within 3 m and facing
-the same way to within 45 deg), whatever its index; the key is then only a label.
+the same way to within 45 deg), whatever its index; the key is then only a label (any string).
+Without "at" the key must be the edge index.
 
 Facade override keys understood by facades.layout():
   centres        bay centre positions along the edge (m from vertex a)
@@ -26,14 +27,19 @@ Facade override keys understood by facades.layout():
                  "balcony_w", "balcony_d"}
   balcony_bays   bays with a balcony on the first upper floor
   awning         true/false: canopy over the shop row
-  bands / cornice  force string courses / cornice
-  extra_signs    [{"u0", "u1", "z0", "cell"}]       sign atlas names: data/textures/gen/signs.json
+  bands / cornice  true / false: force string courses / cornice on or off (default: hero ashlar fronts)
+  extra_signs    [{"u0", "u1", "z0", "cell"}]       sign atlas names: data/textures/gen/signs.json; z0 is
+                 absolute, built as given (on a souq canopy facade keep it above the canopy)
   extra_fixtures [{"type": "sign", "cell", "u", "z", "w", "h"} | {"type": "wall_lantern"|"ac_unit", "u", "z"}]
   extra_decals / extra_awnings / extra_balconies   appended as given
   blank          no openings at all
   auto           false: no random elements at all (signs, posters, plaques, AC units, pipes, lanterns,
-                 cables, blind bays, random shutters/grilles); only what the override lists
-  ground[k]      also "sign": false (no fascia sign), "sill" (window sill height), "lo", "grille",
+                 cables, awnings, balconies, blind bays, arches, shutters/grilles, door colours, rubble
+                 jitter); only what the override lists. Bays and upper floors it does not list get the
+                 plain defaults (glass windows, arch_up, no balcony); check_overrides.py warns about them
+  ground[k]      also "sign": a sign atlas cell (built on any facade: hero or mid, souq or not, auto or
+                 not; over the shop head, or above the souq canopy where there is one) or false (no
+                 fascia sign), "sill" (window sill height), "lo", "grille",
                  "h" for doors (default 2.75)
   floors[f]      also "ws" / "hs" / "arches" (per bay), "sill" (window floor above the storey base,
                  default 0.9), "lo" (infill cell for every window, e.g. "glass", "shutter_green"),
@@ -45,7 +51,7 @@ from pathlib import Path
 OVR = Path(__file__).resolve().parent.parent / "data/reference/overrides"
 
 FACADES = {}
-ANCHORED = {}          # bid -> [(x, y, ov)] for facades with an "at" anchor
+ANCHORED = {}          # bid -> [(x, y, key, ov)] for facades with an "at" anchor (key: only a label)
 BUILDING = {}
 SOURCES = {}
 
@@ -56,9 +62,12 @@ for fn in sorted(OVR.glob("*.json")) if OVR.exists() else []:
     SOURCES[bid] = d.get("sources", [])
     for edge, ov in d.get("facades", {}).items():
         if "at" in ov:
-            ANCHORED.setdefault(bid, []).append((ov["at"][0], ov["at"][1], int(edge), ov))
-        else:
+            ANCHORED.setdefault(bid, []).append((ov["at"][0], ov["at"][1], edge, ov))
+            continue
+        try:
             FACADES[(bid, int(edge))] = ov
+        except ValueError:            # a bad file must not stop make_spec for everyone else
+            print("override %s facade %r: no \"at\" anchor and the key is not an edge index; skipped" % (fn.name, edge))
 
 
 def facades_for(bid, ring):
