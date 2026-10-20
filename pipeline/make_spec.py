@@ -100,8 +100,10 @@ GATE_DOORS = {"w616186088": [(265.8, 558.2), (275.4, 551.8)], "w288395731": [(89
 
 # ground the landmark builders replace: no ground mesh here (Wilson's Arch hall under Chain Street,
 # whose roof is the walking surface; landmarks_haram.WILSON_HALL)
-GROUND_HOLES = [Polygon([(621.91, 30.53), (646.06, 35.24), (640.68, 62.55), (639.28, 62.27), (626.48, 59.77),
-                         (629.03, 46.85), (619.07, 44.91)])]
+WILSON_HALL = Polygon([(621.91, 30.53), (646.06, 35.24), (640.68, 62.55), (639.28, 62.27), (626.48, 59.77),
+                       (629.03, 46.85), (619.07, 44.91)])
+GROUND_HOLES = []        # (Wilson's Arch hall: paved at Chain Street level instead, see LOCAL_FLATS; a hole
+                         #  left gaps between the hall's roof and the walls around it)
 # sunken courts: paving at street level + dz (the Golden Gate's court, 4.5 m below the esplanade;
 # retaining walls, railing and stairs by landmarks_haram)
 SUNKEN = [{"poly": box(884.0, 249.0, 892.0, 266.0), "dz": -4.5, "name": "golden_gate_court"}]
@@ -112,7 +114,9 @@ CLIP_STREETS = {"w1022672085": [(26492706, 2.2)]}     # Holy Sepulchre over Chri
 # level areas the terrain field does not know about: (OSM way, point whose street level they take)
 LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, at the main door
                # the Western Wall prayer-area level carried north to the front of Wilson's Arch hall
-               (Polygon([(621.91, 30.53), (646.06, 35.24), (647.21, 29.35), (623.06, 24.64)]), -43.58)]
+               (Polygon([(621.91, 30.53), (646.06, 35.24), (647.21, 29.35), (623.06, 24.64)]), -43.58),
+               # paving over Wilson's Arch hall at Chain Street level (the hall's roof sits 3 cm below)
+               (WILSON_HALL, (633.0, 61.0))]
 
 
 # covered streets: passages under buildings (OSM tunnel=yes|building_passage, covered=yes) are carved
@@ -550,31 +554,243 @@ def david_drop(s):
     return max(0.0, s - DAVID["start_s"]) * DAVID["riser"] / DAVID["tread"]
 
 
-_FLATS = []                                    # [(polygon, z)] filled by setup_flats()
+_FLATS = []                                    # [(polygon, z)] local flats, filled by setup_flats()
+ALL_FLATS = []                                 # terrain flats + local flats: the level areas
+PAIR_EDGES = []                                # [(edge geometry, z of the higher-priority flat, smaller flat, its z)]
+BLEND_SLOPE = 0.3                              # around a level area the ground eases into the terrain
+                                               # over |dz| / BLEND_SLOPE metres (3-25 m)
 
 
 def setup_flats(d):
     for wid, at in LOCAL_FLATS:                # (OSM way, point it takes its level from) or (polygon, z)
         if isinstance(wid, Polygon):
-            _FLATS.append((wid, float(at)))
+            _FLATS.append((wid, float(at) if not isinstance(at, tuple) else float(_terrain.street_z(*at)) if _terrain else 0.0))
             continue
         w = next((w_ for w_ in d["ways"] if w_["id"] == wid), None)
         if w and _terrain is not None:
             _FLATS.append((Polygon(w["pts"]).buffer(0), float(_terrain.street_z(*at))))
-    for poly, _ in _FLATS:
+    _osm_fp = [Polygon(b["outer"][0]).buffer(0) for b in d["buildings"] if b.get("outer") and len(b["outer"][0]) > 2]
+    _fp_tree = STRtree(_osm_fp)
+
+    def grown(poly):
+        """A plaza is level right up to the buildings around it: grow a (non-Haram) level area into the
+        open ground within 12 m, stopping at building faces, so the easing starts beyond them."""
+        if poly.area > 20000 or poly.equals(WILSON_HALL):
+            return poly
+        ring = poly.buffer(12.0)
+        near = [_osm_fp[k] for k in _fp_tree.query(ring)]
+        g = ring.difference(unary_union(near)) if near else ring
+        parts = [q for q in getattr(g, "geoms", [g]) if q.geom_type == "Polygon" and q.intersects(poly)]
+        return unary_union(parts + [poly]).buffer(0) if parts else poly
+    ALL_FLATS[:] = sorted([(grown(fp_), float(fz_)) for fp_, fz_ in (_terrain._runtime()[2] if _terrain else [])] + list(_FLATS),
+                          key=lambda f_: f_[0].area)      # the most specific (smallest) level area wins where they overlap
+    for poly, _ in ALL_FLATS:
         prepare(poly)
     street_z0.cache_clear()
     street_z.cache_clear()
 
 
+def surface_z_v(xs, ys, prefer=None, ease_from=None):
+    """THE walkable surface, one continuous function used by ground, steps, buildings and props:
+    level areas exactly level, the terrain elsewhere, and around each level area a smooth easing
+    from its level into the terrain over |dz| / BLEND_SLOPE metres. No discontinuity anywhere, so
+    the ground mesh cannot open holes or build cliffs/pyramids at the edges of level areas."""
+    xs, ys = np.asarray(xs, float), np.asarray(ys, float)
+    zt = terrain_z_v(xs, ys)
+    if not ALL_FLATS:
+        return zt
+    pts = shapely.points(xs, ys)
+    inside_any = np.zeros(xs.shape, bool)
+    out = zt.copy()
+    best = np.full(xs.shape, np.inf)
+    order = ALL_FLATS
+    if prefer is not None:              # a piece of this flat: its own outline counts as inside it
+        order = [f_ for f_ in ALL_FLATS if f_[0] is prefer] + [f_ for f_ in ALL_FLATS if f_[0] is not prefer]
+    owner = np.full(xs.shape, -1)
+    for poly, fz in order:
+        inside = shapely.contains_xy(poly, xs, ys)
+        if poly is prefer:
+            inside |= shapely.distance(poly, pts) < 0.02
+        elif (poly is WILSON_HALL or ease_from is not None) and inside.any():
+            # the deck does not ease, an easing-zone piece eases from its own level area: their outlines
+            # belong to the ground outside unless asked for by a piece of that level area
+            k_ = np.nonzero(inside)[0]
+            inside[k_[shapely.distance(poly.exterior, pts[k_]) < 0.02]] = False
+        out = np.where(inside & ~inside_any, fz, out)
+        owner = np.where(inside & ~inside_any, id(poly), owner)
+        inside_any |= inside
+    for edge, zbig, small, zsmall in PAIR_EDGES:     # two level areas meeting in open ground: the smaller
+        ins = owner == id(small)                    # one ramps up/down to the other along that edge
+        d = shapely.distance(edge, pts)
+        D = max(3.0, min(40.0, abs(zbig - zsmall) / BLEND_SLOPE))
+        m = ins & (d < D)
+        out = np.where(m, zbig + (zsmall - zbig) * (d / D), out)
+    for poly, fz in ALL_FLATS:                 # outside every flat: ease from the nearest one
+        if poly is WILSON_HALL:                 # a raised deck: walls (crack seals) at its edges, no easing
+            continue
+        d = shapely.distance(poly, pts)
+        D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
+        w = np.clip(d / D, 0.0, 1.0)                 # linear: the slope never exceeds |dz| / D
+        near = (~inside_any) & (d < D) & (d / D < best)
+        out = np.where(near, fz + (zt - fz) * w, out)
+        best = np.where(near, d / D, best)
+    if ease_from is not None:                  # a piece of an easing zone: eased from its own level area only
+        fz = next(z_ for p_, z_ in ALL_FLATS if p_ is ease_from)
+        d = shapely.distance(ease_from, pts)
+        D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
+        m = (~inside_any) & (d < D)
+        out = np.where(m, fz + (zt - fz) * np.clip(d / D, 0.0, 1.0), out)
+    return out
+
+
+EASE_ZONES = []                                # [(polygon, level area)]: where easing bands meet
+
+
+def setup_ease_zones(cell=0.5):
+    """Where the easing bands of two level areas meet, the surface switches from easing out of one to
+    easing out of the other: a jump (the Mughrabi ramp beside the prayer area, 5-9 m). The ground is
+    split along that switch line, each side eased from its own level area, so the jump is a clean
+    vertical edge (closed by seal_cracks) instead of triangles spanning it."""
+    EASE_ZONES.clear()
+    fl = [(p_, z_) for p_, z_ in ALL_FLATS if p_ is not WILSON_HALL]
+    bands = [p_.buffer(40.0) for p_, _ in fl]
+    allf = unary_union([p_ for p_, _ in fl])
+    zones = []
+    for i in range(len(fl)):
+        for j in range(i + 1, len(fl)):
+            if bands[i].intersects(bands[j]):
+                ov = bands[i].intersection(bands[j]).difference(allf)
+                if not ov.is_empty:
+                    zones.append(ov)
+    if not zones:
+        return
+    zone = unary_union(zones)
+    x0, y0, x1, y1 = zone.bounds
+    gx, gy = np.meshgrid(np.arange(x0, x1, cell) + cell / 2, np.arange(y0, y1, cell) + cell / 2)
+    gx, gy = gx.ravel(), gy.ravel()
+    k = shapely.contains_xy(zone, gx, gy)
+    gx, gy = gx[k], gy[k]
+    pts = shapely.points(gx, gy)
+    zt = terrain_z_v(gx, gy)
+    best = np.full(gx.shape, np.inf)
+    own = np.full(gx.shape, -1)
+    for i, (p_, fz) in enumerate(fl):
+        r = shapely.distance(p_, pts) / np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
+        m = (r < 1.0) & (r < best)
+        own[m], best[m] = i, r[m]
+    for i, (p_, fz) in enumerate(fl):
+        m = own == i
+        if not m.any() or m.all():
+            continue
+        cells = shapely.box(gx[m] - cell / 2, gy[m] - cell / 2, gx[m] + cell / 2, gy[m] + cell / 2)
+        poly = shapely.coverage_union_all(cells).buffer(0.01).buffer(-0.01).simplify(cell * 0.7) \
+            .buffer(cell, join_style="mitre")       # overlapping (the first zone takes the overlap): no slivers between
+        pieces = [q for q in getattr(poly, "geoms", [poly]) if q.geom_type == "Polygon" and q.area > 4.0]
+        if pieces:
+            EASE_ZONES.append((unary_union(pieces).segmentize(1.0), p_))
+    for ez_, _ in EASE_ZONES:
+        prepare(ez_)
+    street_z0.cache_clear()
+    street_z.cache_clear()
+    print("ease zones: %d (%s m2)" % (len(EASE_ZONES), round(sum(z_.area for z_, _ in EASE_ZONES))))
+
+
+
+def seal_cracks(ground, tol=0.02, skip=None):
+    """Faces closing every vertical step between neighbouring ground triangles (a level area against
+    the slope, the deck over Wilson's Arch, the ground lowered under landmarks): wherever the piece
+    across an edge lies lower, one face from its surface up to this edge, looking at the low side.
+    Seen from anywhere the ground is then closed: no sky through a seam."""
+    T = np.array([t for g in ground for t in g["tris"]], float)
+    if not len(T):
+        return []
+    polys = shapely.polygons(T[:, :, :2])
+    tree = shapely.STRtree(polys)
+    A = T[:, [0, 1, 2]]
+    B = T[:, [1, 2, 0]]
+    cen = T[:, :, :2].mean(axis=1)
+    a, b = A.reshape(-1, 3), B.reshape(-1, 3)
+    owner = np.repeat(np.arange(len(T)), 3)
+    d = b[:, :2] - a[:, :2]
+    L = np.hypot(d[:, 0], d[:, 1])
+    ok = L > 0.02
+    nrm = np.stack([d[:, 1], -d[:, 0]], 1) / np.maximum(L, 1e-9)[:, None]
+    mid = (a[:, :2] + b[:, :2]) / 2
+    flip = ((mid - cen[owner]) * nrm).sum(1) < 0
+    nrm[flip] *= -1
+    probe = mid + nrm * 0.01
+    pi, ti = tree.query(shapely.points(probe), predicate="intersects")
+    keep = (ti != owner[pi]) & ok[pi]
+    pi, ti = pi[keep], ti[keep]
+    _, first = np.unique(pi, return_index=True)          # one neighbour per edge
+    pi, ti = pi[first], ti[first]
+
+    def plane_z(k, xy):
+        (x1, y1, z1), (x2, y2, z2), (x3, y3, z3) = T[k]
+        den = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3)
+        if abs(den) < 1e-12:
+            return z1
+        u = ((y2 - y3) * (xy[0] - x3) + (x3 - x2) * (xy[1] - y3)) / den
+        v = ((y3 - y1) * (xy[0] - x3) + (x1 - x3) * (xy[1] - y3)) / den
+        return u * z1 + v * z2 + (1 - u - v) * z3
+    if skip is not None and not skip.is_empty:
+        m_ = ~shapely.contains_xy(skip, mid[pi, 0], mid[pi, 1])
+        pi, ti = pi[m_], ti[m_]
+    sel = []
+    for e, k in zip(pi, ti):
+        la = plane_z(k, a[e, :2] + nrm[e] * 0.01)
+        lb = plane_z(k, b[e, :2] + nrm[e] * 0.01)
+        if a[e, 2] - la > tol or b[e, 2] - lb > tol:
+            sel.append((e, la, lb))
+    ends = {}                                    # end point -> directions of the seals ending there
+    for e, _, _ in sel:
+        t_ = (b[e, :2] - a[e, :2]) / L[e]
+        for p_ in (a[e], b[e]):
+            ends.setdefault((round(p_[0], 2), round(p_[1], 2)), []).append(t_)
+
+    def ext(p_, t_):                             # 6 cm longer where the seal turns a corner (no slit there);
+        ds = ends.get((round(p_[0], 2), round(p_[1], 2)), [])      # not where a collinear one continues it
+        return 0.0 if sum(1 for d_ in ds if abs(d_ @ t_) > 0.99) > 1 else 0.06
+    out = []
+    for e, la, lb in sel:
+        za, zb = a[e, 2], b[e, 2]
+        # 4 cm back under the high side: where a landmark builds its own face on the edge, the seal
+        # stays behind it instead of z-fighting with it
+        t_ = (b[e, :2] - a[e, :2]) / L[e]
+        pa = a[e, :2] - nrm[e] * 0.04 - t_ * ext(a[e], t_)
+        pb = b[e, :2] - nrm[e] * 0.04 + t_ * ext(b[e], t_)
+        out.append({"a": [round(pa[0], 3), round(pa[1], 3)], "b": [round(pb[0], 3), round(pb[1], 3)],
+                    "lo": [round(min(la, za) - 0.02, 3), round(min(lb, zb) - 0.02, 3)],
+                    "hi": [round(za, 3), round(zb, 3)], "cap": 0,
+                    "n": [round(nrm[e, 0], 3), round(nrm[e, 1], 3)]})
+    return out
+
+def eased_at(x, y):
+    """Inside a level area or its easing band (where the continuous surface handles the level
+    change and stair treads would sink into or float over the slope)."""
+    if not ALL_FLATS:
+        return False
+    zt = float(terrain_z_v([x], [y])[0])
+    pt = Point(x, y)
+    for poly, fz in ALL_FLATS:
+        if poly.contains(pt):
+            return True
+        if poly is WILSON_HALL:
+            continue
+        D = max(3.0, min(40.0, abs(fz - zt) / BLEND_SLOPE))
+        if poly.distance(pt) < D and abs(fz - zt) > 0.3:
+            return True
+    return False
+
+
 @functools.lru_cache(maxsize=1 << 21)          # ground vertices are shared by ~6 triangles
 def street_z0(x, y):
-    """Street level from the terrain and the local flats (not lowered in the SUNKEN courts)."""
-    for poly, z in _FLATS:
-        if shapely.contains_xy(poly, x, y):
-            return z
+    """Street level: the walkable surface (not lowered in the SUNKEN courts)."""
     if _terrain is not None:
-        return float(_terrain.street_z(x, y))
+        for ez_, ef_ in EASE_ZONES:          # the same easing as the ground piece there
+            if shapely.contains_xy(ez_, x, y):
+                return float(surface_z_v([x], [y], ease_from=ef_)[0])
+        return float(surface_z_v([x], [y])[0])
     if x > 100 and y > 3.5:
         return -david_drop(polyline_s(DAVID["pts"], (x, y))[0])
     return 0.0
@@ -592,15 +808,12 @@ def street_z(x, y):
     return z
 
 
-def street_z_v(xs, ys):
+def street_z_v(xs, ys, prefer=None, ease_from=None):
     """street_z0 over arrays (one vectorised terrain lookup for a whole ground tile set; the SUNKEN
     court regions add their dz themselves)."""
     xs, ys = np.asarray(xs, float), np.asarray(ys, float)
     if _terrain is not None:
-        z = np.asarray(_terrain.street_z(xs, ys), float)
-        for poly, zf in _FLATS:
-            z = np.where(shapely.contains_xy(poly, xs, ys), zf, z)
-        return z
+        return surface_z_v(xs, ys, prefer, ease_from)
     return np.array([street_z0(x, y) for x, y in zip(xs, ys)])
 
 
@@ -721,6 +934,7 @@ def main():
         if w["tags"].get("name:en") in COVERED_SOUQS or w["id"] in COVERED_IDS:   # they are the street level
             w["tags"] = dict(w["tags"], layer="0")
     setup_flats(d)
+    setup_ease_zones()
     # the Dome of the Rock's upper platform (OSM retaining wall w137725307): no trees on it
     PLATFORM = next((Polygon(w["pts"]).buffer(0) for w in d["ways"] if w["id"] == 137725307), Polygon())
     souq_lines = [(LineString(w["pts"]), SOUQ_STREETS[souq_key(w)]) for w in d["ways"]
@@ -872,7 +1086,7 @@ def main():
                              and len(b_["outer"][0]) >= 3) if p_ is not None]
     fill = infill.infill(d, [p for _, p, t in cands if t != "context"], CITY.buffer(-16.5),
                          unary_union([HARAM.buffer(2.0), HERO_ZONE.buffer(3.0), blocked.buffer(2.0), wall_slabs.buffer(0.5),
-                                      unary_union(GROUND_HOLES).buffer(0.5), unary_union(PROFILE_OPEN or [Polygon()]),
+                                      unary_union(GROUND_HOLES + [WILSON_HALL]).buffer(0.5), unary_union(PROFILE_OPEN or [Polygon()]),
                                       LineString(ROAD).buffer(ROAD_HALF + 1.0)] + removed + sunk_lanes))
     for k, fp in enumerate(fill):
         cands.append(({"id": "f%d" % k, "tags": {"building": "yes", "note": "infill"}, "outer": [list(fp.exterior.coords)[:-1]]},
@@ -933,6 +1147,23 @@ def main():
     ctx = box(*CONTEXT)
     road = LineString(ROAD).buffer(ROAD_HALF, cap_style="flat", join_style="round")
     bld_union = unary_union([bd["poly"] for bd in buildings])
+    PAIR_EDGES.clear()
+    for i_, (fa, za) in enumerate(ALL_FLATS):
+        for fb_, zb in ALL_FLATS[i_ + 1:]:
+            if abs(za - zb) < 0.1 or not fa.intersects(fb_.buffer(0.5)):
+                continue
+            if any(f_.equals(WILSON_HALL) for f_ in (fa, fb_)):
+                continue                       # a real cliff: the hall's front wall (landmarks_haram builds it)
+            big, zbig, small, zsmall = (fa, za, fb_, zb) if fa.area >= fb_.area else (fb_, zb, fa, za)
+            # where the bigger area really is the ground next door: not where a smaller level area
+            # (lying inside it) owns that ground, e.g. the prayer area around the strip in front of the hall
+            owned = big.difference(unary_union([f_ for f_, _ in ALL_FLATS if f_.area < big.area and f_ is not small]
+                                               or [Polygon()]))
+            edge = small.exterior.intersection(owned.buffer(0.5)).difference(bld_union.buffer(0.5))
+            if edge.length > 0.5:
+                PAIR_EDGES.append((edge, zbig, small, zsmall))
+    street_z0.cache_clear()
+    street_z.cache_clear()
     # stepped streets (pipeline/stairs.py): David Street from its first step, every OSM steps way,
     # and any lane steeper than 7 %, all from the terrain
     open_street = ctx.difference(bld_union).difference(cit_outer).difference(unary_union(GROUND_HOLES))
@@ -943,6 +1174,7 @@ def main():
                            lambda w, ln: infill.street_halfwidth(w["tags"], ln, fp_tree, fp_list),
                            skip=david.buffer(DAVID["width"] / 2 + 1.0).union(box(*CONTEXT).difference(CITY.buffer(80.0))),
                            extra=[(david, DAVID["width"] / 2, DAVID["start_s"], david.length)])
+    st_recs = [r_ for r_ in st_recs if not eased_at(r_["poly"].centroid.x, r_["poly"].centroid.y)]
     steps = [{"poly": poly_json(r_["poly"]), "top": r_["top"], "bottom": r_["bottom"], "dir": r_["dir"],
               "ez": [round(street_z(*c), 3) for c in poly_json(r_["poly"])["ext"]]}     # street at each corner
              for r_ in st_recs]
@@ -963,7 +1195,13 @@ def main():
         st["eo"] = eo
 
     sunken = unary_union([sk["poly"] for sk in SUNKEN])
-    street = ctx.difference(bld_union).difference(cit_outer).difference(steps_union) \
+    # the ground continues under landmark footprints: their builders inset walls inside the OSM ring and
+    # build raised floors, so cutting the ground at the ring left gaps at the foot of their walls
+    def spans_drop(q):
+        zs = street_z_v([c[0] for c in q.exterior.coords], [c[1] for c in q.exterior.coords])
+        return float(np.max(zs) - np.min(zs)) > 1.5
+    ground_cut = unary_union([bd["poly"] for bd in buildings if bd["osm"] not in LANDMARK_IDS])
+    street = ctx.difference(ground_cut).difference(cit_outer).difference(steps_union) \
         .difference(unary_union(GROUND_HOLES)).difference(sunken)
     road_area = street.intersection(road)
     paving_all = street.difference(road)
@@ -979,53 +1217,59 @@ def main():
     ] + [
         ("paving", sk["poly"].difference(bld_union), lambda x, y, dz=sk["dz"]: street_z_v(x, y) + dz) for sk in SUNKEN
     ]
-    # level areas (the Haram esplanade, the Western Wall plaza and prayer area, the Sepulchre parvis)
-    # are tessellated on their own at their exact level: a triangle straddling a flat's edge would
-    # slope from the flat down to the terrain beside it (up to 11 m in 4 m: paved pyramids). Where the
-    # flat and the terrain beside it differ, a retaining wall runs along the edge instead.
-    all_flats = ([(fp_, float(fz_)) for fp_, fz_ in _terrain._runtime()[2]] if _terrain else []) + list(_FLATS)
+    # Level areas are tessellated on their own at their exact level and the rest on the eased surface,
+    # which equals the level at the edge: no triangle straddles an edge, and there is no seam. Where two
+    # level areas meet in open ground (the Western Wall plaza and the lower prayer area) one vertical
+    # face closes the step between them.
     split_regions = []
-    for mat, reg, zf in regions[:3]:
-        for fp_, fz_ in all_flats:
+    seg_flats = [(fp_.segmentize(1.0), fz_, fp_) for fp_, fz_ in ALL_FLATS]   # both sides of an edge get the same
+    for mat, reg, zf in regions[:3]:                                     # vertices: no T-junction cracks
+        for fp_, fz_, orig_ in seg_flats:
             inside = reg.intersection(fp_)
             if not inside.is_empty:
                 k_ = KERB if mat == "setts" else 0.0
-                split_regions.append((mat, inside, lambda x, y, fz_=fz_, k_=k_: np.full(len(x), fz_ - k_)))
+                split_regions.append((mat, inside, lambda x, y, k_=k_, o_=orig_: street_z_v(x, y, o_) - k_))
                 reg = reg.difference(fp_)
-        k_ = KERB if mat == "setts" else 0.0
-        split_regions.append((mat, reg, lambda x, y, k_=k_: terrain_z_v(x, y) - k_))
+        for ez_, ef_ in EASE_ZONES:
+            inside = reg.intersection(ez_)
+            if not inside.is_empty:
+                k_ = KERB if mat == "setts" else 0.0
+                split_regions.append((mat, inside, lambda x, y, k_=k_, e_=ef_: street_z_v(x, y, ease_from=e_) - k_))
+                reg = reg.difference(ez_)
+        split_regions.append((mat, reg, zf))
     regions = split_regions + regions[3:]
-    retaining = []
-    open_ground = street.buffer(0.05)
-    for fp_, fz_ in all_flats:
-        edge = fp_.exterior.intersection(open_ground)
-        for ln_ in getattr(edge, "geoms", [edge]):
-            if ln_.geom_type != "LineString" or ln_.length < 0.3:
-                continue
-            n_ = max(1, int(math.ceil(ln_.length / 2.0)))
-            pts_ = [ln_.interpolate(ln_.length * k / n_).coords[0] for k in range(n_ + 1)]
-            zo = terrain_z_v([p_[0] for p_ in pts_], [p_[1] for p_ in pts_])     # on the edge: the terrain side
-            prepare(street)
-            for k in range(n_):
-                # only where open ground lies on BOTH sides (not along a wall or building face,
-                # e.g. the prayer area against the Western Wall)
-                (ax_, ay_), (bx_, by_) = pts_[k], pts_[k + 1]
-                L_ = math.hypot(bx_ - ax_, by_ - ay_) or 1.0
-                mx_, my_ = (ax_ + bx_) / 2, (ay_ + by_) / 2
-                nx_, ny_ = (by_ - ay_) / L_ * 0.6, -(bx_ - ax_) / L_ * 0.6
-                if not (street.contains(Point(mx_ + nx_, my_ + ny_)) and street.contains(Point(mx_ - nx_, my_ - ny_))):
-                    continue
-                lo_a, lo_b = min(zo[k], fz_), min(zo[k + 1], fz_)
-                hi_a, hi_b = max(zo[k], fz_), max(zo[k + 1], fz_)
-                if max(hi_a - lo_a, hi_b - lo_b) < 0.15:
-                    continue
-                retaining.append({"a": [round(v, 3) for v in pts_[k]], "b": [round(v, 3) for v in pts_[k + 1]],
-                                  "lo": [round(lo_a - 0.3, 3), round(lo_b - 0.3, 3)], "hi": [round(hi_a, 3), round(hi_b, 3)]})
-    print("retaining walls along level areas: %d segments, %.0f m" % (len(retaining), sum(math.dist(r_["a"], r_["b"]) for r_ in retaining)))
+    # under landmark footprints the ground runs 4 cm lower: their floors sit on it without z-fighting
+    lm_polys = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS
+                            and not (bd["osm"] in WALL_LANDMARKS and spans_drop(bd["poly"]))]
+                           or [Polygon()]).segmentize(1.0)
+    # landmarks spanning a level change (the Western Wall: prayer area on one side, the Haram on the other):
+    # flat ground under them at their lowest point, so it meets the low side and never pokes through a face
+    drops = []
+    for bd in buildings:
+        if bd["osm"] in WALL_LANDMARKS and spans_drop(bd["poly"]):
+            q = bd["poly"].segmentize(1.0)
+            zmin = float(np.min(street_z_v([c[0] for c in q.exterior.coords], [c[1] for c in q.exterior.coords])))
+            drops.append((q, zmin - 0.05))
+    lowered = []
+    for mat, reg, zf in regions:
+        for q, zq in drops:
+            under = reg.intersection(q)
+            if not under.is_empty:
+                lowered.append((mat, under, lambda x, y, zq=zq: np.full(len(x), zq)))
+                reg = reg.difference(q)
+        under = reg.intersection(lm_polys)
+        if not under.is_empty:
+            lowered.append((mat, under, lambda x, y, zf=zf: zf(x, y) - 0.04))
+            reg = reg.difference(lm_polys)
+        lowered.append((mat, reg, zf))
+    regions = lowered
     ground = []
     for mat, reg, zf in regions:
         tri = tess_regions(reg, zf)
         ground.append({"mat": mat, "tris": tri})
+    # (the moat, the sunken courts and Wilson's Arch hall have their own walls on their outlines:
+    #  landmarks_gates / landmarks_haram; a seal on the hall front would close its arches)
+    retaining = seal_cracks(ground, skip=unary_union([moat.boundary, sunken.boundary, WILSON_HALL.boundary]).buffer(0.1))
     # kerbs: where road meets paving (not where it meets buildings or the moat)
     kerbs = []
     edge = road_area.boundary.intersection(paving_all.buffer(0.02))
@@ -1307,7 +1551,9 @@ def main():
     print("street plaques:", sorted(c for c, _ in placed_cells))
 
     # ---------------------------------------------------------------- dressing
-    ctxinfo = {"buildings": out_b, "road": road, "road_line": ROAD, "paving": paving_all, "street": street,
+    lm_cut = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS] or [Polygon()])
+    ctxinfo = {"buildings": out_b, "road": road, "road_line": ROAD, "paving": paving_all.difference(lm_cut),
+               "street": street.difference(lm_cut),       # no dressing inside landmarks (ground runs under them)
                "road_area": road_area, "obstacles": obstacles, "moat": moat, "cit_outer": cit_outer,
                "cit_outer_r": cit_outer_r, "moat_edges": moat_edges, "hero": HERO_ZONE, "david": DAVID,
                "street_z": street_z, "kerb": KERB, "gate": GATEHOUSE, "walls": CITY_WALLS, "steps": steps,

@@ -1535,7 +1535,10 @@ def _wilson_hall(mbs, gen, zf, lod=False):
         if e.L < 0.3:
             continue
         face(sol, e, [(0, zf - 0.5), (e.L, zf - 0.5), (e.L, z_top), (0, z_top)], "ashlar", col=WARM)
-    face(sol, ef, [(0, zf - 0.5), (L, zf - 0.5), (L, z_top), (0, z_top)], "ashlar", holes=holes, col=WARM)
+    # the end at the Wall runs 1 m on into it: the Wall's face is inset from its OSM ring, which left a
+    # slit of sky in the corner
+    u0_, u1_ = (0.0, L + 1.0) if east_u == L else (-1.0, L)
+    face(sol, ef, [(u0_, zf - 0.5), (u1_, zf - 0.5), (u1_, z_top), (u0_, z_top)], "ashlar", holes=holes, col=WARM)
     for ol in holes:
         reveal(sol, ef, ol, 0.0, -1.2, "ashlar", col=GREYSTONE, skip_bottom=True)
     cap(sol, ring, z_top, "lime")

@@ -411,12 +411,17 @@ def build_retaining(mb, walls, t=0.3):
             continue
         n = Vector((d.y, -d.x, 0)).normalized() * (t / 2)
         lo, hi = w["lo"], w["hi"]
+        if not w.get("cap", 1):                       # a single face looking at the low side, nothing on top
+            q = [a + UP * lo[0], b + UP * lo[1], b + UP * hi[1], a + UP * hi[0]]
+            mb.poly(q, w.get("mat", "ashlar"), Vector((*w["n"], 0)), col=(0.86, 0.83, 0.77))
+            continue
         for sgn in (1, -1):
             o = n * sgn
             q = [a + o + UP * lo[0], b + o + UP * lo[1], b + o + UP * hi[1], a + o + UP * hi[0]]
             mb.poly(q, "ashlar", o, col=(0.86, 0.83, 0.77))
-        mb.poly([a + n + UP * hi[0], b + n + UP * hi[1], b - n + UP * hi[1], a - n + UP * hi[0]], "dressed", UP,
-                col=(0.9, 0.88, 0.83))
+        if w.get("cap", 1):
+            mb.poly([a + n + UP * hi[0], b + n + UP * hi[1], b - n + UP * hi[1], a - n + UP * hi[0]], "dressed", UP,
+                    col=(0.9, 0.88, 0.83))
 
 
 def wall_runs(walls, tol=0.15):
