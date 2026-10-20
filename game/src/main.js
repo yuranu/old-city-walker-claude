@@ -308,6 +308,7 @@ addEventListener('keydown', (e) => {
   player.keys.add(e.code);
   if (e.code === 'KeyP') hud.togglePhoto(player);
   if (e.code === 'KeyM') hud.toggleBig(player);
+  if (e.code === 'KeyF') hud.flash(player.toggleFly() ? 'Fly mode: WASD where you look · Space/E up · C/Q down · Shift fast · F to land' : 'Walking');
   if (e.code === 'Escape' && hud.big.open) hud.toggleBig(player);
   if (e.code === 'Equal' || e.code === 'NumpadAdd') hud.zoomMap(1);
   if (e.code === 'Minus' || e.code === 'NumpadSubtract') hud.zoomMap(-1);

@@ -22,6 +22,7 @@ export class Player {
     this.yaw = 0;
     this.pitch = 0;
     this.onGround = false;
+    this.flying = false;          // fly mode: no gravity, no collision, move where you look
     this.keys = new Set();
     this._seg = new THREE.Line3();
     this._box = new THREE.Box3();
@@ -77,8 +78,35 @@ export class Player {
     return this._killY;
   }
 
+  // F: fly mode on/off; turning it off lands on the street below
+  toggleFly() {
+    this.flying = !this.flying;
+    this.vel.set(0, 0, 0);
+    if (!this.flying) {
+      const { x, y } = this.plan();
+      this.teleport(x, y, this.heading(), THREE.MathUtils.radToDeg(this.pitch));
+    }
+    return this.flying;
+  }
+
+  fly(dt) {
+    const k = this.keys;
+    const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
+    const side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
+    const up = (k.has('Space') || k.has('KeyE') ? 1 : 0) - (k.has('KeyC') || k.has('KeyQ') ? 1 : 0);
+    if (k.has('ArrowLeft')) this.yaw += 1.8 * dt;
+    if (k.has('ArrowRight')) this.yaw -= 1.8 * dt;
+    const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 45 : 12;
+    const dir = this._d.set(0, 0, -1).applyEuler(new THREE.Euler(this.pitch, this.yaw, 0, 'YXZ'));
+    const right = this._a.set(Math.cos(this.yaw), 0, -Math.sin(this.yaw));
+    this.pos.addScaledVector(dir, fwd * speed * dt).addScaledVector(right, side * speed * dt);
+    this.pos.y += up * speed * dt;
+    this.updateCamera();
+  }
+
   update(dt) {
     if (this.held) { this.vel.set(0, 0, 0); this.updateCamera(); return; }
+    if (this.flying) { this.fly(dt); return; }
     const k = this.keys;
     const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
     const side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);

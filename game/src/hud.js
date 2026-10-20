@@ -185,6 +185,14 @@ export class Hud {
     g.fillRect(40, W - 9, 60, 2);
   }
 
+  flash(msg) {                                  // a short notice under the place name
+    let el = document.getElementById('flash');
+    if (!el) { el = document.createElement('div'); el.id = 'flash'; el.style.cssText = 'margin-top:6px;color:#ffd88a'; this.place.parentNode.appendChild(el); }
+    el.textContent = msg;
+    clearTimeout(this._flashT);
+    this._flashT = setTimeout(() => { el.textContent = ''; }, 5000);
+  }
+
   zoomMap(d) { this.zoom = Math.max(0, Math.min(ZOOMS.length - 1, this.zoom + d)); this.frame = 0; }
 
   // ---------------------------------------------------------------- full map (M)
