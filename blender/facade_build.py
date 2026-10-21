@@ -120,9 +120,12 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
     vs = v1 - rise
     # threshold step (doors and shops): stone block from inside the recess to just outside
     if o.get("threshold"):
-        thr, out = o.get("thr", 0.12), o.get("thr_out", 0.25)
-        mk.box(mb, P((u0 + u1) / 2, 0) + n * ((out - d) / 2), t, n, w + 0.12 + (0.3 if out > 0.35 else 0), d + out,
-               v0 - thr - 0.4, v0, "dressed", col=(0.86, 0.84, 0.8))    # (deep: it meets a sloping street too)
+        thr, out = o.get("thr", 0.12), o.get("thr_out", 0.1)
+        bench = out > 0.35                                 # a souq shop's raised bench (mastaba) reaches the street
+        # a door's sill is a thin slab just proud of the wall (the door sits on the ground in front of it): deep
+        # or wide blocks read as wedges across the lane
+        mk.box(mb, P((u0 + u1) / 2, 0) + n * ((out - d) / 2), t, n, w + (0.42 if bench else 0.06), d + out,
+               v0 - thr - (0.6 if bench else 0.1), v0, "dressed", col=(0.86, 0.84, 0.8))
     # dressed stone surround
     fw = o.get("frame", 0.0)
     for q in others:
@@ -213,12 +216,11 @@ def _blade(mb, P, t, n, fx, signs):
         rect = (x / S, 1 - (y + hh) / S, (x + ww) / S, 1 - y / S)
     for side in (1, -1):
         base = c + t * (0.04 * side) - n * (w / 2)            # clear of the 5 cm frame box (was 1 mm: flicker)
-        if rect:
-            mk.card(mb, base + n * (w / 2) + UP * z0 - UP * z0 + Vector((0, 0, z0)), n * side, UP, w, h, "signs",
+        if rect:                                             # (base is at z0 already: adding z0 again put every
+            mk.card(mb, base + n * (w / 2), n * side, UP, w, h, "signs",       # board's artwork out of sight)
                     rect if side > 0 else (rect[2], rect[1], rect[0], rect[3]))
         else:
-            q = [base + Vector((0, 0, z0)), base + n * w + Vector((0, 0, z0)), base + n * w + Vector((0, 0, z0 + h)),
-                 base + Vector((0, 0, z0 + h))]
+            q = [base, base + n * w, base + n * w + UP * h, base + UP * h]
             mb.poly(q, "lime", t * side, col=(1.0, 0.97, 0.88))
     mk.tube(mb, [P(u, z0 + h + 0.25), P(u, z0 + h + 0.25) + n * (out + 0.05)], 0.02, "iron")
     for uu in (0.25, w - 0.05):
@@ -306,9 +308,9 @@ def facade_extras(mbs, a, b, f, gen, signs, place, tint):
     for fx in f.get("fixtures", []):
         ty = fx["type"]
         if ty == "pipe":
-            p0, p1 = P(fx["u"], fx["z0"] + 0.15) + n * 0.1, P(fx["u"], fx["z1"]) + n * 0.1
-            mk.tube(deco, [p0 + n * 0.12 - UP * 0.15, p0, p1], 0.045, "metal_grey", sides=6)
-            mk.tube(deco, [p1, p1 - n * 0.1], 0.045, "metal_grey", sides=6)
+            p0, p1 = P(fx["u"], fx["z0"] + 0.15) + n * 0.06, P(fx["u"], fx["z1"]) + n * 0.06    # (close to the wall)
+            mk.tube(deco, [p0 + n * 0.1 - UP * 0.13, p0, p1], 0.045, "metal_grey", sides=6)
+            mk.tube(deco, [p1, p1 - n * 0.06], 0.045, "metal_grey", sides=6)
             continue
         if ty == "blade":                                  # board hung perpendicular to the street (notes C6)
             _blade(mbs["signs"], P, t, n, fx, signs)

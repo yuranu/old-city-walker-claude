@@ -707,7 +707,7 @@ def setup_ease_zones(cell=0.5):
 
 
 
-def seal_cracks(ground, tol=0.02, skip=None):
+def seal_cracks(ground, tol=0.003, skip=None):          # (2 cm left hairlines of sky at grazing angles)
     """Faces closing every vertical step between neighbouring ground triangles (a level area against
     the slope, the deck over Wilson's Arch, the ground lowered under landmarks): wherever the piece
     across an edge lies lower, one face from its surface up to this edge, looking at the low side.
@@ -1292,9 +1292,10 @@ def main():
     # world does not end in sky a few dozen metres past the walls (the Hinnom and Kidron valleys)
     far = box(*CONTEXT).buffer(1200.0, join_style="mitre").difference(box(*CONTEXT))
     ground.append({"mat": "grass", "tris": tess_regions(far, street_z_v, cell=40.0, tile=160.0)})
-    # (the moat, the sunken courts and Wilson's Arch hall have their own walls on their outlines:
-    #  landmarks_gates / landmarks_haram; a seal on the hall front would close its arches)
-    retaining = seal_cracks(ground, skip=unary_union([moat.boundary, sunken.boundary, WILSON_HALL.boundary]).buffer(0.1))
+    # (the sunken courts and Wilson's Arch hall have their own walls on their outlines, landmarks_haram; a
+    #  seal on the hall front would close its arches. The Citadel moat is sealed like any other step: its
+    #  foot showed sky)
+    retaining = seal_cracks(ground, skip=unary_union([sunken.boundary, WILSON_HALL.boundary]).buffer(0.1))
     kerbs = []               # (the kerb faces are the crack seals along the roads: seal_cracks)
 
     # ---------------------------------------------------------------- buildings

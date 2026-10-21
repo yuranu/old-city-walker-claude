@@ -278,10 +278,9 @@ def build_ground(mbs, spec):
             fl, ft = mk.tess2d([ext] + s["poly"]["holes"])
         except Exception:  # noqa: BLE001
             continue
-        dx_, dy_ = s.get("dir", [1, 0])
-        tile = 4.0
-        mbs["ground"].tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,
-                           uvfn=lambda p, dx_=dx_, dy_=dy_: ((p[0] * -dy_ + p[1] * dx_) / tile, (p[0] * dx_ + p[1] * dy_) / tile))
+        tile = 4.0                                          # world-aligned like the ground around: one paving
+        mbs["ground"].tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,      # pattern, the risers read
+                           uvfn=lambda p: (p[0] / tile, p[1] / tile))                   # as the steps
         ez = s.get("ez") or [s["top"]] * len(ext)
         for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
             a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way
@@ -388,10 +387,8 @@ def build_steps(mb, steps):
             fl, ft = mk.tess2d([ext] + s["poly"]["holes"])
         except Exception:  # noqa: BLE001
             continue
-        dx_, dy_ = s.get("dir", [1, 0])
-        tile = 4.0
-        mb.tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP,
-                uvfn=lambda p, dx_=dx_, dy_=dy_: ((p[0] * -dy_ + p[1] * dx_) / tile, (p[0] * dx_ + p[1] * dy_) / tile))
+        tile = 4.0                                  # world-aligned like the ground around (one paving pattern)
+        mb.tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP, uvfn=lambda p: (p[0] / tile, p[1] / tile))
         ez = s.get("ez") or [s["top"]] * len(ext)
         for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
             a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way

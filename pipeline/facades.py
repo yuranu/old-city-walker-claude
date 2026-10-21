@@ -65,7 +65,7 @@ def storeys_for(bld, eg, g_storey, storey):
 def layout(bld, i, eg, rng, override=None, ground_at=None):
     """Layout of facade i of bld (openings, balconies, fixtures, signs). ground_at(u): street level in
     front of the facade at u; doors and shops sit on it (on a sloping
-    street too; within 0.6 m of the edge's level eg so they keep clear of the storey above)."""
+    street too; from 1.5 m below to 0.8 m above the edge level eg, clear of the storey above)."""
     a, b = bld["ring"][i], bld["ring"][(i + 1) % len(bld["ring"])]
     _, _, L = edge_frame(a, b)
     st = bld["style"]
@@ -108,7 +108,7 @@ def layout(bld, i, eg, rng, override=None, ground_at=None):
         return draw if auto else fixed
 
     thr = override.get("thr", 0.12) if override else 0.12
-    thr_out = override.get("thr_out", 0.25) if override else 0.25
+    thr_out = override.get("thr_out", 0.1) if override else 0.1     # (0.25 read as slabs across narrow lanes)
     # ---- ground floor
     door_bay = pick(rng.randrange(len(centres)), len(centres) // 2)
     ground_spec = override.get("ground") if override else None
@@ -123,7 +123,7 @@ def layout(bld, i, eg, rng, override=None, ground_at=None):
                 continue
             arch = g.get("arch", "round" if ashlar else "pointed") if g else ("round" if ashlar else "pointed")
             h = g.get("h", min(g_storey - 0.8, 4.0)) if g else min(g_storey - 0.8, 4.0)
-            egd = min(eg + 0.6, max(eg - 0.6, ground_at(c))) if ground_at else eg
+            egd = min(eg + 0.8, max(eg - 1.5, ground_at(c))) if ground_at else eg
             v0, v1 = egd + thr, egd + thr + h
             vs = v1 - arch_rise(arch, w)
             door = g.get("door") if g and g.get("door") else pick(rng.choice(SHOP_DOORS), SHOP_DOORS[0])
@@ -134,8 +134,9 @@ def layout(bld, i, eg, rng, override=None, ground_at=None):
             if souq and auto and rng.random() < 0.35 and k + 1 < len(centres):   # blade board on the pier
                 pu = (c + w / 2 + centres[k + 1] - (g2w(ground_spec, k + 1, w)) / 2) / 2
                 f["fixtures"].append({"type": "blade", "u": round(pu, 2), "z": eg + 2.3, "h": 0.6, "out": 1.25,
-                                      "cell": rng.choice([None, None, None, "sign_souvenirs", "sign_jewelry", "sign_textiles",
-                                                          "sign_spices", "sign_ceramics"])})
+                                      "cell": rng.choice(["sign_souvenirs", "sign_jewelry", "sign_textiles", "sign_spices",
+                                                          "sign_ceramics", "sign_icons", "sign_judaica", "sign_cafe"])})
+                # (a blank cream board read as a missing texture)
             # a sign the override names is always built (any tier, souq or not, auto or not);
             # random fascia signs only on hero shops outside the souq
             named = g.get("sign") if g and g.get("sign") else None
@@ -158,7 +159,7 @@ def layout(bld, i, eg, rng, override=None, ground_at=None):
         elif kind == "door":
             w = g.get("w", 1.3) if g else 1.3
             arch = g.get("arch", "round") if g else "round"
-            v0 = (min(eg + 0.6, max(eg - 0.6, ground_at(c))) if ground_at else eg) + thr
+            v0 = (min(eg + 0.8, max(eg - 1.5, ground_at(c))) if ground_at else eg) + thr
             f["openings"].append({"kind": "door", "u0": c - w / 2, "u1": c + w / 2, "v0": v0,
                                   "v1": v0 + (g.get("h", 2.75) if g else 2.75),
                                   "arch": arch, "depth": 0.4, "split": None, "lo": g.get("door", "door_wood") if g else
@@ -279,7 +280,7 @@ def layout(bld, i, eg, rng, override=None, ground_at=None):
             u += rng.uniform(4.5, 8.0) if hero else rng.uniform(9.0, 15.0)
         if auto and rng.random() < 0.45:
             pu = rng.choice([0.35, L - 0.35])
-            f["fixtures"].append({"type": "pipe", "u": pu, "z0": eg, "z1": top - 0.9})
+            f["fixtures"].append({"type": "pipe", "u": pu, "z0": ground_at(pu) if ground_at else eg, "z1": top - 0.9})
     # ---- wall lanterns + cable runs along street facades
     if hero and auto and L > 6:
         u = rng.uniform(2.0, 4.0)

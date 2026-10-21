@@ -299,6 +299,20 @@ def bark(N=512, tile=1.0):
     return to_img(rgb), normal_map(h.astype(np.float32), px)
 
 
+def lime(N=512, tile=2.0):
+    """Lime plaster / pale limestone (roofs, bollards, benches, blank boards were a flat colour): soft mottling,
+    fine grain, faint weathering streaks."""
+    px = N / tile
+    mott = fbm(N, N, 4, 5)
+    grain = vnoise(N, N, 160, 160)
+    streak = 0.6 * vnoise(N, N, 3, 40) + 0.4 * vnoise(N, N, 6, 80)        # long in y: rain streaks
+    base = np.array([0.80, 0.77, 0.71], np.float32)          # the flat lime it replaces: (0.74, 0.71, 0.65)
+    rgb = base * (0.9 + 0.14 * mott[..., None]) * (0.96 + 0.06 * grain[..., None])
+    rgb = rgb * (1 - smooth(0.7, 0.95, streak)[..., None] * 0.05)
+    h = mott * 0.003 + grain * 0.0015
+    return to_img(rgb), normal_map(h.astype(np.float32), px)
+
+
 def rolldown(color, seed=0):
     H = W = CELL
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
@@ -696,6 +710,10 @@ def main():
     d.save(OUT / "bark_diff.jpg", quality=90)
     n.save(OUT / "bark_nor.png")
     man["bark"] = {"diff": "data/textures/gen/bark_diff.jpg", "nor": "data/textures/gen/bark_nor.png", "tile": 1.0}
+    d, n = lime()
+    d.save(OUT / "lime_diff.jpg", quality=90)
+    n.save(OUT / "lime_nor.png")
+    man["lime"] = {"diff": "data/textures/gen/lime_diff.jpg", "nor": "data/textures/gen/lime_nor.png", "tile": 2.0}
     (OUT / "manifest.json").write_text(json.dumps(man, indent=1))
     print("wrote", sorted(p.name for p in OUT.iterdir()))
 

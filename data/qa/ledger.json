@@ -3007,7 +3007,7 @@
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3030,13 +3030,14 @@
     "source": null,
     "view": "w1546610953_2_d",
     "key": "flicker@60,-94"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@13,-104": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3059,13 +3060,14 @@
     "source": null,
     "view": "air_40_-356",
     "key": "hole@13,-104"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@9,-93": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3088,13 +3090,14 @@
     "source": null,
     "view": "air_40_-311",
     "key": "hole@9,-93"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@22,-93": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3117,13 +3120,14 @@
     "source": null,
     "view": "air_85_-311",
     "key": "hole@22,-93"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@19,-108": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3146,13 +3150,14 @@
     "source": null,
     "view": "air_130_-401",
     "key": "hole@19,-108"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@27,-115": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3175,13 +3180,14 @@
     "source": null,
     "view": "air_130_-401",
     "key": "hole@27,-115"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@47,-115": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3204,13 +3210,14 @@
     "source": null,
     "view": "air_175_-401",
     "key": "hole@47,-115"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@57,-106": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3233,13 +3240,14 @@
     "source": null,
     "view": "air_175_-401",
     "key": "hole@57,-106"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@53,-112": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3262,13 +3270,14 @@
     "source": null,
     "view": "air_175_-401",
     "key": "hole@53,-112"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@54,-112": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3291,13 +3300,14 @@
     "source": null,
     "view": "air_175_-401",
     "key": "hole@54,-112"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@59,-104": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3320,13 +3330,14 @@
     "source": null,
     "view": "air_220_-356",
     "key": "hole@59,-104"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@66,-93": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3349,13 +3360,14 @@
     "source": null,
     "view": "air_265_-311",
     "key": "hole@66,-93"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@70,-114": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3378,13 +3390,14 @@
     "source": null,
     "view": "air_310_-401",
     "key": "hole@70,-114"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|hole@74,-116": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3407,13 +3420,14 @@
     "source": null,
     "view": "air_310_-401",
     "key": "hole@74,-116"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s02_zion|coplanar@64,-94": {
    "region": "s02_zion",
    "first": "2026-10-21 07:34",
    "last": "2026-10-21 07:34",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -3428,13 +3442,14 @@
     "source": "overlapping geometry: bld_f185 vs bld_f185",
     "view": null,
     "key": "coplanar@64,-94"
-   }
+   },
+   "fixed": "2026-10-21 10:26"
   },
   "s01_armenian|flicker@37,-41": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3457,13 +3472,14 @@
     "source": null,
     "view": "w26492729_1_f",
     "key": "flicker@37,-41"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@48,-36": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3486,13 +3502,14 @@
     "source": null,
     "view": "w26492729_5_f",
     "key": "flicker@48,-36"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@58,-43": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3515,13 +3532,14 @@
     "source": null,
     "view": "w26492729_7_f",
     "key": "flicker@58,-43"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@47,-64": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3544,13 +3562,14 @@
     "source": null,
     "view": "w26492744_9_b",
     "key": "flicker@47,-64"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@63,-49": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3573,13 +3592,14 @@
     "source": null,
     "view": "w254576592_1_b",
     "key": "flicker@63,-49"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@61,-50": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3602,13 +3622,14 @@
     "source": null,
     "view": "w254576592_1_b",
     "key": "flicker@61,-50"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@58,-52": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3631,13 +3652,14 @@
     "source": null,
     "view": "w254576592_1_b",
     "key": "flicker@58,-52"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@56,-52": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3660,13 +3682,14 @@
     "source": null,
     "view": "w290677051_2_b",
     "key": "flicker@56,-52"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@69,-60": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3689,13 +3712,14 @@
     "source": null,
     "view": "w290677051_4_d",
     "key": "flicker@69,-60"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@64,-64": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3718,13 +3742,14 @@
     "source": null,
     "view": "w290677051_4_d",
     "key": "flicker@64,-64"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@61,-65": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3747,13 +3772,14 @@
     "source": null,
     "view": "w290677051_4_d",
     "key": "flicker@61,-65"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|hole@30,-58": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -3776,13 +3802,14 @@
     "source": null,
     "view": "w722675056_0_b",
     "key": "hole@30,-58"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@47,-57": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3805,13 +3832,14 @@
     "source": null,
     "view": "w1545835308_0_d",
     "key": "flicker@47,-57"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@44,-58": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3834,13 +3862,14 @@
     "source": null,
     "view": "w1545835308_0_d",
     "key": "flicker@44,-58"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@21,-79": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3863,30 +3892,31 @@
     "source": null,
     "view": "w1546332719_2_d",
     "key": "flicker@21,-79"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@21,-71": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 07:55",
+   "last": "2026-10-21 10:18",
    "status": "open",
    "finding": {
     "kind": "flicker",
     "level": 0,
     "severity": "high",
     "at": [
-     86.1,
-     -283.1
+     84.4,
+     -280.0
     ],
-    "what": "surface flips between frames 1 cm apart (2020 px)",
+    "what": "surface flips between frames 1 cm apart (1677 px)",
     "evidence": {
-     "crop": "crops/w1546332719_2_d_flick_321_91.png",
-     "px": 2020,
+     "crop": "crops/w1546332719_2_d_flick_467_204.png",
+     "px": 1677,
      "bbox": [
-      321,
-      91,
-      358,
-      220
+      467,
+      204,
+      478,
+      394
      ]
     },
     "source": null,
@@ -3898,7 +3928,7 @@
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3921,13 +3951,14 @@
     "source": null,
     "view": "w1546336247_0_f",
     "key": "flicker@20,-70"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|flicker@19,-67": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -3950,12 +3981,13 @@
     "source": null,
     "view": "w1546336247_0_f",
     "key": "flicker@19,-67"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|hole@4,-33": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 07:55",
+   "last": "2026-10-21 10:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -3965,10 +3997,10 @@
      19.5,
      -128.7
     ],
-    "what": "sky visible below the horizon (5449 px)",
+    "what": "sky visible below the horizon (5441 px)",
     "evidence": {
      "crop": "crops/air_28_-145_hole_549_380.png",
-     "px": 5449,
+     "px": 5441,
      "bbox": [
       549,
       380,
@@ -3984,7 +4016,7 @@
   "s01_armenian|hole@6,-33": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 07:55",
+   "last": "2026-10-21 10:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -3994,15 +4026,15 @@
      25.3,
      -131.0
     ],
-    "what": "sky visible below the horizon (530 px)",
+    "what": "sky visible below the horizon (532 px)",
     "evidence": {
      "crop": "crops/air_28_-145_hole_725_478.png",
-     "px": 530,
+     "px": 532,
      "bbox": [
       725,
       478,
-      845,
-      549
+      844,
+      550
      ]
     },
     "source": null,
@@ -4013,7 +4045,7 @@
   "s01_armenian|hole@7,-17": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 07:55",
+   "last": "2026-10-21 10:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4042,7 +4074,7 @@
   "s01_armenian|hole@10,-29": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 07:55",
+   "last": "2026-10-21 10:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4072,7 +4104,7 @@
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4087,13 +4119,14 @@
     "source": "overlapping geometry: bld_w290687206 vs bld_f493",
     "view": null,
     "key": "coplanar@61,-59"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s01_armenian|coplanar@52,-37": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
    "last": "2026-10-21 07:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4108,30 +4141,31 @@
     "source": "overlapping geometry: bld_f166 vs bld_f166",
     "view": null,
     "key": "coplanar@52,-37"
-   }
+   },
+   "fixed": "2026-10-21 10:18"
   },
   "s03_christian_w|hole@26,64": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 08:11",
+   "last": "2026-10-21 10:40",
    "status": "open",
    "finding": {
     "kind": "hole",
     "level": 0,
     "severity": "high",
     "at": [
-     105.5,
-     258.2
+     107.8,
+     257.6
     ],
-    "what": "sky visible below the horizon (220 px)",
+    "what": "sky visible below the horizon (71 px)",
     "evidence": {
-     "crop": "crops/w26492707_3_f_hole_577_268.png",
-     "px": 220,
+     "crop": "crops/w26492707_3_f_hole_610_309.png",
+     "px": 71,
      "bbox": [
-      577,
-      268,
-      659,
-      272
+      610,
+      309,
+      617,
+      318
      ]
     },
     "source": null,
@@ -4142,24 +4176,24 @@
   "s03_christian_w|flicker@-25,68": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 08:11",
+   "last": "2026-10-21 10:40",
    "status": "open",
    "finding": {
     "kind": "flicker",
     "level": 0,
     "severity": "high",
     "at": [
-     -97.2,
-     274.6
+     -97.3,
+     274.4
     ],
-    "what": "surface flips between frames 1 cm apart (151 px)",
+    "what": "surface flips between frames 1 cm apart (234 px)",
     "evidence": {
      "crop": "crops/w298277801_0_d_flick_350_18.png",
-     "px": 151,
+     "px": 234,
      "bbox": [
       350,
       18,
-      361,
+      367,
       31
      ]
     },
@@ -4171,7 +4205,7 @@
   "s03_christian_w|hole@-31,37": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 08:11",
+   "last": "2026-10-21 10:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4181,10 +4215,10 @@
      -121.0,
      150.2
     ],
-    "what": "sky visible below the horizon (275 px)",
+    "what": "sky visible below the horizon (276 px)",
     "evidence": {
      "crop": "crops/air_-149_203_hole_587_63.png",
-     "px": 275,
+     "px": 276,
      "bbox": [
       587,
       63,
@@ -4200,7 +4234,7 @@
   "s03_christian_w|hole@-22,47": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 08:11",
+   "last": "2026-10-21 10:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4229,7 +4263,7 @@
   "s03_christian_w|hole@-11,25": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 08:11",
+   "last": "2026-10-21 10:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4258,7 +4292,7 @@
   "s03_christian_w|hole@-2,2": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 08:11",
+   "last": "2026-10-21 10:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4288,7 +4322,7 @@
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4303,13 +4337,14 @@
     "source": "overlapping geometry: bld_f192 vs bld_f192",
     "view": null,
     "key": "coplanar@12,45"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@10,44": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4324,13 +4359,14 @@
     "source": "overlapping geometry: bld_f192 vs bld_f192",
     "view": null,
     "key": "coplanar@10,44"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@37,65": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4345,13 +4381,14 @@
     "source": "overlapping geometry: bld_f452 vs bld_f452",
     "view": null,
     "key": "coplanar@37,65"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@18,47": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4366,13 +4403,14 @@
     "source": "overlapping geometry: bld_f192 vs bld_f192",
     "view": null,
     "key": "coplanar@18,47"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@19,48": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4387,13 +4425,14 @@
     "source": "overlapping geometry: bld_f192 vs bld_f192",
     "view": null,
     "key": "coplanar@19,48"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@10,20": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4408,13 +4447,14 @@
     "source": "overlapping geometry: bld_f510 vs bld_w1394034704",
     "view": null,
     "key": "coplanar@10,20"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@-11,25": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4429,13 +4469,14 @@
     "source": "overlapping geometry: bld_f205 vs bld_r3864581",
     "view": null,
     "key": "coplanar@-11,25"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "s03_christian_w|coplanar@5,44": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-21 08:11",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -4450,7 +4491,8 @@
     "source": "overlapping geometry: bld_f192 vs bld_f192",
     "view": null,
     "key": "coplanar@5,44"
-   }
+   },
+   "fixed": "2026-10-21 10:40"
   },
   "pilot_jaffa|hole@1,-13": {
    "region": "pilot_jaffa",
@@ -4947,6 +4989,534 @@
     "source": "overlapping geometry: bld_w1393928800 vs bld_r3864551",
     "view": null,
     "key": "coplanar@24,11"
+   }
+  },
+  "s00_jaffa|flicker@23,7": {
+   "region": "s00_jaffa",
+   "first": "2026-10-21 10:06",
+   "last": "2026-10-21 10:06",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     95.5,
+     31.5
+    ],
+    "what": "surface flips between frames 1 cm apart (1073 px)",
+    "evidence": {
+     "crop": "crops/w1393445771_4_f_flick_37_0.png",
+     "px": 1073,
+     "bbox": [
+      37,
+      0,
+      56,
+      128
+     ]
+    },
+    "source": null,
+    "view": "w1393445771_4_f",
+    "key": "flicker@23,7"
+   }
+  },
+  "s00_jaffa|hole@5,-5": {
+   "region": "s00_jaffa",
+   "first": "2026-10-21 10:06",
+   "last": "2026-10-21 10:06",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     23.4,
+     -17.7
+    ],
+    "what": "sky visible below the horizon (1469 px)",
+    "evidence": {
+     "crop": "crops/air_22_23_hole_870_254.png",
+     "px": 1469,
+     "bbox": [
+      870,
+      254,
+      957,
+      298
+     ]
+    },
+    "source": null,
+    "view": "air_22_23",
+    "key": "hole@5,-5"
+   }
+  },
+  "s00_jaffa|hole@16,-11": {
+   "region": "s00_jaffa",
+   "first": "2026-10-21 10:06",
+   "last": "2026-10-21 10:06",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     66.9,
+     -42.2
+    ],
+    "what": "sky visible below the horizon (169 px)",
+    "evidence": {
+     "crop": "crops/air_67_-22_hole_29_423.png",
+     "px": 169,
+     "bbox": [
+      29,
+      423,
+      55,
+      448
+     ]
+    },
+    "source": null,
+    "view": "air_67_-22",
+    "key": "hole@16,-11"
+   }
+  },
+  "s00_jaffa|blocked_street@12,5": {
+   "region": "s00_jaffa",
+   "first": "2026-10-21 10:06",
+   "last": "2026-10-21 10:06",
+   "status": "open",
+   "finding": {
+    "kind": "blocked_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     50.3,
+     20.0
+    ],
+    "what": "551972654 runs 7.6 m inside w290812336",
+    "evidence": {},
+    "source": "footprints / infill / passages",
+    "view": null,
+    "key": "blocked_street@12,5"
+   }
+  },
+  "s00_jaffa|coplanar@24,11": {
+   "region": "s00_jaffa",
+   "first": "2026-10-21 10:06",
+   "last": "2026-10-21 10:06",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     97.6,
+     47.3,
+     3.6
+    ],
+    "what": "coplanar faces s00_jaffa:bld_w1393928800 / s03_christian_w:bld_r3864551 (0.05 m2, dressed.001/rubble.003)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1393928800 vs bld_r3864551",
+    "view": null,
+    "key": "coplanar@24,11"
+   }
+  },
+  "s01_armenian|flicker@21,-73": {
+   "region": "s01_armenian",
+   "first": "2026-10-21 10:18",
+   "last": "2026-10-21 10:18",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     87.8,
+     -291.6
+    ],
+    "what": "surface flips between frames 1 cm apart (216 px)",
+    "evidence": {
+     "crop": "crops/w1546332719_2_d_flick_362_57.png",
+     "px": 216,
+     "bbox": [
+      362,
+      57,
+      373,
+      77
+     ]
+    },
+    "source": null,
+    "view": "w1546332719_2_d",
+    "key": "flicker@21,-73"
+   }
+  },
+  "s01_armenian|flicker@20,-69": {
+   "region": "s01_armenian",
+   "first": "2026-10-21 10:18",
+   "last": "2026-10-21 10:18",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     81.3,
+     -276.0
+    ],
+    "what": "surface flips between frames 1 cm apart (305 px)",
+    "evidence": {
+     "crop": "crops/w1546336247_0_f_flick_120_0.png",
+     "px": 305,
+     "bbox": [
+      120,
+      0,
+      130,
+      35
+     ]
+    },
+    "source": null,
+    "view": "w1546336247_0_f",
+    "key": "flicker@20,-69"
+   }
+  },
+  "s03_christian_w|flicker@-29,71": {
+   "region": "s03_christian_w",
+   "first": "2026-10-21 10:40",
+   "last": "2026-10-21 10:40",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     -115.3,
+     285.4
+    ],
+    "what": "surface flips between frames 1 cm apart (221 px)",
+    "evidence": {
+     "crop": "crops/w298277801_0_d_flick_346_56.png",
+     "px": 221,
+     "bbox": [
+      346,
+      56,
+      363,
+      70
+     ]
+    },
+    "source": null,
+    "view": "w298277801_0_d",
+    "key": "flicker@-29,71"
+   }
+  },
+  "s03_christian_w|hole@-14,24": {
+   "region": "s03_christian_w",
+   "first": "2026-10-21 10:40",
+   "last": "2026-10-21 10:40",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     -55.2,
+     96.5
+    ],
+    "what": "sky visible below the horizon (96 px)",
+    "evidence": {
+     "crop": "crops/w1395896903_0_f_hole_355_394.png",
+     "px": 96,
+     "bbox": [
+      355,
+      394,
+      357,
+      447
+     ]
+    },
+    "source": null,
+    "view": "w1395896903_0_f",
+    "key": "hole@-14,24"
+   }
+  },
+  "s03_christian_w|coplanar@34,64": {
+   "region": "s03_christian_w",
+   "first": "2026-10-21 10:40",
+   "last": "2026-10-21 10:40",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     137.6,
+     258.1,
+     -2.0
+    ],
+    "what": "coplanar faces base:steps / s03_christian_w:bld_w1393409178 (0.20 m2, paving/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: steps vs bld_w1393409178",
+    "view": null,
+    "key": "coplanar@34,64"
+   }
+  },
+  "s03_christian_w|coplanar@-12,84": {
+   "region": "s03_christian_w",
+   "first": "2026-10-21 10:40",
+   "last": "2026-10-21 10:40",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     -45.1,
+     339.1,
+     19.6
+    ],
+    "what": "coplanar faces base:city_walls_osm / s03_christian_w:bld_w290818505 (0.04 m2, fort/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w290818505",
+    "view": null,
+    "key": "coplanar@-12,84"
+   }
+  },
+  "s04_sepulchre|hole@86,59": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     347.2,
+     237.7
+    ],
+    "what": "sky visible below the horizon (1972 px)",
+    "evidence": {
+     "crop": "crops/w44376193_5_f_hole_136_335.png",
+     "px": 1972,
+     "bbox": [
+      136,
+      335,
+      366,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w44376193_5_f",
+    "key": "hole@86,59"
+   }
+  },
+  "s04_sepulchre|coplanar@43,65": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     175.1,
+     262.6,
+     -6.4
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_f139 / s04_sepulchre:bld_w620113752 (0.12 m2, dressed.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f139 vs bld_w620113752",
+    "view": null,
+    "key": "coplanar@43,65"
+   }
+  },
+  "s04_sepulchre|coplanar@45,66": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     182.7,
+     267.9,
+     2.3
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_f451 / s04_sepulchre:bld_w1393409164 (0.09 m2, rubble.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f451 vs bld_w1393409164",
+    "view": null,
+    "key": "coplanar@45,66"
+   }
+  },
+  "s04_sepulchre|coplanar@76,72": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     305.2,
+     290.6,
+     -17.2
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_f518 / s04_sepulchre:bld_r3864696 (0.09 m2, dressed.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f518 vs bld_r3864696",
+    "view": null,
+    "key": "coplanar@76,72"
+   }
+  },
+  "s04_sepulchre|coplanar@71,81": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     286.8,
+     327.4,
+     -9.7
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_f516 / s04_sepulchre:bld_w1393408267 (0.06 m2, rubble.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f516 vs bld_w1393408267",
+    "view": null,
+    "key": "coplanar@71,81"
+   }
+  },
+  "s04_sepulchre|coplanar@76,103": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     305.1,
+     412.3,
+     -23.6
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_f442 / s04_sepulchre:bld_w1392901032 (0.05 m2, dressed.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f442 vs bld_w1392901032",
+    "view": null,
+    "key": "coplanar@76,103"
+   }
+  },
+  "s04_sepulchre|coplanar@44,65": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 11:02",
+   "last": "2026-10-21 11:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     176.0,
+     262.5,
+     -6.4
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_f139 / s04_sepulchre:bld_w620113752 (0.05 m2, dressed.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f139 vs bld_w620113752",
+    "view": null,
+    "key": "coplanar@44,65"
+   }
+  },
+  "s07_kotel|flicker@191,-32": {
+   "region": "s07_kotel",
+   "first": "2026-10-21 11:13",
+   "last": "2026-10-21 11:13",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     766.2,
+     -127.0
+    ],
+    "what": "surface flips between frames 1 cm apart (5146 px)",
+    "evidence": {
+     "crop": "crops/w288016688_0_d_flick_307_0.png",
+     "px": 5146,
+     "bbox": [
+      307,
+      0,
+      325,
+      277
+     ]
+    },
+    "source": null,
+    "view": "w288016688_0_d",
+    "key": "flicker@191,-32"
+   }
+  },
+  "s07_kotel|flicker@192,-33": {
+   "region": "s07_kotel",
+   "first": "2026-10-21 11:13",
+   "last": "2026-10-21 11:13",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     769.0,
+     -131.7
+    ],
+    "what": "surface flips between frames 1 cm apart (502 px)",
+    "evidence": {
+     "crop": "crops/w288016688_0_d_flick_308_448.png",
+     "px": 502,
+     "bbox": [
+      308,
+      448,
+      325,
+      480
+     ]
+    },
+    "source": null,
+    "view": "w288016688_0_d",
+    "key": "flicker@192,-33"
+   }
+  },
+  "s07_kotel|flicker@192,-34": {
+   "region": "s07_kotel",
+   "first": "2026-10-21 11:13",
+   "last": "2026-10-21 11:13",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     769.3,
+     -132.2
+    ],
+    "what": "surface flips between frames 1 cm apart (911 px)",
+    "evidence": {
+     "crop": "crops/w288016688_0_d_flick_307_579.png",
+     "px": 911,
+     "bbox": [
+      307,
+      579,
+      325,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w288016688_0_d",
+    "key": "flicker@192,-34"
    }
   }
  }

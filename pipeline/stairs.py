@@ -29,6 +29,8 @@ GRADE_RULE = False         # step every lane steeper than GRADE (off: only OSM s
 PED = {"footway", "pedestrian", "steps", "path", "living_street"}
 TURN = 0.3          # a reversal of the level profile by more than this (m) ends a flight
 CHORD_TOL = 0.25    # equal treads when the profile stays this close (m) to the straight line
+WIDEN = 1.2         # treads reach this much past the measured half-width, clipped to the open street: a stepped
+                    # lane runs wall to wall (a strip of ramp beside the steps, with cheeks, read as broken)
 
 
 def steep_intervals(ln, zfun, always=False, sample=2.0, min_len=4.0):
@@ -159,7 +161,7 @@ def build(ways, zfun, open_street, halfwidth, skip=None, extra=()):
         if t["highway"] != "steps" and not GRADE_RULE:
             continue                 # steep lanes stay ramps: inventing steps put stairs where there are none
         for s0, s1 in steep_intervals(ln, zfun, always=t["highway"] == "steps"):
-            runs.append((ln, halfwidth(w, ln), s0, s1))
+            runs.append((ln, halfwidth(w, ln) + WIDEN, s0, s1))
     placed, polys = [], []
     tree = None
     for ln, hw, s0, s1 in runs:
