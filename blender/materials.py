@@ -89,7 +89,12 @@ def build(root: Path):
     signs = root / "data/textures/gen/signs.png"
     if signs.exists():
         mats["signs"] = _textured("signs", signs, alpha="mask", rough=0.6)
+    if "bark" in gen:                         # trunks: generated bark (a flat colour read as untextured)
+        mats["bark"] = _textured("bark", root / gen["bark"]["diff"], root / gen["bark"]["nor"], rough=0.9)
+        tiles["bark"] = gen["bark"]["tile"]
     for name, (col, rough, metal) in FLAT.items():
+        if name in mats:
+            continue
         m = bpy.data.materials.new(name)
         m.use_nodes = True
         bsdf = next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")

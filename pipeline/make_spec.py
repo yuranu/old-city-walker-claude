@@ -1060,12 +1060,14 @@ def main():
     over, over_fp, vaulted, drop = [], {}, [], set()     # over: (way, stretch under the footprint, hw, building id)
     sunk_lanes = []          # lanes OSM puts below layer 0 that run under one: street level there, kept free of infill
     for b_, p_, t_ in cands:
-        if not raised(b_) or t_ != "mid" or b_["id"] in LANDMARK_IDS or HARAM.intersects(p_):
+        if t_ != "mid" or b_["id"] in LANDMARK_IDS or HARAM.contains(p_.representative_point()):
             continue
         for k in lane_tree.query(p_):
             w_, ln_ = lanes[k]                   # (the lane runs under it, not along its edge)
             parts = [s_ for s_ in lines_of(ln_.intersection(p_)) if s_.length >= 1.0
                      and p_.exterior.distance(s_.interpolate(0.5, normalized=True)) >= 0.5]
+            if not raised(b_):                   # an ordinary footprint a mapped lane runs right through
+                parts = [s_ for s_ in parts if s_.length >= 3.0]    # (rooms over the lane, as so often here)
             if parts and b_["tags"].get("building") == "roof" and squares.contains(p_.representative_point()):
                 drop.add(b_["id"])
                 break
@@ -1118,6 +1120,10 @@ def main():
                 for j in range(math.floor(by0 / G), math.floor(by1 / G) + 1)]
     buildings = []
     for b, p, tier in cands:
+        if tier in ("mid", "context") and b["id"] not in LANDMARK_IDS:
+            # 8 cm larger: OSM neighbours that should touch often leave a few cm between them, a slit of sky
+            # down the whole wall; grown, the priority pass below closes every gap under 16 cm
+            p = p.buffer(0.08, join_style="mitre")
         rest = p.difference(blocked) if blocked.intersects(p) else p
         for wid, hw_ in CLIP_STREETS.get(b["id"], []):
             wpts = next((w_["pts"] for w_ in d["ways"] if w_["id"] == wid), None)
@@ -1282,6 +1288,10 @@ def main():
     for mat, reg, zf in regions:
         tri = tess_regions(reg, zf)
         ground.append({"mat": mat, "tris": tri})
+    # far terrain: a coarse ring 1.2 km out around the context box, so that from the walls or the air the
+    # world does not end in sky a few dozen metres past the walls (the Hinnom and Kidron valleys)
+    far = box(*CONTEXT).buffer(1200.0, join_style="mitre").difference(box(*CONTEXT))
+    ground.append({"mat": "grass", "tris": tess_regions(far, street_z_v, cell=40.0, tile=160.0)})
     # (the moat, the sunken courts and Wilson's Arch hall have their own walls on their outlines:
     #  landmarks_gates / landmarks_haram; a seal on the hall front would close its arches)
     retaining = seal_cracks(ground, skip=unary_union([moat.boundary, sunken.boundary, WILSON_HALL.boundary]).buffer(0.1))
@@ -1329,6 +1339,11 @@ def main():
         g_lo = min(min(zs), min(eground))
         hb = hero.BUILDING.get(osm, {})
         h, sid = height_of(osm, bd["tags"], q, bd["tier"])
+        # a footprint narrower than 1.5 m is a wall OSM maps as a building (garden walls, the partitions at
+        # the Kotel entrance): a 2.6 m wall without openings, not a blank block a storey or two high
+        thin = bd["tier"] == "mid" and osm not in LANDMARK_IDS and osm not in hero.BUILDING and q.buffer(-0.75).is_empty
+        if thin:
+            h = min(h, 2.6)
         ashlar = hb["wall"] == "ashlar" if "wall" in hb else osm in ASHLAR
         shops = hb.get("shops", osm in SHOPS)
         style = {"wall": hb.get("wall", "ashlar" if ashlar else "rubble"), "shops": shops,
@@ -1347,7 +1362,7 @@ def main():
             rec["facades"] = []
             fov = hero.facades_for(osm, r)
             for i in range(len(r)):
-                if not exposed[i]:
+                if not exposed[i] or thin:
                     continue
                 ov = fov.get(i)
                 a_, b_ = r[i], r[(i + 1) % len(r)]
@@ -1374,7 +1389,11 @@ def main():
                                                    width=2 * dist)
                             ov = {**base_ov, **(ov or {})}
                         break
-                fac = facades.layout(rec, i, eground[i], brng, ov)
+                a_, b_ = r[i], r[(i + 1) % len(r)]
+                (tx_, ty_), (nx_, ny_), _ = edge_frame(a_, b_)
+                fac = facades.layout(rec, i, eground[i], brng, ov,
+                                     ground_at=lambda u, a_=a_, tx_=tx_, ty_=ty_, nx_=nx_, ny_=ny_:
+                                     street_z(a_[0] + tx_ * u + nx_ * 0.6, a_[1] + ty_ * u + ny_ * 0.6))
                 # balconies must not touch any wall (stepped facades, narrow alleys)
                 a, b = r[i], r[(i + 1) % len(r)]
                 (tx, ty), (nx, ny), _ = edge_frame(a, b)

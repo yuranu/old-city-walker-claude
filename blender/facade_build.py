@@ -122,7 +122,7 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
     if o.get("threshold"):
         thr, out = o.get("thr", 0.12), o.get("thr_out", 0.25)
         mk.box(mb, P((u0 + u1) / 2, 0) + n * ((out - d) / 2), t, n, w + 0.12 + (0.3 if out > 0.35 else 0), d + out,
-               v0 - thr - 0.04, v0, "dressed", col=(0.86, 0.84, 0.8))
+               v0 - thr - 0.4, v0, "dressed", col=(0.86, 0.84, 0.8))    # (deep: it meets a sloping street too)
     # dressed stone surround
     fw = o.get("frame", 0.0)
     for q in others:

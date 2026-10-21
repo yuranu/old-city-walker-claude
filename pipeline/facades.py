@@ -62,7 +62,10 @@ def storeys_for(bld, eg, g_storey, storey):
     return out
 
 
-def layout(bld, i, eg, rng, override=None):
+def layout(bld, i, eg, rng, override=None, ground_at=None):
+    """Layout of facade i of bld (openings, balconies, fixtures, signs). ground_at(u): street level in
+    front of the facade at u; doors and shops sit on it (on a sloping
+    street too; within 0.6 m of the edge's level eg so they keep clear of the storey above)."""
     a, b = bld["ring"][i], bld["ring"][(i + 1) % len(bld["ring"])]
     _, _, L = edge_frame(a, b)
     st = bld["style"]
@@ -120,7 +123,8 @@ def layout(bld, i, eg, rng, override=None):
                 continue
             arch = g.get("arch", "round" if ashlar else "pointed") if g else ("round" if ashlar else "pointed")
             h = g.get("h", min(g_storey - 0.8, 4.0)) if g else min(g_storey - 0.8, 4.0)
-            v0, v1 = eg + thr, eg + thr + h
+            egd = min(eg + 0.6, max(eg - 0.6, ground_at(c))) if ground_at else eg
+            v0, v1 = egd + thr, egd + thr + h
             vs = v1 - arch_rise(arch, w)
             door = g.get("door") if g and g.get("door") else pick(rng.choice(SHOP_DOORS), SHOP_DOORS[0])
             f["openings"].append({"kind": "shop", "u0": c - w / 2, "u1": c + w / 2, "v0": v0, "v1": v1, "arch": arch,
@@ -154,7 +158,7 @@ def layout(bld, i, eg, rng, override=None):
         elif kind == "door":
             w = g.get("w", 1.3) if g else 1.3
             arch = g.get("arch", "round") if g else "round"
-            v0 = eg + thr
+            v0 = (min(eg + 0.6, max(eg - 0.6, ground_at(c))) if ground_at else eg) + thr
             f["openings"].append({"kind": "door", "u0": c - w / 2, "u1": c + w / 2, "v0": v0,
                                   "v1": v0 + (g.get("h", 2.75) if g else 2.75),
                                   "arch": arch, "depth": 0.4, "split": None, "lo": g.get("door", "door_wood") if g else

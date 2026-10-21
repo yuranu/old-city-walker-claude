@@ -107,8 +107,8 @@ def _flight(ln, ss, zm, hw, region, riser):
     """Treads of one monotonic flight (stations ss, levels zm)."""
     s0, s1, za, zb = ss[0], ss[-1], zm[0], zm[-1]
     n = max(1, int(round(abs(zb - za) / riser)))
-    if abs(zb - za) < 0.25:
-        return []
+    if abs(zb - za) < 0.25 or (s1 - s0) / n > 2.6:
+        return []                            # (treads over 2.6 m deep: a ramp, not a stair; they read as slabs)
     h = (zb - za) / n
     if np.abs(za + (zb - za) * (ss - s0) / (s1 - s0) - zm).max() < CHORD_TOL:
         cuts = [s0 + (s1 - s0) * k / n for k in range(n + 1)]                  # equal treads

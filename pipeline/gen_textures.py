@@ -285,6 +285,20 @@ def corrugated(N=512, tile=1.0):
     return to_img(rgb), normal_map(h.astype(np.float32), px)
 
 
+def bark(N=512, tile=1.0):
+    """Olive / pine bark: grey-brown, deep vertical fissures between flat plates (trunks were a flat colour)."""
+    px = N / tile
+    fiss = 0.6 * vnoise(N, N, 4, 48) + 0.3 * vnoise(N, N, 8, 96) + 0.1 * vnoise(N, N, 32, 160)   # long in y: fissures
+    plates = smooth(0.35, 0.6, fiss)
+    tone = fbm(N, N, 5, 4)
+    base = np.array([0.36, 0.31, 0.26], np.float32)
+    rgb = base * (0.45 + 0.6 * plates[..., None]) * (0.85 + 0.3 * tone[..., None])
+    lichen = smooth(0.7, 0.85, fbm(N, N, 6, 3))
+    rgb = rgb * (1 - lichen[..., None] * 0.35) + np.array([0.55, 0.56, 0.48]) * lichen[..., None] * 0.35
+    h = plates * 0.012 + tone * 0.003
+    return to_img(rgb), normal_map(h.astype(np.float32), px)
+
+
 def rolldown(color, seed=0):
     H = W = CELL
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
@@ -678,6 +692,10 @@ def main():
     a, cells = decal_atlas()
     a.save(OUT / "decal.png")
     man["decal"] = {"img": "data/textures/gen/decal.png", **cells}
+    d, n = bark()
+    d.save(OUT / "bark_diff.jpg", quality=90)
+    n.save(OUT / "bark_nor.png")
+    man["bark"] = {"diff": "data/textures/gen/bark_diff.jpg", "nor": "data/textures/gen/bark_nor.png", "tile": 1.0}
     (OUT / "manifest.json").write_text(json.dumps(man, indent=1))
     print("wrote", sorted(p.name for p in OUT.iterdir()))
 
