@@ -41,6 +41,7 @@ import * as THREE from 'three';
 import { MeshBVH } from 'three-mesh-bvh';
 import { LAYER_NO_AO, LAYER_FAR, LAYER_SHADOW, RENDER_ORDER } from './world.js';
 import { U } from './materials.js';
+import { fetchJoined } from './fetchparts.js';
 
 export const STREAM_DEFAULTS = {
   rIn: 150, rOut: 220,      // metres to the sector bounds
@@ -207,8 +208,12 @@ export class Streamer {
     if (!j || !Array.isArray(j.sectors)) throw new Error(`${url}: not a sector manifest`);
     // every build stamps the manifest; the stamp goes on each GLB URL so a rebuilt sector is never
     // served from the browser cache next to a fresh base (mismatched ground and buildings)
-    const stamp = j.build ? `?b=${j.build}` : '';
-    const abs = (p) => (p ? new URL(p, base).href + stamp : null);
+    const abs = (p) => {                       // (through the URL API: a split file's #parts=N stays last)
+      if (!p) return null;
+      const u = new URL(p, base);
+      if (j.build) u.searchParams.set('b', j.build);
+      return u.href;
+    };
     const always = (j.always || []).map(abs);
     let ground = j.ground ? [].concat(j.ground).map(abs) : always.filter((u) => /ground/i.test(u.split('/').pop()));
     const st = j.stream || {};
@@ -994,23 +999,8 @@ export class Streamer {
 }
 
 async function fetchWithProgress(url, prog) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
-  prog.total = +r.headers.get('content-length') || 0;
-  if (!r.body) { const b = await r.arrayBuffer(); prog.loaded = prog.total = b.byteLength; return b; }
-  const reader = r.body.getReader();
-  const parts = [];
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    parts.push(value);
-    prog.loaded += value.length;
-  }
-  const out = new Uint8Array(prog.loaded);
-  let o = 0;
-  for (const p of parts) { out.set(p, o); o += p.length; }
-  prog.total = prog.loaded;
-  const head = new TextDecoder().decode(out.subarray(0, 4));
+  const buf = await fetchJoined(url, (loaded, total) => { prog.loaded = loaded; prog.total = total; });
+  const head = new TextDecoder().decode(new Uint8Array(buf, 0, 4));
   if (head !== 'glTF') throw new Error(`${url}: not a GLB`);
-  return out.buffer;
+  return buf;
 }

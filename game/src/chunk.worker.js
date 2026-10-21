@@ -8,30 +8,12 @@ import { BufferGeometry, BufferAttribute, DataUtils } from 'three';
 import { MeshBVH } from 'three-mesh-bvh';
 import { GltfDoc, mat4, toTriangles, materialTextures, remapMaterialTextures, buildGLB, BinWriter, GEOMETRY_EXTENSIONS } from './gltf.js';
 import { mergeParts, splitCells, splitCellsPos, finishPiece, bounds, heightField } from './merge.js';
+import { fetchJoined } from './fetchparts.js';
 
 let meshopt = null;
 
-async function fetchBytes(url, onProgress) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
-  const total = +r.headers.get('content-length') || 0;
-  if (!r.body || !onProgress) return r.arrayBuffer();
-  const reader = r.body.getReader();
-  const parts = [];
-  let got = 0, last = 0;
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    parts.push(value);
-    got += value.length;
-    const now = performance.now();
-    if (now - last > 80) { last = now; onProgress(got, total); }
-  }
-  onProgress(got, total || got);
-  const out = new Uint8Array(got);
-  let o = 0;
-  for (const p of parts) { out.set(p, o); o += p.length; }
-  return out.buffer;
+function fetchBytes(url, onProgress) {          // (split files are joined: fetchparts.js)
+  return fetchJoined(url, onProgress);
 }
 
 // world-space bounding-box diagonal of a mesh node (POSITION accessor min/max, glTF requires them)
