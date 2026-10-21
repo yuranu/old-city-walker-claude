@@ -218,8 +218,10 @@ def _blade(mb, P, t, n, fx, signs):
     for side in (1, -1):
         base = c + t * (0.04 * side) - n * (w / 2)            # clear of the 5 cm frame box (was 1 mm: flicker)
         if rect:                                             # (base is at z0 already: adding z0 again put every
-            mk.card(mb, base + n * (w / 2), n * side, UP, w, h, "signs", rect)  # board's artwork out of sight;
-                                                       # the card's right vector already turns with the side)
+            # board's artwork out of sight.
+            # right = UP x face so the card faces t*side, away from the frame: with right = n*side it faced
+            #  into the frame box and the street saw its back, the lettering mirrored)
+            mk.card(mb, base + n * (w / 2), UP.cross(t * side), UP, w, h, "signs", rect)
         else:
             q = [base, base + n * w, base + n * w + UP * h, base + UP * h]
             mb.poly(q, "lime", t * side, col=(1.0, 0.97, 0.88))
