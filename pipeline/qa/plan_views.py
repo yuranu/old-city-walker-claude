@@ -8,21 +8,34 @@ import json
 import math
 import sys
 
+from shapely import STRtree
 from shapely.geometry import LineString, Point, Polygon
 
 from common import ROOT, building_index, load_spec, region_geom
 
 
+# footprints that are not spec buildings but have walls a camera must not stand in: Wilson's Arch hall
+# (landmarks_haram.WILSON_HALL; game.setCam puts a camera there on the hall floor, under Chain Street,
+# and its front wall seen edge-on read as a slit of sky in the paving)
+NO_CAMERA = [Polygon([(621.91, 30.53), (646.06, 35.24), (640.68, 62.55), (639.28, 62.27), (626.48, 59.77),
+                      (629.03, 46.85), (619.07, 44.91)])]
+
+
 def main():
     region_name, out = sys.argv[1], sys.argv[2]
     reg = region_geom(region_name)
-    _, _, blds = load_spec()
+    base, secs, blds = load_spec()
     polys, tree = building_index(blds)
+    # tree trunks too: a camera inside one sees the bark from within, which flickers
+    trunks = [Point(p_["p"][:2]).buffer(1.0 * p_.get("s", 1.0)) for d_ in [base] + list(secs.values())
+              for p_ in d_.get("props", []) if p_["type"].startswith("tree")]
+    polys = polys + trunks
+    tree = STRtree(polys)
     osm = json.loads((ROOT / "data/osm_local.json").read_text())
 
     def free(x, y, r=0.8):
         p = Point(x, y).buffer(r)
-        return not any(polys[k].intersects(p) for k in tree.query(p))
+        return not any(polys[k].intersects(p) for k in tree.query(p)) and not any(q.intersects(p) for q in NO_CAMERA)
     views = []
 
     def add(vid, x, y, h, pitch=-6.0, z=1.7, fov=75):
