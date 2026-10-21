@@ -3988,7 +3988,7 @@
   "s01_armenian|hole@4,-33": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 14:56",
+   "last": "2026-10-21 18:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4017,7 +4017,7 @@
   "s01_armenian|hole@6,-33": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 14:56",
+   "last": "2026-10-21 18:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4046,7 +4046,7 @@
   "s01_armenian|hole@7,-17": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 14:56",
+   "last": "2026-10-21 18:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4179,7 +4179,7 @@
   "s03_christian_w|flicker@-25,68": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -4208,7 +4208,7 @@
   "s03_christian_w|hole@-31,37": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4237,7 +4237,7 @@
   "s03_christian_w|hole@-22,47": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4266,7 +4266,7 @@
   "s03_christian_w|hole@-11,25": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4295,7 +4295,7 @@
   "s03_christian_w|hole@-2,2": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4997,7 +4997,7 @@
   "s00_jaffa|flicker@23,7": {
    "region": "s00_jaffa",
    "first": "2026-10-21 10:06",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5026,7 +5026,7 @@
   "s00_jaffa|hole@5,-5": {
    "region": "s00_jaffa",
    "first": "2026-10-21 10:06",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5085,7 +5085,7 @@
   "s00_jaffa|blocked_street@12,5": {
    "region": "s00_jaffa",
    "first": "2026-10-21 10:06",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "blocked_street",
@@ -5157,7 +5157,7 @@
   "s01_armenian|flicker@20,-69": {
    "region": "s01_armenian",
    "first": "2026-10-21 10:18",
-   "last": "2026-10-21 14:56",
+   "last": "2026-10-21 18:18",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5186,7 +5186,7 @@
   "s03_christian_w|flicker@-29,71": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5215,7 +5215,7 @@
   "s03_christian_w|hole@-14,24": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5266,7 +5266,7 @@
   "s03_christian_w|coplanar@-12,84": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5383,7 +5383,7 @@
   "s04_sepulchre|coplanar@71,81": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 11:02",
-   "last": "2026-10-21 15:39",
+   "last": "2026-10-21 19:01",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5448,7 +5448,7 @@
   "s07_kotel|flicker@191,-32": {
    "region": "s07_kotel",
    "first": "2026-10-21 11:13",
-   "last": "2026-10-21 14:40",
+   "last": "2026-10-21 17:07",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5477,7 +5477,7 @@
   "s07_kotel|flicker@192,-33": {
    "region": "s07_kotel",
    "first": "2026-10-21 11:13",
-   "last": "2026-10-21 14:40",
+   "last": "2026-10-21 17:07",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5506,7 +5506,7 @@
   "s07_kotel|flicker@192,-34": {
    "region": "s07_kotel",
    "first": "2026-10-21 11:13",
-   "last": "2026-10-21 14:40",
+   "last": "2026-10-21 17:07",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5587,7 +5587,7 @@
   "s01_armenian|hole@11,-29": {
    "region": "s01_armenian",
    "first": "2026-10-21 13:24",
-   "last": "2026-10-21 14:56",
+   "last": "2026-10-21 18:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5676,7 +5676,7 @@
   "s03_christian_w|flicker@31,53": {
    "region": "s03_christian_w",
    "first": "2026-10-21 13:47",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5705,7 +5705,7 @@
   "s03_christian_w|flicker@25,56": {
    "region": "s03_christian_w",
    "first": "2026-10-21 13:47",
-   "last": "2026-10-21 15:18",
+   "last": "2026-10-21 18:40",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5756,7 +5756,7 @@
   "s05_souks|hole@50,-9": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5785,7 +5785,7 @@
   "s05_souks|hole@49,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5814,7 +5814,7 @@
   "s05_souks|hole@50,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5843,7 +5843,7 @@
   "s05_souks|coplanar@83,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5864,7 +5864,7 @@
   "s05_souks|coplanar@81,7": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5929,7 +5929,7 @@
   "s00_jaffa|hole@35,1": {
    "region": "s00_jaffa",
    "first": "2026-10-21 14:45",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5958,7 +5958,7 @@
   "s00_jaffa|hole@32,3": {
    "region": "s00_jaffa",
    "first": "2026-10-21 14:45",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5987,7 +5987,7 @@
   "s00_jaffa|hole@34,1": {
    "region": "s00_jaffa",
    "first": "2026-10-21 14:45",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6016,7 +6016,7 @@
   "s00_jaffa|hole@27,1": {
    "region": "s00_jaffa",
    "first": "2026-10-21 14:45",
-   "last": "2026-10-21 14:45",
+   "last": "2026-10-21 18:07",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6045,7 +6045,7 @@
   "s01_armenian|hole@60,-13": {
    "region": "s01_armenian",
    "first": "2026-10-21 14:56",
-   "last": "2026-10-21 14:56",
+   "last": "2026-10-21 18:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6074,7 +6074,7 @@
   "s04_sepulchre|hole@86,106": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 15:39",
-   "last": "2026-10-21 15:39",
+   "last": "2026-10-21 19:01",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6103,7 +6103,7 @@
   "s04_sepulchre|hole@87,73": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 15:39",
-   "last": "2026-10-21 15:39",
+   "last": "2026-10-21 19:01",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6132,7 +6132,7 @@
   "s04_sepulchre|hole@87,74": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 15:39",
-   "last": "2026-10-21 15:39",
+   "last": "2026-10-21 19:01",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6161,7 +6161,7 @@
   "s04_sepulchre|hole@84,74": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 15:39",
-   "last": "2026-10-21 15:39",
+   "last": "2026-10-21 19:01",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6190,7 +6190,7 @@
   "s04_sepulchre|hole@43,37": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 15:39",
-   "last": "2026-10-21 15:39",
+   "last": "2026-10-21 19:01",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6219,7 +6219,7 @@
   "s05_souks|hole@67,-5": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6248,7 +6248,7 @@
   "s05_souks|hole@40,1": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6277,7 +6277,7 @@
   "s05_souks|hole@39,1": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6306,7 +6306,7 @@
   "s05_souks|hole@43,1": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6335,7 +6335,7 @@
   "s05_souks|hole@42,1": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6364,7 +6364,7 @@
   "s05_souks|hole@67,-7": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6393,7 +6393,7 @@
   "s05_souks|hole@67,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6422,7 +6422,7 @@
   "s05_souks|hole@65,-9": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6451,7 +6451,7 @@
   "s05_souks|hole@65,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6480,7 +6480,7 @@
   "s05_souks|hole@62,-10": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6509,7 +6509,7 @@
   "s05_souks|hole@63,-9": {
    "region": "s05_souks",
    "first": "2026-10-21 15:47",
-   "last": "2026-10-21 15:47",
+   "last": "2026-10-21 19:09",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6538,7 +6538,7 @@
   "s06_jewish|hole@126,-63": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6567,7 +6567,7 @@
   "s06_jewish|hole@125,-63": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6596,7 +6596,7 @@
   "s06_jewish|hole@125,-64": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6625,7 +6625,7 @@
   "s06_jewish|hole@139,-35": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6654,7 +6654,7 @@
   "s06_jewish|hole@136,-36": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6683,7 +6683,7 @@
   "s06_jewish|hole@138,-27": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6712,7 +6712,7 @@
   "s06_jewish|hole@135,-55": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6741,7 +6741,7 @@
   "s06_jewish|hole@135,-54": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6770,7 +6770,7 @@
   "s06_jewish|flicker@123,-68": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -6799,7 +6799,7 @@
   "s06_jewish|hole@146,-35": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6828,7 +6828,7 @@
   "s06_jewish|coplanar@124,-62": {
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
-   "last": "2026-10-21 16:17",
+   "last": "2026-10-21 19:39",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -6849,7 +6849,7 @@
   "s08_damascus|hole@90,108": {
    "region": "s08_damascus",
    "first": "2026-10-21 16:30",
-   "last": "2026-10-21 16:30",
+   "last": "2026-10-21 19:50",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -6878,7 +6878,7 @@
   "s08_damascus|blocked_street@89,110": {
    "region": "s08_damascus",
    "first": "2026-10-21 16:30",
-   "last": "2026-10-21 16:30",
+   "last": "2026-10-21 19:50",
    "status": "open",
    "finding": {
     "kind": "blocked_street",
@@ -6893,6 +6893,3540 @@
     "source": "footprints / infill / passages",
     "view": null,
     "key": "blocked_street@89,110"
+   }
+  },
+  "s09_wad|hole@159,8": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 20:19",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     639.5,
+     34.0
+    ],
+    "what": "sky visible below the horizon (322 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_f_hole_470_440.png",
+     "px": 322,
+     "bbox": [
+      470,
+      440,
+      472,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_f",
+    "key": "hole@159,8"
+   },
+   "fixed": "2026-10-21 22:32"
+  },
+  "s09_wad|hole@161,8": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 20:19",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     644.2,
+     34.9
+    ],
+    "what": "sky visible below the horizon (221 px)",
+    "evidence": {
+     "crop": "crops/w26492734_19_b_hole_476_496.png",
+     "px": 221,
+     "bbox": [
+      476,
+      496,
+      478,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w26492734_19_b",
+    "key": "hole@161,8"
+   },
+   "fixed": "2026-10-21 22:32"
+  },
+  "s09_wad|hole@136,1": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     544.2,
+     6.2
+    ],
+    "what": "sky visible below the horizon (60 px)",
+    "evidence": {
+     "crop": "crops/w26493216_1_b_hole_275_398.png",
+     "px": 60,
+     "bbox": [
+      275,
+      398,
+      289,
+      405
+     ]
+    },
+    "source": null,
+    "view": "w26493216_1_b",
+    "key": "hole@136,1"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@112,79": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     451.1,
+     319.6
+    ],
+    "what": "sky visible below the horizon (932 px)",
+    "evidence": {
+     "crop": "crops/w26506003_1_b_hole_639_312.png",
+     "px": 932,
+     "bbox": [
+      639,
+      312,
+      696,
+      351
+     ]
+    },
+    "source": null,
+    "view": "w26506003_1_b",
+    "key": "hole@112,79"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@111,80": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     447.8,
+     321.5
+    ],
+    "what": "sky visible below the horizon (879 px)",
+    "evidence": {
+     "crop": "crops/w26506003_1_b_hole_139_518.png",
+     "px": 879,
+     "bbox": [
+      139,
+      518,
+      189,
+      579
+     ]
+    },
+    "source": null,
+    "view": "w26506003_1_b",
+    "key": "hole@111,80"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@107,79": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     430.9,
+     317.6
+    ],
+    "what": "sky visible below the horizon (16280 px)",
+    "evidence": {
+     "crop": "crops/w26506003_2_f_hole_741_439.png",
+     "px": 16280,
+     "bbox": [
+      741,
+      439,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w26506003_2_f",
+    "key": "hole@107,79"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@108,79": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     435.6,
+     316.2
+    ],
+    "what": "sky visible below the horizon (1313 px)",
+    "evidence": {
+     "crop": "crops/w26506003_2_b_hole_655_343.png",
+     "px": 1313,
+     "bbox": [
+      655,
+      343,
+      709,
+      395
+     ]
+    },
+    "source": null,
+    "view": "w26506003_2_b",
+    "key": "hole@108,79"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@104,78": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     419.7,
+     312.9
+    ],
+    "what": "sky visible below the horizon (4070 px)",
+    "evidence": {
+     "crop": "crops/w26506003_3_b_hole_643_408.png",
+     "px": 4070,
+     "bbox": [
+      643,
+      408,
+      726,
+      514
+     ]
+    },
+    "source": null,
+    "view": "w26506003_3_b",
+    "key": "hole@104,78"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@106,95": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     427.1,
+     383.0
+    ],
+    "what": "sky visible below the horizon (2905 px)",
+    "evidence": {
+     "crop": "crops/w160699290_0_f_hole_884_570.png",
+     "px": 2905,
+     "bbox": [
+      884,
+      570,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w160699290_0_f",
+    "key": "hole@106,95"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@160,8": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 20:19",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     643.5,
+     34.8
+    ],
+    "what": "sky visible below the horizon (1958 px)",
+    "evidence": {
+     "crop": "crops/w277508273_0_b_hole_99_563.png",
+     "px": 1958,
+     "bbox": [
+      99,
+      563,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w277508273_0_b",
+    "key": "hole@160,8"
+   },
+   "fixed": "2026-10-21 22:32"
+  },
+  "s09_wad|hole@100,76": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     402.5,
+     304.1
+    ],
+    "what": "sky visible below the horizon (169 px)",
+    "evidence": {
+     "crop": "crops/w616344390_0_d_hole_564_146.png",
+     "px": 169,
+     "bbox": [
+      564,
+      146,
+      579,
+      165
+     ]
+    },
+    "source": null,
+    "view": "w616344390_0_d",
+    "key": "hole@100,76"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@134,0": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     536.0,
+     2.1
+    ],
+    "what": "sky visible below the horizon (700 px)",
+    "evidence": {
+     "crop": "crops/w659765488_0_f_hole_97_454.png",
+     "px": 700,
+     "bbox": [
+      97,
+      454,
+      143,
+      485
+     ]
+    },
+    "source": null,
+    "view": "w659765488_0_f",
+    "key": "hole@134,0"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|hole@140,17": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 17:30",
+   "status": "fixed",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     561.5,
+     68.0
+    ],
+    "what": "sky visible below the horizon (258 px)",
+    "evidence": {
+     "crop": "crops/reg_user_ohel_yitzchak_steps_hole_607_629.png",
+     "px": 258,
+     "bbox": [
+      607,
+      629,
+      636,
+      639
+     ]
+    },
+    "source": null,
+    "view": "reg_user_ohel_yitzchak_steps",
+    "key": "hole@140,17"
+   },
+   "fixed": "2026-10-21 20:19"
+  },
+  "s09_wad|coplanar@163,-4": {
+   "region": "s09_wad",
+   "first": "2026-10-21 17:30",
+   "last": "2026-10-21 22:32",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     654.4,
+     -14.3,
+     -32.4
+    ],
+    "what": "coplanar faces s11_haram:caper.11 / s11_haram:caper.10 (0.04 m2, cut/cut)",
+    "evidence": {},
+    "source": "overlapping geometry: caper.11 vs caper.10",
+    "view": null,
+    "key": "coplanar@163,-4"
+   }
+  },
+  "s10_herod_lions|hole@201,155": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 17:46",
+   "last": "2026-10-21 21:43",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     805.1,
+     621.8
+    ],
+    "what": "sky visible below the horizon (52 px)",
+    "evidence": {
+     "crop": "crops/w257604175_0_f_hole_666_362.png",
+     "px": 52,
+     "bbox": [
+      666,
+      362,
+      669,
+      381
+     ]
+    },
+    "source": null,
+    "view": "w257604175_0_f",
+    "key": "hole@201,155"
+   }
+  },
+  "s10_herod_lions|flicker@211,110": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 17:46",
+   "last": "2026-10-21 20:41",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     844.5,
+     441.6
+    ],
+    "what": "surface flips between frames 1 cm apart (352 px)",
+    "evidence": {
+     "crop": "crops/w625346015_1_b_flick_418_26.png",
+     "px": 352,
+     "bbox": [
+      418,
+      26,
+      431,
+      60
+     ]
+    },
+    "source": null,
+    "view": "w625346015_1_b",
+    "key": "flicker@211,110"
+   },
+   "fixed": "2026-10-21 21:43"
+  },
+  "s10_herod_lions|flicker@210,108": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 17:46",
+   "last": "2026-10-21 20:41",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     840.6,
+     434.2
+    ],
+    "what": "surface flips between frames 1 cm apart (262 px)",
+    "evidence": {
+     "crop": "crops/w625346015_1_b_flick_290_185.png",
+     "px": 262,
+     "bbox": [
+      290,
+      185,
+      303,
+      210
+     ]
+    },
+    "source": null,
+    "view": "w625346015_1_b",
+    "key": "flicker@210,108"
+   },
+   "fixed": "2026-10-21 21:43"
+  },
+  "s10_herod_lions|flicker@210,110": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 17:46",
+   "last": "2026-10-21 20:41",
+   "status": "fixed",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     843.9,
+     440.8
+    ],
+    "what": "surface flips between frames 1 cm apart (186 px)",
+    "evidence": {
+     "crop": "crops/w625346015_1_b_flick_403_269.png",
+     "px": 186,
+     "bbox": [
+      403,
+      269,
+      416,
+      288
+     ]
+    },
+    "source": null,
+    "view": "w625346015_1_b",
+    "key": "flicker@210,110"
+   },
+   "fixed": "2026-10-21 21:43"
+  },
+  "s10_herod_lions|hole@183,139": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 17:46",
+   "last": "2026-10-21 21:43",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     735.6,
+     559.9
+    ],
+    "what": "sky visible below the horizon (51 px)",
+    "evidence": {
+     "crop": "crops/w744665958_0_b_hole_905_551.png",
+     "px": 51,
+     "bbox": [
+      905,
+      551,
+      909,
+      568
+     ]
+    },
+    "source": null,
+    "view": "w744665958_0_b",
+    "key": "hole@183,139"
+   }
+  },
+  "s11_haram|coplanar@235,0": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     941.6,
+     3.5,
+     -39.2
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (86.32 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,0"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,23": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     932.2,
+     93.2,
+     -35.7
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w1080613977 (46.03 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w1080613977",
+    "view": null,
+    "key": "coplanar@233,23"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,17": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     934.5,
+     71.4,
+     -36.0
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (23.04 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@233,17"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,20": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     933.2,
+     83.8,
+     -38.1
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (19.08 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@233,20"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@228,-17": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     912.3,
+     -65.8,
+     -36.2
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w620099942 (18.08 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w620099942",
+    "view": null,
+    "key": "coplanar@228,-17"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@235,-4": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     943.4,
+     -13.6,
+     -36.8
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (16.45 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,-4"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@235,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     943.0,
+     -9.7,
+     -36.8
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (15.93 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@232,30": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     929.3,
+     121.2,
+     -32.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (13.47 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@232,30"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,22": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     932.4,
+     91.4,
+     -32.5
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w1080613977 (11.77 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w1080613977",
+    "view": null,
+    "key": "coplanar@233,22"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,21": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     933.1,
+     84.8,
+     -32.6
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w1080613977 (11.13 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w1080613977",
+    "view": null,
+    "key": "coplanar@233,21"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@235,1": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     941.5,
+     4.8,
+     -35.6
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (10.57 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,1"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,18": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     934.2,
+     74.2,
+     -32.7
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (10.00 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@233,18"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@235,2": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     941.1,
+     8.2,
+     -35.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (9.19 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,2"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@226,86": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     905.4,
+     346.6,
+     -33.8
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175932 / base:city_walls_osm (7.24 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175932 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@226,86"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@226,83": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     906.9,
+     333.0,
+     -33.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175932 / base:city_walls_osm (7.19 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175932 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@226,83"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@235,-2": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     942.8,
+     -7.6,
+     -36.8
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (7.17 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,-2"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,13": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     936.5,
+     52.4,
+     -32.7
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (6.78 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,13"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,5": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     939.6,
+     22.8,
+     -35.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (6.68 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,5"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@230,50": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     920.7,
+     201.9,
+     -34.3
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w508175930 (6.67 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w508175930",
+    "view": null,
+    "key": "coplanar@230,50"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,12": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     936.9,
+     48.4,
+     -32.7
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (6.20 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,12"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@232,25": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     931.1,
+     103.9,
+     -32.5
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w1080613977 (6.02 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w1080613977",
+    "view": null,
+    "key": "coplanar@232,25"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,6": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     939.1,
+     27.3,
+     -35.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (6.01 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,6"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@226,87": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     905.2,
+     348.5,
+     -31.3
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175932 / base:city_walls_osm (5.95 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175932 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@226,87"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@224,-18": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     896.1,
+     -68.2,
+     -40.5
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w620099942 (5.75 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w620099942",
+    "view": null,
+    "key": "coplanar@224,-18"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@226,84": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     906.5,
+     336.6,
+     -33.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175932 / base:city_walls_osm (5.71 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175932 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@226,84"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@230,49": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     921.2,
+     197.1,
+     -34.1
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w508175930 (4.69 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w508175930",
+    "view": null,
+    "key": "coplanar@230,49"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@232,24": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     931.9,
+     96.4,
+     -32.5
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w1080613977 (4.65 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w1080613977",
+    "view": null,
+    "key": "coplanar@232,24"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@230,47": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     921.9,
+     190.9,
+     -34.3
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175930 / base:city_walls_osm (4.57 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175930 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@230,47"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,15": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     935.6,
+     60.8,
+     -32.5
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (4.30 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@233,15"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@235,3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     940.5,
+     14.2,
+     -35.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (3.85 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@235,3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@233,16": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     935.0,
+     66.5,
+     -32.7
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (3.02 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@233,16"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,7": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     938.9,
+     29.4,
+     -35.3
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (2.69 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,7"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,9": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     938.2,
+     36.2,
+     -35.2
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (2.56 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,9"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@226,88": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     904.4,
+     355.6,
+     -31.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175932 / base:city_walls_osm (2.29 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175932 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@226,88"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,8": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     938.4,
+     34.3,
+     -35.4
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (1.89 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,8"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@225,-17": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     900.9,
+     -67.5,
+     -40.5
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w620099942 (1.71 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w620099942",
+    "view": null,
+    "key": "coplanar@225,-17"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@234,10": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     937.7,
+     40.9,
+     -32.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w1080613977 / base:city_walls_osm (1.65 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1080613977 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@234,10"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@230,52": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     920.0,
+     208.6,
+     -32.0
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175930 / base:city_walls_osm (1.41 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175930 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@230,52"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@224,-17": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     899.4,
+     -67.7,
+     -40.5
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w620099942 (1.06 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w620099942",
+    "view": null,
+    "key": "coplanar@224,-17"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@226,85": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     905.7,
+     343.9,
+     -31.3
+    ],
+    "what": "coplanar faces base:city_walls_osm / s11_haram:bld_w508175932 (0.98 m2, fort/fort.001)",
+    "evidence": {},
+    "source": "overlapping geometry: city_walls_osm vs bld_w508175932",
+    "view": null,
+    "key": "coplanar@226,85"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,41": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     631.4,
+     165.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.92 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@157,41"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@217,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     870.0,
+     395.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.90 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@217,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@218,99": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     874.5,
+     396.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.77 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@218,99"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@159,30": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     639.5,
+     121.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836726 (0.76 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836726",
+    "view": null,
+    "key": "coplanar@159,30"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@186,95": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     747.1,
+     383.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.70 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@186,95"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@156,47": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     627.0,
+     190.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.67 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@156,47"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@188,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     755.8,
+     -10.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.65 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@188,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@230,51": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     920.5,
+     204.0,
+     -32.0
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175930 / base:city_walls_osm (0.65 m2, fort.001/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175930 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@230,51"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@185,-4": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     743.8,
+     -12.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.63 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@185,-4"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@200,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     802.0,
+     393.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.62 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@200,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@206,97": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     825.8,
+     391.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.60 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@206,97"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@159,31": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     639.0,
+     125.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836726 (0.58 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836726",
+    "view": null,
+    "key": "coplanar@159,31"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@216,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     866.8,
+     395.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.55 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@216,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@185,95": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     743.2,
+     383.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.54 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@185,95"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@215,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     861.7,
+     395.1,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.54 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@215,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@214,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     857.6,
+     394.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.54 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@214,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,44": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     629.3,
+     178.1,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.53 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@157,44"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@165,-8": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     662.1,
+     -32.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836692 (0.53 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836692",
+    "view": null,
+    "key": "coplanar@165,-8"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@213,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     853.5,
+     394.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.53 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@213,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@187,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     748.3,
+     -11.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.52 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@187,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@190,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     760.4,
+     -9.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.52 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@190,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@182,95": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     731.0,
+     382.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.52 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@182,95"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@198,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     793.7,
+     392.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.52 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@198,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,42": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     630.9,
+     169.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.50 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@157,42"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@183,95": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     734.8,
+     382.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.50 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@183,95"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@186,-4": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     745.9,
+     -12.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.50 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@186,-4"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@229,43": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     919.1,
+     174.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w508175929 (0.49 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w508175929",
+    "view": null,
+    "key": "coplanar@229,43"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@203,97": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     814.2,
+     390.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.48 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@203,97"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@220,99": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     883.4,
+     397.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.48 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@220,99"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@210,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     841.3,
+     393.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.47 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@210,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@222,99": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     891.1,
+     397.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836688 (0.47 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836688",
+    "view": null,
+    "key": "coplanar@222,99"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@184,95": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     739.4,
+     383.1,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.46 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@184,95"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@156,46": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     627.5,
+     185.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.46 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@156,46"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@156,49": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     625.7,
+     197.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836690 (0.45 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836690",
+    "view": null,
+    "key": "coplanar@156,49"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@212,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     849.1,
+     394.1,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.44 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@212,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@209,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     837.7,
+     393.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.44 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@209,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@219,99": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     879.0,
+     397.1,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.44 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@219,99"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,45": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     628.8,
+     181.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.44 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@157,45"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@188,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     755.7,
+     385.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.44 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@188,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@191,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     764.6,
+     -9.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.42 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@191,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@191,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     767.6,
+     385.9,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836685 (0.41 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836685",
+    "view": null,
+    "key": "coplanar@191,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@161,18": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     647.3,
+     74.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836687 (0.40 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836687",
+    "view": null,
+    "key": "coplanar@161,18"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@148,86": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     594.1,
+     346.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w620130982 (0.39 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w620130982",
+    "view": null,
+    "key": "coplanar@148,86"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@211,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     845.9,
+     393.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.37 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@211,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@207,97": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     829.1,
+     391.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.36 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@207,97"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,31": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     631.4,
+     125.8,
+     -32.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w291836726 / base:retaining_walls (0.35 m2, ashlar/dressed)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w291836726 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@157,31"
+   }
+  },
+  "s11_haram|coplanar@158,37": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     634.2,
+     151.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836677 (0.35 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836677",
+    "view": null,
+    "key": "coplanar@158,37"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@160,30": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     640.2,
+     121.9,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836726 (0.34 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836726",
+    "view": null,
+    "key": "coplanar@160,30"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@189,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     756.4,
+     -10.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.34 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@189,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@199,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     798.1,
+     392.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.34 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@199,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@194,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     776.6,
+     386.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.34 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@194,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@193,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     775.8,
+     -8.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.33 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@193,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,43": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     630.4,
+     173.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.33 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@157,43"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@187,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     751.3,
+     384.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.33 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@187,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@148,87": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     593.4,
+     351.3,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w620130982 (0.32 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w620130982",
+    "view": null,
+    "key": "coplanar@148,87"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@195,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     781.9,
+     387.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.32 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@195,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@164,-6": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     658.8,
+     -23.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836692 (0.28 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836692",
+    "view": null,
+    "key": "coplanar@164,-6"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@194,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     777.0,
+     -9.3,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.27 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@194,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@158,38": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     634.1,
+     152.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836677 (0.27 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836677",
+    "view": null,
+    "key": "coplanar@158,38"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@194,-2": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     776.7,
+     -8.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.24 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@194,-2"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@190,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     760.0,
+     385.6,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.23 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@190,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@189,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     759.4,
+     385.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.22 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@189,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@186,-3": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     747.7,
+     -10.9,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.18 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@186,-3"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@205,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     823.5,
+     392.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.18 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@205,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@151,69": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     606.3,
+     279.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836689 (0.17 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836689",
+    "view": null,
+    "key": "coplanar@151,69"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@217,99": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     871.2,
+     396.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.16 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@217,99"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@151,68": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     607.0,
+     275.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836689 (0.16 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836689",
+    "view": null,
+    "key": "coplanar@151,68"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@186,96": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     747.9,
+     384.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.15 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@186,96"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@208,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     833.8,
+     392.9,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.15 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@208,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,30": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     631.8,
+     122.8,
+     -33.0
+    ],
+    "what": "coplanar faces base:retaining_walls / s11_haram:bld_w291836726 (0.14 m2, dressed/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs bld_w291836726",
+    "view": null,
+    "key": "coplanar@157,30"
+   }
+  },
+  "s11_haram|coplanar@152,68": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     608.7,
+     274.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836689 (0.13 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836689",
+    "view": null,
+    "key": "coplanar@152,68"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@151,70": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     607.0,
+     280.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836689 (0.12 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836689",
+    "view": null,
+    "key": "coplanar@151,70"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,40": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     631.0,
+     163.9,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.11 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@157,40"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@187,95": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     748.4,
+     383.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836721 (0.11 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836721",
+    "view": null,
+    "key": "coplanar@187,95"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@158,41": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     632.1,
+     166.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836708 (0.10 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836708",
+    "view": null,
+    "key": "coplanar@158,41"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@207,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     828.4,
+     392.5,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.09 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@207,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@206,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     825.4,
+     392.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.08 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@206,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@230,43": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     923.6,
+     175.1,
+     -34.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w508175929 / base:city_walls_osm (0.08 m2, ashlar/fort)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w508175929 vs city_walls_osm",
+    "view": null,
+    "key": "coplanar@230,43"
+   }
+  },
+  "s11_haram|coplanar@193,-2": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     774.9,
+     -8.0,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.07 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@193,-2"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@159,29": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     639.1,
+     119.8,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836726 (0.07 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836726",
+    "view": null,
+    "key": "coplanar@159,29"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@165,-9": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     660.7,
+     -32.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836692 (0.07 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836692",
+    "view": null,
+    "key": "coplanar@165,-9"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@157,32": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     630.9,
+     128.6,
+     -31.8
+    ],
+    "what": "coplanar faces s11_haram:bld_w291836726 / base:retaining_walls (0.06 m2, ashlar/dressed)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w291836726 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@157,32"
+   }
+  },
+  "s11_haram|coplanar@198,97": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     792.5,
+     391.7,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836735 (0.06 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836735",
+    "view": null,
+    "key": "coplanar@198,97"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@185,-5": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     740.9,
+     -16.2,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.06 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@185,-5"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@184,-4": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     739.3,
+     -13.4,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w280309331 (0.06 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w280309331",
+    "view": null,
+    "key": "coplanar@184,-4"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@179,-9": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     716.7,
+     -34.1,
+     -30.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w291836719 / s11_haram:bld_w291836719_deco (0.04 m2, dressed.001/dressed.001)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w291836719 vs bld_w291836719_deco",
+    "view": null,
+    "key": "coplanar@179,-9"
+   }
+  },
+  "s11_haram|coplanar@177,-10": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     711.6,
+     -38.9,
+     -30.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w291836719 / s11_haram:bld_w291836719_deco (0.04 m2, dressed.001/dressed.001)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w291836719 vs bld_w291836719_deco",
+    "view": null,
+    "key": "coplanar@177,-10"
+   }
+  },
+  "s11_haram|coplanar@165,-6": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     660.3,
+     -23.1,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836692 (0.04 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836692",
+    "view": null,
+    "key": "coplanar@165,-6"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@177,-9": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     711.7,
+     -34.1,
+     -30.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w291836719 / s11_haram:bld_w291836719_deco (0.04 m2, dressed.001/dressed.001)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w291836719 vs bld_w291836719_deco",
+    "view": null,
+    "key": "coplanar@177,-9"
+   }
+  },
+  "s11_haram|coplanar@218,98": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 18:03",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     874.1,
+     395.9,
+     -33.5
+    ],
+    "what": "coplanar faces base:ground / s11_haram:bld_w291836706 (0.04 m2, paving/paving.001)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs bld_w291836706",
+    "view": null,
+    "key": "coplanar@218,98"
+   },
+   "fixed": "2026-10-21 21:05"
+  },
+  "s11_haram|coplanar@179,-10": {
+   "region": "s11_haram",
+   "first": "2026-10-21 18:03",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     716.6,
+     -39.0,
+     -30.9
+    ],
+    "what": "coplanar faces s11_haram:bld_w291836719 / s11_haram:bld_w291836719_deco (0.03 m2, dressed.001/dressed.001)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w291836719 vs bld_w291836719_deco",
+    "view": null,
+    "key": "coplanar@179,-10"
+   }
+  },
+  "s10_herod_lions|flicker@145,167": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 21:43",
+   "last": "2026-10-21 21:43",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     583.1,
+     670.8
+    ],
+    "what": "surface flips between frames 1 cm apart (171 px)",
+    "evidence": {
+     "crop": "crops/w257604177_4_f_flick_728_589.png",
+     "px": 171,
+     "bbox": [
+      728,
+      589,
+      741,
+      605
+     ]
+    },
+    "source": null,
+    "view": "w257604177_4_f",
+    "key": "flicker@145,167"
+   }
+  },
+  "s10_herod_lions|flicker@146,166": {
+   "region": "s10_herod_lions",
+   "first": "2026-10-21 21:43",
+   "last": "2026-10-21 21:43",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     587.8,
+     665.0
+    ],
+    "what": "surface flips between frames 1 cm apart (209 px)",
+    "evidence": {
+     "crop": "crops/w257604177_4_b_flick_16_366.png",
+     "px": 209,
+     "bbox": [
+      16,
+      366,
+      24,
+      393
+     ]
+    },
+    "source": null,
+    "view": "w257604177_4_b",
+    "key": "flicker@146,166"
+   }
+  },
+  "s09_wad|prop_float@154,48": {
+   "region": "s09_wad",
+   "first": "2026-10-21 22:32",
+   "last": "2026-10-21 22:32",
+   "status": "open",
+   "finding": {
+    "kind": "prop_float",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     619.0,
+     194.2,
+     -32.5
+    ],
+    "what": "weeds 1.05 m above the ground",
+    "evidence": {},
+    "source": "dressing zat / profile props",
+    "view": null,
+    "key": "prop_float@154,48"
+   }
+  },
+  "s11_haram|ground_gap@195,43": {
+   "region": "s11_haram",
+   "first": "2026-10-21 23:02",
+   "last": "2026-10-21 23:02",
+   "status": "open",
+   "finding": {
+    "kind": "ground_gap",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     781.6,
+     174.5
+    ],
+    "what": "20270.6 m2 with no ground, step or building",
+    "evidence": {
+     "area": 20270.6
+    },
+    "source": "make_spec ground regions / steps_union / buildings",
+    "view": null,
+    "key": "ground_gap@195,43"
    }
   }
  }

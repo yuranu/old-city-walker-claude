@@ -64,10 +64,8 @@ def main():
     # 1 ground gaps: open area covered by nothing walkable
     cit = base.get("citadel") or {}
     cit_mass = [make_valid(Polygon(cit["mass"]))] if cit.get("mass") else []     # built solid by landmarks_gates
-    cover = unary_union([P for P, _, _ in tris] + spolys + bpolys + cit_mass)
-    known = []
-    import importlib.util
-    spec_ = importlib.util.spec_from_file_location("ms", ROOT / "pipeline/make_spec.py")
+    holes = [make_valid(Polygon(h_)) for h_ in base.get("ground_holes", [])]     # closed in by landmark walls
+    cover = unary_union([P for P, _, _ in tris] + spolys + bpolys + cit_mass + holes)
     gaps = reg.difference(cover)
     for p in getattr(gaps, "geoms", [gaps]):
         if p.geom_type == "Polygon" and p.area > 1.5 and not p.buffer(-0.3).is_empty:

@@ -102,7 +102,20 @@ GATE_DOORS = {"w616186088": [(265.8, 558.2), (275.4, 551.8)], "w288395731": [(89
 # whose roof is the walking surface; landmarks_haram.WILSON_HALL)
 WILSON_HALL = Polygon([(621.91, 30.53), (646.06, 35.24), (640.68, 62.55), (639.28, 62.27), (626.48, 59.77),
                        (629.03, 46.85), (619.07, 44.91)])
-GROUND_HOLES = []        # (Wilson's Arch hall: paved at Chain Street level instead, see LOCAL_FLATS; a hole
+# the Dome of the Rock's upper platform (landmarks_haram.PLATFORM, built PLAT_H = 5.1 m above the esplanade
+# with retaining walls down below it): no esplanade ground inside, 0.5 m in from its walls. That ground was
+# a sealed void under the platform top, and a teleport (lowest floor with headroom) stood players in it
+DOME_PLATFORM = Polygon([
+    (695.31, 87.30), (695.56, 86.02), (712.71, 89.35), (713.69, 84.34), (724.48, 86.29), (723.96, 89.05),
+    (726.64, 89.56), (727.16, 86.80), (741.11, 89.48), (747.93, 90.70), (791.29, 97.93), (797.50, 99.05),
+    (797.68, 87.31), (817.91, 91.95), (816.67, 164.42), (815.22, 174.28), (814.49, 210.13), (813.17, 210.16),
+    (813.41, 240.38), (813.50, 265.07), (772.30, 259.75), (772.04, 261.88), (762.12, 260.64), (762.71, 255.95),
+    (755.36, 255.03), (755.03, 257.60), (730.80, 254.58), (730.53, 256.69), (718.00, 255.13), (718.72, 249.45),
+    (713.28, 248.78), (712.84, 252.34), (673.47, 247.42), (675.55, 230.87), (662.27, 229.22), (662.51, 227.33),
+    (660.20, 227.04), (670.43, 181.88), (672.90, 182.35), (673.68, 178.19), (671.25, 177.73), (677.71, 144.88),
+    (696.09, 148.79), (699.21, 134.32), (680.61, 131.10), (683.20, 116.88), (689.24, 86.12)])
+GROUND_HOLES = [DOME_PLATFORM.buffer(-0.5)]
+                         # (Wilson's Arch hall: paved at Chain Street level instead, see LOCAL_FLATS; a hole
                          #  left gaps between the hall's roof and the walls around it)
 # sunken courts: paving at street level + dz (the Golden Gate's court, 4.5 m below the esplanade;
 # retaining walls, railing and stairs by landmarks_haram)
@@ -424,7 +437,7 @@ def write_sectors(spec):
         m = v["pts"][len(v["pts"]) // 2]
         per[sector_or_nearest(m[0], m[1])]["vaults"].append(v)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
-                                  "walls_generic", "retaining", "spawn", "sources")}
+                                  "walls_generic", "retaining", "spawn", "sources", "ground_holes")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": spec["steps"], "cables": [],
                  "beams": []})
     write_json(out_dir / "base.json", base)
@@ -1240,7 +1253,9 @@ def main():
         zs = street_z_v([c[0] for c in q.exterior.coords], [c[1] for c in q.exterior.coords])
         return float(np.max(zs) - np.min(zs)) > 1.5
     ground_cut = unary_union([bd["poly"] for bd in buildings if bd["osm"] not in LANDMARK_IDS])
-    street = ctx.difference(ground_cut).difference(cit_outer).difference(steps_union) \
+    # (the ground runs 2 mm under the treads: cut at steps_union, 1 mm wider than them, it left a hairline
+    #  of sky around every tread)
+    street = ctx.difference(ground_cut).difference(cit_outer).difference(steps_union.buffer(-0.003)) \
         .difference(unary_union(GROUND_HOLES)).difference(sunken)
     road_area = street.intersection(road)
     paving_all = street.difference(road)
@@ -1441,7 +1456,12 @@ def main():
                         uc_ = (o["u0"] + o["u1"]) / 2
                         if steps_union.contains(Point(a[0] + tx * uc_ + nx * 0.4, a[1] + ty * uc_ + ny * 0.4)):
                             o["threshold"] = False
-                fac["fixtures"] = [fx for fx in fac["fixtures"] if "u" not in fx or not covered(fx["u"], fx["u"])]
+                # fixtures stand out from the wall (pipes 6-15 cm, boards over a metre): probed deeper, a
+                # neighbour 36 cm in front left a corner pipe standing free in the street before its wall
+                def blocked(u_):
+                    return any(inside_other(Point(a[0] + tx * u_ + nx * d_, a[1] + ty * u_ + ny * d_), bidx)
+                               for d_ in (0.15, 0.35, 0.6, 0.9))
+                fac["fixtures"] = [fx for fx in fac["fixtures"] if "u" not in fx or not blocked(fx["u"])]
                 for key in ("signs", "decals", "awnings"):
                     fac[key] = [x for x in fac.get(key, []) if "u0" not in x or not covered(x["u0"], x["u1"])]
                 if fac["openings"] or fac["fixtures"] or fac["decals"]:
@@ -1665,6 +1685,8 @@ def main():
         "poc_box": POC, "context_box": CONTEXT,
         "walls_generic": walls_generic,
         "retaining": retaining,
+        # ground left out on purpose (closed in by landmark walls): QA counts these as covered
+        "ground_holes": [[[round(x, 3), round(y, 3)] for x, y in h_.exterior.coords[:-1]] for h_ in GROUND_HOLES],
         "vaults": vaults,
         "buildings": out_b,
         "gatehouse": GATEHOUSE, "city_walls": CITY_WALLS,
