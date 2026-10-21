@@ -45,3 +45,7 @@ data/spec/
 build/logs/
 data/terrain_street.json
 data/landmark_ids.json
+
+# --- wrangler state (deploy/)
+.wrangler/
+deploy/stage.jsonc
