@@ -97,4 +97,7 @@ try {
   process.exitCode = 1;
 } finally {
   chrome.kill('SIGKILL');
+  // the profile caches every GLB it loaded (~1 GB) and /tmp is RAM-backed: 13 GB of these piled up
+  if (chrome.exitCode === null && chrome.signalCode === null) await new Promise((r) => chrome.once('exit', r));
+  fs.rmSync(dir, { recursive: true, force: true });
 }
