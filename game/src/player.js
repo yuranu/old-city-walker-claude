@@ -41,10 +41,14 @@ export class Player {
     const hits = this.world.raycast(new THREE.Ray(new THREE.Vector3(x, top, -y), down), THREE.DoubleSide)
       .sort((a, b) => a.point.y - b.point.y);
     let groundY = hits.length ? hits[hits.length - 1].point.y : 0;
+    // (a floor whose next surface up faces up too lies in a sealed void under another floor, e.g. the
+    //  esplanade under the Dome of the Rock's platform or under a stair flight: a room has a ceiling)
     for (let i = 0; i < hits.length; i++) {
       const h = hits[i];
       if (!h.face || h.face.normal.y < 0.5) continue;
-      const above = i + 1 < hits.length ? hits[i + 1].point.y : Infinity;
+      const next = i + 1 < hits.length ? hits[i + 1] : null;
+      const above = next ? next.point.y : Infinity;
+      if (next && next.face && next.face.normal.y >= 0.5) continue;
       if (above - h.point.y >= 2.0) { groundY = h.point.y; break; }
     }
     this.groundY = groundY;
