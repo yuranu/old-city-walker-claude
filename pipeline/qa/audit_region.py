@@ -20,7 +20,7 @@ def main():
     parts = ["base"] + [s["id"] for s in idx
                         if not (s["bounds"][2] < x0 - 60 or s["bounds"][0] > x1 + 60 or s["bounds"][3] < y0 - 60 or s["bounds"][1] > y1 + 60)]
     js = out.with_suffix(".audit.json")
-    cmd = ["blender", "-b", "--factory-startup", "--python-exit-code", "1", "-P", str(ROOT / "build/audit_combo.py"), "--",
+    cmd = ["blender", "-b", "--factory-startup", "--python-exit-code", "1", "-P", str(ROOT / "blender/audit_combo.py"), "--",
            "--parts", ",".join(parts), "--bbox", "%f,%f,%f,%f" % (x0, y0, x1, y1), "--top", "0", "--json", str(js), "--min-area", "0.03"]
     subprocess.run(cmd, cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
     F = []
