@@ -3988,7 +3988,7 @@
   "s01_armenian|hole@4,-33": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 13:24",
+   "last": "2026-10-21 14:56",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4017,7 +4017,7 @@
   "s01_armenian|hole@6,-33": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 13:24",
+   "last": "2026-10-21 14:56",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4046,7 +4046,7 @@
   "s01_armenian|hole@7,-17": {
    "region": "s01_armenian",
    "first": "2026-10-21 07:55",
-   "last": "2026-10-21 13:24",
+   "last": "2026-10-21 14:56",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4179,7 +4179,7 @@
   "s03_christian_w|flicker@-25,68": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -4187,16 +4187,16 @@
     "severity": "high",
     "at": [
      -97.3,
-     274.4
+     274.5
     ],
-    "what": "surface flips between frames 1 cm apart (234 px)",
+    "what": "surface flips between frames 1 cm apart (227 px)",
     "evidence": {
      "crop": "crops/w298277801_0_d_flick_350_18.png",
-     "px": 234,
+     "px": 227,
      "bbox": [
       350,
       18,
-      367,
+      366,
       31
      ]
     },
@@ -4208,7 +4208,7 @@
   "s03_christian_w|hole@-31,37": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4237,7 +4237,7 @@
   "s03_christian_w|hole@-22,47": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4266,7 +4266,7 @@
   "s03_christian_w|hole@-11,25": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -4295,7 +4295,7 @@
   "s03_christian_w|hole@-2,2": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5157,7 +5157,7 @@
   "s01_armenian|flicker@20,-69": {
    "region": "s01_armenian",
    "first": "2026-10-21 10:18",
-   "last": "2026-10-21 13:24",
+   "last": "2026-10-21 14:56",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5186,25 +5186,25 @@
   "s03_christian_w|flicker@-29,71": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "flicker",
     "level": 0,
     "severity": "high",
     "at": [
-     -115.3,
+     -115.4,
      285.4
     ],
-    "what": "surface flips between frames 1 cm apart (221 px)",
+    "what": "surface flips between frames 1 cm apart (232 px)",
     "evidence": {
      "crop": "crops/w298277801_0_d_flick_346_56.png",
-     "px": 221,
+     "px": 232,
      "bbox": [
       346,
       56,
       363,
-      70
+      71
      ]
     },
     "source": null,
@@ -5215,7 +5215,7 @@
   "s03_christian_w|hole@-14,24": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5245,7 +5245,7 @@
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
    "last": "2026-10-21 13:47",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5260,12 +5260,13 @@
     "source": "overlapping geometry: steps vs bld_w1393409178",
     "view": null,
     "key": "coplanar@34,64"
-   }
+   },
+   "fixed": "2026-10-21 15:18"
   },
   "s03_christian_w|coplanar@-12,84": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5339,7 +5340,7 @@
    "region": "s04_sepulchre",
    "first": "2026-10-21 11:02",
    "last": "2026-10-21 14:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5354,13 +5355,14 @@
     "source": "overlapping geometry: bld_f451 vs bld_w1393409164",
     "view": null,
     "key": "coplanar@45,66"
-   }
+   },
+   "fixed": "2026-10-21 15:39"
   },
   "s04_sepulchre|coplanar@76,72": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 11:02",
    "last": "2026-10-21 14:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5375,12 +5377,13 @@
     "source": "overlapping geometry: bld_f518 vs bld_r3864696",
     "view": null,
     "key": "coplanar@76,72"
-   }
+   },
+   "fixed": "2026-10-21 15:39"
   },
   "s04_sepulchre|coplanar@71,81": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 11:02",
-   "last": "2026-10-21 14:10",
+   "last": "2026-10-21 15:39",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5402,7 +5405,7 @@
    "region": "s04_sepulchre",
    "first": "2026-10-21 11:02",
    "last": "2026-10-21 14:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5417,7 +5420,8 @@
     "source": "overlapping geometry: bld_f442 vs bld_w1392901032",
     "view": null,
     "key": "coplanar@76,103"
-   }
+   },
+   "fixed": "2026-10-21 15:39"
   },
   "s04_sepulchre|coplanar@44,65": {
    "region": "s04_sepulchre",
@@ -5554,7 +5558,7 @@
    "region": "s01_armenian",
    "first": "2026-10-21 13:24",
    "last": "2026-10-21 13:24",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -5577,12 +5581,13 @@
     "source": null,
     "view": "air_28_-145",
     "key": "hole@6,-32"
-   }
+   },
+   "fixed": "2026-10-21 14:56"
   },
   "s01_armenian|hole@11,-29": {
    "region": "s01_armenian",
    "first": "2026-10-21 13:24",
-   "last": "2026-10-21 13:24",
+   "last": "2026-10-21 14:56",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5592,14 +5597,14 @@
      44.1,
      -113.0
     ],
-    "what": "sky visible below the horizon (1131 px)",
+    "what": "sky visible below the horizon (1110 px)",
     "evidence": {
      "crop": "crops/air_73_-100_hole_611_303.png",
-     "px": 1131,
+     "px": 1110,
      "bbox": [
       611,
       303,
-      699,
+      696,
       359
      ]
     },
@@ -5612,7 +5617,7 @@
    "region": "s03_christian_w",
    "first": "2026-10-21 13:47",
    "last": "2026-10-21 13:47",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -5635,13 +5640,14 @@
     "source": null,
     "view": "w26492707_3_f",
     "key": "hole@27,64"
-   }
+   },
+   "fixed": "2026-10-21 15:18"
   },
   "s03_christian_w|hole@25,64": {
    "region": "s03_christian_w",
    "first": "2026-10-21 13:47",
    "last": "2026-10-21 13:47",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -5664,12 +5670,13 @@
     "source": null,
     "view": "w1005635990_0_f",
     "key": "hole@25,64"
-   }
+   },
+   "fixed": "2026-10-21 15:18"
   },
   "s03_christian_w|flicker@31,53": {
    "region": "s03_christian_w",
    "first": "2026-10-21 13:47",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -5698,25 +5705,25 @@
   "s03_christian_w|flicker@25,56": {
    "region": "s03_christian_w",
    "first": "2026-10-21 13:47",
-   "last": "2026-10-21 13:47",
+   "last": "2026-10-21 15:18",
    "status": "open",
    "finding": {
     "kind": "flicker",
     "level": 0,
     "severity": "high",
     "at": [
-     101.6,
-     225.7
+     102.6,
+     225.4
     ],
-    "what": "surface flips between frames 1 cm apart (276 px)",
+    "what": "surface flips between frames 1 cm apart (202 px)",
     "evidence": {
-     "crop": "crops/w1545565702_0_b_flick_935_460.png",
-     "px": 276,
+     "crop": "crops/w1545565702_0_b_flick_903_421.png",
+     "px": 202,
      "bbox": [
-      935,
-      460,
-      956,
-      484
+      903,
+      421,
+      920,
+      439
      ]
     },
     "source": null,
@@ -5728,7 +5735,7 @@
    "region": "s04_sepulchre",
    "first": "2026-10-21 14:10",
    "last": "2026-10-21 14:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5743,12 +5750,13 @@
     "source": "overlapping geometry: bld_w1022672084 vs crate_stack.0",
     "view": null,
     "key": "coplanar@58,39"
-   }
+   },
+   "fixed": "2026-10-21 15:39"
   },
   "s05_souks|hole@50,-9": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 14:18",
+   "last": "2026-10-21 15:47",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5777,7 +5785,7 @@
   "s05_souks|hole@49,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 14:18",
+   "last": "2026-10-21 15:47",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5806,7 +5814,7 @@
   "s05_souks|hole@50,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 14:18",
+   "last": "2026-10-21 15:47",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5835,7 +5843,7 @@
   "s05_souks|coplanar@83,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 14:18",
+   "last": "2026-10-21 15:47",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5856,7 +5864,7 @@
   "s05_souks|coplanar@81,7": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-21 14:18",
+   "last": "2026-10-21 15:47",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5878,7 +5886,7 @@
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
    "last": "2026-10-21 14:18",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5893,13 +5901,14 @@
     "source": "overlapping geometry: steps vs bld_w1392907920",
     "view": null,
     "key": "coplanar@50,-7"
-   }
+   },
+   "fixed": "2026-10-21 15:47"
   },
   "s05_souks|coplanar@50,-6": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
    "last": "2026-10-21 14:18",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5914,7 +5923,8 @@
     "source": "overlapping geometry: steps vs bld_f200",
     "view": null,
     "key": "coplanar@50,-6"
-   }
+   },
+   "fixed": "2026-10-21 15:47"
   },
   "s00_jaffa|hole@35,1": {
    "region": "s00_jaffa",
@@ -6030,6 +6040,859 @@
     "source": null,
     "view": "w1393445771_6_f",
     "key": "hole@27,1"
+   }
+  },
+  "s01_armenian|hole@60,-13": {
+   "region": "s01_armenian",
+   "first": "2026-10-21 14:56",
+   "last": "2026-10-21 14:56",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     241.0,
+     -51.8
+    ],
+    "what": "sky visible below the horizon (1282 px)",
+    "evidence": {
+     "crop": "crops/w616359702_2_f_hole_208_355.png",
+     "px": 1282,
+     "bbox": [
+      208,
+      355,
+      257,
+      406
+     ]
+    },
+    "source": null,
+    "view": "w616359702_2_f",
+    "key": "hole@60,-13"
+   }
+  },
+  "s04_sepulchre|hole@86,106": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 15:39",
+   "last": "2026-10-21 15:39",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     347.4,
+     425.8
+    ],
+    "what": "sky visible below the horizon (14024 px)",
+    "evidence": {
+     "crop": "crops/w26506006_1_f_hole_734_370.png",
+     "px": 14024,
+     "bbox": [
+      734,
+      370,
+      959,
+      565
+     ]
+    },
+    "source": null,
+    "view": "w26506006_1_f",
+    "key": "hole@86,106"
+   }
+  },
+  "s04_sepulchre|hole@87,73": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 15:39",
+   "last": "2026-10-21 15:39",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     349.3,
+     295.5
+    ],
+    "what": "sky visible below the horizon (756 px)",
+    "evidence": {
+     "crop": "crops/w257617674_0_b_hole_611_381.png",
+     "px": 756,
+     "bbox": [
+      611,
+      381,
+      682,
+      394
+     ]
+    },
+    "source": null,
+    "view": "w257617674_0_b",
+    "key": "hole@87,73"
+   }
+  },
+  "s04_sepulchre|hole@87,74": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 15:39",
+   "last": "2026-10-21 15:39",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     348.7,
+     297.8
+    ],
+    "what": "sky visible below the horizon (13225 px)",
+    "evidence": {
+     "crop": "crops/w616344389_0_f_hole_0_472.png",
+     "px": 13225,
+     "bbox": [
+      0,
+      472,
+      178,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w616344389_0_f",
+    "key": "hole@87,74"
+   }
+  },
+  "s04_sepulchre|hole@84,74": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 15:39",
+   "last": "2026-10-21 15:39",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     336.5,
+     297.2
+    ],
+    "what": "sky visible below the horizon (56 px)",
+    "evidence": {
+     "crop": "crops/w616344389_1_b_hole_273_458.png",
+     "px": 56,
+     "bbox": [
+      273,
+      458,
+      281,
+      467
+     ]
+    },
+    "source": null,
+    "view": "w616344389_1_b",
+    "key": "hole@84,74"
+   }
+  },
+  "s04_sepulchre|hole@43,37": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-21 15:39",
+   "last": "2026-10-21 15:39",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     174.9,
+     150.6
+    ],
+    "what": "sky visible below the horizon (220 px)",
+    "evidence": {
+     "crop": "crops/air_180_158_hole_380_592.png",
+     "px": 220,
+     "bbox": [
+      380,
+      592,
+      408,
+      623
+     ]
+    },
+    "source": null,
+    "view": "air_180_158",
+    "key": "hole@43,37"
+   }
+  },
+  "s05_souks|hole@67,-5": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     271.6,
+     -20.0
+    ],
+    "what": "sky visible below the horizon (2932 px)",
+    "evidence": {
+     "crop": "crops/w26492725_0_d_hole_494_262.png",
+     "px": 2932,
+     "bbox": [
+      494,
+      262,
+      662,
+      290
+     ]
+    },
+    "source": null,
+    "view": "w26492725_0_d",
+    "key": "hole@67,-5"
+   }
+  },
+  "s05_souks|hole@40,1": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     160.8,
+     7.4
+    ],
+    "what": "sky visible below the horizon (94 px)",
+    "evidence": {
+     "crop": "crops/w279685572_4_f_hole_551_438.png",
+     "px": 94,
+     "bbox": [
+      551,
+      438,
+      563,
+      448
+     ]
+    },
+    "source": null,
+    "view": "w279685572_4_f",
+    "key": "hole@40,1"
+   }
+  },
+  "s05_souks|hole@39,1": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     158.0,
+     6.8
+    ],
+    "what": "sky visible below the horizon (585 px)",
+    "evidence": {
+     "crop": "crops/w279685572_4_f_hole_919_620.png",
+     "px": 585,
+     "bbox": [
+      919,
+      620,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w279685572_4_f",
+    "key": "hole@39,1"
+   }
+  },
+  "s05_souks|hole@43,1": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     173.4,
+     7.8
+    ],
+    "what": "sky visible below the horizon (8119 px)",
+    "evidence": {
+     "crop": "crops/w279685572_5_f_hole_785_545.png",
+     "px": 8119,
+     "bbox": [
+      785,
+      545,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w279685572_5_f",
+    "key": "hole@43,1"
+   }
+  },
+  "s05_souks|hole@42,1": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     169.8,
+     7.0
+    ],
+    "what": "sky visible below the horizon (7964 px)",
+    "evidence": {
+     "crop": "crops/w279685572_5_b_hole_0_444.png",
+     "px": 7964,
+     "bbox": [
+      0,
+      444,
+      185,
+      566
+     ]
+    },
+    "source": null,
+    "view": "w279685572_5_b",
+    "key": "hole@42,1"
+   }
+  },
+  "s05_souks|hole@67,-7": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     269.2,
+     -25.7
+    ],
+    "what": "sky visible below the horizon (2441 px)",
+    "evidence": {
+     "crop": "crops/w616359701_0_b_hole_506_388.png",
+     "px": 2441,
+     "bbox": [
+      506,
+      388,
+      593,
+      454
+     ]
+    },
+    "source": null,
+    "view": "w616359701_0_b",
+    "key": "hole@67,-7"
+   }
+  },
+  "s05_souks|hole@67,-8": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     268.6,
+     -28.9
+    ],
+    "what": "sky visible below the horizon (3013 px)",
+    "evidence": {
+     "crop": "crops/w616359701_0_d_hole_559_329.png",
+     "px": 3013,
+     "bbox": [
+      559,
+      329,
+      636,
+      374
+     ]
+    },
+    "source": null,
+    "view": "w616359701_0_d",
+    "key": "hole@67,-8"
+   }
+  },
+  "s05_souks|hole@65,-9": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     260.1,
+     -33.1
+    ],
+    "what": "sky visible below the horizon (1567 px)",
+    "evidence": {
+     "crop": "crops/w616359702_0_f_hole_227_287.png",
+     "px": 1567,
+     "bbox": [
+      227,
+      287,
+      294,
+      337
+     ]
+    },
+    "source": null,
+    "view": "w616359702_0_f",
+    "key": "hole@65,-9"
+   }
+  },
+  "s05_souks|hole@65,-8": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     262.6,
+     -29.2
+    ],
+    "what": "sky visible below the horizon (16505 px)",
+    "evidence": {
+     "crop": "crops/w616359702_0_f_hole_734_441.png",
+     "px": 16505,
+     "bbox": [
+      734,
+      441,
+      959,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w616359702_0_f",
+    "key": "hole@65,-8"
+   }
+  },
+  "s05_souks|hole@62,-10": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     250.9,
+     -38.8
+    ],
+    "what": "sky visible below the horizon (14681 px)",
+    "evidence": {
+     "crop": "crops/w616359702_1_f_hole_0_475.png",
+     "px": 14681,
+     "bbox": [
+      0,
+      475,
+      218,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w616359702_1_f",
+    "key": "hole@62,-10"
+   }
+  },
+  "s05_souks|hole@63,-9": {
+   "region": "s05_souks",
+   "first": "2026-10-21 15:47",
+   "last": "2026-10-21 15:47",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     255.4,
+     -35.5
+    ],
+    "what": "sky visible below the horizon (231 px)",
+    "evidence": {
+     "crop": "crops/w616359702_1_b_hole_550_309.png",
+     "px": 231,
+     "bbox": [
+      550,
+      309,
+      568,
+      331
+     ]
+    },
+    "source": null,
+    "view": "w616359702_1_b",
+    "key": "hole@63,-9"
+   }
+  },
+  "s06_jewish|hole@126,-63": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     505.1,
+     -249.5
+    ],
+    "what": "sky visible below the horizon (2746 px)",
+    "evidence": {
+     "crop": "crops/w26492742_0_f_hole_665_307.png",
+     "px": 2746,
+     "bbox": [
+      665,
+      307,
+      766,
+      376
+     ]
+    },
+    "source": null,
+    "view": "w26492742_0_f",
+    "key": "hole@126,-63"
+   }
+  },
+  "s06_jewish|hole@125,-63": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     501.5,
+     -251.1
+    ],
+    "what": "sky visible below the horizon (3788 px)",
+    "evidence": {
+     "crop": "crops/w26492742_0_f_hole_152_314.png",
+     "px": 3788,
+     "bbox": [
+      152,
+      314,
+      276,
+      396
+     ]
+    },
+    "source": null,
+    "view": "w26492742_0_f",
+    "key": "hole@125,-63"
+   }
+  },
+  "s06_jewish|hole@125,-64": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     501.9,
+     -252.1
+    ],
+    "what": "sky visible below the horizon (2725 px)",
+    "evidence": {
+     "crop": "crops/w26492742_0_d_hole_879_251.png",
+     "px": 2725,
+     "bbox": [
+      879,
+      251,
+      959,
+      291
+     ]
+    },
+    "source": null,
+    "view": "w26492742_0_d",
+    "key": "hole@125,-64"
+   }
+  },
+  "s06_jewish|hole@139,-35": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     556.8,
+     -137.2
+    ],
+    "what": "sky visible below the horizon (4623 px)",
+    "evidence": {
+     "crop": "crops/w29388393_2_f_hole_548_373.png",
+     "px": 4623,
+     "bbox": [
+      548,
+      373,
+      689,
+      423
+     ]
+    },
+    "source": null,
+    "view": "w29388393_2_f",
+    "key": "hole@139,-35"
+   }
+  },
+  "s06_jewish|hole@136,-36": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     547.8,
+     -140.2
+    ],
+    "what": "sky visible below the horizon (475 px)",
+    "evidence": {
+     "crop": "crops/w29388393_3_b_hole_611_371.png",
+     "px": 475,
+     "bbox": [
+      611,
+      371,
+      638,
+      399
+     ]
+    },
+    "source": null,
+    "view": "w29388393_3_b",
+    "key": "hole@136,-36"
+   }
+  },
+  "s06_jewish|hole@138,-27": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     554.5,
+     -104.2
+    ],
+    "what": "sky visible below the horizon (1482 px)",
+    "evidence": {
+     "crop": "crops/w29388399_0_b_hole_681_309.png",
+     "px": 1482,
+     "bbox": [
+      681,
+      309,
+      819,
+      324
+     ]
+    },
+    "source": null,
+    "view": "w29388399_0_b",
+    "key": "hole@138,-27"
+   }
+  },
+  "s06_jewish|hole@135,-55": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     541.2,
+     -216.1
+    ],
+    "what": "sky visible below the horizon (5257 px)",
+    "evidence": {
+     "crop": "crops/w368474204_0_f_hole_651_410.png",
+     "px": 5257,
+     "bbox": [
+      651,
+      410,
+      758,
+      527
+     ]
+    },
+    "source": null,
+    "view": "w368474204_0_f",
+    "key": "hole@135,-55"
+   }
+  },
+  "s06_jewish|hole@135,-54": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     540.8,
+     -213.4
+    ],
+    "what": "sky visible below the horizon (6272 px)",
+    "evidence": {
+     "crop": "crops/w368474204_0_d_hole_439_415.png",
+     "px": 6272,
+     "bbox": [
+      439,
+      415,
+      670,
+      455
+     ]
+    },
+    "source": null,
+    "view": "w368474204_0_d",
+    "key": "hole@135,-54"
+   }
+  },
+  "s06_jewish|flicker@123,-68": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     495.0,
+     -270.0
+    ],
+    "what": "surface flips between frames 1 cm apart (677 px)",
+    "evidence": {
+     "crop": "crops/w496167693_8_f_flick_395_78.png",
+     "px": 677,
+     "bbox": [
+      395,
+      78,
+      410,
+      137
+     ]
+    },
+    "source": null,
+    "view": "w496167693_8_f",
+    "key": "flicker@123,-68"
+   }
+  },
+  "s06_jewish|hole@146,-35": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     585.1,
+     -139.3
+    ],
+    "what": "sky visible below the horizon (118 px)",
+    "evidence": {
+     "crop": "crops/air_585_-130_hole_0_594.png",
+     "px": 118,
+     "bbox": [
+      0,
+      594,
+      22,
+      610
+     ]
+    },
+    "source": null,
+    "view": "air_585_-130",
+    "key": "hole@146,-35"
+   }
+  },
+  "s06_jewish|coplanar@124,-62": {
+   "region": "s06_jewish",
+   "first": "2026-10-21 16:17",
+   "last": "2026-10-21 16:17",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     496.1,
+     -246.7,
+     -2.1
+    ],
+    "what": "coplanar faces s06_jewish:bld_w290725362 / s06_jewish:bld_f616 (0.07 m2, dressed.004/rubble.004)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w290725362 vs bld_f616",
+    "view": null,
+    "key": "coplanar@124,-62"
+   }
+  },
+  "s08_damascus|hole@90,108": {
+   "region": "s08_damascus",
+   "first": "2026-10-21 16:30",
+   "last": "2026-10-21 16:30",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     360.1,
+     434.3
+    ],
+    "what": "sky visible below the horizon (11322 px)",
+    "evidence": {
+     "crop": "crops/w26506006_0_f_hole_779_417.png",
+     "px": 11322,
+     "bbox": [
+      779,
+      417,
+      959,
+      586
+     ]
+    },
+    "source": null,
+    "view": "w26506006_0_f",
+    "key": "hole@90,108"
+   }
+  },
+  "s08_damascus|blocked_street@89,110": {
+   "region": "s08_damascus",
+   "first": "2026-10-21 16:30",
+   "last": "2026-10-21 16:30",
+   "status": "open",
+   "finding": {
+    "kind": "blocked_street",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     358.4,
+     441.8
+    ],
+    "what": "Al Wadi runs 2.2 m inside w1393172389",
+    "evidence": {},
+    "source": "footprints / infill / passages",
+    "view": null,
+    "key": "blocked_street@89,110"
    }
   }
  }
