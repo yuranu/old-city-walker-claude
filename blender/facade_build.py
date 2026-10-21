@@ -73,8 +73,8 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
     back = [p - n * d for p in front]
     centre = P(cu, cv) - n * (d / 2)
     for i in range(len(front) - 1):
-        if i == 0 and kind in SKIP_BOTTOM:
-            continue                                       # floor is the threshold / ground
+        if i == 0 and kind in SKIP_BOTTOM and o.get("threshold", True):
+            continue                                       # floor is the threshold (without one: the reveal's)
         q = [front[i], front[i + 1], back[i + 1], back[i]]
         mb.poly(q, mat, centre - (q[0] + q[2]) / 2, col=col)
     if kind == "passage" or d <= 0.0:

@@ -1278,9 +1278,8 @@ def main():
         split_regions.append((mat, reg, zf))
     regions = split_regions + regions[3:]
     # under landmark footprints the ground runs 4 cm lower: their floors sit on it without z-fighting
-    # (0.6 m in from the outline: where a footprint reaches past the landmark's walls the 4 cm step and its seal
-    #  showed as a strip across the street; inside the walls it is hidden)
-    lm_polys = unary_union([bd["poly"].buffer(-0.6, join_style="mitre") for bd in buildings if bd["osm"] in LANDMARK_IDS
+    # (the whole footprint: keeping a rim at full level put it in the same plane as the portico floors)
+    lm_polys = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS
                             and not (bd["osm"] in WALL_LANDMARKS and spans_drop(bd["poly"]))]
                            or [Polygon()]).segmentize(1.0)
     # landmarks spanning a level change (the Western Wall: prayer area on one side, the Haram on the other):

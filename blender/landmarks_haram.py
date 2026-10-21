@@ -1901,6 +1901,9 @@ def wall_strip(mbs, bd, gen, place, lod=False):
         if e.L < 0.05:
             continue
         z0 = min(eg[i], E) - 0.6
+        mid = ((ring[i][0] + ring[(i + 1) % len(ring)][0]) / 2, (ring[i][1] + ring[(i + 1) % len(ring)][1]) / 2)
+        if eg[i] < E - 1 and _base_wall_near(mid, max_d=0.6):
+            continue                                     # the city wall's own face stands there (it z-fought)
         face(sol, e, [(0, z0), (e.L, z0), (e.L, zt), (0, zt)], "fort" if eg[i] < E - 1 else "ashlar", col=WARM)
     cap(sol, ring, zt, "ashlar", col=WARM)
 
