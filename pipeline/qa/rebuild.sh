@@ -3,7 +3,7 @@
 #   pipeline/qa/rebuild.sh [JOBS]
 set -euo pipefail
 cd "$(dirname "$0")/../.."
-J=${1:-3}
+J=${1:-2}
 PY=.venv/bin/python
 $PY pipeline/make_spec.py 2>&1 | grep -E "Error|Traceback|^buildings" || true
 $PY pipeline/export_game_data.py | tail -1

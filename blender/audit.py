@@ -47,35 +47,51 @@ def main():
     tris = []           # (obj, poly_index, material, [v0,v1,v2] world)
     boundary = []
     degenerate = []
+    import numpy as np
     for ob in bpy.data.objects:
         if ob.type != "MESH" or not ob.visible_get():
             continue
         me = ob.data
         me.calc_loop_triangles()
-        mw = ob.matrix_world
-        verts = [mw @ v.co for v in me.vertices]
+        nv, nt = len(me.vertices), len(me.loop_triangles)
+        if not nt:
+            continue
+        co = np.empty(nv * 3, np.float32)
+        me.vertices.foreach_get("co", co)
+        M = np.array(ob.matrix_world, np.float64)
+        co = co.reshape(-1, 3) @ M[:3, :3].T + M[:3, 3]
+        tv = np.empty(nt * 3, np.int32)
+        me.loop_triangles.foreach_get("vertices", tv)
+        tv = tv.reshape(-1, 3)
+        tp = np.empty(nt, np.int32)
+        me.loop_triangles.foreach_get("polygon_index", tp)
+        tm = np.empty(nt, np.int32)
+        me.loop_triangles.foreach_get("material_index", tm)
+        P = co[tv]                                            # (nt, 3, 3) world
+        if bb:                                                # only triangles whose centre lies in the box
+            c = P.mean(axis=1)
+            keep = (c[:, 0] >= bb[0]) & (c[:, 0] <= bb[2]) & (c[:, 1] >= bb[1]) & (c[:, 1] <= bb[3])
+            P, tp, tm = P[keep], tp[keep], tm[keep]
         mats = [m.name if m else "" for m in me.materials]
-        for lt in me.loop_triangles:
-            p = [verts[i] for i in lt.vertices]
-            area = (p[1] - p[0]).cross(p[2] - p[0]).length / 2
-            longest = max((p[1] - p[0]).length, (p[2] - p[1]).length, (p[0] - p[2]).length)
-            if area < 1e-6 or (longest > 0.5 and area / (longest * longest) < 1e-4):
-                degenerate.append({"obj": ob.name, "at": [round(c, 2) for c in (sum(p, Vector()) / 3)],
-                                   "area": area})
-                continue
-            if bb:
-                cx, cy = (p[0].x + p[1].x + p[2].x) / 3, (p[0].y + p[1].y + p[2].y) / 3
-                if not (bb[0] <= cx <= bb[2] and bb[1] <= cy <= bb[3]):
-                    continue
-            tris.append((ob.name, lt.polygon_index, mats[lt.material_index] if mats else "", p))
-        bm = bmesh.new()
-        bm.from_mesh(me)
-        for e in bm.edges:
-            if e.is_boundary:
-                c = mw @ ((e.verts[0].co + e.verts[1].co) / 2)
-                if c.z > 0.3 and (e.verts[0].co - e.verts[1].co).length > 0.05:
-                    boundary.append((ob.name, [round(c.x, 1), round(c.y, 1), round(c.z, 1)]))
-        bm.free()
+        cr = np.cross(P[:, 1] - P[:, 0], P[:, 2] - P[:, 0])
+        area = np.linalg.norm(cr, axis=1) / 2
+        longest = np.max(np.stack([np.linalg.norm(P[:, 1] - P[:, 0], axis=1), np.linalg.norm(P[:, 2] - P[:, 1], axis=1),
+                                   np.linalg.norm(P[:, 0] - P[:, 2], axis=1)]), axis=0)
+        bad = (area < 1e-6) | ((longest > 0.5) & (area / np.maximum(longest * longest, 1e-12) < 1e-4))
+        for k in np.nonzero(bad)[0][:200]:
+            degenerate.append({"obj": ob.name, "at": [round(float(v), 2) for v in P[k].mean(axis=0)], "area": float(area[k])})
+        for k in np.nonzero(~bad)[0]:
+            tris.append((ob.name, int(tp[k]), mats[tm[k]] if mats else "", [Vector(v) for v in P[k]]))
+        if not bb:                                            # (open edges: whole-scene audits only)
+            bm = bmesh.new()
+            bm.from_mesh(me)
+            mw = ob.matrix_world
+            for e in bm.edges:
+                if e.is_boundary:
+                    c = mw @ ((e.verts[0].co + e.verts[1].co) / 2)
+                    if c.z > 0.3 and (e.verts[0].co - e.verts[1].co).length > 0.05:
+                        boundary.append((ob.name, [round(c.x, 1), round(c.y, 1), round(c.z, 1)]))
+            bm.free()
 
     # bucket by plane
     buckets = defaultdict(list)

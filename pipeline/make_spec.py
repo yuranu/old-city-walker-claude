@@ -556,6 +556,8 @@ def david_drop(s):
 
 _FLATS = []                                    # [(polygon, z)] local flats, filled by setup_flats()
 ALL_FLATS = []                                 # terrain flats + local flats: the level areas
+OPEN_EDGES = {}                                # id(level area) -> the part of its outline it eases across, or None
+SHRUNK = {}                                    # id(level area) -> the area 2 cm in from its outline
 PAIR_EDGES = []                                # [(edge geometry, z of the higher-priority flat, smaller flat, its z)]
 BLEND_SLOPE = 0.3                              # around a level area the ground eases into the terrain
                                                # over |dz| / BLEND_SLOPE metres (3-25 m)
@@ -586,6 +588,19 @@ def setup_flats(d):
                           key=lambda f_: f_[0].area)      # the most specific (smallest) level area wins where they overlap
     for poly, _ in ALL_FLATS:
         prepare(poly)
+    # a level area eases into the terrain only across its open edges: not where buildings or walls line
+    # it (the lanes outside the Haram's walls keep their own level instead of climbing to the esplanade)
+    closers = [Polygon(b["outer"][0]).buffer(0) for b in d["buildings"] if b.get("outer") and len(b["outer"][0]) > 2]
+    closers += [LineString(w["pts"]).buffer(1.0) for w in d["ways"] if len(w.get("pts") or []) > 1 and
+                (w["tags"].get("barrier") in ("city_wall", "wall", "retaining_wall") or w["tags"].get("historic") == "citywalls")]
+    closed = unary_union(closers).buffer(1.0)
+    OPEN_EDGES.clear()
+    SHRUNK.clear()
+    for poly, _ in ALL_FLATS:
+        oe = poly.boundary.difference(closed)
+        OPEN_EDGES[id(poly)] = oe if not oe.is_empty and oe.length > 0.5 else None
+        SHRUNK[id(poly)] = poly.buffer(-0.02)
+        prepare(SHRUNK[id(poly)])
     street_z0.cache_clear()
     street_z.cache_clear()
 
@@ -608,14 +623,10 @@ def surface_z_v(xs, ys, prefer=None, ease_from=None):
         order = [f_ for f_ in ALL_FLATS if f_[0] is prefer] + [f_ for f_ in ALL_FLATS if f_[0] is not prefer]
     owner = np.full(xs.shape, -1)
     for poly, fz in order:
-        inside = shapely.contains_xy(poly, xs, ys)
-        if poly is prefer:
-            inside |= shapely.distance(poly, pts) < 0.02
-        elif (poly is WILSON_HALL or ease_from is not None) and inside.any():
-            # the deck does not ease, an easing-zone piece eases from its own level area: their outlines
-            # belong to the ground outside unless asked for by a piece of that level area
-            k_ = np.nonzero(inside)[0]
-            inside[k_[shapely.distance(poly.exterior, pts[k_]) < 0.02]] = False
+        if poly is prefer:              # a piece of this level area: its outline counts as inside it
+            inside = shapely.contains_xy(poly, xs, ys) | (shapely.distance(poly, pts) < 0.02)
+        else:                           # anyone else: the outline belongs to the ground outside (where the
+            inside = shapely.contains_xy(SHRUNK[id(poly)], xs, ys)    # area does not ease, a step is there)
         out = np.where(inside & ~inside_any, fz, out)
         owner = np.where(inside & ~inside_any, id(poly), owner)
         inside_any |= inside
@@ -626,9 +637,9 @@ def surface_z_v(xs, ys, prefer=None, ease_from=None):
         m = ins & (d < D)
         out = np.where(m, zbig + (zsmall - zbig) * (d / D), out)
     for poly, fz in ALL_FLATS:                 # outside every flat: ease from the nearest one
-        if poly is WILSON_HALL:                 # a raised deck: walls (crack seals) at its edges, no easing
+        if poly is WILSON_HALL or OPEN_EDGES.get(id(poly)) is None:   # a raised deck, a walled area: no easing
             continue
-        d = shapely.distance(poly, pts)
+        d = shapely.distance(OPEN_EDGES[id(poly)], pts)
         D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
         w = np.clip(d / D, 0.0, 1.0)                 # linear: the slope never exceeds |dz| / D
         near = (~inside_any) & (d < D) & (d / D < best)
@@ -636,7 +647,7 @@ def surface_z_v(xs, ys, prefer=None, ease_from=None):
         best = np.where(near, d / D, best)
     if ease_from is not None:                  # a piece of an easing zone: eased from its own level area only
         fz = next(z_ for p_, z_ in ALL_FLATS if p_ is ease_from)
-        d = shapely.distance(ease_from, pts)
+        d = shapely.distance(OPEN_EDGES[id(ease_from)], pts)
         D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
         m = (~inside_any) & (d < D)
         out = np.where(m, fz + (zt - fz) * np.clip(d / D, 0.0, 1.0), out)
@@ -652,8 +663,8 @@ def setup_ease_zones(cell=0.5):
     split along that switch line, each side eased from its own level area, so the jump is a clean
     vertical edge (closed by seal_cracks) instead of triangles spanning it."""
     EASE_ZONES.clear()
-    fl = [(p_, z_) for p_, z_ in ALL_FLATS if p_ is not WILSON_HALL]
-    bands = [p_.buffer(40.0) for p_, _ in fl]
+    fl = [(p_, z_) for p_, z_ in ALL_FLATS if p_ is not WILSON_HALL and OPEN_EDGES.get(id(p_)) is not None]
+    bands = [OPEN_EDGES[id(p_)].buffer(40.0) for p_, _ in fl]
     allf = unary_union([p_ for p_, _ in fl])
     zones = []
     for i in range(len(fl)):
@@ -675,7 +686,7 @@ def setup_ease_zones(cell=0.5):
     best = np.full(gx.shape, np.inf)
     own = np.full(gx.shape, -1)
     for i, (p_, fz) in enumerate(fl):
-        r = shapely.distance(p_, pts) / np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
+        r = shapely.distance(OPEN_EDGES[id(p_)], pts) / np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
         m = (r < 1.0) & (r < best)
         own[m], best[m] = i, r[m]
     for i, (p_, fz) in enumerate(fl):
@@ -702,6 +713,7 @@ def seal_cracks(ground, tol=0.02, skip=None):
     across an edge lies lower, one face from its surface up to this edge, looking at the low side.
     Seen from anywhere the ground is then closed: no sky through a seam."""
     T = np.array([t for g in ground for t in g["tris"]], float)
+    mats = [g["mat"] for g in ground for _ in g["tris"]]
     if not len(T):
         return []
     polys = shapely.polygons(T[:, :, :2])
@@ -741,9 +753,9 @@ def seal_cracks(ground, tol=0.02, skip=None):
         la = plane_z(k, a[e, :2] + nrm[e] * 0.01)
         lb = plane_z(k, b[e, :2] + nrm[e] * 0.01)
         if a[e, 2] - la > tol or b[e, 2] - lb > tol:
-            sel.append((e, la, lb))
+            sel.append((e, la, lb, k))
     ends = {}                                    # end point -> directions of the seals ending there
-    for e, _, _ in sel:
+    for e, _, _, _ in sel:
         t_ = (b[e, :2] - a[e, :2]) / L[e]
         for p_ in (a[e], b[e]):
             ends.setdefault((round(p_[0], 2), round(p_[1], 2)), []).append(t_)
@@ -752,7 +764,7 @@ def seal_cracks(ground, tol=0.02, skip=None):
         ds = ends.get((round(p_[0], 2), round(p_[1], 2)), [])      # not where a collinear one continues it
         return 0.0 if sum(1 for d_ in ds if abs(d_ @ t_) > 0.99) > 1 else 0.06
     out = []
-    for e, la, lb in sel:
+    for e, la, lb, k in sel:
         za, zb = a[e, 2], b[e, 2]
         # 4 cm back under the high side: where a landmark builds its own face on the edge, the seal
         # stays behind it instead of z-fighting with it
@@ -760,25 +772,28 @@ def seal_cracks(ground, tol=0.02, skip=None):
         pa = a[e, :2] - nrm[e] * 0.04 - t_ * ext(a[e], t_)
         pb = b[e, :2] - nrm[e] * 0.04 + t_ * ext(b[e], t_)
         out.append({"a": [round(pa[0], 3), round(pa[1], 3)], "b": [round(pb[0], 3), round(pb[1], 3)],
-                    "lo": [round(min(la, za) - 0.02, 3), round(min(lb, zb) - 0.02, 3)],
+                    # well below the low side: it stands 4 cm back, and a grazing ray over the low edge
+                    # would pass under a shallow foot
+                    "lo": [round(min(la, za) - 0.3, 3), round(min(lb, zb) - 0.3, 3)],
                     "hi": [round(za, 3), round(zb, 3)], "cap": 0,
-                    "n": [round(nrm[e, 0], 3), round(nrm[e, 1], 3)]})
+                    "n": [round(nrm[e, 0], 3), round(nrm[e, 1], 3)],
+                    **({"mat": "dressed"} if mats[k] == "setts" else {})})      # the kerb along a road
     return out
 
 def eased_at(x, y):
-    """Inside a level area or its easing band (where the continuous surface handles the level
-    change and stair treads would sink into or float over the slope)."""
-    if not ALL_FLATS:
-        return False
+    """Inside a level area (it is level there: stair treads would stick out of it). In the easing
+    bands the treads stay: they are built from the eased surface itself."""
+    pt = Point(x, y)
+    return any(poly.distance(pt) < 0.5 for poly, _ in ALL_FLATS if poly is not WILSON_HALL)
     zt = float(terrain_z_v([x], [y])[0])
     pt = Point(x, y)
     for poly, fz in ALL_FLATS:
         if poly.contains(pt):
             return True
-        if poly is WILSON_HALL:
+        if poly is WILSON_HALL or OPEN_EDGES.get(id(poly)) is None:
             continue
         D = max(3.0, min(40.0, abs(fz - zt) / BLEND_SLOPE))
-        if poly.distance(pt) < D and abs(fz - zt) > 0.3:
+        if OPEN_EDGES[id(poly)].distance(pt) < D and abs(fz - zt) > 0.3:
             return True
     return False
 
@@ -1270,24 +1285,7 @@ def main():
     # (the moat, the sunken courts and Wilson's Arch hall have their own walls on their outlines:
     #  landmarks_gates / landmarks_haram; a seal on the hall front would close its arches)
     retaining = seal_cracks(ground, skip=unary_union([moat.boundary, sunken.boundary, WILSON_HALL.boundary]).buffer(0.1))
-    # kerbs: where road meets paving (not where it meets buildings or the moat)
-    kerbs = []
-    edge = road_area.boundary.intersection(paving_all.buffer(0.02))
-    for ls in getattr(edge, "geoms", [edge]):
-        if ls.geom_type != "LineString" or ls.length < 0.1:
-            continue
-        c = list(ls.coords)
-        for a, b in zip(c, c[1:]):
-            if math.dist(a, b) < 0.02:
-                continue
-            m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
-            # orient so the face looks into the road (right-hand normal points into the road)
-            (tx, ty), (nx, ny), _ = edge_frame(a, b)
-            if not road_area.buffer(0.01).contains(Point(m[0] + nx * 0.05, m[1] + ny * 0.05)):
-                a, b = b, a
-            z = street_z(*m)
-            kerbs.append({"a": [round(a[0], 3), round(a[1], 3)], "b": [round(b[0], 3), round(b[1], 3)],
-                          "z0": round(z - KERB, 3), "z1": round(z, 3)})
+    kerbs = []               # (the kerb faces are the crack seals along the roads: seal_cracks)
 
     # ---------------------------------------------------------------- buildings
     def height_of(osm, tags, q, tier):
