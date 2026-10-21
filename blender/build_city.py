@@ -387,8 +387,11 @@ def build_steps(mb, steps):
             fl, ft = mk.tess2d([ext] + s["poly"]["holes"])
         except Exception:  # noqa: BLE001
             continue
-        tile = 4.0                                  # world-aligned like the ground around (one paving pattern)
-        mb.tris([(p[0], p[1], s["top"]) for p in fl], ft, "paving", UP, uvfn=lambda p: (p[0] / tile, p[1] / tile))
+        # worn limestone, world-aligned: in the paving texture the treads vanished into the street (its
+        # joints ran across them, the steps read as stripes on a ramp and as staggered slabs)
+        tile = 2.0
+        mb.tris([(p[0], p[1], s["top"]) for p in fl], ft, "lime", UP, uvfn=lambda p: (p[0] / tile, p[1] / tile),
+                col=(0.93, 0.9, 0.85))
         ez = s.get("ez") or [s["top"]] * len(ext)
         for i in range(len(ext)):                 # sides: from below up to the tread or the street, whichever
             a, b = ext[i], ext[(i + 1) % len(ext)]                  # is higher, so no gap opens either way

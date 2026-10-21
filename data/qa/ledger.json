@@ -9327,7 +9327,7 @@
   "s11_haram|coplanar@157,31": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -9854,7 +9854,7 @@
   "s11_haram|coplanar@157,30": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10029,7 +10029,7 @@
   "s11_haram|coplanar@230,43": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10116,7 +10116,7 @@
   "s11_haram|coplanar@157,32": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10203,7 +10203,7 @@
   "s11_haram|coplanar@179,-9": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10224,7 +10224,7 @@
   "s11_haram|coplanar@177,-10": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10267,7 +10267,7 @@
   "s11_haram|coplanar@177,-9": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10310,7 +10310,7 @@
   "s11_haram|coplanar@179,-10": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-21 23:02",
+   "last": "2026-10-21 23:42",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10411,7 +10411,7 @@
    "region": "s11_haram",
    "first": "2026-10-21 23:02",
    "last": "2026-10-21 23:02",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "ground_gap",
     "level": 0,
@@ -10427,7 +10427,8 @@
     "source": "make_spec ground regions / steps_union / buildings",
     "view": null,
     "key": "ground_gap@195,43"
-   }
+   },
+   "fixed": "2026-10-21 23:42"
   }
  }
 }

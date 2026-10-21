@@ -976,13 +976,13 @@ def _stairs(mbs, e, u0, u1, z_top, z_foot, riser=0.16, tread=0.34, lod=False):
             sol.poly([e.P(ua, z_top, 0), e.P(ua, z_foot, run), e.P(ua, zb, run), e.P(ua, zb, 0)], "ashlar", e.t * sgn,
                      col=WARM)
         return
-    tile = 4.0
+    tile = 2.0                               # worn limestone treads (city steps: build_city.build_steps)
     for k in range(1, nst + 1):
         zk = z_top - k * r                       # top of step k
         a, b = (k - 1) * tread, k * tread
         if k < nst:
             q = [e.P(u0, zk, a), e.P(u1, zk, a), e.P(u1, zk, b), e.P(u0, zk, b)]
-            sol.poly(q, "paving", UP, uv=[((p.dot(e.t)) / tile, (p.dot(e.n)) / tile) for p in q])
+            sol.poly(q, "lime", UP, uv=[((p.dot(e.t)) / tile, (p.dot(e.n)) / tile) for p in q], col=(0.93, 0.9, 0.85))
         if k >= 2:                               # riser at the front of step k-1 -> top of step k
             zr0 = zk if k < nst else zb
             q = [e.P(u0, zr0, a), e.P(u1, zr0, a), e.P(u1, zk + r, a), e.P(u0, zk + r, a)]
@@ -1827,7 +1827,9 @@ def riwaq(mbs, bd, gen, place, lod=False):
     storey with small arched windows, flat roof 9.5 m above the ground (the generic 15 m with shop
     facades was too tall).  Other sides plain with windows."""
     sol, dec = mbs["solid"], mbs["deco"]
-    E = bd["ground"]
+    # the arcade opens on the esplanade: at its level (the record's own ground is the median round the
+    # ring, along the N side the higher lanes behind, and set the arcade 2.5 m up on a bare plinth)
+    E = min(bd["ground"], esplanade(bd))
     H = 9.5
     ring = ccw(bd["ring"])
     n = len(ring)
