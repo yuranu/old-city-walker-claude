@@ -1,5 +1,6 @@
+import { reportError, setGpuInfo, watchContext } from './errors.js';   // first: report what fails below
 import * as THREE from 'three';
-import { Pipeline, LIGHT } from './render.js';
+import { Pipeline, LIGHT, MOBILE } from './render.js';
 import { U as SHARED_UNIFORMS } from './materials.js';
 import { GpuTimer, DynRes, PerfOverlay } from './perf.js';
 import { Player } from './player.js';
@@ -7,9 +8,12 @@ import { Hud } from './hud.js';
 import { Library } from './library.js';
 import { Collider } from './collider.js';
 import { Streamer } from './stream.js';
+import { TouchControls } from './touch.js';
 
 const q = new URLSearchParams(location.search);
 const canvas = document.getElementById('view');
+watchContext(canvas);
+if (MOBILE) document.body.classList.add('touch');
 const pipe = new Pipeline(canvas);
 const { renderer, scene, camera, sun } = pipe;
 const DEFAULT_FOV = 70;
@@ -26,6 +30,7 @@ const gpuTimer = new GpuTimer(renderer.getContext());
 const GPU = gpuInfo(renderer.getContext());
 console.info('GPU:', GPU.raw);
 document.getElementById('gpu').textContent = `GPU: ${GPU.name}${GPU.kind ? ` (${GPU.kind})` : ''}`;
+setGpuInfo(`${GPU.raw} · float RT ${pipe.caps.float ? 'yes' : 'no'} · half RT ${pipe.caps.half ? 'yes' : 'no'}${MOBILE ? ' · mobile profile' : ''}`);
 overlay.gpu = GPU;
 const dynres = new DynRes(pipe);
 // fixed resolution for reproducible screenshots, or when a pixel ratio was asked for
@@ -79,6 +84,10 @@ if (!q.has('rcell') && GPU.kind === 'integrated') streamOpts.rCell = 100;
 if (q.get('far') === '0') streamOpts.farLod = false;
 if (q.has('farground')) streamOpts.farGround = q.get('farground') !== '0';
 if (q.get('sproxy') === '0') streamOpts.shadowProxy = false;
+// phones: less city resident at once (memory) and full detail only close by (draw calls)
+if (MOBILE) {
+  for (const [o, v] of [['rIn', 90], ['rOut', 140], ['rCell', 70]]) if (!(o in streamOpts)) streamOpts[o] = v;
+}
 const library = new Library(pipe, Math.min(8, renderer.capabilities.getMaxAnisotropy()));
 if (q.get('twins') === '0') library.twins = false;
 const collider = new Collider();
@@ -139,7 +148,7 @@ async function load() {
   let start = { x: plan.spawn.p[0], y: plan.spawn.p[1] };
   if (q.has('x')) start = { x: +q.get('x'), y: +q.get('y') };
   else if (q.has('cam') && cams[q.get('cam')]) start = { x: +cams[q.get('cam')].x, y: +cams[q.get('cam')].y };
-  const failed = (e) => { loading.textContent = `Could not load the city: ${e.message}`; return e; };
+  const failed = (e) => { loading.textContent = `Could not load the city: ${e.message}`; reportError(`Could not load the city: ${e.message}`); return e; };
   let timing;
   try {
     timing = await startCity(start);
@@ -294,7 +303,20 @@ async function setCam(c) {
 
 // ------------------------------------------------------------------ input
 const start = document.getElementById('start');
-start.addEventListener('click', () => canvas.requestPointerLock());
+start.addEventListener('click', () => {
+  if (MOBILE) start.style.display = 'none';           // (touch: no pointer lock, the controls are on screen)
+  else canvas.requestPointerLock();
+});
+if (MOBILE) {
+  new TouchControls(canvas, player, hud, {
+    onLook: () => { if (camPose) releaseCam(); },
+    onFly: () => {
+      const on = player.toggleFly();
+      hud.flash(on ? 'Fly mode: the stick moves where you look · ▲▼ up and down · Fly again to land' : 'Walking');
+      return on;
+    },
+  });
+}
 document.addEventListener('pointerlockchange', () => {
   start.style.display = document.pointerLockElement === canvas ? 'none' : 'flex';
 });
@@ -347,7 +369,7 @@ function frame(t) {
   const now = performance.now();
   const frameMs = now - lastT;
   lastT = now;
-  if (camPose && MOVE_KEYS.some((k) => player.keys.has(k))) releaseCam();
+  if (camPose && (MOVE_KEYS.some((k) => player.keys.has(k)) || player.stick.x || player.stick.y)) releaseCam();
   if (!camPose) player.update(dt);
   const pp = player.plan();
   streamer.frame(pp.x, pp.y);

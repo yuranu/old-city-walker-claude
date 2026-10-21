@@ -34,13 +34,24 @@ export const LIGHT = {
     cloudCoverage: 0.18, cloudDensity: 0.32, cloudElevation: 0.55 },
 };
 
+// Phones and tablets (coarse pointer) get a lighter profile: no MSAA or AO, lower resolution, a smaller
+// shadow map and sky cube (?mobile=1 / ?mobile=0 force it either way, for testing on a desktop)
+const QS = new URLSearchParams(location.search);
+export const MOBILE = QS.has('mobile') ? QS.get('mobile') !== '0' : matchMedia('(pointer: coarse)').matches;
+
 export class Pipeline {
   constructor(canvas) {
     this.canvas = canvas;
     const r = (this.renderer = new THREE.WebGLRenderer({
-      canvas, antialias: true, preserveDrawingBuffer: true, powerPreference: 'high-performance',
+      canvas, antialias: !MOBILE, preserveDrawingBuffer: !MOBILE, powerPreference: 'high-performance',
     }));
-    this.maxPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    // render-to-float support: many phone GPUs have neither (rendering into such a target fails
+    // silently and the frame never draws); ?nofloat=1 / ?nohalf=1 simulate their absence
+    const gl = r.getContext();
+    const float = !QS.has('nofloat') && !QS.has('nohalf') && !!gl.getExtension('EXT_color_buffer_float');
+    const half = float || (!QS.has('nohalf') && !!gl.getExtension('EXT_color_buffer_half_float'));
+    this.caps = { float, half, mobile: MOBILE };
+    this.maxPR = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.25 : 1.5);
     this.minPR = 0.6;
     this.pixelRatio = this.maxPR;
     r.setPixelRatio(this.pixelRatio);
@@ -63,7 +74,7 @@ export class Pipeline {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(70, 1, 0.2, 1200);
     this.camera.layers.enable(LAYER_NO_AO);
-    this.useAO = true;
+    this.useAO = !MOBILE;
     this.aoScale = 0.5;
 
     this._setupLights();
@@ -79,7 +90,7 @@ export class Pipeline {
     sun.position.copy(this.sunDir).multiplyScalar(100);
     sun.castShadow = true;
     sun.shadow = new StableSunShadow();
-    sun.shadow.mapSize.set(2048, 2048);
+    sun.shadow.mapSize.set(MOBILE ? 1024 : 2048, MOBILE ? 1024 : 2048);
     sun.shadow.camera.near = 0.5;
     sun.shadow.camera.far = 170;          // shadow distance
     sun.shadow.split = 24;
@@ -98,7 +109,7 @@ export class Pipeline {
   addReflective(m) {
     if (this.metals.includes(m)) return;
     this.metals.push(m);
-    m.envMap = this.envRT.texture;
+    m.envMap = this.envRT ? this.envRT.texture : null;
     m.envMapIntensity = LIGHT.envIntensity;
     m.needsUpdate = true;
   }
@@ -118,8 +129,9 @@ export class Pipeline {
   // per pixel: scattering + fbm clouds) and drawn after the opaque city with a depth test, so
   // only visible sky pixels are shaded. The same cube feeds the sky light probe, the metals' PMREM and the haze LUT.
   _setupSky() {
-    this.skyCube = new THREE.WebGLCubeRenderTarget(1024, { type: THREE.HalfFloatType, generateMipmaps: false });
-    this.fogLUT = new THREE.WebGLRenderTarget(64, 1, { type: THREE.HalfFloatType, depthBuffer: false });
+    const skyType = this.caps.half ? THREE.HalfFloatType : THREE.UnsignedByteType;     // (8 bit clips the sun's glow)
+    this.skyCube = new THREE.WebGLCubeRenderTarget(MOBILE ? 512 : 1024, { type: skyType, generateMipmaps: false });
+    this.fogLUT = new THREE.WebGLRenderTarget(64, 1, { type: skyType, depthBuffer: false });
     this.fogLUT.texture.wrapS = THREE.RepeatWrapping;
     this.fogLUT.texture.minFilter = this.fogLUT.texture.magFilter = THREE.LinearFilter;
     U.ocFogLUT.value = this.fogLUT.texture;
@@ -186,14 +198,17 @@ export class Pipeline {
     // PMREM: only metals get it as envMap (specular reflections); everything else gets its sky
     // fill from an SH light probe of the same sky, which costs no texture fetches (the PMREM
     // lookups were ~25-35% of the main pass)
-    const pmrem = new THREE.PMREMGenerator(r);
     if (this.envRT) this.envRT.dispose();
-    this.envRT = pmrem.fromCubemap(this.skyCube.texture);
-    pmrem.dispose();
+    this.envRT = null;
+    if (this.caps.half) {                   // (PMREM renders to half float: without it metals go without)
+      const pmrem = new THREE.PMREMGenerator(r);
+      this.envRT = pmrem.fromCubemap(this.skyCube.texture);
+      pmrem.dispose();
+    }
     sky.geometry.dispose(); sky.material.dispose();
     this.skyProbe.sh.copy(this._skySH());
     this.skyProbe.intensity = LIGHT.envIntensity;
-    for (const m of this.metals) { m.envMap = this.envRT.texture; m.envMapIntensity = LIGHT.envIntensity; }
+    for (const m of this.metals) { m.envMap = this.envRT ? this.envRT.texture : null; m.envMapIntensity = LIGHT.envIntensity; }
 
     // haze LUT: sky radiance just above the horizon for 64 azimuths (world, from -z towards +x)
     const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
@@ -234,7 +249,8 @@ export class Pipeline {
   // warm ground bounce is the hemisphere light's job)
   _skySH() {
     const W = 64, H = 32;
-    const rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.FloatType, depthBuffer: false });
+    const F = this.caps.float;              // without float targets: 8 bit, radiance / 8 (sky values stay below 8)
+    const rt = new THREE.WebGLRenderTarget(W, H, { type: F ? THREE.FloatType : THREE.UnsignedByteType, depthBuffer: false });
     const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.ShaderMaterial({
       uniforms: { tSky: { value: this.skyCube.texture } },
       vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4( position.xy, 0.0, 1.0 ); }',
@@ -253,13 +269,19 @@ export class Pipeline {
             vec3 s = textureCube( tSky, d ).rgb;
             c += el < 0.0 ? s * 0.35 : s;
           }
-          gl_FragColor = vec4( c / 16.0, 1.0 );
+          gl_FragColor = vec4( c / 16.0 * SCALE, 1.0 );
         }`,
+      defines: { SCALE: F ? '1.0' : '0.125' },
       depthTest: false, depthWrite: false,
     }));
     this._fullscreen(quad, rt);
-    const px = new Float32Array(W * H * 4);
-    this.renderer.readRenderTargetPixels(rt, 0, 0, W, H, px);
+    let px = new Float32Array(W * H * 4);
+    if (F) this.renderer.readRenderTargetPixels(rt, 0, 0, W, H, px);
+    else {
+      const b = new Uint8Array(W * H * 4);
+      this.renderer.readRenderTargetPixels(rt, 0, 0, W, H, b);
+      px = Float32Array.from(b, (v) => (v / 255) * 8);
+    }
     rt.dispose();
     const sh = new THREE.SphericalHarmonics3();
     const basis = new Array(9).fill(0);
@@ -318,7 +340,7 @@ export class Pipeline {
     }
     const bw = this.canvas.width, bh = this.canvas.height;
     const aw = Math.max(1, Math.ceil(bw * this.aoScale)), ah = Math.max(1, Math.ceil(bh * this.aoScale));
-    if (this.pre.width !== aw || this.pre.height !== ah) {
+    if (this.useAO && (this.pre.width !== aw || this.pre.height !== ah)) {     // (AO off: its targets stay tiny)
       this.pre.setSize(aw, ah);
       this.gtao.setSize(aw, ah);
     }

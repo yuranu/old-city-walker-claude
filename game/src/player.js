@@ -24,6 +24,7 @@ export class Player {
     this.onGround = false;
     this.flying = false;          // fly mode: no gravity, no collision, move where you look
     this.keys = new Set();
+    this.stick = { x: 0, y: 0 };  // touch joystick: x right, y forward, each -1..1 (touch.js)
     this._seg = new THREE.Line3();
     this._box = new THREE.Box3();
     this._wb = new THREE.Box3();
@@ -89,14 +90,28 @@ export class Player {
     return this.flying;
   }
 
+  // forward / sideways input from the keys, else the touch stick; m: speed factor (a stick part-way out
+  // walks slower), run: Shift or the stick pushed to its rim
+  _input() {
+    const k = this.keys, s = this.stick;
+    let fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
+    let side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
+    let m = 1, run = k.has('ShiftLeft') || k.has('ShiftRight');
+    if (!fwd && !side) {
+      const sm = Math.hypot(s.x, s.y);
+      if (sm > 0.12) { fwd = s.y / sm; side = s.x / sm; m = Math.min(1, sm / 0.7); run = run || sm > 0.95; }
+    }
+    return { fwd, side, m, run };
+  }
+
   fly(dt) {
     const k = this.keys;
-    const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
-    const side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
+    const { fwd: f0, side: s0, m, run } = this._input();
+    const fwd = f0 * m, side = s0 * m;
     const up = (k.has('Space') || k.has('KeyE') ? 1 : 0) - (k.has('KeyC') || k.has('KeyQ') ? 1 : 0);
     if (k.has('ArrowLeft')) this.yaw += 1.8 * dt;
     if (k.has('ArrowRight')) this.yaw -= 1.8 * dt;
-    const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 45 : 12;
+    const speed = run ? 45 : 12;
     const dir = this._d.set(0, 0, -1).applyEuler(new THREE.Euler(this.pitch, this.yaw, 0, 'YXZ'));
     const right = this._a.set(Math.cos(this.yaw), 0, -Math.sin(this.yaw));
     this.pos.addScaledVector(dir, fwd * speed * dt).addScaledVector(right, side * speed * dt);
@@ -108,11 +123,10 @@ export class Player {
     if (this.held) { this.vel.set(0, 0, 0); this.updateCamera(); return; }
     if (this.flying) { this.fly(dt); return; }
     const k = this.keys;
-    const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
-    const side = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
+    const { fwd, side, m, run } = this._input();
     if (k.has('ArrowLeft')) this.yaw += 1.8 * dt;
     if (k.has('ArrowRight')) this.yaw -= 1.8 * dt;
-    const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 6.5 : 2.8;
+    const speed = (run ? 6.5 : 2.8) * m;
 
     // horizontal move in the yaw frame (camera looks down -Z at yaw 0, i.e. north)
     const sin = Math.sin(this.yaw), cos = Math.cos(this.yaw);

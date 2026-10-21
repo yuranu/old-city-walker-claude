@@ -27,6 +27,19 @@
     #perf { left: 12px; bottom: 12px; display: none; white-space: pre; font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; pointer-events: none; }
     #bigmap { position: absolute; inset: 4vh 4vw; display: none; z-index: 20; padding: 6px; }
     #bigmap canvas { width: 100%; height: 100%; display: block; border-radius: 6px; cursor: crosshair; }
+    .touchonly { display: none; }
+    body.touch .touchonly { display: block; }
+    body.touch .keysonly, body.touch #info .hints { display: none; }
+    body.touch #info { top: 8px; left: 8px; max-width: calc(100vw - 150px); padding: 6px 9px; }
+    body.touch #info .place { font-size: 14px; }
+    body.touch #info .coords { font-size: 11px; }
+    body.touch #map { top: 8px; right: 8px; bottom: auto; padding: 4px; }
+    body.touch #map canvas { width: 116px; height: 116px; }
+    body.touch #photo { width: auto; left: 8px; right: 8px; top: auto; bottom: 180px; }
+    body.touch #bigmap { inset: 8px; }
+    body.touch #start .box { padding: 0 18px; font-size: 13px; }
+    body.touch #start h1 { font-size: 21px; }
+    body.touch #loading { bottom: 170px; }
     body.clean #info, body.clean #map, body.clean #photo, body.clean #start, body.clean #loading, body.clean #crosshair, body.clean #perf { display: none !important; }
   </style>
 </head>
@@ -36,7 +49,7 @@
   <div id="info" class="panel">
     <div class="place" id="place">Jaffa Gate</div>
     <div class="coords" id="coords"></div>
-    <div style="margin-top:6px;font-size:12px;opacity:.8"><kbd>F</kbd> fly · <kbd>M</kbd> map · <kbd>+</kbd>/<kbd>-</kbd> zoom minimap · <kbd>P</kbd> nearest real photo · <kbd>G</kbd> Google Maps</div>
+    <div class="hints" style="margin-top:6px;font-size:12px;opacity:.8"><kbd>F</kbd> fly · <kbd>M</kbd> map · <kbd>+</kbd>/<kbd>-</kbd> zoom minimap · <kbd>P</kbd> nearest real photo · <kbd>G</kbd> Google Maps</div>
   </div>
   <div id="photo" class="panel"><img id="photoImg" alt="" /><div class="meta" id="photoMeta"></div></div>
   <div id="map" class="panel"><canvas id="mapCanvas" width="240" height="240"></canvas></div>
@@ -45,7 +58,9 @@
     <div class="box">
       <h1>Jerusalem Old City</h1>
       <div>The walled city from open data: OpenStreetMap footprints, an 1865 survey of street levels and Commons photos → Blender → walkable, geo-registered.</div>
-      <p><b>Click to walk.</b> <kbd>WASD</kbd> move · mouse look · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump<br />
+      <p class="touchonly"><b>Tap to start.</b> Left thumb: walk (push to the rim to run) · drag anywhere else: look ·
+        <b>Fly</b>, <b>Map</b> and <b>Photo</b> buttons on the right.</p>
+      <p class="keysonly"><b>Click to walk.</b> <kbd>WASD</kbd> move · mouse look · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump<br />
         <kbd>P</kbd> nearest geotagged photo (Wikimedia Commons) · <kbd>N</kbd> next photo · <kbd>G</kbd> Google Maps here · <kbd>O</kbd> ambient occlusion · <kbd>F3</kbd> performance · <kbd>Esc</kbd> release mouse</p>
       <div id="gpu" class="gpu"></div>
     </div>
