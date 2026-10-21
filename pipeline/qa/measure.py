@@ -62,7 +62,9 @@ def main():
         return None
 
     # 1 ground gaps: open area covered by nothing walkable
-    cover = unary_union([P for P, _, _ in tris] + spolys + bpolys)
+    cit = base.get("citadel") or {}
+    cit_mass = [make_valid(Polygon(cit["mass"]))] if cit.get("mass") else []     # built solid by landmarks_gates
+    cover = unary_union([P for P, _, _ in tris] + spolys + bpolys + cit_mass)
     known = []
     import importlib.util
     spec_ = importlib.util.spec_from_file_location("ms", ROOT / "pipeline/make_spec.py")
@@ -85,6 +87,11 @@ def main():
         L = max(math.dist(t[i][:2], t[(i + 1) % 3][:2]) for i in range(3))
         if dz > 0.8 and dz / max(L, 0.1) > 0.6:
             c = P.centroid
+            if dz <= 4.0 and dz / max(L, 0.1) <= 1.2:     # a steep but smooth slope (the terrain itself):
+                F.append(finding("steep_ground", 1, "medium", c.x, c.y, sum(zs) / 3,    # wants terraces or steps
+                                 what="paved slope of %.0f%% (%.1f m over %.1f m, %s)" % (100 * dz / max(L, 0.1), dz, L, mat),
+                                 source="terrain: no steps or retaining walls on a steep open slope"))
+                continue
             F.append(finding("spike", 0, "high" if dz > 2 else "medium", c.x, c.y, sum(zs) / 3,
                              what="ground triangle rises %.1f m over %.1f m (%s)" % (dz, L, mat),
                              source="terrain / flats edges in tess_regions"))
@@ -107,6 +114,8 @@ def main():
             continue                                   # the edge of a landmark: its own walls stand there
         h = max(r["hi"][0] - r["lo"][0], r["hi"][1] - r["lo"][1]) - 0.3
         for k in (stree.query(ln) if stree else []):
+            if streets[k][0]["tags"].get("tunnel") == "yes":
+                continue                               # (a tunnel ends at a door or a wall: the Haram gates)
             if streets[k][1].intersects(ln) and h > 0.4:
                 c = ln.interpolate(0.5, normalized=True)
                 F.append(finding("wall_across_street", 0, "high", c.x, c.y, what="retaining wall %.1f m high across %s"

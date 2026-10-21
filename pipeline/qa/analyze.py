@@ -101,7 +101,12 @@ def main():
             Image.fromarray(n[max(0, y0 - 40):y1 + 40, max(0, x0 - 40):x1 + 40].astype(np.uint8)).save(crops / (cid + ".png"))
             out.append(finding("hole", 0, "high", gx, gy, what="sky visible below the horizon (%d px)" % area,
                                evidence={"crop": "crops/%s.png" % cid, "px": area, "bbox": [x0, y0, x1, y1]}, view=v["id"]))
-        d = np.abs(n - j).max(axis=2)
+        # parallax-tolerant: the jitter moves the camera 1 cm sideways, which shifts edges right next to the
+        # camera (grille bars, lamp posts, mortar joints) by a few pixels; a z-fighting face flips in place
+        d = None
+        for dx in range(-4, 5):
+            dd = np.abs(n - np.roll(j, dx, axis=1)).max(axis=2)
+            d = dd if d is None else np.minimum(d, dd)
         raw = d > 70
         m = erode(raw, 2)                        # thin aliasing (grille bars, edges, cables) goes;
         m = dilate(m, 3)                         # solid flipping patches (z-fighting) stay

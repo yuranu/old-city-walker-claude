@@ -28,8 +28,9 @@ def main():
         d = json.loads(js.read_text())
         for it in d.get("overlaps", d if isinstance(d, list) else []):
             x, y, z = it["at"]
-            if it["a"] == it["b"] and it["a"].endswith("retaining_walls") and it["mat_a"] == it["mat_b"]:
-                continue        # overlapping crack seals: same material, world-space UVs -> identical pixels
+            if it["a"] == it["b"] and it["mat_a"] == it["mat_b"] and \
+                    (it["a"].endswith("retaining_walls") or abs(it.get("normal", [0, 0, 0])[2]) > 0.99):
+                continue        # crack seals, horizontal caps of one object: same material, world-space UVs -> same pixels
             if reg.contains(__import__("shapely.geometry", fromlist=["Point"]).Point(x, y)):
                 F.append(finding("coplanar", 0, "high" if it["area"] > 0.3 else "medium", x, y, z,
                                  what="coplanar faces %s / %s (%.2f m2, %s/%s)" % (it["a"], it["b"], it["area"], it["mat_a"], it["mat_b"]),

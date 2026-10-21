@@ -10,7 +10,7 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 def reaches(o):
     if bb is None:
         return True
-    cs = [o.matrix_world @ Vector(c) for c in o.bound_box]
+    cs = [o.matrix_basis @ Vector(c) for c in o.bound_box]     # (matrix_world is identity until evaluated)
     return not (max(c.x for c in cs) < bb[0] - 5 or min(c.x for c in cs) > bb[2] + 5 or
                 max(c.y for c in cs) < bb[1] - 5 or min(c.y for c in cs) > bb[3] + 5)
 
@@ -27,5 +27,7 @@ for p in parts:
         else:
             bpy.data.objects.remove(o)
     bpy.data.orphans_purge(do_recursive=True)
+    bpy.context.view_layer.update()                # world matrices of the loaded objects (props are placed copies)
+    print("AUDIT loaded %s: %d objects" % (p, len(bpy.context.scene.collection.objects)), flush=True)
 sys.argv = [a for a in sys.argv if a != "--parts" and a not in [",".join(parts)]]
 runpy.run_path("blender/audit.py", run_name="__main__")

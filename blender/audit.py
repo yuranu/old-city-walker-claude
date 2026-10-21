@@ -21,6 +21,7 @@ from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(next((ROOT / ".venv/lib").glob("python3*/site-packages"))))
+import shapely  # noqa: E402
 from shapely import STRtree  # noqa: E402
 from shapely.geometry import Polygon  # noqa: E402
 
@@ -42,12 +43,13 @@ def plane_basis(n):
 
 
 def main():
+    import numpy as np
     a = args()
     bb = [float(v) for v in a.bbox.split(",")] if a.bbox else None
-    tris = []           # (obj, poly_index, material, [v0,v1,v2] world)
     boundary = []
     degenerate = []
-    import numpy as np
+    names, matnames = [], []                  # object names; material names (global ids)
+    Ps, Os, Qs, Ms = [], [], [], []            # per object: triangles (n,3,3), object id, polygon index, material id
     for ob in bpy.data.objects:
         if ob.type != "MESH" or not ob.visible_get():
             continue
@@ -62,17 +64,21 @@ def main():
         co = co.reshape(-1, 3) @ M[:3, :3].T + M[:3, 3]
         tv = np.empty(nt * 3, np.int32)
         me.loop_triangles.foreach_get("vertices", tv)
-        tv = tv.reshape(-1, 3)
         tp = np.empty(nt, np.int32)
         me.loop_triangles.foreach_get("polygon_index", tp)
         tm = np.empty(nt, np.int32)
         me.loop_triangles.foreach_get("material_index", tm)
-        P = co[tv]                                            # (nt, 3, 3) world
+        P = co[tv.reshape(-1, 3)]
         if bb:                                                # only triangles whose centre lies in the box
             c = P.mean(axis=1)
             keep = (c[:, 0] >= bb[0]) & (c[:, 0] <= bb[2]) & (c[:, 1] >= bb[1]) & (c[:, 1] <= bb[3])
             P, tp, tm = P[keep], tp[keep], tm[keep]
-        mats = [m.name if m else "" for m in me.materials]
+        mats = [m.name if m else "" for m in me.materials] or [""]
+        mid = []
+        for m_ in mats:
+            if m_ not in matnames:
+                matnames.append(m_)
+            mid.append(matnames.index(m_))
         cr = np.cross(P[:, 1] - P[:, 0], P[:, 2] - P[:, 0])
         area = np.linalg.norm(cr, axis=1) / 2
         longest = np.max(np.stack([np.linalg.norm(P[:, 1] - P[:, 0], axis=1), np.linalg.norm(P[:, 2] - P[:, 1], axis=1),
@@ -80,8 +86,14 @@ def main():
         bad = (area < 1e-6) | ((longest > 0.5) & (area / np.maximum(longest * longest, 1e-12) < 1e-4))
         for k in np.nonzero(bad)[0][:200]:
             degenerate.append({"obj": ob.name, "at": [round(float(v), 2) for v in P[k].mean(axis=0)], "area": float(area[k])})
-        for k in np.nonzero(~bad)[0]:
-            tris.append((ob.name, int(tp[k]), mats[tm[k]] if mats else "", [Vector(v) for v in P[k]]))
+        ok = ~bad
+        names.append(ob.name)
+        if nt > 200000:
+            print("AUDIT %s: %d triangles, %d in the box" % (ob.name, nt, int(ok.sum())), flush=True)
+        Ps.append(P[ok])
+        Os.append(np.full(int(ok.sum()), len(names) - 1, np.int32))
+        Qs.append(tp[ok])
+        Ms.append(np.asarray(mid, np.int32)[np.clip(tm[ok], 0, len(mid) - 1)])
         if not bb:                                            # (open edges: whole-scene audits only)
             bm = bmesh.new()
             bm.from_mesh(me)
@@ -92,51 +104,76 @@ def main():
                     if c.z > 0.3 and (e.verts[0].co - e.verts[1].co).length > 0.05:
                         boundary.append((ob.name, [round(c.x, 1), round(c.y, 1), round(c.z, 1)]))
             bm.free()
-
-    # bucket by plane
-    buckets = defaultdict(list)
-    for t in tris:
-        p = t[3]
-        n = (p[1] - p[0]).cross(p[2] - p[0]).normalized()
-        d = n.dot(p[0])
-        key = (round(n.x * 50), round(n.y * 50), round(n.z * 50), round(d / 0.02))   # coarse prefilter
-        buckets[key].append((t, n))
-
+    P = np.concatenate(Ps) if Ps else np.zeros((0, 3, 3))
+    O = np.concatenate(Os) if Os else np.zeros(0, np.int32)
+    Q = np.concatenate(Qs) if Qs else np.zeros(0, np.int32)
+    MT = np.concatenate(Ms) if Ms else np.zeros(0, np.int32)
+    del Ps, Os, Qs, Ms
+    ntri = len(P)
+    seal_obj = np.array([n_.endswith("retaining_walls") for n_ in names] or [False])
+    N = np.cross(P[:, 1] - P[:, 0], P[:, 2] - P[:, 0])
+    N /= np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-12)
+    D = (N * P[:, 0]).sum(1)
+    C = P.mean(axis=1)
+    # bucket by plane (coarse prefilter); each triangle also goes into the bucket one offset below, so a
+    # near-coplanar pair straddling two offset buckets still meets in one
+    kn = np.round(N * 50).astype(np.int64)
+    kd = np.round(D / 0.02).astype(np.int64)
+    idx = np.concatenate([np.arange(ntri), np.arange(ntri)])
+    keys = np.stack([np.concatenate([kn[:, 0]] * 2), np.concatenate([kn[:, 1]] * 2), np.concatenate([kn[:, 2]] * 2),
+                     np.concatenate([kd, kd - 1])], 1)
+    order = np.lexsort(keys.T[::-1])
+    keys, idx = keys[order], idx[order]
+    brk = np.nonzero(np.any(keys[1:] != keys[:-1], axis=1))[0] + 1
+    starts = np.concatenate([[0], brk])
+    ends = np.concatenate([brk, [len(idx)]])
     issues = []
     seen = set()
-    for key, items in buckets.items():
-        # merge with the neighbouring offset bucket so near-coplanar pairs are caught too
-        cand = items + buckets.get((key[0], key[1], key[2], key[3] + 1), [])
-        if len(cand) < 2:
+    sizes = ends - starts
+    print("AUDIT %d triangles, %d buckets, largest %s" % (ntri, len(sizes), sorted(sizes.tolist())[-5:]), flush=True)
+    for s0, s1 in zip(starts, ends):
+        if s1 - s0 < 2:
             continue
-        n = cand[0][1]
+        g = idx[s0:s1]
+        src = O[g].astype(np.int64) * 10_000_000 + Q[g]
+        if np.all(src == src[0]):
+            continue                                      # one source polygon only
+        n = Vector(N[g[0]])
         u, v = plane_basis(n)
-        polys = []
-        for (t, _) in cand:
-            q = Polygon([(pt.dot(u), pt.dot(v)) for pt in t[3]])
-            polys.append(q if q.is_valid else q.buffer(0))
-        tree = STRtree(polys)
-        for i, j in zip(*tree.query(polys, predicate="intersects")):
-            if i >= j:
-                continue
-            ti, tj = cand[i][0], cand[j][0]
-            if ti[0] == tj[0] and ti[1] == tj[1]:
-                continue                                  # same source polygon
-            ci, cj = sum(ti[3], Vector()) / 3, sum(tj[3], Vector()) / 3
-            if abs(cand[i][1].dot(cj - ci)) > 0.004 or cand[i][1].dot(cand[j][1]) < 0.999:
-                continue                                  # precise local test: not within 4 mm of one plane
-            if "decal" in (ti[2], tj[2]):
+        uv = np.stack([P[g] @ np.array(u), P[g] @ np.array(v)], -1)          # (k, 3, 2)
+        polys = shapely.make_valid(shapely.polygons(uv))
+        I, J = STRtree(polys).query(polys, predicate="intersects")
+        if len(I) > 200000:
+            from collections import Counter
+            print("AUDIT big bucket: %d tris, %d pairs, n=%s d=%.2f, objects %s" % (
+                len(g), len(I), np.round(N[g[0]], 2).tolist(), float(D[g[0]]),
+                Counter(names[o] for o in O[g]).most_common(4)), flush=True)
+        m = I < J
+        I, J = I[m], J[m]
+        ti, tj = g[I], g[J]
+        m = ~((O[ti] == O[tj]) & (Q[ti] == Q[tj]))                           # not the same source polygon
+        m &= np.abs(((C[tj] - C[ti]) * N[ti]).sum(1)) <= 0.004                # within 4 mm of one plane
+        m &= (N[ti] * N[tj]).sum(1) >= 0.999
+        # one object, one material, horizontal (world-xy UVs): identical pixels, no visible flicker. This is
+        # every pair of a flat plaza's ground triangles, so it goes before any geometry work
+        m &= ~((O[ti] == O[tj]) & (MT[ti] == MT[tj]) & ((np.abs(N[ti, 2]) > 0.99) | seal_obj[O[ti]]))
+        I, J, ti, tj = I[m], J[m], ti[m], tj[m]
+        if not len(I):
+            continue
+        ov = np.concatenate([shapely.area(shapely.intersection(polys[I[k:k + 20000]], polys[J[k:k + 20000]]))
+                             for k in range(0, len(I), 20000)])
+        for k in np.nonzero(ov >= a.min_area)[0]:
+            ma, mb_ = matnames[MT[ti[k]]], matnames[MT[tj[k]]]
+            if "decal" in (ma, mb_):
                 continue                                  # blended, no depth write + polygon offset in the game
-            ov = polys[i].intersection(polys[j]).area
-            if ov < a.min_area:
+            c = (C[ti[k]] + C[tj[k]]) / 2
+            k_ = (names[O[ti[k]]], names[O[tj[k]]], round(c[0]), round(c[1]), round(c[2]))
+            if k_ in seen:
                 continue
-            c = (sum(ti[3], Vector()) + sum(tj[3], Vector())) / 6
-            k = (ti[0], tj[0], round(c.x), round(c.y), round(c.z))
-            if k in seen:
-                continue
-            seen.add(k)
-            issues.append({"a": ti[0], "b": tj[0], "mat_a": ti[2], "mat_b": tj[2], "area": round(ov, 3),
-                           "at": [round(c.x, 1), round(c.y, 1), round(c.z, 1)], "normal": [round(x, 2) for x in n]})
+            seen.add(k_)
+            issues.append({"a": names[O[ti[k]]], "b": names[O[tj[k]]], "mat_a": ma, "mat_b": mb_, "area": round(float(ov[k]), 3),
+                           "at": [round(float(c[0]), 1), round(float(c[1]), 1), round(float(c[2]), 1)],
+                           "normal": [round(float(x), 2) for x in N[ti[k]]]})
 
     issues.sort(key=lambda r: -r["area"])
     by_pair = defaultdict(lambda: [0, 0.0])
@@ -145,7 +182,7 @@ def main():
         by_pair[kk][0] += 1
         by_pair[kk][1] += r["area"]
     print("AUDIT triangles %d  coplanar-overlaps %d (%.1f m2)  degenerate %d  open-edges(above 0.3 m) %d" %
-          (len(tris), len(issues), sum(r["area"] for r in issues), len(degenerate), len(boundary)))
+          (ntri, len(issues), sum(r["area"] for r in issues), len(degenerate), len(boundary)))
     print("AUDIT worst object pairs:")
     for kk, (cnt, ar) in sorted(by_pair.items(), key=lambda x: -x[1][1])[:a.top]:
         print("   %4d  %7.2f m2  %s [%s] x %s [%s]" % (cnt, ar, kk[0], kk[2], kk[1], kk[3]))
