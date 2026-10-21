@@ -395,7 +395,8 @@ def build_steps(mb, steps):
             eo = s.get("eo") or [1] * len(ext)
             za, zb = (max(s["top"], ez[i]), max(s["top"], ez[(i + 1) % len(ext)])) if eo[i] else (s["top"], s["top"])
             q = [(a[0], a[1], s["bottom"]), (b[0], b[1], s["bottom"]), (b[0], b[1], zb), (a[0], a[1], za)]
-            mb.poly(q, "ashlar", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.82, 0.8, 0.76))
+            mb.poly(q, "dressed", Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=(0.9, 0.88, 0.84))   # (ashlar: only
+                                                                     # a dark mortar band shows at riser height)
 
 
 def build_retaining(mb, walls, t=0.3):
@@ -410,7 +411,7 @@ def build_retaining(mb, walls, t=0.3):
         lo, hi = w["lo"], w["hi"]
         if not w.get("cap", 1):                       # a single face looking at the low side, nothing on top
             q = [a + UP * lo[0], b + UP * lo[1], b + UP * hi[1], a + UP * hi[0]]
-            mb.poly(q, w.get("mat", "ashlar"), Vector((*w["n"], 0)), col=(0.86, 0.83, 0.77))
+            mb.poly(q, w.get("mat", "dressed"), Vector((*w["n"], 0)), col=(0.9, 0.88, 0.84))   # (pale stone, like a kerb)
             continue
         for sgn in (1, -1):
             o = n * sgn
@@ -773,7 +774,7 @@ def main():
         a = math.radians(dcl["rot"])
         right = Vector((math.cos(a), -math.sin(a), 0))
         fwd = Vector((math.sin(a), math.cos(a), 0))
-        c = Vector(dcl["p"]) - fwd * dcl["h"] / 2
+        c = Vector(dcl["p"]) - fwd * dcl["h"] / 2 + UP * 0.03      # (lifted: a sloping ground swallowed half a cover)
         q = [c - right * dcl["w"] / 2, c + right * dcl["w"] / 2, c + right * dcl["w"] / 2 + fwd * dcl["h"],
              c - right * dcl["w"] / 2 + fwd * dcl["h"]]
         u0, v0, u1, v1 = rect

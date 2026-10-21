@@ -122,10 +122,11 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
     if o.get("threshold"):
         thr, out = o.get("thr", 0.12), o.get("thr_out", 0.1)
         bench = out > 0.35                                 # a souq shop's raised bench (mastaba) reaches the street
-        # a door's sill is a thin slab just proud of the wall (the door sits on the ground in front of it): deep
-        # or wide blocks read as wedges across the lane
+        # a door's sill stands only 10 cm proud of the wall (deep or wide blocks read as wedges across the lane)
+        # and reaches 0.5 m down (1.2 m for a bench), so a sloping or stepped street never shows a gap under it
         mk.box(mb, P((u0 + u1) / 2, 0) + n * ((out - d) / 2), t, n, w + (0.42 if bench else 0.06), d + out,
-               v0 - thr - (0.6 if bench else 0.1), v0, "dressed", col=(0.86, 0.84, 0.8))
+               v0 - thr - (1.2 if bench else 0.5), v0, "paving", col=(0.95, 0.94, 0.92))   # (paving stone: "dressed"
+                                                                     # is so large-scale a small block reads untextured)
     # dressed stone surround
     fw = o.get("frame", 0.0)
     for q in others:
@@ -217,8 +218,8 @@ def _blade(mb, P, t, n, fx, signs):
     for side in (1, -1):
         base = c + t * (0.04 * side) - n * (w / 2)            # clear of the 5 cm frame box (was 1 mm: flicker)
         if rect:                                             # (base is at z0 already: adding z0 again put every
-            mk.card(mb, base + n * (w / 2), n * side, UP, w, h, "signs",       # board's artwork out of sight)
-                    rect if side > 0 else (rect[2], rect[1], rect[0], rect[3]))
+            mk.card(mb, base + n * (w / 2), n * side, UP, w, h, "signs", rect)  # board's artwork out of sight;
+                                                       # the card's right vector already turns with the side)
         else:
             q = [base, base + n * w, base + n * w + UP * h, base + UP * h]
             mb.poly(q, "lime", t * side, col=(1.0, 0.97, 0.88))

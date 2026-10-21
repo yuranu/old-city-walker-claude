@@ -164,7 +164,7 @@ def build(ways, zfun, open_street, halfwidth, skip=None, extra=()):
             runs.append((ln, halfwidth(w, ln) + WIDEN, s0, s1))
     placed, polys = [], []
     tree = None
-    for ln, hw, s0, s1 in runs:
+    for run_id, (ln, hw, s0, s1) in enumerate(runs):
         x0, y0, x1, y1 = ln.bounds
         bb = (x0 - hw - 2, y0 - hw - 2, x1 + hw + 2, y1 + hw + 2)
         try:
@@ -187,10 +187,19 @@ def build(ways, zfun, open_street, halfwidth, skip=None, extra=()):
                     continue
                 polys.append(q)
                 own.append(q)
-                placed.append((q, top, t))
+                placed.append((q, top, t, run_id))
+    # an OSM flight the terrain only gives a few deep treads (a gentle lane mapped as steps) reads as loose
+    # slabs or strips across the paving: fewer than 3 treads, or treads deeper than 1.2 m on average, and
+    # it stays a ramp (the given runs, David Street with its 2.2 m treads, are kept)
+    count = {}
+    for _, _, _, run_id in placed:
+        count[run_id] = count.get(run_id, 0) + 1
+    keep_run = {k for k, c in count.items()
+                if k < len(extra) or (c >= 3 and (runs[k][3] - runs[k][2]) / c <= 1.2)}
+    placed = [p_ for p_ in placed if p_[3] in keep_run]
     out = []
-    for q, top, t in placed:
+    for q, top, t, run_id in placed:
         zmin = min(zfun(*c) for c in q.exterior.coords)
         out.append({"poly": q, "top": round(top, 3), "bottom": round(min(zmin, top) - 0.45, 3),
-                    "dir": [round(t[0], 4), round(t[1], 4)]})
+                    "dir": [round(t[0], 4), round(t[1], 4)], "run": run_id})
     return out

@@ -593,7 +593,7 @@ def setup_flats(d):
     closers = [Polygon(b["outer"][0]).buffer(0) for b in d["buildings"] if b.get("outer") and len(b["outer"][0]) > 2]
     closers += [LineString(w["pts"]).buffer(1.0) for w in d["ways"] if len(w.get("pts") or []) > 1 and
                 (w["tags"].get("barrier") in ("city_wall", "wall", "retaining_wall") or w["tags"].get("historic") == "citywalls")]
-    closed = unary_union(closers).buffer(1.0)
+    closed = unary_union(closers).buffer(0.3)       # (1 m closed the narrow lanes that enter a plaza between buildings)
     OPEN_EDGES.clear()
     SHRUNK.clear()
     for poly, _ in ALL_FLATS:
@@ -1196,6 +1196,24 @@ def main():
                            skip=david.buffer(DAVID["width"] / 2 + 1.0).union(box(*CONTEXT).difference(CITY.buffer(80.0))),
                            extra=[(david, DAVID["width"] / 2, DAVID["start_s"], david.length)])
     st_recs = [r_ for r_ in st_recs if not eased_at(r_["poly"].centroid.x, r_["poly"].centroid.y)]
+    # a flight laid across the slope (or over an eased ramp) has treads buried on one side and floating on
+    # the other: where the treads sit (median) more than 0.6 m off the ground at their corners, the whole
+    # flight goes and the ground stays a ramp
+    dev = {}
+    st_recs_all = list(st_recs)
+    for r_ in st_recs:
+        zs_ = [street_z(*c) for c in r_["poly"].exterior.coords]
+        dev.setdefault(r_["run"], []).append(max(abs(z_ - r_["top"]) for z_ in zs_))
+    bad_runs = {k for k, v in dev.items() if float(np.median(v)) > 0.6}
+    st_recs = [r_ for r_ in st_recs if r_["run"] not in bad_runs]
+    print("stairs: %d flights, %d dropped (laid across the slope)" % (len(dev), len(bad_runs)))
+    if os.environ.get("STAIRS_DEBUG"):
+        cen = {}
+        for r_ in st_recs_all:
+            cen.setdefault(r_["run"], []).append(r_["poly"].centroid.coords[0])
+        for k in sorted(dev):
+            c_ = np.mean(cen[k], axis=0)
+            print("  run %3d at (%5.0f,%5.0f) treads %3d median %.2f %s" % (k, c_[0], c_[1], len(dev[k]), float(np.median(dev[k])), "DROP" if k in bad_runs else ""))
     steps = [{"poly": poly_json(r_["poly"]), "top": r_["top"], "bottom": r_["bottom"], "dir": r_["dir"],
               "ez": [round(street_z(*c), 3) for c in poly_json(r_["poly"])["ext"]]}     # street at each corner
              for r_ in st_recs]
@@ -1260,7 +1278,9 @@ def main():
         split_regions.append((mat, reg, zf))
     regions = split_regions + regions[3:]
     # under landmark footprints the ground runs 4 cm lower: their floors sit on it without z-fighting
-    lm_polys = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS
+    # (0.6 m in from the outline: where a footprint reaches past the landmark's walls the 4 cm step and its seal
+    #  showed as a strip across the street; inside the walls it is hidden)
+    lm_polys = unary_union([bd["poly"].buffer(-0.6, join_style="mitre") for bd in buildings if bd["osm"] in LANDMARK_IDS
                             and not (bd["osm"] in WALL_LANDMARKS and spans_drop(bd["poly"]))]
                            or [Polygon()]).segmentize(1.0)
     # landmarks spanning a level change (the Western Wall: prayer area on one side, the Haram on the other):
@@ -1411,6 +1431,20 @@ def main():
                             if o["kind"] == "balcony_door" and bl["u0"] < o["u0"] < bl["u1"] and abs(o["v0"] - bl["z"] - 0.08) < 0.01:
                                 o["kind"], o["v0"], o["sill"] = "window", bl["z"] + 0.9, True
                 fac["balconies"] = keep
+                # a wall another building stands against (or a few cm in front of) keeps no openings or
+                # fixtures there: the hole was hidden and its sill and threshold poked through the neighbour
+                def covered(u0_, u1_):
+                    return any(inside_other(Point(a[0] + tx * u_ + nx * 0.35, a[1] + ty * u_ + ny * 0.35), bidx)
+                               for u_ in (u0_, (u0_ + u1_) / 2, u1_))
+                fac["openings"] = [o for o in fac["openings"] if not covered(o["u0"], o["u1"])]
+                for o in fac["openings"]:            # a door opening onto a stair flight: the treads are its step
+                    if o.get("threshold"):
+                        uc_ = (o["u0"] + o["u1"]) / 2
+                        if steps_union.contains(Point(a[0] + tx * uc_ + nx * 0.4, a[1] + ty * uc_ + ny * 0.4)):
+                            o["threshold"] = False
+                fac["fixtures"] = [fx for fx in fac["fixtures"] if "u" not in fx or not covered(fx["u"], fx["u"])]
+                for key in ("signs", "decals", "awnings"):
+                    fac[key] = [x for x in fac.get(key, []) if "u0" not in x or not covered(x["u0"], x["u1"])]
                 if fac["openings"] or fac["fixtures"] or fac["decals"]:
                     rec["facades"].append(fac)
         # context buildings: flat window cards, each checked against neighbouring walls
@@ -1499,9 +1533,33 @@ def main():
         parts = [ln_] if kind == "souq" else flanked(ln_, hw)      # (a bare roof over open ground: none)
         unbridged += ln_.length - sum(s_.length for s_ in parts)
         runs += [(w_, s_, kind, hw, bid_) for s_ in parts]
+    def side_dist(x, y, nx_, ny_, maxd=6.0):
+        """Distance from (x, y) along (nx_, ny_) to the nearest wall, or None within maxd."""
+        hit = LineString([(x, y), (x + nx_ * maxd, y + ny_ * maxd)]).intersection(obstacles)
+        if hit.is_empty:
+            return None
+        return Point(x, y).distance(hit)
+
     for w_, ln_, kind, hw, under in runs:
         n = max(1, int(math.ceil(ln_.length / 3.0)))
         pts = [ln_.interpolate(ln_.length * k / n).coords[0] for k in range(n + 1)]
+        if kind == "souq":
+            # a souq is rarely centred on its OSM line: the vault goes midway between the walls at each
+            # point, as wide as the wider spans (one half-width about the line left sky along one wall)
+            cen, hws = [], []
+            for k, (x, y) in enumerate(pts):
+                a_, b_ = pts[max(0, k - 1)], pts[min(len(pts) - 1, k + 1)]
+                (tx_, ty_), _, _ = edge_frame(a_, b_)
+                dl, dr = side_dist(x, y, -ty_, tx_), side_dist(x, y, ty_, -tx_)
+                if dl is not None and dr is not None and dl + dr < 9.0:
+                    off = (dl - dr) / 2
+                    cen.append((x - ty_ * off, y + tx_ * off))
+                    hws.append((dl + dr) / 2)
+                else:
+                    cen.append((x, y))
+            pts = cen
+            if hws:
+                hw = min(4.0, float(np.percentile(hws, 90)) + 0.1)
         pts = [(x, y, round(street_z(x, y), 3)) for x, y in pts]
         near = [out_b[k] for k in rec_tree.query(ln_.buffer(hw + 1.0))]
         spring = 3.0 if kind == "passage" else 4.4
