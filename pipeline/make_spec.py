@@ -114,7 +114,8 @@ DOME_PLATFORM = Polygon([
     (713.28, 248.78), (712.84, 252.34), (673.47, 247.42), (675.55, 230.87), (662.27, 229.22), (662.51, 227.33),
     (660.20, 227.04), (670.43, 181.88), (672.90, 182.35), (673.68, 178.19), (671.25, 177.73), (677.71, 144.88),
     (696.09, 148.79), (699.21, 134.32), (680.61, 131.10), (683.20, 116.88), (689.24, 86.12)])
-GROUND_HOLES = [DOME_PLATFORM.buffer(-0.5)]
+GROUND_HOLES = []        # (DOME_PLATFORM.buffer(-0.5) once: the platform has no retaining wall beside the qanatir
+                         #  stairs, and with no ground under it sky showed through; Player.teleport skips the void)
                          # (Wilson's Arch hall: paved at Chain Street level instead, see LOCAL_FLATS; a hole
                          #  left gaps between the hall's roof and the walls around it)
 # sunken courts: paving at street level + dz (the Golden Gate's court, 4.5 m below the esplanade;
@@ -747,8 +748,11 @@ def surface_z_v(xs, ys, prefer=None, ease_from=None):
         D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
         m = (~inside_any) & (d < D)
         out = np.where(m, fz + (zt - fz) * np.clip(d / D, 0.0, 1.0), out)
-    if STAIR_FIELD is not None:
-        out = _stair_conform(xs, ys, out)
+    if STAIR_FIELD is not None:            # (not inside level areas: it folded the Western Wall plaza into
+        free = ~inside_any                   #  creases and a ring round the flights coming down into it)
+        if free.any():
+            out = out.copy()
+            out[free] = _stair_conform(xs[free], ys[free], out[free])
     return out
 
 
