@@ -281,7 +281,8 @@
  ],
  "remove_buildings": {
   "w277508272": "OSM building=roof (layer 1): the flat roof of the south entrance portal 'MEN ENTRANCE / WOMEN ENTRANCE' carried on stone-clad pillars over the security lanes (K:045). Built as a closed 11 m block it walled off the south entrance to the plaza; see requests for the open portal structure.",
-  "r3820187": "OSM multipolygon (with a courtyard the spec fills) mixing the arched corner block at the Southern Wall with ruin wings and thin walls running 50 m down 12-17 m of fall along the inside of the Ottoman wall: one record has one top, so its southern arms stood as 14-18 m blank blades above the city wall (review: renders verify/v_parke.png, corner_ene.png) and two layer-1 stairs (w288016716, w755420496) ran through it. Replaced by m_s07_kotel_5 (block), m_s07_kotel_4 (east wing) and m_s07_kotel_3 (E-W arm); the N-S arm along the wall lies inside the wall slab and is left out."
+  "r3820187": "OSM multipolygon (with a courtyard the spec fills) mixing the arched corner block at the Southern Wall with ruin wings and thin walls running 50 m down 12-17 m of fall along the inside of the Ottoman wall: one record has one top, so its southern arms stood as 14-18 m blank blades above the city wall (review: renders verify/v_parke.png, corner_ene.png) and two layer-1 stairs (w288016716, w755420496) ran through it. Replaced by m_s07_kotel_5 (block), m_s07_kotel_4 (east wing) and m_s07_kotel_3 (E-W arm); the N-S arm along the wall lies inside the wall slab and is left out.",
+  "w1550608919": "11 m2 OSM building against the west side of the Dung Gate arch, outside the wall: built 7 m tall with house windows it read as a stray house stuck on the city wall beside the gate (iconic-place critic 2026-10-22)."
  },
  "props": [
   {
