@@ -1031,10 +1031,11 @@ def _hs_specials(Z, mbs, ring, g, base, gen, tf, nf):
     fw = edge_of((218.88, 182.0), (0.05, -1.0))
     if fw:
         Z.special(fw[0], fw[1], _hs_franks_west(mbs, g, base, gen))
-        if not lod:                          # the door at the stair head, as a card on the face: the zone edge
-            ef_ = Edge(fw[0], fw[1])         # there does not always match the special (it built a blank wall)
-            mk.card(deco, ef_.P(1.05, g + 2.2, 0.03), ef_.t, UP, 1.2, 2.6, "doors", cell_uv(gen, "doors", "door_wood"))
-            frame(sol, ef_, rect(0.45, 1.65, g + 2.2, g + 4.8), 0.15, 0.0, 0.1)
+        # the door at the stair head, as a card on the face: the zone edge there does not always match the
+        # special (it built a blank wall)  (_hs_specials runs for the full model only)
+        ef_ = Edge(fw[0], fw[1])
+        mk.card(deco, ef_.P(1.05, g + 2.2, 0.03), ef_.t, UP, 1.2, 2.6, "doors", cell_uv(gen, "doors", "door_wood"))
+        frame(sol, ef_, rect(0.45, 1.65, g + 2.2, g + 4.8), 0.15, 0.0, 0.1)
     fs = edge_of((221.75, 179.62), (1.0, 0.077))
     if fs:
         Z.special(fs[0], fs[1], _hs_franks_south(mbs, g, base, gen))
