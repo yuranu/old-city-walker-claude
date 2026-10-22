@@ -411,6 +411,37 @@ def build_steps(mb, steps):
                                                                      # a dark mortar band shows at riser height)
 
 
+def build_osm_walls(mb, walls):
+    """OSM barrier=wall / retaining_wall segments (make_spec.osm_walls): rough stone slabs of the given
+    thickness from below the low ground to their top, a dressed coping, end faces only where the run
+    stops (segments of one line share their end faces' planes, so those are skipped)."""
+    Z = lambda z: Vector((0, 0, z))  # noqa: E731
+    ends = {}
+    for w in walls:
+        for k in ("a", "b"):
+            key = (round(w[k][0], 2), round(w[k][1], 2))
+            ends[key] = ends.get(key, 0) + 1
+    for w in walls:
+        a, b = Vector((*w["a"], 0)), Vector((*w["b"], 0))
+        t = b - a
+        if t.length < 0.05:
+            continue
+        t.normalize()
+        n = Vector((t.y, -t.x, 0)) * (w["thick"] / 2)
+        (za0, zb0), (za1, zb1) = w["z0"], w["z1"]
+        mat = "rubble"
+        col = (0.98, 0.95, 0.9)
+        for s_ in (1, -1):
+            q = [a + n * s_ + Z(za0), b + n * s_ + Z(zb0), b + n * s_ + Z(zb1), a + n * s_ + Z(za1)]
+            mb.poly(q, mat, n * s_, col=col)
+        cop = [a + n * 1.15 + Z(za1), b + n * 1.15 + Z(zb1), b - n * 1.15 + Z(zb1), a - n * 1.15 + Z(za1)]
+        mb.poly(cop, "dressed", UP, col=(0.92, 0.9, 0.86))
+        for p, zl, zh, sg in ((a, za0, za1, -1), (b, zb0, zb1, 1)):
+            if ends.get((round(p.x, 2), round(p.y, 2)), 0) < 2:          # the run stops here
+                q = [p + n + Z(zl), p - n + Z(zl), p - n + Z(zh), p + n + Z(zh)]
+                mb.poly(q, mat, t * sg, col=col)
+
+
 def build_retaining(mb, walls, t=0.3):
     """Retaining walls along the edges of level areas (spec "retaining"): a 0.3 m stone slab from
     below the lower side up to the higher one, with a coping face on top."""
@@ -773,6 +804,10 @@ def main():
         build_retaining(rw, spec.get("retaining", []))
         if not rw.empty():
             rw.to_object("retaining_walls", mats, col("ground"))
+        ow = mk.MeshBuilder(tiles)
+        build_osm_walls(ow, spec.get("osm_walls", []))
+        if not ow.empty():
+            ow.to_object("osm_walls", mats, col("walls"))
     st = mk.MeshBuilder(tiles)
     build_steps(st, spec.get("steps", []))
     if not st.empty():

@@ -130,7 +130,10 @@ LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, a
                # the Western Wall prayer-area level carried north to the front of Wilson's Arch hall
                (Polygon([(621.91, 30.53), (646.06, 35.24), (647.21, 29.35), (623.06, 24.64)]), -43.58),
                # paving over Wilson's Arch hall at Chain Street level (the hall's roof sits 3 cm below)
-               (WILSON_HALL, (633.0, 61.0))]
+               (WILSON_HALL, (633.0, 61.0)),
+               # the Austrian Hospice compound (retaining wall w375040920): a garden terrace ~5 m over the Via
+               # Dolorosa at its gatehouse (Street View: the terrace and its planters level with the gate's roof)
+               (375040920, (424.0, 374.0, 5.0))]
 
 
 # covered streets: passages under buildings (OSM tunnel=yes|building_passage, covered=yes) are carved
@@ -438,7 +441,7 @@ def write_sectors(spec):
         m = v["pts"][len(v["pts"]) // 2]
         per[sector_or_nearest(m[0], m[1])]["vaults"].append(v)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
-                                  "walls_generic", "retaining", "spawn", "sources", "ground_holes")}
+                                  "walls_generic", "retaining", "spawn", "sources", "ground_holes", "osm_walls")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": spec["steps"], "cables": [],
                  "beams": []})
     write_json(out_dir / "base.json", base)
@@ -584,11 +587,15 @@ BLEND_SLOPE = 0.3                              # around a level area the ground 
 def setup_flats(d):
     for wid, at in LOCAL_FLATS:                # (OSM way, point it takes its level from) or (polygon, z)
         if isinstance(wid, Polygon):
-            _FLATS.append((wid, float(at) if not isinstance(at, tuple) else float(_terrain.street_z(*at)) if _terrain else 0.0))
+            if isinstance(at, tuple) and len(at) == 3:            # (x, y, dz): dz above the street at (x, y)
+                _FLATS.append((wid, (float(_terrain.street_z(at[0], at[1])) if _terrain else 0.0) + at[2]))
+            else:
+                _FLATS.append((wid, float(at) if not isinstance(at, tuple) else float(_terrain.street_z(*at)) if _terrain else 0.0))
             continue
         w = next((w_ for w_ in d["ways"] if w_["id"] == wid), None)
         if w and _terrain is not None:
-            _FLATS.append((Polygon(w["pts"]).buffer(0), float(_terrain.street_z(*at))))
+            z_ = float(_terrain.street_z(at[0], at[1])) + (at[2] if len(at) == 3 else 0.0)
+            _FLATS.append((Polygon(w["pts"]).buffer(0), z_))
     _osm_fp = [Polygon(b["outer"][0]).buffer(0) for b in d["buildings"] if b.get("outer") and len(b["outer"][0]) > 2]
     _fp_tree = STRtree(_osm_fp)
 
@@ -810,6 +817,66 @@ def setup_ease_zones(cell=0.5):
     street_z.cache_clear()
     print("ease zones: %d (%s m2)" % (len(EASE_ZONES), round(sum(z_.area for z_, _ in EASE_ZONES))))
 
+
+
+def osm_walls(d, buildings, skip_ids=()):
+    """OSM barrier=wall / retaining_wall lines (compound walls, garden and terrace walls: 5 km of them
+    were not built at all, and every walled compound stood open to the street): segments of 2 m along
+    each line outside the building footprints, a 2.6 m gap where a mapped path crosses. A wall stands
+    3 m (or its OSM height) above the higher ground beside it; a retaining wall from the low side up to
+    a 1.1 m parapet over the high side. Lines inside the Haram are its builders' own."""
+    # (clear of the footprints by 8 cm, the ends cut there run 25 cm on into the building: a wall line drawn
+    #  along a building's face, the Austrian Hospice's on its gatehouse front, stood in front of the facade)
+    fp = unary_union([bd["poly"] for bd in buildings]).buffer(0.08)
+    paths = [LineString(w_["pts"]) for w_ in d["ways"] if w_["tags"].get("highway") and len(w_.get("pts") or []) > 1]
+    ptree = STRtree(paths) if paths else None
+    ctx = box(*CONTEXT)
+    out = []
+    for w_ in d["ways"]:
+        t_ = w_["tags"]
+        kind = t_.get("barrier")
+        pts_ = w_.get("pts") or []
+        if kind not in ("wall", "retaining_wall") or len(pts_) < 2 or w_["id"] in skip_ids:
+            continue
+        ln = LineString(pts_)
+        if not ctx.contains(ln.centroid) or HARAM.buffer(2.0).contains(ln.centroid):
+            continue
+        cuts = [fp]
+        if ptree is not None:
+            for k in ptree.query(ln):
+                x_ = paths[k].intersection(ln)
+                for g_ in getattr(x_, "geoms", [x_]):
+                    if g_.geom_type == "Point":
+                        cuts.append(g_.buffer(1.3))
+        try:
+            h_tag = float(str(t_.get("height", "")).replace("m", "").strip())
+        except ValueError:
+            h_tag = None
+        for seg in lines_of(ln.difference(unary_union(cuts))):
+            if seg.length < 0.8:
+                continue
+            seg = seg.segmentize(2.0)
+            cs = list(seg.coords)
+            for i_, j_ in ((0, 1), (-1, -2)):          # an end stopped by a building runs on into it
+                if fp.distance(Point(cs[i_])) < 0.02:
+                    dx_, dy_ = cs[i_][0] - cs[j_][0], cs[i_][1] - cs[j_][1]
+                    l_ = math.hypot(dx_, dy_) or 1.0
+                    cs[i_] = (cs[i_][0] + dx_ / l_ * 0.25, cs[i_][1] + dy_ / l_ * 0.25)
+            for a_, b_ in zip(cs, cs[1:]):
+                (_, _), (nx_, ny_), L_ = edge_frame(a_, b_)
+                if L_ < 0.05:
+                    continue
+                z0, z1 = [], []
+                for p_ in (a_, b_):
+                    zl = street_z(p_[0] - nx_ * 0.9, p_[1] - ny_ * 0.9)
+                    zr = street_z(p_[0] + nx_ * 0.9, p_[1] + ny_ * 0.9)
+                    z0.append(round(min(zl, zr) - 0.4, 2))
+                    top = max(zl, zr) + (1.1 if kind == "retaining_wall" else (h_tag or 3.0))
+                    z1.append(round(top, 2))
+                out.append({"a": [round(a_[0], 3), round(a_[1], 3)], "b": [round(b_[0], 3), round(b_[1], 3)],
+                            "z0": z0, "z1": z1, "thick": 0.6 if kind == "retaining_wall" else 0.45, "kind": kind,
+                            "osm": w_["id"]})
+    return out
 
 
 def seal_cracks(ground, tol=0.003, skip=None, back_near=None):   # (2 cm left hairlines of sky at grazing angles)
@@ -1482,6 +1549,8 @@ def main():
     retaining = seal_cracks(ground, skip=unary_union([sunken.boundary, WILSON_HALL.boundary]).buffer(0.1),
                             back_near=lm_near)
     kerbs = []               # (the kerb faces are the crack seals along the roads: seal_cracks)
+    owalls = osm_walls(d, buildings, skip_ids={137725307})     # (the Dome platform's wall: landmarks_haram)
+    print("osm walls: %d segments, %.0f m" % (len(owalls), sum(math.dist(w_["a"], w_["b"]) for w_ in owalls)))
 
     # ---------------------------------------------------------------- buildings
     def height_of(osm, tags, q, tier):
@@ -1613,6 +1682,21 @@ def main():
                     return any(inside_other(Point(a[0] + tx * u_ + nx * d_, a[1] + ty * u_ + ny * d_), bidx)
                                for d_ in (0.15, 0.35, 0.6, 0.9))
                 fac["fixtures"] = [fx for fx in fac["fixtures"] if "u" not in fx or not blocked(fx["u"])]
+                # canopies stop short of the building across the lane (at the Muristan a shop canopy ran
+                # into the Church of the Redeemer's wall a metre away)
+                keep_cp = []
+                for cp in fac.get("canopies", []):
+                    dp = cp["depth"]
+                    for u_ in (cp["u0"] + 0.3, (cp["u0"] + cp["u1"]) / 2, cp["u1"] - 0.3):
+                        d_ = 0.3
+                        while d_ <= dp + 0.25:
+                            if inside_other(Point(a[0] + tx * u_ + nx * d_, a[1] + ty * u_ + ny * d_), bidx):
+                                dp = min(dp, d_ - 0.25)
+                                break
+                            d_ += 0.25
+                    if dp >= 0.6:
+                        keep_cp.append(dict(cp, depth=round(dp, 2)))
+                fac["canopies"] = keep_cp
                 for key in ("signs", "decals", "awnings"):
                     fac[key] = [x for x in fac.get(key, []) if "u0" not in x or not covered(x["u0"], x["u1"])]
                 if fac["openings"] or fac["fixtures"] or fac["decals"]:
@@ -1836,6 +1920,7 @@ def main():
         "poc_box": POC, "context_box": CONTEXT,
         "walls_generic": walls_generic,
         "retaining": retaining,
+        "osm_walls": owalls,
         # ground left out on purpose (closed in by landmark walls): QA counts these as covered
         "ground_holes": [[[round(x, 3), round(y, 3)] for x, y in h_.exterior.coords[:-1]] for h_ in GROUND_HOLES],
         "vaults": vaults,

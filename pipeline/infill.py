@@ -147,7 +147,8 @@ def infill(d, footprints, domain, keep_open):
         pts = w.get("pts") or []
         if not w.get("closed") or len(pts) < 4 or "building" in t:
             continue
-        if is_open_area(t):
+        # (a closed wall ring is a compound: its garden or court stays open, not filled with houses)
+        if is_open_area(t) or t.get("barrier") in ("wall", "retaining_wall"):
             p = Polygon(pts).buffer(0)
             if p.area > 15 and domain.intersects(p):
                 areas.append(p)
