@@ -748,11 +748,14 @@ def surface_z_v(xs, ys, prefer=None, ease_from=None):
         D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
         m = (~inside_any) & (d < D)
         out = np.where(m, fz + (zt - fz) * np.clip(d / D, 0.0, 1.0), out)
-    if STAIR_FIELD is not None:            # (not inside level areas: it folded the Western Wall plaza into
-        free = ~inside_any                   #  creases and a ring round the flights coming down into it)
-        if free.any():
-            out = out.copy()
-            out[free] = _stair_conform(xs[free], ys[free], out[free])
+    if STAIR_FIELD is not None:            # fading out over the first 3 m inside a level area (applied in it,
+        conf = _stair_conform(xs, ys, out)   # it folded the Western Wall plaza into creases round the flights;
+        k = np.ones(xs.shape)                # cut at its edge, the jump built spikes on the JQ escarpment)
+        for poly, _ in ALL_FLATS:
+            m = owner == id(poly)
+            if m.any():
+                k[m] = np.clip(1.0 - shapely.distance(poly.boundary, pts[m]) / 3.0, 0.0, 1.0)
+        out = out + (conf - out) * k
     return out
 
 
@@ -1472,7 +1475,9 @@ def main():
     # (the sunken courts and Wilson's Arch hall have their own walls on their outlines, landmarks_haram; a
     #  seal on the hall front would close its arches. The Citadel moat is sealed like any other step: its
     #  foot showed sky)
-    lm_near = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS] or [Polygon()]).buffer(0.5)
+    # (any wall, not only landmarks: 5 mm from a house wall or the citadel the seal z-fought with it)
+    lm_near = unary_union([bd["poly"] for bd in buildings] + [cit_outer, Polygon(cit_mass_r)]
+                          + [LineString([w_["a"], w_["b"]]).buffer(w_["thick"] / 2) for w_ in walls_generic]).buffer(0.5)
     prepare(lm_near)
     retaining = seal_cracks(ground, skip=unary_union([sunken.boundary, WILSON_HALL.boundary]).buffer(0.1),
                             back_near=lm_near)
