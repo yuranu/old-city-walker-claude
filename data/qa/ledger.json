@@ -4213,7 +4213,7 @@
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-22 03:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -4236,7 +4236,8 @@
     "source": null,
     "view": "air_-149_203",
     "key": "hole@-31,37"
-   }
+   },
+   "fixed": "2026-10-22 10:17"
   },
   "s03_christian_w|hole@-22,47": {
    "region": "s03_christian_w",
@@ -4272,7 +4273,7 @@
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-22 03:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -4295,13 +4296,14 @@
     "source": null,
     "view": "air_-59_158",
     "key": "hole@-11,25"
-   }
+   },
+   "fixed": "2026-10-22 10:17"
   },
   "s03_christian_w|hole@-2,2": {
    "region": "s03_christian_w",
    "first": "2026-10-21 08:11",
    "last": "2026-10-22 03:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -4324,7 +4326,8 @@
     "source": null,
     "view": "air_-14_68",
     "key": "hole@-2,2"
-   }
+   },
+   "fixed": "2026-10-22 10:17"
   },
   "s03_christian_w|coplanar@12,45": {
    "region": "s03_christian_w",
@@ -5003,7 +5006,7 @@
    "region": "s00_jaffa",
    "first": "2026-10-21 10:06",
    "last": "2026-10-22 00:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -5026,13 +5029,14 @@
     "source": null,
     "view": "w1393445771_4_f",
     "key": "flicker@23,7"
-   }
+   },
+   "fixed": "2026-10-22 09:47"
   },
   "s00_jaffa|hole@5,-5": {
    "region": "s00_jaffa",
    "first": "2026-10-21 10:06",
    "last": "2026-10-22 00:55",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -5055,7 +5059,8 @@
     "source": null,
     "view": "air_22_23",
     "key": "hole@5,-5"
-   }
+   },
+   "fixed": "2026-10-22 09:47"
   },
   "s00_jaffa|hole@16,-11": {
    "region": "s00_jaffa",
@@ -5090,7 +5095,7 @@
   "s00_jaffa|blocked_street@12,5": {
    "region": "s00_jaffa",
    "first": "2026-10-21 10:06",
-   "last": "2026-10-22 00:55",
+   "last": "2026-10-22 12:27",
    "status": "open",
    "finding": {
     "kind": "blocked_street",
@@ -5163,7 +5168,7 @@
    "region": "s01_armenian",
    "first": "2026-10-21 10:18",
    "last": "2026-10-22 03:14",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "flicker",
     "level": 0,
@@ -5186,7 +5191,8 @@
     "source": null,
     "view": "w1546336247_0_f",
     "key": "flicker@20,-69"
-   }
+   },
+   "fixed": "2026-10-22 09:57"
   },
   "s03_christian_w|flicker@-29,71": {
    "region": "s03_christian_w",
@@ -5221,7 +5227,7 @@
   "s03_christian_w|hole@-14,24": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-22 03:10",
+   "last": "2026-10-22 10:17",
    "status": "open",
    "finding": {
     "kind": "hole",
@@ -5272,7 +5278,7 @@
   "s03_christian_w|coplanar@-12,84": {
    "region": "s03_christian_w",
    "first": "2026-10-21 10:40",
-   "last": "2026-10-22 03:10",
+   "last": "2026-10-22 10:17",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -5390,7 +5396,7 @@
    "region": "s04_sepulchre",
    "first": "2026-10-21 11:02",
    "last": "2026-10-22 03:41",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5405,7 +5411,8 @@
     "source": "overlapping geometry: bld_f516 vs bld_w1393408267",
     "view": null,
     "key": "coplanar@71,81"
-   }
+   },
+   "fixed": "2026-10-22 10:36"
   },
   "s04_sepulchre|coplanar@76,103": {
    "region": "s04_sepulchre",
@@ -5746,8 +5753,8 @@
   "s04_sepulchre|coplanar@58,39": {
    "region": "s04_sepulchre",
    "first": "2026-10-21 14:10",
-   "last": "2026-10-21 14:10",
-   "status": "fixed",
+   "last": "2026-10-22 12:46",
+   "status": "regressed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5755,9 +5762,9 @@
     "at": [
      232.3,
      156.6,
-     -12.2
+     -12.0
     ],
-    "what": "coplanar faces s04_sepulchre:bld_w1022672084 / s04_sepulchre:crate_stack.0 (0.06 m2, dressed.002/plastic.002)",
+    "what": "coplanar faces s04_sepulchre:bld_w1022672084 / s04_sepulchre:crate_stack.0 (0.06 m2, paving.002/plastic.002)",
     "evidence": {},
     "source": "overlapping geometry: bld_w1022672084 vs crate_stack.0",
     "view": null,
@@ -5769,7 +5776,7 @@
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
    "last": "2026-10-22 04:26",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -5792,7 +5799,8 @@
     "source": null,
     "view": "w616359696_2_f",
     "key": "hole@50,-9"
-   }
+   },
+   "fixed": "2026-10-22 10:43"
   },
   "s05_souks|hole@49,-8": {
    "region": "s05_souks",
@@ -5828,7 +5836,7 @@
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
    "last": "2026-10-22 04:26",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -5851,13 +5859,14 @@
     "source": null,
     "view": "w616359696_2_d",
     "key": "hole@50,-8"
-   }
+   },
+   "fixed": "2026-10-22 10:43"
   },
   "s05_souks|coplanar@83,-8": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
    "last": "2026-10-22 04:26",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -5872,12 +5881,13 @@
     "source": "overlapping geometry: bld_f538 vs vaults",
     "view": null,
     "key": "coplanar@83,-8"
-   }
+   },
+   "fixed": "2026-10-22 10:43"
   },
   "s05_souks|coplanar@81,7": {
    "region": "s05_souks",
    "first": "2026-10-21 14:18",
-   "last": "2026-10-22 04:26",
+   "last": "2026-10-22 10:43",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -6663,7 +6673,7 @@
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
    "last": "2026-10-22 04:08",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -6686,7 +6696,8 @@
     "source": null,
     "view": "w29388393_2_f",
     "key": "hole@139,-35"
-   }
+   },
+   "fixed": "2026-10-22 11:10"
   },
   "s06_jewish|hole@136,-36": {
    "region": "s06_jewish",
@@ -6872,7 +6883,7 @@
    "region": "s06_jewish",
    "first": "2026-10-21 16:17",
    "last": "2026-10-22 04:08",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "coplanar",
     "level": 0,
@@ -6887,7 +6898,8 @@
     "source": "overlapping geometry: bld_w290725362 vs bld_f616",
     "view": null,
     "key": "coplanar@124,-62"
-   }
+   },
+   "fixed": "2026-10-22 11:10"
   },
   "s08_damascus|hole@90,108": {
    "region": "s08_damascus",
@@ -6922,7 +6934,7 @@
   "s08_damascus|blocked_street@89,110": {
    "region": "s08_damascus",
    "first": "2026-10-21 16:30",
-   "last": "2026-10-22 02:30",
+   "last": "2026-10-22 11:21",
    "status": "open",
    "finding": {
     "kind": "blocked_street",
@@ -7332,7 +7344,7 @@
   "s09_wad|coplanar@163,-4": {
    "region": "s09_wad",
    "first": "2026-10-21 17:30",
-   "last": "2026-10-22 06:58",
+   "last": "2026-10-22 12:23",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -7354,7 +7366,7 @@
    "region": "s10_herod_lions",
    "first": "2026-10-21 17:46",
    "last": "2026-10-21 21:43",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -7377,7 +7389,8 @@
     "source": null,
     "view": "w257604175_0_f",
     "key": "hole@201,155"
-   }
+   },
+   "fixed": "2026-10-22 09:44"
   },
   "s10_herod_lions|flicker@211,110": {
    "region": "s10_herod_lions",
@@ -7473,7 +7486,7 @@
    "region": "s10_herod_lions",
    "first": "2026-10-21 17:46",
    "last": "2026-10-21 21:43",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -7496,7 +7509,8 @@
     "source": null,
     "view": "w744665958_0_b",
     "key": "hole@183,139"
-   }
+   },
+   "fixed": "2026-10-22 09:44"
   },
   "s11_haram|coplanar@235,0": {
    "region": "s11_haram",
@@ -9371,7 +9385,7 @@
   "s11_haram|coplanar@157,31": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -9898,7 +9912,7 @@
   "s11_haram|coplanar@157,30": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10073,7 +10087,7 @@
   "s11_haram|coplanar@230,43": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10082,9 +10096,9 @@
     "at": [
      923.6,
      175.1,
-     -34.9
+     -35.3
     ],
-    "what": "coplanar faces s11_haram:bld_w508175929 / base:city_walls_osm (0.08 m2, ashlar/fort)",
+    "what": "coplanar faces s11_haram:bld_w508175929 / base:city_walls_osm (0.07 m2, ashlar/fort)",
     "evidence": {},
     "source": "overlapping geometry: bld_w508175929 vs city_walls_osm",
     "view": null,
@@ -10160,7 +10174,7 @@
   "s11_haram|coplanar@157,32": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10247,7 +10261,7 @@
   "s11_haram|coplanar@179,-9": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10268,7 +10282,7 @@
   "s11_haram|coplanar@177,-10": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10311,7 +10325,7 @@
   "s11_haram|coplanar@177,-9": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10354,7 +10368,7 @@
   "s11_haram|coplanar@179,-10": {
    "region": "s11_haram",
    "first": "2026-10-21 18:03",
-   "last": "2026-10-22 00:05",
+   "last": "2026-10-22 09:02",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10375,7 +10389,7 @@
   "s10_herod_lions|flicker@145,167": {
    "region": "s10_herod_lions",
    "first": "2026-10-21 21:43",
-   "last": "2026-10-21 21:43",
+   "last": "2026-10-22 09:44",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -10385,15 +10399,15 @@
      583.1,
      670.8
     ],
-    "what": "surface flips between frames 1 cm apart (171 px)",
+    "what": "surface flips between frames 1 cm apart (158 px)",
     "evidence": {
-     "crop": "crops/w257604177_4_f_flick_728_589.png",
-     "px": 171,
+     "crop": "crops/w257604177_4_f_flick_728_590.png",
+     "px": 158,
      "bbox": [
       728,
-      589,
-      741,
-      605
+      590,
+      740,
+      604
      ]
     },
     "source": null,
@@ -10404,7 +10418,7 @@
   "s10_herod_lions|flicker@146,166": {
    "region": "s10_herod_lions",
    "first": "2026-10-21 21:43",
-   "last": "2026-10-21 21:43",
+   "last": "2026-10-22 09:44",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -10414,10 +10428,10 @@
      587.8,
      665.0
     ],
-    "what": "surface flips between frames 1 cm apart (209 px)",
+    "what": "surface flips between frames 1 cm apart (215 px)",
     "evidence": {
      "crop": "crops/w257604177_4_b_flick_16_366.png",
-     "px": 209,
+     "px": 215,
      "bbox": [
       16,
       366,
@@ -10478,7 +10492,7 @@
   "s06_jewish|flicker@103,-40": {
    "region": "s06_jewish",
    "first": "2026-10-22 02:18",
-   "last": "2026-10-22 04:08",
+   "last": "2026-10-22 11:54",
    "status": "open",
    "finding": {
     "kind": "flicker",
@@ -10508,7 +10522,7 @@
    "region": "s03_christian_w",
    "first": "2026-10-22 03:10",
    "last": "2026-10-22 03:10",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "hole",
     "level": 0,
@@ -10531,6 +10545,409 @@
     "source": null,
     "view": "air_-104_248",
     "key": "hole@-23,47"
+   },
+   "fixed": "2026-10-22 10:17"
+  },
+  "s09_wad|hole@115,-6": {
+   "region": "s09_wad",
+   "first": "2026-10-22 09:28",
+   "last": "2026-10-22 12:23",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     463.2,
+     -21.0
+    ],
+    "what": "sky visible below the horizon (10945 px)",
+    "evidence": {
+     "crop": "crops/w26493220_2_f_hole_64_401.png",
+     "px": 10945,
+     "bbox": [
+      64,
+      401,
+      132,
+      639
+     ]
+    },
+    "source": null,
+    "view": "w26493220_2_f",
+    "key": "hole@115,-6"
+   }
+  },
+  "s09_wad|hole@116,81": {
+   "region": "s09_wad",
+   "first": "2026-10-22 09:28",
+   "last": "2026-10-22 12:23",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     465.5,
+     326.5
+    ],
+    "what": "sky visible below the horizon (77 px)",
+    "evidence": {
+     "crop": "crops/w26506003_0_b_hole_335_297.png",
+     "px": 77,
+     "bbox": [
+      335,
+      297,
+      340,
+      335
+     ]
+    },
+    "source": null,
+    "view": "w26506003_0_b",
+    "key": "hole@116,81"
+   }
+  },
+  "s09_wad|coplanar@132,0": {
+   "region": "s09_wad",
+   "first": "2026-10-22 09:28",
+   "last": "2026-10-22 09:28",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     529.9,
+     1.5,
+     -35.3
+    ],
+    "what": "coplanar faces s09_wad:bld_w1393371472 / base:retaining_walls (0.31 m2, rubble.006/dressed)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1393371472 vs retaining_walls",
+    "view": null,
+    "key": "coplanar@132,0"
+   },
+   "fixed": "2026-10-22 12:23"
+  },
+  "s09_wad|coplanar@142,3": {
+   "region": "s09_wad",
+   "first": "2026-10-22 09:28",
+   "last": "2026-10-22 12:23",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     571.3,
+     15.1,
+     -40.0
+    ],
+    "what": "coplanar faces s09_wad:bld_f245 / s09_wad:bld_w394161633 (0.04 m2, rubble.006/rubble.006)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f245 vs bld_w394161633",
+    "view": null,
+    "key": "coplanar@142,3"
+   }
+  },
+  "s00_jaffa|coplanar@20,-10": {
+   "region": "s00_jaffa",
+   "first": "2026-10-22 09:47",
+   "last": "2026-10-22 09:47",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     83.8,
+     -36.6,
+     -2.5
+    ],
+    "what": "coplanar faces base:retaining_walls / base:citadel (1.97 m2, dressed/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs citadel",
+    "view": null,
+    "key": "coplanar@20,-10"
+   },
+   "fixed": "2026-10-22 12:27"
+  },
+  "s00_jaffa|coplanar@21,-9": {
+   "region": "s00_jaffa",
+   "first": "2026-10-22 09:47",
+   "last": "2026-10-22 09:47",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     86.0,
+     -35.7,
+     -1.6
+    ],
+    "what": "coplanar faces base:retaining_walls / base:citadel (0.10 m2, dressed/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs citadel",
+    "view": null,
+    "key": "coplanar@21,-9"
+   },
+   "fixed": "2026-10-22 12:27"
+  },
+  "s01_armenian|coplanar@20,-14": {
+   "region": "s01_armenian",
+   "first": "2026-10-22 09:57",
+   "last": "2026-10-22 09:57",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     80.1,
+     -55.5,
+     -3.3
+    ],
+    "what": "coplanar faces base:retaining_walls / base:citadel (3.43 m2, dressed/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs citadel",
+    "view": null,
+    "key": "coplanar@20,-14"
+   },
+   "fixed": "2026-10-22 12:04"
+  },
+  "s01_armenian|coplanar@20,-13": {
+   "region": "s01_armenian",
+   "first": "2026-10-22 09:57",
+   "last": "2026-10-22 09:57",
+   "status": "fixed",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     80.3,
+     -51.5,
+     -3.4
+    ],
+    "what": "coplanar faces base:retaining_walls / base:citadel (1.57 m2, dressed/ashlar)",
+    "evidence": {},
+    "source": "overlapping geometry: retaining_walls vs citadel",
+    "view": null,
+    "key": "coplanar@20,-13"
+   },
+   "fixed": "2026-10-22 12:04"
+  },
+  "s02_zion|hole@56,-97": {
+   "region": "s02_zion",
+   "first": "2026-10-22 10:04",
+   "last": "2026-10-22 10:04",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     226.8,
+     -386.9
+    ],
+    "what": "sky visible below the horizon (146 px)",
+    "evidence": {
+     "crop": "crops/w383484416_4_b_hole_795_427.png",
+     "px": 146,
+     "bbox": [
+      795,
+      427,
+      802,
+      497
+     ]
+    },
+    "source": null,
+    "view": "w383484416_4_b",
+    "key": "hole@56,-97"
+   }
+  },
+  "s03_christian_w|flicker@14,57": {
+   "region": "s03_christian_w",
+   "first": "2026-10-22 10:17",
+   "last": "2026-10-22 10:17",
+   "status": "open",
+   "finding": {
+    "kind": "flicker",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     57.3,
+     230.5
+    ],
+    "what": "surface flips between frames 1 cm apart (270 px)",
+    "evidence": {
+     "crop": "crops/w1545565703_0_b_flick_186_333.png",
+     "px": 270,
+     "bbox": [
+      186,
+      333,
+      197,
+      359
+     ]
+    },
+    "source": null,
+    "view": "w1545565703_0_b",
+    "key": "flicker@14,57"
+   }
+  },
+  "s03_christian_w|coplanar@28,63": {
+   "region": "s03_christian_w",
+   "first": "2026-10-22 10:17",
+   "last": "2026-10-22 10:17",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     113.7,
+     254.7,
+     4.5
+    ],
+    "what": "coplanar faces s03_christian_w:bld_f180 / s03_christian_w:bld_w1392902297 (0.06 m2, rubble.002/dressed.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_f180 vs bld_w1392902297",
+    "view": null,
+    "key": "coplanar@28,63"
+   }
+  },
+  "s04_sepulchre|coplanar@86,59": {
+   "region": "s04_sepulchre",
+   "first": "2026-10-22 10:36",
+   "last": "2026-10-22 12:46",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     347.8,
+     237.3,
+     -8.9
+    ],
+    "what": "coplanar faces s04_sepulchre:bld_w1392909831 / s04_sepulchre:vaults (0.08 m2, rubble.002/lime.002)",
+    "evidence": {},
+    "source": "overlapping geometry: bld_w1392909831 vs vaults",
+    "view": null,
+    "key": "coplanar@86,59"
+   }
+  },
+  "s05_souks|coplanar@66,-7": {
+   "region": "s05_souks",
+   "first": "2026-10-22 10:43",
+   "last": "2026-10-22 10:43",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     265.2,
+     -25.8,
+     -5.8
+    ],
+    "what": "coplanar faces base:steps / s05_souks:bld_f400 (0.12 m2, dressed/rubble.004)",
+    "evidence": {},
+    "source": "overlapping geometry: steps vs bld_f400",
+    "view": null,
+    "key": "coplanar@66,-7"
+   }
+  },
+  "s06_jewish|hole@138,-35": {
+   "region": "s06_jewish",
+   "first": "2026-10-22 11:10",
+   "last": "2026-10-22 11:54",
+   "status": "open",
+   "finding": {
+    "kind": "hole",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     553.0,
+     -137.0
+    ],
+    "what": "sky visible below the horizon (4050 px)",
+    "evidence": {
+     "crop": "crops/w29388393_2_f_hole_528_240.png",
+     "px": 4050,
+     "bbox": [
+      528,
+      240,
+      628,
+      316
+     ]
+    },
+    "source": null,
+    "view": "w29388393_2_f",
+    "key": "hole@138,-35"
+   }
+  },
+  "s06_jewish|spike@131,-13": {
+   "region": "s06_jewish",
+   "first": "2026-10-22 11:10",
+   "last": "2026-10-22 11:54",
+   "status": "open",
+   "finding": {
+    "kind": "spike",
+    "level": 0,
+    "severity": "high",
+    "at": [
+     526.7,
+     -50.7,
+     -24.4
+    ],
+    "what": "ground triangle rises 4.2 m over 5.6 m (paving)",
+    "evidence": {},
+    "source": "terrain / flats edges in tess_regions",
+    "view": null,
+    "key": "spike@131,-13"
+   }
+  },
+  "s06_jewish|coplanar@129,-34": {
+   "region": "s06_jewish",
+   "first": "2026-10-22 11:10",
+   "last": "2026-10-22 11:54",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     517.2,
+     -135.5,
+     -16.8
+    ],
+    "what": "coplanar faces base:steps / base:steps (0.27 m2, dressed/dressed)",
+    "evidence": {},
+    "source": "overlapping geometry: steps vs steps",
+    "view": null,
+    "key": "coplanar@129,-34"
+   }
+  },
+  "s06_jewish|coplanar@138,-55": {
+   "region": "s06_jewish",
+   "first": "2026-10-22 11:10",
+   "last": "2026-10-22 11:54",
+   "status": "open",
+   "finding": {
+    "kind": "coplanar",
+    "level": 0,
+    "severity": "medium",
+    "at": [
+     554.3,
+     -218.9,
+     -22.1
+    ],
+    "what": "coplanar faces base:ground / base:steps (0.15 m2, paving/dressed)",
+    "evidence": {},
+    "source": "overlapping geometry: ground vs steps",
+    "view": null,
+    "key": "coplanar@138,-55"
    }
   }
  }
