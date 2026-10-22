@@ -125,8 +125,9 @@ def _opening(mb, o, ol, P, t, n, mat, col, gen, others, rng_key):
         # a door's sill stands only 10 cm proud of the wall (deep or wide blocks read as wedges across the lane)
         # and reaches 0.5 m down (1.2 m for a bench), so a sloping or stepped street never shows a gap under it
         mk.box(mb, P((u0 + u1) / 2, 0) + n * ((out - d) / 2), t, n, w + (0.42 if bench else 0.06), d + out,
-               v0 - thr - (1.2 if bench else 0.5), v0, "dressed", col=(0.86, 0.84, 0.8))   # ("paving" on these boxes
-                                                                     # rendered as holes in the game: kept dressed)
+               v0 - thr - (1.2 if bench else 0.5), v0, "paving")   # (dressed stone read as a flat untextured box
+                                                       # at this size; the "holes" once blamed on paving were the
+                                                       # missing recess floor, fixed)
     # dressed stone surround
     fw = o.get("frame", 0.0)
     for q in others:

@@ -511,8 +511,12 @@ def generic_walls(d, cit_outer, gate_poly, seg_len=15.0, height=11.5, thick=3.0)
             z_in = street_z0(m[0] - nx * 5, m[1] - ny * 5)             # (not the sunken court level)
             z_out = street_z0(m[0] + nx * 5, m[1] + ny * 5)
             h = HARAM_WALL_H if HARAM.buffer(-2.0).contains(Point(m[0] - nx * 5, m[1] - ny * 5)) else height
+            # foot below the lowest ground near the whole segment (the midpoint 5 m out missed the slope
+            # falling away at the ends below a bastion: sky showed under the wall)
+            z_low = min([z_in, z_out] + [street_z0(p_[0] + nx * d_, p_[1] + ny * d_)
+                                         for p_ in (a, b, m) for d_ in (-10.0, -3.0, 0.0, 3.0, 10.0)])
             out.append({"a": [round(a[0], 2), round(a[1], 2)], "b": [round(b[0], 2), round(b[1], 2)],
-                        "z0": round(min(z_in, z_out) - 2.5, 2), "z1": round(z_in + h, 2), "thick": thick})
+                        "z0": round(z_low - 2.5, 2), "z1": round(z_in + h, 2), "thick": thick})
     return out
 
 
@@ -862,6 +866,39 @@ def cell_size(x, y):
     return 4.0 if CITY.contains(Point(x, y)) else 8.0
 
 
+def raise_ez_to_ground(steps, ground, reach=0.15):
+    """Per tread corner: ez = max(ez, the ground mesh's height at the nearest point of each triangle
+    within reach of the corner)."""
+    tris = [t for g in ground if g["mat"] != "grass" for t in g["tris"]]
+    if not tris or not steps:
+        return
+    polys = [Polygon([(q[0], q[1]) for q in t]) for t in tris]
+    tree = STRtree(polys)
+
+    def z_at(t, x, y):
+        (x1, y1, z1), (x2, y2, z2), (x3, y3, z3) = t
+        den = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3)
+        if abs(den) < 1e-12:
+            return max(z1, z2, z3)
+        l1 = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / den
+        l2 = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / den
+        return l1 * z1 + l2 * z2 + (1 - l1 - l2) * z3
+
+    for st in steps:
+        ext, ez = st["poly"]["ext"], st.get("ez")
+        if not ez:
+            continue
+        for i, c in enumerate(ext):
+            pt = Point(c)
+            best = ez[i]
+            for k in tree.query(pt.buffer(reach)):
+                if polys[k].distance(pt) > reach:
+                    continue
+                q = shapely.ops.nearest_points(polys[k], pt)[0]
+                best = max(best, z_at(tris[k], q.x, q.y))
+            ez[i] = round(best, 3)
+
+
 def tess_regions(region, zfun, cell=None, tile=32.0):
     """Clip region to 32 m tiles (fast rectangle clipping), then to cells, and triangulate each
     piece; returns a flat triangle list with z. cell=None picks the size per tile (cell_size); a
@@ -992,6 +1029,19 @@ def main():
         m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
         moat_edges.append(MOAT_W if (m[1] > -62 and m[0] > 42 and not (m[0] < 30 and m[1] < -30)) else 0.0)
     cit_mass_r = offset_ring(cit_outer_r, moat_edges)
+    # lowest street level just outside each mass edge: the walls stand on it (south of the citadel the ground
+    # falls ~9 m below the Jaffa Gate level the builder used, and sky showed under them)
+    cit_edge_ground = []
+    _cm = Polygon(cit_mass_r)
+    for i_ in range(len(cit_mass_r)):
+        a_, b_ = cit_mass_r[i_], cit_mass_r[(i_ + 1) % len(cit_mass_r)]
+        (_, _), (nx_, ny_), _ = edge_frame(a_, b_)
+        mx_, my_ = (a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2
+        if _cm.contains(Point(mx_ + nx_ * 1.0, my_ + ny_ * 1.0)):
+            nx_, ny_ = -nx_, -ny_
+        zs_ = [street_z0(a_[0] + (b_[0] - a_[0]) * f_ + nx_ * d_, a_[1] + (b_[1] - a_[1]) * f_ + ny_ * d_)
+               for f_ in (0.0, 0.25, 0.5, 0.75, 1.0) for d_ in (0.5, 3.0)]
+        cit_edge_ground.append(round(min(zs_), 2))
     cit_outer, cit_mass, cit_inner = Polygon(cit_outer_r), Polygon(cit_mass_r), Polygon(cit_inner_r)
     assert cit_mass.is_valid and cit_outer.is_valid, "citadel rings invalid"
     citadel_body = cit_mass.difference(cit_inner)
@@ -1326,6 +1376,9 @@ def main():
     # world does not end in sky a few dozen metres past the walls (the Hinnom and Kidron valleys)
     far = box(*CONTEXT).buffer(1200.0, join_style="mitre").difference(box(*CONTEXT))
     ground.append({"mat": "grass", "tris": tess_regions(far, street_z_v, cell=40.0, tile=160.0)})
+    # a tread side bordering ground rises to the street (ez); the ground mesh there can sit a few cm above
+    # street_z (eased levels, linear triangles), and a slit of sky opened under its edge: take the mesh
+    raise_ez_to_ground(steps, ground)
     # (the sunken courts and Wilson's Arch hall have their own walls on their outlines, landmarks_haram; a
     #  seal on the hall front would close its arches. The Citadel moat is sealed like any other step: its
     #  foot showed sky)
@@ -1577,8 +1630,8 @@ def main():
                 else:
                     cen.append((x, y))
             pts = cen
-            if hws:
-                hw = min(4.0, float(np.percentile(hws, 90)) + 0.1)
+            if hws:                          # the widest span: at the 90th percentile the wider stretches
+                hw = min(4.0, max(hws) + 0.1)    # showed a strip of sky between the vault and one wall
         pts = [(x, y, round(street_z(x, y), 3)) for x, y in pts]
         near = [out_b[k] for k in rec_tree.query(ln_.buffer(hw + 1.0))]
         spring = 3.0 if kind == "passage" else 4.4
@@ -1691,7 +1744,8 @@ def main():
         "buildings": out_b,
         "gatehouse": GATEHOUSE, "city_walls": CITY_WALLS,
         "citadel": {"outer": cit_outer_r, "mass": [list(p) for p in cit_mass_r], "inner": cit_inner_r,
-                    "moat_edges": moat_edges, "wall_h": CITADEL_WALL_H, "moat_depth": MOAT_DEPTH, "towers": TOWERS},
+                    "moat_edges": moat_edges, "wall_h": CITADEL_WALL_H, "moat_depth": MOAT_DEPTH, "towers": TOWERS,
+                    "edge_ground": cit_edge_ground},
         "ground": ground, "kerbs": kerbs, "steps": steps,
         "props": props, "cables": cables, "ground_decals": ground_decals, "beams": beams,
         "spawn": SPAWN,

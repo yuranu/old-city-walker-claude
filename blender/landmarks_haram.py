@@ -976,13 +976,13 @@ def _stairs(mbs, e, u0, u1, z_top, z_foot, riser=0.16, tread=0.34, lod=False):
             sol.poly([e.P(ua, z_top, 0), e.P(ua, z_foot, run), e.P(ua, zb, run), e.P(ua, zb, 0)], "ashlar", e.t * sgn,
                      col=WARM)
         return
-    tile = 2.0                               # worn limestone treads (city steps: build_city.build_steps)
+    tile = 4.0                               # paving laid per tread (as build_city.build_steps)
     for k in range(1, nst + 1):
         zk = z_top - k * r                       # top of step k
         a, b = (k - 1) * tread, k * tread
         if k < nst:
             q = [e.P(u0, zk, a), e.P(u1, zk, a), e.P(u1, zk, b), e.P(u0, zk, b)]
-            sol.poly(q, "lime", UP, uv=[((p.dot(e.t)) / tile, (p.dot(e.n)) / tile) for p in q], col=(0.93, 0.9, 0.85))
+            sol.poly(q, "paving", UP, uv=[((p.dot(e.t)) / tile, ((p - e.P(u0, 0, a)).dot(e.n)) / tile) for p in q])
         if k >= 2:                               # riser at the front of step k-1 -> top of step k
             zr0 = zk if k < nst else zb
             q = [e.P(u0, zr0, a), e.P(u1, zr0, a), e.P(u1, zk + r, a), e.P(u0, zk + r, a)]

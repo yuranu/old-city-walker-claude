@@ -177,11 +177,11 @@ def build(ways, zfun, open_street, halfwidth, skip=None, extra=()):
             tree = STRtree(polys)
             near = [polys[i] for i in tree.query(ln.buffer(hw + 1.0))]
             if near:
-                region = region.difference(unary_union(near).buffer(0.002))
+                region = region.difference(unary_union(near))
         own = []                             # treads of this flight so far: at a bend consecutive
         for piece, top, t in treads(ln, s0, s1, hw, zfun, region):   # quads overlap on the inner side
-            if own:
-                piece = piece.difference(unary_union(own).buffer(0.002))
+            if own:                          # (exactly: a 2 mm clearance left a slit of sky between treads)
+                piece = piece.difference(unary_union(own))
             for q in getattr(piece, "geoms", [piece]):
                 if q.geom_type != "Polygon" or q.area < 0.05:
                     continue

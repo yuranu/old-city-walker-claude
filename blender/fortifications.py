@@ -1652,7 +1652,8 @@ def build_citadel(mb, c, gen, place, rng):
         barb = {ent} | {(ent + d) % n for d in (-2, -1, 1, 2)
                         if moat[(ent + d) % n] and E[(ent + d) % n].L < 14.0 and (mid((ent + d) % n) - mid(ent)).length < 15}
     styles = ["pointed" if i in barb else "flat" for i in range(n)]
-    base = [(-D - 0.5) if moat[i] else -0.6 for i in range(n)]
+    eg = c.get("edge_ground") or [0.0] * n                        # the ground just outside each edge
+    base = [(-D - 0.5) if moat[i] else min(-0.6, eg[i] - 0.6) for i in range(n)]
     state = {}
 
     def holes(i, e):
