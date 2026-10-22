@@ -1,0 +1,8 @@
+{
+ "sector": "s09_wad",
+ "sources": ["build/qa/svcmp/ecce_homo/pairs/OFwtoos7Uv_55.jpg (Street View vs model, 2026-10-22)"],
+ "notes": "Street View pass 2026-10-22: the Via Dolorosa east of the Ecce Homo arch is open to the sky.",
+ "remove_buildings": {
+  "w1393158496": "OSM room on the Ecce Homo arch (14 m2 over the Via Dolorosa): the landmark builder (landmarks_city.ecce_homo) already builds the arch and its room; the generic lane vault over this footprint doubled it into a vaulted tunnel along the street (Street View: one arch, open sky beyond)."
+ }
+}

@@ -444,7 +444,7 @@ def write_sectors(spec):
         m = v["pts"][len(v["pts"]) // 2]
         per[sector_or_nearest(m[0], m[1])]["vaults"].append(v)
     base = {k: spec[k] for k in ("poc_box", "context_box", "ground", "kerbs", "gatehouse", "city_walls", "citadel",
-                                  "walls_generic", "retaining", "spawn", "sources", "ground_holes", "osm_walls")}
+                                  "walls_generic", "retaining", "spawn", "sources", "ground_holes", "osm_walls", "bridges")}
     base.update({"buildings": base_b, "props": base_props, "ground_decals": base_dec, "steps": spec["steps"], "cables": [],
                  "beams": []})
     write_json(out_dir / "base.json", base)
@@ -834,6 +834,12 @@ def osm_walls(d, buildings, skip_ids=()):
     paths = [LineString(w_["pts"]) for w_ in d["ways"] if w_["tags"].get("highway") and len(w_.get("pts") or []) > 1]
     ptree = STRtree(paths) if paths else None
     ctx = box(*CONTEXT)
+    # walls standing inside a mapped square or pedestrian area are partitions and low walls (the Western Wall
+    # prayer-area partition stood 3.4 m and hid the Wall; Street View: waist-high)
+    plazas = unary_union([Polygon(w_["pts"]).buffer(0) for w_ in d["ways"] if w_.get("closed") and len(w_.get("pts") or []) > 3
+                          and (w_["tags"].get("place") in ("square", "plaza")
+                               or (w_["tags"].get("highway") == "pedestrian" and w_["tags"].get("area") == "yes"))]
+                         or [Polygon()])
     out = []
     for w_ in d["ways"]:
         t_ = w_["tags"]
@@ -859,6 +865,8 @@ def osm_walls(d, buildings, skip_ids=()):
             h_tag = float(str(t_.get("height", "")).replace("m", "").strip())
         except ValueError:
             h_tag = None
+        if h_tag is None and kind == "wall" and plazas.contains(ln.interpolate(0.5, normalized=True)):
+            h_tag = 1.2
         for seg in lines_of(ln.difference(unary_union(cuts))):
             if seg.length < 0.8:
                 continue
@@ -1337,7 +1345,9 @@ def main():
     fill = infill.infill(d, [p for _, p, t in cands if t != "context"], CITY.buffer(-16.5),
                          unary_union([HARAM.buffer(2.0), HERO_ZONE.buffer(3.0), blocked.buffer(2.0), wall_slabs.buffer(0.5),
                                       unary_union(GROUND_HOLES + [WILSON_HALL]).buffer(0.5), unary_union(PROFILE_OPEN or [Polygon()]),
-                                      LineString(ROAD).buffer(ROAD_HALF + 1.0)] + removed + sunk_lanes))
+                                      LineString(ROAD).buffer(ROAD_HALF + 1.0)] + removed + sunk_lanes
+                                     # (and nothing under the Mughrabi bridge: the excavation it spans)
+                                     + [LineString(w_["pts"]).buffer(6.0) for w_ in d["ways"] if w_["id"] == 277508271]))
     for k, fp in enumerate(fill):
         cands.append(({"id": "f%d" % k, "tags": {"building": "yes", "note": "infill"}, "outer": [list(fp.exterior.coords)[:-1]]},
                       fp, "mid"))
@@ -1562,6 +1572,19 @@ def main():
                             back_near=lm_near)
     kerbs = []               # (the kerb faces are the crack seals along the roads: seal_cracks)
     owalls = osm_walls(d, buildings, skip_ids={137725307})     # (the Dome platform's wall: landmarks_haram)
+    # the Mughrabi bridge (OSM steps w277508271, bridge=yes): the covered timber ramp on steel scaffolding from
+    # the prayer plaza up to the Mughrabi Gate, over the excavation (Street View: never built before, an
+    # infill block stood under it); its top end at the esplanade level 5 m inside the gate
+    bridges = []
+    for w_ in d["ways"]:
+        if w_["id"] == 277508271:
+            a_, b_ = w_["pts"][0], w_["pts"][-1]
+            ux, uy = (b_[0] - a_[0]), (b_[1] - a_[1])
+            L_ = math.hypot(ux, uy)
+            top = street_z(b_[0] + ux / L_ * 5.0, b_[1] + uy / L_ * 5.0)
+            gnd = [round(street_z(a_[0] + ux * k / 12, a_[1] + uy * k / 12), 2) for k in range(13)]
+            bridges.append({"a": [round(v, 3) for v in a_], "b": [round(v, 3) for v in b_],
+                            "z0": round(street_z(*a_), 2), "z1": round(top, 2), "w": 4.2, "ground": gnd})
     print("osm walls: %d segments, %.0f m" % (len(owalls), sum(math.dist(w_["a"], w_["b"]) for w_ in owalls)))
 
     # ---------------------------------------------------------------- buildings
@@ -1611,6 +1634,11 @@ def main():
         thin = bd["tier"] == "mid" and osm not in LANDMARK_IDS and osm not in hero.BUILDING and q.buffer(-0.75).is_empty
         if thin:
             h = min(h, 2.6)
+        # a footprint under 16 m2 OSM gives no height or levels is a booth, kiosk or shrine (two of them by the
+        # Golden Gate stood 6-11 m as stone towers; Street View: none there taller than a door)
+        elif (bd["tier"] == "mid" and osm not in LANDMARK_IDS and osm not in hero.BUILDING and q.area < 16.0
+              and not roofscape.osm_height(bd["tags"])):
+            h = min(h, 3.0)
         ashlar = hb["wall"] == "ashlar" if "wall" in hb else osm in ASHLAR
         shops = hb.get("shops", osm in SHOPS)
         style = {"wall": hb.get("wall", "ashlar" if ashlar else "rubble"), "shops": shops,
@@ -1933,6 +1961,7 @@ def main():
         "walls_generic": walls_generic,
         "retaining": retaining,
         "osm_walls": owalls,
+        "bridges": bridges,
         # ground left out on purpose (closed in by landmark walls): QA counts these as covered
         "ground_holes": [[[round(x, 3), round(y, 3)] for x, y in h_.exterior.coords[:-1]] for h_ in GROUND_HOLES],
         "vaults": vaults,

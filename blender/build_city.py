@@ -442,6 +442,69 @@ def build_osm_walls(mb, walls):
                 mb.poly(q, mat, t * sg, col=col)
 
 
+def build_bridges(mb, bridges):
+    """Covered timber ramps on steel scaffolding (spec "bridges": the Mughrabi bridge): a deck rising from
+    z0 at a to z1 at b, timber side walls with an open band of slats under a pitched timber roof, square steel
+    posts every 3 m each side down to the ground below, diagonal braces between them."""
+    wood, wcol = "wood", (0.62, 0.48, 0.34)
+
+    def both(mb_, q, mat, nrm, col):                  # thin timber: both faces
+        mb_.poly(q, mat, nrm, col=col)
+        mb_.poly(q[::-1], mat, -nrm, col=col)
+    for br in bridges:
+        a, b = Vector((*br["a"], 0)), Vector((*br["b"], 0))
+        t = b - a
+        L = t.length
+        if L < 1.0:
+            continue
+        t.normalize()
+        s = Vector((-t.y, t.x, 0))
+        hw = br["w"] / 2
+        z0, z1, gnd = br["z0"], br["z1"], br["ground"]
+
+        def P(u, v, z):
+            return a + t * u + s * v + Vector((0, 0, z))
+
+        def zd(u):                                    # deck top
+            return z0 + 0.15 + (z1 - z0) * min(max(u / L, 0.0), 1.0)
+
+        def zg(u):                                    # ground under it
+            k = min(max(u / L, 0.0), 1.0) * (len(gnd) - 1)
+            i = min(int(k), len(gnd) - 2)
+            return gnd[i] + (gnd[i + 1] - gnd[i]) * (k - i)
+        n = max(2, int(L / 1.5))
+        us = [L * k / n for k in range(n + 1)]
+        for u0, u1 in zip(us, us[1:]):
+            mb.poly([P(u0, -hw, zd(u0)), P(u1, -hw, zd(u1)), P(u1, hw, zd(u1)), P(u0, hw, zd(u0))], wood, UP,
+                    col=(0.7, 0.58, 0.44))                                         # deck
+            mb.poly([P(u0, hw, zd(u0) - 0.35), P(u1, hw, zd(u1) - 0.35), P(u1, -hw, zd(u1) - 0.35),
+                     P(u0, -hw, zd(u0) - 0.35)], "iron", -UP)                     # underside
+            for sg in (-1, 1):
+                v = sg * hw
+                nrm = s * sg
+                for zlo, zhi in ((-0.35, 1.1), (1.9, 2.3)):                   # solid lower wall, fascia
+                    q = [P(u0, v, zd(u0) + zlo), P(u1, v, zd(u1) + zlo), P(u1, v, zd(u1) + zhi), P(u0, v, zd(u0) + zhi)]
+                    both(mb, q, wood, nrm, wcol)
+                q = [P(u0, v * 0.97, zd(u0) + 1.1), P(u1, v * 0.97, zd(u1) + 1.1), P(u1, v * 0.97, zd(u1) + 1.9),
+                     P(u0, v * 0.97, zd(u0) + 1.9)]                                # dark slatted band
+                both(mb, q, "iron", nrm, (0.25, 0.22, 0.2))
+                # roof slope: eave at the side to the ridge over the axis
+                q = [P(u0, v + sg * 0.3, zd(u0) + 2.3), P(u1, v + sg * 0.3, zd(u1) + 2.3), P(u1, 0, zd(u1) + 3.1),
+                     P(u0, 0, zd(u0) + 3.1)]
+                both(mb, q, wood, (UP + nrm).normalized(), (0.55, 0.43, 0.32))
+        u = 0.6
+        while u < L - 0.3:                                                      # scaffolding
+            for sg in (-1, 1):
+                c = P(u, sg * (hw - 0.1), 0)
+                if zd(u) - 0.35 - zg(u) > 0.3:
+                    mk.box(mb, (c.x, c.y), (t.x, t.y), (s.x, s.y), 0.12, 0.12, zg(u) - 0.2, zd(u) - 0.35, "metal_green",
+                           col=(0.45, 0.47, 0.48))
+                    if u + 3.0 < L and zd(u) - zg(u) > 1.5:
+                        mk.tube(mb, [P(u, sg * (hw - 0.1), zg(u) + 0.3), P(u + 3.0, sg * (hw - 0.1), zd(u + 3.0) - 0.5)],
+                                0.04, "metal_green", sides=6, col=(0.45, 0.47, 0.48))
+            u += 3.0
+
+
 def build_retaining(mb, walls, t=0.3):
     """Retaining walls along the edges of level areas (spec "retaining"): a 0.3 m stone slab from
     below the lower side up to the higher one, with a coping face on top."""
@@ -808,6 +871,10 @@ def main():
         build_osm_walls(ow, spec.get("osm_walls", []))
         if not ow.empty():
             ow.to_object("osm_walls", mats, col("walls"))
+        bw = mk.MeshBuilder(tiles)
+        build_bridges(bw, spec.get("bridges", []))
+        if not bw.empty():
+            bw.to_object("bridges", mats, col("walls"))
     st = mk.MeshBuilder(tiles)
     build_steps(st, spec.get("steps", []))
     if not st.empty():
