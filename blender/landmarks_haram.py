@@ -656,7 +656,8 @@ def _dor_porch(mbs, gen, e, zp, cardinal, door_w):
     for x in xs:
         p = e.P(x, 0, depth - 0.35)
         column(sol, gen, p.x, p.y, zp, z_lint - 0.25, r=0.24)
-    for x in (uc - 1.95 + 0.3, uc + 1.95 - 0.3):                       # piers framing the central arch
+    for x in (uc - 1.95 + 0.6, uc + 1.95 - 0.6):                       # piers framing the central arch (clear of
+                                                                        # the first columns: they cut into each other)
         obox(sol, e.P(x, 0, depth - 0.35), e.t, 0.6, 0.6, zp - 0.2, zp + z_lint, "dressed", col=PALE, top=False)
     u0, u1 = min(xs) - 0.5, max(xs) + 0.5
     # flat roof slab with a lintel band; underside in tile
