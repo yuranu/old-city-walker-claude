@@ -136,7 +136,16 @@ LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, a
                (375040920, (424.0, 374.0, 5.0)),
                # Dung Gate: the road runs level through the gate and its forecourt (Street View); the terrain
                # fell 20% straight through the passage
-               (Polygon([(611.0, -189.0), (640.0, -187.0), (646.0, -211.0), (617.0, -214.0)]), (627.9, -199.3, 0.0))]
+               (Polygon([(611.0, -189.0), (640.0, -187.0), (646.0, -211.0), (617.0, -214.0)]), (627.9, -199.3, 0.0)),
+               # Damascus Gate: the sunken amphitheatre plaza. The terrain has no pit here (it even fell to the west);
+               # OSM's flights give the levels: 32-36 steps (~5 m) from the plaza bottom, at the gate threshold and
+               # the bridge, up to Sultan Suleiman Street (N, NE) and to the Musrara side (W)
+               (Polygon([(238.0, 566.0), (252.0, 566.0), (258.0, 574.0), (254.0, 584.0), (240.0, 586.0), (234.0, 576.0)]), -17.8),
+               (Polygon([(245.0, 603.0), (256.0, 603.0), (256.0, 613.0), (245.0, 613.0)]), -12.4),
+               (Polygon([(261.0, 594.0), (271.0, 594.0), (271.0, 603.0), (261.0, 603.0)]), -13.0),
+               (Polygon([(210.0, 576.0), (221.0, 576.0), (221.0, 586.0), (210.0, 586.0)]), -12.4),
+               # and the excavated Roman gate level beside the bridge, under the east tower (~3.5 m down)
+               (Polygon([(267.6, 560.4), (275.0, 567.4), (270.2, 572.6), (262.7, 565.6)]), -21.3)]
 
 
 # covered streets: passages under buildings (OSM tunnel=yes|building_passage, covered=yes) are carved
@@ -296,6 +305,7 @@ CITY_WALLS = [
 #     on photo 062 with its calibrated eval pose (fort_notes.md); the line is shifted 1.6 m inwards so
 #     the outer face passes through gate corner A (3.4, 3.2) and the gate's whole NW face shows.
 MOAT_DEPTH = 5.0
+DAM_DOOR = (265.8, 558.2)        # Damascus Gate outer door (landmarks_gates.DAM)
 CITADEL_WALL_H = 13.0
 MOAT_W = 6.0
 TOWERS = [
@@ -1410,6 +1420,29 @@ def main():
     # ---------------------------------------------------------------- ground regions
     ctx = box(*CONTEXT)
     road = LineString(ROAD).buffer(ROAD_HALF, cap_style="flat", join_style="round")
+    setts_road = road
+    # asphalt roads (Street View: Ma'ale HaShalom, the Zion and Dung Gate roads came out as pale plaza paving):
+    # OSM road classes with surface=asphalt, or with no surface tag outside the walls; kerbed like the road
+    VEH_HW = {"trunk": 6.0, "primary": 5.5, "secondary": 5.0, "tertiary": 4.0, "tertiary_link": 3.5,
+              "residential": 3.2, "unclassified": 3.0, "service": 2.6}
+    asph = []
+    for w_ in d["ways"]:
+        t_ = w_["tags"]
+        if t_.get("highway") not in VEH_HW or len(w_.get("pts") or []) < 2 or t_.get("area") == "yes":
+            continue
+        if t_.get("tunnel") or int(t_.get("layer", "0") or 0) != 0:
+            continue
+        ln_ = LineString(w_["pts"])
+        sf = t_.get("surface")
+        if not (sf == "asphalt" or (sf is None and not CITY.contains(ln_.interpolate(0.5, normalized=True)))):
+            continue
+        try:
+            hw_ = float(str(t_.get("width", "")).replace("m", "").strip()) / 2
+        except ValueError:
+            hw_ = VEH_HW[t_["highway"]]
+        asph.append(ln_.buffer(hw_, cap_style="flat", join_style="round"))
+    asphalt_road = unary_union(asph or [Polygon()]).difference(setts_road)
+    road = setts_road.union(asphalt_road)
     bld_union = unary_union([bd["poly"] for bd in buildings])
     PAIR_EDGES.clear()
     for i_, (fa, za) in enumerate(ALL_FLATS):
@@ -1489,7 +1522,10 @@ def main():
     #  of sky around every tread)
     street = ctx.difference(ground_cut).difference(cit_outer).difference(steps_union.buffer(-0.003)) \
         .difference(unary_union(GROUND_HOLES)).difference(sunken)
-    road_area = street.intersection(road)
+    road_area = street.intersection(setts_road)
+    asphalt_area = street.intersection(asphalt_road)
+    road_all_area = road_area.union(asphalt_area)            # (kerb drop for props, spawn and the like)
+    prepare(road_all_area)
     paving_all = street.difference(road)
     kerb_band = paving_all.intersection(road.buffer(KERB_BAND))
     paving = paving_all.difference(kerb_band)
@@ -1498,6 +1534,7 @@ def main():
         ("paving", paving, street_z_v),                    # z functions take arrays
         ("kerb_band", kerb_band, street_z_v),
         ("setts", road_area, lambda x, y: street_z_v(x, y) - KERB),
+        ("asphalt", asphalt_area, lambda x, y: street_z_v(x, y) - KERB),
         ("grass", moat.buffer(-0.01), lambda x, y: np.full(len(x), -MOAT_DEPTH)),
         ("paving", courtyard, lambda x, y: np.full(len(x), 1.0)),
     ] + [
@@ -1509,21 +1546,21 @@ def main():
     # face closes the step between them.
     split_regions = []
     seg_flats = [(fp_.segmentize(1.0), fz_, fp_) for fp_, fz_ in ALL_FLATS]   # both sides of an edge get the same
-    for mat, reg, zf in regions[:3]:                                     # vertices: no T-junction cracks
+    for mat, reg, zf in regions[:4]:                                     # vertices: no T-junction cracks
         for fp_, fz_, orig_ in seg_flats:
             inside = reg.intersection(fp_)
             if not inside.is_empty:
-                k_ = KERB if mat == "setts" else 0.0
+                k_ = KERB if mat in ("setts", "asphalt") else 0.0
                 split_regions.append((mat, inside, lambda x, y, k_=k_, o_=orig_: street_z_v(x, y, o_) - k_))
                 reg = reg.difference(fp_)
         for ez_, ef_ in EASE_ZONES:
             inside = reg.intersection(ez_)
             if not inside.is_empty:
-                k_ = KERB if mat == "setts" else 0.0
+                k_ = KERB if mat in ("setts", "asphalt") else 0.0
                 split_regions.append((mat, inside, lambda x, y, k_=k_, e_=ef_: street_z_v(x, y, ease_from=e_) - k_))
                 reg = reg.difference(ez_)
         split_regions.append((mat, reg, zf))
-    regions = split_regions + regions[3:]
+    regions = split_regions + regions[4:]
     # under landmark footprints the ground runs 4 cm lower: their floors sit on it without z-fighting
     # (the whole footprint: keeping a rim at full level put it in the same plane as the portico floors)
     lm_polys = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS
@@ -1585,6 +1622,11 @@ def main():
             gnd = [round(street_z(a_[0] + ux * k / 12, a_[1] + uy * k / 12), 2) for k in range(13)]
             bridges.append({"a": [round(v, 3) for v in a_], "b": [round(v, 3) for v in b_],
                             "z0": round(street_z(*a_), 2), "z1": round(top, 2), "w": 4.2, "ground": gnd})
+        if w_["id"] == 616383626:                    # Damascus Gate: the stone bridge over the excavation to the door
+            a_, b_ = w_["pts"][0], DAM_DOOR
+            gnd = [round(street_z(a_[0] + (b_[0] - a_[0]) * k / 12, a_[1] + (b_[1] - a_[1]) * k / 12), 2) for k in range(13)]
+            bridges.append({"a": [round(v, 3) for v in a_], "b": list(b_), "z0": -17.8, "z1": -17.8, "w": 4.6,
+                            "ground": gnd, "style": "stone"})
     print("osm walls: %d segments, %.0f m" % (len(owalls), sum(math.dist(w_["a"], w_["b"]) for w_ in owalls)))
 
     # ---------------------------------------------------------------- buildings
@@ -1924,7 +1966,7 @@ def main():
     lm_cut = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS] or [Polygon()])
     ctxinfo = {"buildings": out_b, "road": road, "road_line": ROAD, "paving": paving_all.difference(lm_cut),
                "street": street.difference(lm_cut),       # no dressing inside landmarks (ground runs under them)
-               "road_area": road_area, "obstacles": obstacles, "moat": moat, "cit_outer": cit_outer,
+               "road_area": road_all_area, "obstacles": obstacles, "moat": moat, "cit_outer": cit_outer,
                "cit_outer_r": cit_outer_r, "moat_edges": moat_edges, "hero": HERO_ZONE, "david": DAVID,
                "street_z": street_z, "kerb": KERB, "gate": GATEHOUSE, "walls": CITY_WALLS, "steps": steps,
                "courtyard": courtyard, "haram": HARAM, "landmark_ids": LANDMARK_IDS,
@@ -1948,7 +1990,7 @@ def main():
         for k in (step_tree.query(q) if step_tree is not None else []):
             if st_recs[k]["poly"].contains(q):
                 return steps[k]["top"]
-        return street_z(x, y) - (KERB if road_area.contains(q) else 0.0)
+        return street_z(x, y) - (KERB if road_all_area.contains(q) else 0.0)
     for pp in PROFILE_PROPS:                                   # notable furniture from the sector profiles
         x, y = pp["p"][:2]
         props.append({"type": pp["type"], "p": [round(x, 3), round(y, 3), round(surface_z(x, y), 3)],

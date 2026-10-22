@@ -260,7 +260,8 @@ def build_building(mbs, bd, gen, signs, place):
 
 # ---------------------------------------------------------------- ground
 def build_ground(mbs, spec):
-    mat_of = {"paving": "paving", "setts": "setts", "moat": "rubble", "grass": "grass", "kerb_band": "dressed"}
+    mat_of = {"paving": "paving", "setts": "setts", "moat": "rubble", "grass": "grass", "kerb_band": "dressed",
+              "asphalt": "asphalt"}
     for g in spec["ground"]:
         mb = mbs["ground"]
         mat = mat_of.get(g["mat"], "paving")
@@ -474,6 +475,28 @@ def build_bridges(mb, bridges):
             return gnd[i] + (gnd[i + 1] - gnd[i]) * (k - i)
         n = max(2, int(L / 1.5))
         us = [L * k / n for k in range(n + 1)]
+        if br.get("style") == "stone":                # paved deck between stone parapets with railings, on a pier
+            scol = (0.95, 0.92, 0.86)
+            for u0, u1 in zip(us, us[1:]):
+                mb.poly([P(u0, -hw, zd(u0)), P(u1, -hw, zd(u1)), P(u1, hw, zd(u1)), P(u0, hw, zd(u0))], "paving", UP)
+            pt = 0.4
+            for sg in (-1, 1):
+                v0, v1 = sg * hw, sg * (hw + pt)
+                lo = min(min(gnd), z0 - 4.0) - 0.3          # (down past the pit floor beside it)
+                for v, nrm in ((v1, s * sg), (v0, -s * sg)):          # parapet faces, outer one down to the pit
+                    zlo = lo if v == v1 else zd(0)
+                    q = [P(0, v, zlo), P(L, v, zlo), P(L, v, zd(L) + 0.6), P(0, v, zd(0) + 0.6)]
+                    mb.poly(q, "ashlar", nrm, col=scol)
+                mb.poly([P(0, v0, zd(0) + 0.6), P(L, v0, zd(L) + 0.6), P(L, v1, zd(L) + 0.6), P(0, v1, zd(0) + 0.6)],
+                        "dressed", UP, col=(0.92, 0.9, 0.86))
+                mb.poly([P(0, v0, zd(0) + 0.6), P(0, v1, zd(0) + 0.6), P(0, v1, lo), P(0, v0, lo)], "ashlar", -t, col=scol)
+                rv = sg * (hw + pt / 2)
+                mk.tube(mb, [P(0, rv, zd(0) + 1.05), P(L, rv, zd(L) + 1.05)], 0.03, "iron", sides=6)
+                u = 0.0
+                while u <= L:
+                    mk.tube(mb, [P(u, rv, zd(u) + 0.6), P(u, rv, zd(u) + 1.05)], 0.02, "iron", sides=4)
+                    u += 1.2
+            continue
         for u0, u1 in zip(us, us[1:]):
             mb.poly([P(u0, -hw, zd(u0)), P(u1, -hw, zd(u1)), P(u1, hw, zd(u1)), P(u0, hw, zd(u0))], wood, UP,
                     col=(0.7, 0.58, 0.44))                                         # deck

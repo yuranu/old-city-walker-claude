@@ -154,6 +154,26 @@ def setts(N=1024, tile=2.0):
     return to_img(rgb), normal_map(h.astype(np.float32), px)
 
 
+def asphalt(N=1024, tile=3.0):
+    """Worn grey asphalt of the roads round the walls (Street View: Ma'ale HaShalom, the Zion and Dung Gate
+    roads): fine aggregate speckle, broad tonal patches, a few darker patch repairs and hairline cracks."""
+    rr = np.random.default_rng(23)
+    px = N / tile
+    base = np.array([0.36, 0.35, 0.34], np.float32)
+    broad = fbm(N, N, 3, 4)
+    fine = fbm(N, N, 64, 3)
+    speck = rr.random((N, N)).astype(np.float32)
+    rgb = base * (0.93 + 0.1 * broad[..., None]) * (0.9 + 0.16 * fine[..., None])
+    rgb = np.where((speck > 0.985)[..., None], rgb * 1.35, rgb)
+    rgb = np.where((speck < 0.01)[..., None], rgb * 0.7, rgb)
+    patch = fbm(N, N, 2, 3)
+    rgb = rgb * (1.0 - 0.07 * smooth(0.6, 0.7, patch)[..., None])              # repaired patches, darker
+    crack = smooth(0.0, 0.004, np.abs(fbm(N, N, 6, 4) - 0.5))
+    rgb = rgb * (0.75 + 0.25 * crack[..., None])
+    h = (fine - 0.5) * 0.002 + (speck > 0.985) * 0.0008 - (1 - crack) * 0.002
+    return to_img(rgb), normal_map(h.astype(np.float32), px)
+
+
 # ---------------------------------------------------------------- doors / shutters / windows atlas
 CELL = 512
 
@@ -688,6 +708,10 @@ def main():
     d.save(OUT / "setts_diff.jpg", quality=90)
     n.save(OUT / "setts_nor.png")
     man["setts"] = {"diff": "data/textures/gen/setts_diff.jpg", "nor": "data/textures/gen/setts_nor.png", "tile": 2.0}
+    d, n = asphalt()
+    d.save(OUT / "asphalt_diff.jpg", quality=90)
+    n.save(OUT / "asphalt_nor.png")
+    man["asphalt"] = {"diff": "data/textures/gen/asphalt_diff.jpg", "nor": "data/textures/gen/asphalt_nor.png", "tile": 3.0}
     d, n = corrugated()
     d.save(OUT / "corrugated_diff.jpg", quality=90)
     n.save(OUT / "corrugated_nor.png")

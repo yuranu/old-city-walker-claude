@@ -89,6 +89,9 @@ def build(root: Path):
     signs = root / "data/textures/gen/signs.png"
     if signs.exists():
         mats["signs"] = _textured("signs", signs, alpha="mask", rough=0.6)
+    if "asphalt" in gen:                      # the roads round the walls
+        mats["asphalt"] = _textured("asphalt", root / gen["asphalt"]["diff"], root / gen["asphalt"]["nor"], rough=0.85)
+        tiles["asphalt"] = gen["asphalt"]["tile"]
     if "lime" in gen:                         # lime plaster: roofs, bollards, benches (a flat colour read as untextured)
         mats["lime"] = _textured("lime", root / gen["lime"]["diff"], root / gen["lime"]["nor"], rough=0.9)
         tiles["lime"] = gen["lime"]["tile"]
