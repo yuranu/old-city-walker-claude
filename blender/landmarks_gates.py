@@ -1402,6 +1402,12 @@ def clip_walls(walls, cuts=None, step=0.1):
                 j += 1
             ta = edge_t(Lw * k / n, Lw * (k - 1) / n) if k > 0 else 0.0
             tb = edge_t(Lw * j / n, Lw * (j + 1) / n) if j < n else Lw
+            # a cut end runs 0.4 m on into the gate: its towers stand a little inside the cut hull, and a
+            # slit of sky showed the full height of the wall at the joint (Dung, New Gate)
+            if k > 0:
+                ta = max(0.0, ta - 0.4)
+            if j < n:
+                tb = min(Lw, tb + 0.4)
             if tb - ta > 0.5:
                 pa, pb = a + d * ta, a + d * tb
                 seg = dict(w, a=[round(pa.x, 3), round(pa.y, 3)], b=[round(pb.x, 3), round(pb.y, 3)])
