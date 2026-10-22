@@ -1,0 +1,369 @@
+[
+{
+"place": "austrian_hospice",
+"panoid": "71XWvII270VJcKWG41-4UQ",
+"lat": 31.7800872,
+"lon": 35.2321406,
+"centre": [
+434.8,
+409.5
+]
+},
+{
+"place": "jaffa_gate",
+"panoid": "4AqQ0T_wGe_AyEBmDzGgGQ",
+"lat": 31.7767211,
+"lon": 35.2281508,
+"centre": [
+42,
+-2
+]
+},
+{
+"place": "jaffa_gate",
+"panoid": "aNh4ARk4oRIAAAQYanobog",
+"lat": 31.7764985,
+"lon": 35.2280187,
+"centre": [
+42,
+-2
+]
+},
+{
+"place": "jaffa_gate",
+"panoid": "SdXjYWMCHjcAAAQYano96A",
+"lat": 31.7764618,
+"lon": 35.2278426,
+"centre": [
+42,
+-2
+]
+},
+{
+"place": "citadel",
+"panoid": "a9Qeh6NauLIAAAQYano97Q",
+"lat": 31.7758592,
+"lon": 35.2282417,
+"centre": [
+40,
+-60
+]
+},
+{
+"place": "citadel",
+"panoid": "BIByZOS2SUEAAAQYanqR2w",
+"lat": 31.7763193,
+"lon": 35.2278157,
+"centre": [
+40,
+-60
+]
+},
+{
+"place": "damascus_gate",
+"panoid": "anbdSNidxGcAAAQYVZ5L1Q",
+"lat": 31.7817931,
+"lon": 35.2304446,
+"centre": [
+268.4,
+557.4
+]
+},
+{
+"place": "lions_gate",
+"panoid": "VzAeQDtjlkZTB5JTv56YGA",
+"lat": 31.7806494,
+"lon": 35.2369489,
+"centre": [
+888.6,
+467.3
+]
+},
+{
+"place": "lions_gate",
+"panoid": "IJf-zToZzRdB7orac8_OrA",
+"lat": 31.7809116,
+"lon": 35.2371007,
+"centre": [
+888.6,
+467.3
+]
+},
+{
+"place": "zion_gate",
+"panoid": "GIbeAU6JmFtlegAhjb7c7w",
+"lat": 31.7730022,
+"lon": 35.2296758,
+"centre": [
+203.3,
+-413.6
+]
+},
+{
+"place": "zion_gate",
+"panoid": "hksIb3enGzZxNnlB-glTOQ",
+"lat": 31.7729688,
+"lon": 35.2299012,
+"centre": [
+203.3,
+-413.6
+]
+},
+{
+"place": "zion_gate",
+"panoid": "I2AG17IBFIC9J2z_lAoc3g",
+"lat": 31.7729711,
+"lon": 35.2294592,
+"centre": [
+203.3,
+-413.6
+]
+},
+{
+"place": "dung_gate",
+"panoid": "hFfvnCd8rk1xm0yOIAidAQ",
+"lat": 31.7750268,
+"lon": 35.2341295,
+"centre": [
+627.9,
+-199.3
+]
+},
+{
+"place": "new_gate",
+"panoid": "oD6NVcsVmOLxy9FaMIvqWw",
+"lat": 31.7794797,
+"lon": 35.2261355,
+"centre": [
+-128.9,
+297.5
+]
+},
+{
+"place": "new_gate",
+"panoid": "YSblkasAUNy_AqE2fKAI5g",
+"lat": 31.779425,
+"lon": 35.2260371,
+"centre": [
+-128.9,
+297.5
+]
+},
+{
+"place": "golden_gate",
+"panoid": "CIHM0ogKEICAgICuuI2IOg",
+"lat": 31.7791575,
+"lon": 35.2371896,
+"centre": [
+904.3,
+258.3
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U-D5YN5L6_v-Q1-Ike2Qi-UjIHY9H7i6iVq_hGxbMjkosP_A2cSKTGoRLmZcoabtd_qG7ssEUR6YIa5cwEdfjvDWJ9QRSKZXLMAfV33O-L-CBlrdjUkENuH0YsA4wRX8oFYd31q=w900-h600-k-no-pi0-ya10.578826904296875-ro0-fo100"
+},
+{
+"place": "western_wall",
+"panoid": "mAMjTuRRp48AAAQJKf4Log",
+"lat": 31.7772738,
+"lon": 35.2338655,
+"centre": [
+610,
+10
+]
+},
+{
+"place": "dome_of_the_rock",
+"panoid": "CIHM0ogKEICAgICEsp_ERg",
+"lat": 31.7783337,
+"lon": 35.2352791,
+"centre": [
+734.4,
+154.1
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U8V0CrF15Z7eXRoL8BVpORpc7fKpRzTSlTpYhgySc1AEPG1cABV8kxBYiwmOT5bmE1gqSk7KYyHtCvOuBFwRJXrCZHFBrQOGCLnoI3jlCXnESAjjWvcpfNJKF2CWc0_CxmX-j2D=w900-h600-k-no-pi0-ya0-ro0-fo100"
+},
+{
+"place": "al_aqsa",
+"panoid": "CIHM0ogKEICAgICulsLfqAE",
+"lat": 31.7761363,
+"lon": 35.235924,
+"centre": [
+761.7,
+-55.7
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U91ifCiiTzW_csmoe4-lzarTid9ztoVnX6U8wkGXPRgeXWtjLKzPML-Fardxw8hb0tX-krhEHd_WKGK3SEJPsg9CnWMpUZQYyjVna6j9v98wlndRCQau2lf6lDwQhENzb0e6fjgsw=w900-h600-k-no-pi0-ya97.2855224609375-ro0-fo100"
+},
+{
+"place": "muristan",
+"panoid": "OJUXWUyR4BKvF7DMOGeh8g",
+"lat": 31.7779065,
+"lon": 35.2303365,
+"centre": [
+286.1,
+140.2
+]
+},
+{
+"place": "muristan",
+"panoid": "nIeQx66iN_Cs2ApDbIBerQ",
+"lat": 31.7778729,
+"lon": 35.2309271,
+"centre": [
+286.1,
+140.2
+]
+},
+{
+"place": "ecce_homo",
+"panoid": "CIHM0ogKEICAgID4xrX-eg",
+"lat": 31.7802656,
+"lon": 35.2333126,
+"centre": [
+539.5,
+407.4
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U-vlfGMaL3gPNrnTymoQCVES34vuYWxuXSpk1oJKD7rLlPqwwsL0kVSuJUnMzgKgCwBGmh2sen6gigXjuQ6c83p_vEe1QNns0MJlmqu0jAuMFCmPxhLfI9XhI2KkZFSysmEGwiq=w900-h600-k-no-pi0-ya200-ro0-fo100"
+},
+{
+"place": "flagellation",
+"panoid": "ST4xmPGQaDTe4N6oU9zt_A",
+"lat": 31.7804842,
+"lon": 35.2345121,
+"centre": [
+629.6,
+425.6
+]
+},
+{
+"place": "st_anne",
+"panoid": "CIHM0ogKEICAgIDOu-S79gE",
+"lat": 31.7815241,
+"lon": 35.2364802,
+"centre": [
+842.9,
+526.7
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U-e2FWlbEJDInjtrN3mRckFKiZzDc3KYYrLmCxABpPQK8DMVb4REaTlIP87aU8GaMirPEB6Uk8hWTknXAH6nuRS1HB3u_vZuf7Zke6jqbW_arNIAQEOJd2VR-FBZ5ZW01Ulwn55jA=w900-h600-k-no-pi0-ya60.85260009765619-ro0-fo100"
+},
+{
+"place": "hurva",
+"panoid": "TbTnegnQ5ac3wNWI6L7hag",
+"lat": 31.7753587,
+"lon": 35.2316139,
+"centre": [
+360.1,
+-144.0
+]
+},
+{
+"place": "hurva",
+"panoid": "VelrjeOsAiqcshpKwXi28g",
+"lat": 31.7754817,
+"lon": 35.2312,
+"centre": [
+360.1,
+-144.0
+]
+},
+{
+"place": "hurva",
+"panoid": "YNMQaY0mGQXYlWUkgL8Myg",
+"lat": 31.7751192,
+"lon": 35.2316257,
+"centre": [
+360.1,
+-144.0
+]
+},
+{
+"place": "hurva",
+"panoid": "iNKparG1xxTZMxc_di5-PQ",
+"lat": 31.7750703,
+"lon": 35.2310818,
+"centre": [
+360.1,
+-144.0
+]
+},
+{
+"place": "st_james",
+"panoid": "CIHM0ogKEICAgIDq7cj1zAE",
+"lat": 31.7743143,
+"lon": 35.2291861,
+"centre": [
+163,
+-267
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U8Nmgfj2fSS7HfaprNX4eXvsh8Uw-fvIPY4Xft8vsH05cRlmCeKuj4Ky7mtQ3afiJD2TQX6Ne4EWYSAmOgJ8wKdlx1lQ-p1oiSdi_XkXUb-NeH99hLYQlab-5BmXJMFj70VOq6tYQ=w900-h600-k-no-pi0-ya68-ro0-fo100"
+},
+{
+"place": "christ_church",
+"panoid": "CIHM0ogKEICAgICM4LKziAE",
+"lat": 31.77609,
+"lon": 35.229055,
+"centre": [
+158.0,
+-67.0
+],
+"tmpl": "https://lh3.googleusercontent.com/gpms-cs-s/AM4Q-U__pB5U5RAT4kDdsV7oQlNmBanbjNWIZxibnwJSuTz1fXZZukGQS_WvLztV2p_btKpgIoPYV4K0IURB6tx4qFDgOrpqHZB2cXReCNr6rF8hj0Q-BJWzM04dc46sRUivInvRJnfw=w900-h600-k-no-pi0-ya319-ro0-fo100"
+},
+{
+"place": "davidson",
+"panoid": "mdCgnZ0QP5l9OxURGu3gvQ",
+"lat": 31.7748295,
+"lon": 35.2347044,
+"centre": [
+659.1,
+-179.4
+]
+},
+{
+"place": "davidson",
+"panoid": "f39MKnf0zrGAc0PUvZ3N3w",
+"lat": 31.7748426,
+"lon": 35.2341875,
+"centre": [
+659.1,
+-179.4
+]
+},
+{
+"place": "austrian_hospice",
+"panoid": "r7NjxBWuEME12NM-rtfTIg",
+"lat": 31.7799946,
+"lon": 35.2320369,
+"centre": [
+434.8,
+409.5
+]
+},
+{
+"place": "austrian_hospice",
+"panoid": "KiMJrb8eZ7hNc0uw4Z2uvA",
+"lat": 31.7800305,
+"lon": 35.2319995,
+"centre": [
+434.8,
+409.5
+]
+},
+{
+"place": "austrian_hospice",
+"panoid": "7NSNXhV-_pnI2u8Bwuwf0g",
+"lat": 31.7801156,
+"lon": 35.232252,
+"centre": [
+434.8,
+409.5
+]
+},
+{
+"place": "austrian_hospice",
+"panoid": "dIFYI1Gyr2W1AGkFTsdr8g",
+"lat": 31.780224,
+"lon": 35.2318226,
+"centre": [
+434.8,
+409.5
+]
+}
+]

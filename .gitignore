@@ -33,6 +33,10 @@ data/photos/*.jpg
 !data/photos/142_84782473.jpg
 data/photos_ref/*/*.jpg
 !data/photos_ref/eval/*.jpg
+#     iconic places: Commons photos (pipeline/fetch_iconic_photos.py) and Street View stills
+#     (pipeline/qa/sv_fetch.py, not ours to publish)
+data/photos_ref/iconic/*/*.jpg
+data/photos_ref/sv/
 
 # --- editor / OS
 .DS_Store
