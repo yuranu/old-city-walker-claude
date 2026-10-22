@@ -622,6 +622,85 @@ def setup_flats(d):
     street_z.cache_clear()
 
 
+STAIR_FIELD = None                             # set by set_stair_field() once the flights are final
+STAIR_REACH = 10.0                             # the ground follows a flight this far out at most
+STAIR_SLOPE = 0.35                             # ... blending back to the terrain no steeper than this
+
+
+def set_stair_field(recs):
+    """The ground beside and past each flight follows the flight: a plane through each tread's centre
+    falling along the flight at the flight's own grade, clamped to its top and bottom treads (a level
+    landing at each end, where the cross street meets it), blended back into the surface over
+    |dz| / STAIR_SLOPE metres (1.5-10 m). Tread sides then stand at most half a riser proud of the
+    ground beside them, and a flight meeting a sloping street meets it at its own level."""
+    global STAIR_FIELD
+    if not recs:
+        STAIR_FIELD = None
+        return
+    runs = {}
+    for r_ in recs:
+        runs.setdefault(r_["run"], []).append(r_)
+    polys, top, cx, cy, dx, dy, slope, zlo, zhi = [], [], [], [], [], [], [], [], []
+    for rr in runs.values():
+        d_ = np.array(rr[0]["dir"], float)
+        us = [np.dot(np.array(r_["poly"].centroid.coords[0]), d_) for r_ in rr]
+        tops = [r_["top"] for r_ in rr]
+        k0, k1 = int(np.argmin(us)), int(np.argmax(us))
+        g = (tops[k0] - tops[k1]) / (us[k1] - us[k0]) if us[k1] - us[k0] > 0.3 else 0.0
+        for r_ in rr:
+            c = r_["poly"].centroid
+            polys.append(r_["poly"])
+            top.append(r_["top"]), cx.append(c.x), cy.append(c.y)
+            dx.append(r_["dir"][0]), dy.append(r_["dir"][1]), slope.append(max(0.0, g))
+            zlo.append(min(tops)), zhi.append(max(tops))
+    STAIR_FIELD = {"tree": STRtree(polys), "polys": np.array(polys, dtype=object), "top": np.array(top), "cx": np.array(cx), "cy": np.array(cy),
+                   "dx": np.array(dx), "dy": np.array(dy), "slope": np.array(slope),
+                   "zlo": np.array(zlo), "zhi": np.array(zhi)}
+    street_z0.cache_clear()
+    street_z.cache_clear()
+
+
+def _stair_conform(xs, ys, out):
+    """Every tread within reach votes (weight 1 / (d + 0.3)^2) for its plane's height at the point: between
+    two flights at different levels the ground ramps from one to the other (the nearest tread alone
+    switched there and built cliffs). Conforming evens out what a flight's cheeks and landings show (under a
+    metre): where the flights' level is more than 0.5 m off the surface it fades out, gone by 1.5 m (a flight
+    in a cutting or on a bank keeps its ground; pulling steep terrain to the flight built spikes)."""
+    F = STAIR_FIELD
+    pts = shapely.points(xs, ys)
+    ip, it = F["tree"].query(pts, predicate="dwithin", distance=STAIR_REACH)
+    if len(ip) == 0:
+        return out
+    d = shapely.distance(F["polys"][it], pts[ip])
+    x, y = xs[ip], ys[ip]
+    zs = F["top"][it] - ((x - F["cx"][it]) * F["dx"][it] + (y - F["cy"][it]) * F["dy"][it]) * F["slope"][it]
+    zs = np.clip(zs, F["zlo"][it], F["zhi"][it])
+    wt = 1.0 / (d + 0.3) ** 2
+    n = len(xs)
+    sw = np.bincount(ip, wt, n)
+    has = sw > 0
+    zmix = np.bincount(ip, wt * zs, n)[has] / sw[has]
+    dmin = np.full(n, np.inf)
+    np.minimum.at(dmin, ip, d)
+    dmin = dmin[has]
+    zo = out[has]
+    dz = np.abs(zmix - zo)
+    D = np.clip(dz / STAIR_SLOPE, 1.5, STAIR_REACH)
+    w = np.clip(dmin / D, 0.0, 1.0)
+    w = w * w * (3.0 - 2.0 * w)
+    w = np.maximum(w, np.clip((dz - 0.5) / 1.0, 0.0, 1.0))      # banks and cuttings keep their ground
+    near = d < 2.0                                               # flights within 2 m a metre apart in level:
+    zhi_ = np.full(n, -np.inf)                                   # a wall stands between them, not a ramp
+    zlo_ = np.full(n, np.inf)
+    np.maximum.at(zhi_, ip[near], zs[near])
+    np.minimum.at(zlo_, ip[near], zs[near])
+    split = (zhi_ - zlo_)[has] > 1.0
+    w = np.where(split, 1.0, w)
+    res = out.copy()
+    res[has] = zmix + (zo - zmix) * w
+    return res
+
+
 def surface_z_v(xs, ys, prefer=None, ease_from=None):
     """THE walkable surface, one continuous function used by ground, steps, buildings and props:
     level areas exactly level, the terrain elsewhere, and around each level area a smooth easing
@@ -668,6 +747,8 @@ def surface_z_v(xs, ys, prefer=None, ease_from=None):
         D = np.clip(np.abs(fz - zt) / BLEND_SLOPE, 3.0, 40.0)
         m = (~inside_any) & (d < D)
         out = np.where(m, fz + (zt - fz) * np.clip(d / D, 0.0, 1.0), out)
+    if STAIR_FIELD is not None:
+        out = _stair_conform(xs, ys, out)
     return out
 
 
@@ -1277,6 +1358,8 @@ def main():
         for k in sorted(dev):
             c_ = np.mean(cen[k], axis=0)
             print("  run %3d at (%5.0f,%5.0f) treads %3d median %.2f %s" % (k, c_[0], c_[1], len(dev[k]), float(np.median(dev[k])), "DROP" if k in bad_runs else ""))
+    if not os.environ.get("STAIRS_NO_FIELD"):
+        set_stair_field(st_recs)             # from here on the street follows the flights
     steps = [{"poly": poly_json(r_["poly"]), "top": r_["top"], "bottom": r_["bottom"], "dir": r_["dir"],
               "ez": [round(street_z(*c), 3) for c in poly_json(r_["poly"])["ext"]]}     # street at each corner
              for r_ in st_recs]

@@ -7332,7 +7332,7 @@
   "s09_wad|coplanar@163,-4": {
    "region": "s09_wad",
    "first": "2026-10-21 17:30",
-   "last": "2026-10-22 00:27",
+   "last": "2026-10-22 06:58",
    "status": "open",
    "finding": {
     "kind": "coplanar",
@@ -10434,7 +10434,7 @@
    "region": "s09_wad",
    "first": "2026-10-21 22:32",
    "last": "2026-10-22 00:27",
-   "status": "open",
+   "status": "fixed",
    "finding": {
     "kind": "prop_float",
     "level": 0,
@@ -10449,7 +10449,8 @@
     "source": "dressing zat / profile props",
     "view": null,
     "key": "prop_float@154,48"
-   }
+   },
+   "fixed": "2026-10-22 06:58"
   },
   "s11_haram|ground_gap@195,43": {
    "region": "s11_haram",

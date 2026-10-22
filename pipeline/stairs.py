@@ -18,14 +18,18 @@ Steps ways are stepped over their whole length; other lanes only where the 6 m-s
 exceeds GRADE.
 """
 import math
+import os
 
 import numpy as np
 from shapely import STRtree, clip_by_rect
-from shapely.geometry import LineString, Polygon, box
+from shapely.geometry import LineString, Point, Polygon, box
 from shapely.ops import unary_union
 
 GRADE = 0.07
 GRADE_RULE = False         # step every lane steeper than GRADE (off: only OSM steps ways and given runs)
+STEEP = float(os.environ.get("STAIRS_STEEP", "99"))    # step lanes steeper than this too (off: at 0.2 the JQ
+                           # escarpment footways got 48 flights and the steep ground only moved beside them)
+REACH = 8.0                # a flight in a lane runs wall to wall when both walls stand within this
 PED = {"footway", "pedestrian", "steps", "path", "living_street"}
 TURN = 0.3          # a reversal of the level profile by more than this (m) ends a flight
 CHORD_TOL = 0.25    # equal treads when the profile stays this close (m) to the straight line
@@ -33,7 +37,37 @@ WIDEN = 1.2         # treads reach this much past the measured half-width, clipp
                     # lane runs wall to wall (a strip of ramp beside the steps, with cheeks, read as broken)
 
 
-def steep_intervals(ln, zfun, always=False, sample=2.0, min_len=4.0):
+def wall_reach(ln, s0, s1, region, hw, step=2.0):
+    """Half-width that takes the flight to the walls: where walls stand on both sides within REACH at most
+    stations, the 90th percentile of the wider side's distance (+0.3, the treads are clipped to the open
+    street anyway); else hw. (A flight narrower than its lane left a sloping strip of ramp beside it.)"""
+    n = max(2, int((s1 - s0) / step) + 1)
+    wide, walled = [], 0
+    for k in range(n):
+        s = s0 + (s1 - s0) * k / (n - 1)
+        a = ln.interpolate(max(0.0, s - 0.5)).coords[0]
+        b = ln.interpolate(min(ln.length, s + 0.5)).coords[0]
+        L = math.dist(a, b) or 1.0
+        nx, ny = (b[1] - a[1]) / L, -(b[0] - a[0]) / L
+        x, y = ln.interpolate(s).coords[0]
+        ds = []
+        for sg in (1, -1):
+            ray = LineString([(x, y), (x + sg * nx * REACH, y + sg * ny * REACH)])
+            inside = ray.intersection(region)
+            d = None
+            for g in getattr(inside, "geoms", [inside]):
+                if g.geom_type == "LineString" and g.distance(Point(x, y)) < 0.05 and g.length < REACH - 0.05:
+                    d = g.length
+            ds.append(d)
+        if ds[0] is not None and ds[1] is not None:
+            walled += 1
+            wide.append(max(ds))
+    if walled < 0.5 * n or not wide:
+        return hw
+    return max(hw, min(REACH, float(np.percentile(wide, 90))) + 0.3)
+
+
+def steep_intervals(ln, zfun, always=False, sample=2.0, min_len=4.0, grade=GRADE):
     L = ln.length
     if always:
         return [(0.0, L)]
@@ -45,7 +79,7 @@ def steep_intervals(ln, zfun, always=False, sample=2.0, min_len=4.0):
     zsm = np.convolve(np.pad(zs, k, mode="edge"), np.ones(2 * k + 1) / (2 * k + 1), mode="valid")
     g = np.abs(np.gradient(zsm, ss))
     out, start = [], None
-    for s, steep in zip(ss, g > GRADE):
+    for s, steep in zip(ss, g > grade):
         if steep and start is None:
             start = s
         if not steep and start is not None:
@@ -158,21 +192,23 @@ def build(ways, zfun, open_street, halfwidth, skip=None, extra=()):
             continue
         if not open_street.intersects(ln):
             continue
-        if t["highway"] != "steps" and not GRADE_RULE:
-            continue                 # steep lanes stay ramps: inventing steps put stairs where there are none
-        for s0, s1 in steep_intervals(ln, zfun, always=t["highway"] == "steps"):
+        # (lanes stay ramps up to STEEP: stepping every lane over 7 % put stairs where there are none)
+        for s0, s1 in steep_intervals(ln, zfun, always=t["highway"] == "steps", grade=GRADE if GRADE_RULE else STEEP):
             runs.append((ln, halfwidth(w, ln) + WIDEN, s0, s1))
     placed, polys = [], []
     tree = None
     for run_id, (ln, hw, s0, s1) in enumerate(runs):
         x0, y0, x1, y1 = ln.bounds
-        bb = (x0 - hw - 2, y0 - hw - 2, x1 + hw + 2, y1 + hw + 2)
+        r_ = max(hw, REACH) + 2
+        bb = (x0 - r_, y0 - r_, x1 + r_, y1 + r_)
         try:
             region = clip_by_rect(open_street, *bb)                      # local copy
         except Exception:  # noqa: BLE001  (GEOS ring errors on the city-wide polygon)
             region = open_street.intersection(box(*bb))
         if region.is_empty:
             continue
+        if not os.environ.get("STAIRS_NO_REACH"):
+            hw = wall_reach(ln, s0, s1, region, hw)
         if polys:
             tree = STRtree(polys)
             near = [polys[i] for i in tree.query(ln.buffer(hw + 1.0))]
