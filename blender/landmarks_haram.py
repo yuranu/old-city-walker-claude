@@ -1490,12 +1490,71 @@ def western_wall(mbs, bd, gen, place, lod=False):
             e = Edge(ring[i], ring[(i + 1) % n])
             obox(dec, e.P(e.L / 2, 0, -0.35), e.t, e.L, 0.5, z_top, z_top + 0.9, "fort", col=(0.93, 0.92, 0.9))
     _wilson_hall(mbs, gen, zpl, lod=lod)
+    if not lod:
+        _robinson_arch(mbs)
     _minaret_silsila(mbs, bd, gen, lod=lod)
 
 
 def _minaret_silsila(mbs, bd, gen, lod=False):
     name, c, kind = MINARETS[0]
     minaret(mbs, gen, c, (math.cos(WEST_WALL_BEARING), math.sin(WEST_WALL_BEARING)), esplanade(bd), kind, lod)
+
+
+def _extrude(mb, e, prof, mat, col=None):
+    """Closed profile [(off, z)] (off > 0 outside the wall of edge e) swept along e, with end caps."""
+    m = len(prof)
+    for k in range(m):
+        (o0, z0), (o1, z1) = prof[k], prof[(k + 1) % m]
+        q = [e.P(0, z0, o0), e.P(e.L, z0, o0), e.P(e.L, z1, o1), e.P(0, z1, o1)]
+        mid = (q[0] + q[2]) / 2
+        oc = sum(o for o, _ in prof) / m
+        zc = sum(z for _, z in prof) / m
+        mb.poly(q, mat, mid - e.P(e.L / 2, zc, oc), col=col)
+    for u, sg in ((0.0, -1), (e.L, 1)):
+        mb.poly([e.P(u, z, o) for o, z in prof], mat, e.t * sg, col=col)
+
+
+def _robinson_arch(mbs):
+    """Robinson's Arch (OSM node 9351437161) on the south stretch of the west wall (a generic wall
+    segment there, 3 m thick on the line (666.28, -78.52)-(670.56, -106.44)): the springer of the
+    Herodian arch that carried a stair over the street, ~15 m wide, standing proud of the wall face
+    with the first courses of its soffit; its western pier ~12.5 m out, cut down to a few courses;
+    fallen voussoirs lying on the Herodian street between (the archaeological park)."""
+    sol = mbs["solid"]
+    a, b = Vector((666.28, -78.52, 0)), Vector((670.56, -106.44, 0))
+    t = (b - a).normalized()
+    n = Vector((-t.y, t.x, 0))                          # west (out of the Haram)
+    if n.x > 0:
+        n = -n
+    p = Vector((667.645, -89.261, 0))
+    c = a + t * (p - a).dot(t) + n * 1.5                # on the wall's west face
+    zg = terrain_z(*(c + n * 4.0)[:2]) or -44.0         # the Herodian street
+    W = 15.2
+    z_spr = zg + 10.4                                   # springing line
+    e = Edge(tuple((c - t * W / 2)[:2]), tuple((c + t * W / 2)[:2]))
+    if e.n.dot(n) < 0:
+        e = Edge(tuple((c + t * W / 2)[:2]), tuple((c - t * W / 2)[:2]))
+    # springer mass: the arch's first voussoirs, soffit curving out from the wall (radius ~7.6 m)
+    R = 7.6
+    prof = []
+    for k in range(7):                                  # soffit from the springing, 0..60 degrees
+        th = math.radians(60.0 * k / 6)
+        prof.append((R - R * math.cos(th), z_spr + R * math.sin(th)))
+    top = z_spr + 7.2
+    prof += [(prof[-1][0], top), (0.0, top), (0.0, z_spr)]
+    _extrude(sol, e, prof, "fort", col=(1.0, 0.95, 0.86))
+    # the impost course under the springing, a little proud of the wall
+    wbox(sol, e, e.L / 2, 0.25, e.L + 0.4, 0.5, z_spr - 0.9, z_spr, "fort", col=(1.0, 0.95, 0.86))
+    # western pier, cut down to a few courses
+    pc = c + n * 12.5
+    obox(sol, pc, t, W, 3.6, zg - 0.4, zg + 3.2, "fort", col=(0.98, 0.93, 0.84))
+    # fallen voussoirs on the street between wall and pier (fixed layout)
+    for du, dn, dz, ang in ((-5.1, 3.2, 0.0, 0.3), (-3.0, 4.6, 0.0, -0.4), (-1.2, 2.6, 0.0, 0.8), (0.9, 5.4, 0.0, 0.1),
+                             (2.6, 3.8, 0.0, -0.9), (4.4, 6.1, 0.0, 0.5), (-0.4, 4.2, 0.85, 0.2), (3.4, 4.9, 0.85, -0.3),
+                             (5.8, 2.9, 0.0, 1.1), (-4.2, 6.6, 0.0, -0.7)):
+        q = c + t * du + n * dn
+        tt = (t * math.cos(ang) + n * math.sin(ang)).normalized()
+        obox(sol, q, tt, 1.5, 1.0, zg - 0.1 + dz, zg + 0.85 + dz, "fort", col=(0.96, 0.91, 0.82))
 
 
 def _wilson_hall(mbs, gen, zf, lod=False):
