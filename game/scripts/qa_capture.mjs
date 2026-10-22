@@ -87,7 +87,7 @@ try {
     await sleep(40);
     await shot(path.join(out, `${v.id}_k.png`));
     await evalJs('game.qaKey(false), true');
-    meta.push({ ...v, place: info.place });
+    meta.push({ ...v, place: info.place, ground: info.cam ? info.cam.ground : null });
     process.stdout.write('.');
   }
   fs.writeFileSync(path.join(out, 'captured.json'), JSON.stringify(meta, null, 1));
