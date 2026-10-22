@@ -15,9 +15,11 @@ the Muslim Quarter), which leaves the streets as wide open gaps in a row of foot
 The pieces join the spec as lowest-priority buildings (like MANUAL_BUILDINGS), so they only take
 space the OSM footprints leave free.
 """
+import math
+
 import numpy as np
 from shapely import STRtree
-from shapely.geometry import LineString, Polygon
+from shapely.geometry import LineString, Point, Polygon
 from shapely.ops import split, unary_union
 
 # mapped areas that are open ground (kept free of infill). Built-up landuse (retail, residential,
@@ -91,11 +93,31 @@ def street_halfwidth(t, ln, tree, footprints):
     return float(np.clip(np.percentile(ds, 25), 1.4, HW_MAX.get(t.get("highway"), 5.5))) if ds else 2.5
 
 
+def side_reach(ln, footprints, cap, step=3.0):
+    """Median distance from the line to the first mapped building on its left and on its right (cap
+    where none stands within it)."""
+    walls = footprints                                   # (one union of the mapped buildings)
+    out = []
+    for sg in (1, -1):
+        ds = []
+        for s in np.arange(0.5, max(0.6, ln.length - 0.5) + 0.01, step):
+            a = ln.interpolate(max(0.0, s - 0.5)).coords[0]
+            b = ln.interpolate(min(ln.length, s + 0.5)).coords[0]
+            L = math.dist(a, b) or 1.0
+            nx, ny = -(b[1] - a[1]) / L * sg, (b[0] - a[0]) / L * sg     # left of the direction for sg = 1
+            x, y = ln.interpolate(s).coords[0]
+            hit = LineString([(x, y), (x + nx * cap, y + ny * cap)]).intersection(walls)
+            ds.append(cap if hit.is_empty else Point(x, y).distance(hit))
+        out.append(float(np.median(ds)) if ds else 0.0)
+    return out
+
+
 def infill(d, footprints, domain, keep_open):
     """d: osm_local.json; footprints: shapely polygons of the mapped buildings;
     domain: where infill may go (inside the walls, clear of them); keep_open: extra open areas.
     -> [(polygon, half-width of the street it fronts)]"""
     tree = STRtree(footprints)
+    walls = unary_union(footprints)
     corridors, fronts = [], []
     for w in d["ways"]:
         t = w["tags"]
@@ -112,6 +134,12 @@ def infill(d, footprints, domain, keep_open):
             continue
         hw = street_halfwidth(t, ln, tree, footprints)
         corridors.append(ln.buffer(hw))
+        # and each side out to its own first wall: hw is the distance to the nearer side, and where the
+        # OSM line runs along one wall the far half of the street was filled (a 22 m strip of house
+        # stood on the Via Dolorosa in front of the Austrian Hospice)
+        for side, reach in zip((1, -1), side_reach(ln, walls, HW_MAX.get(t.get("highway"), 5.5))):
+            if reach > hw:
+                corridors.append(ln.buffer(side * reach, single_sided=True))
         fronts.append(ln.buffer(hw + DEPTH))
     areas = []
     for w in d["ways"]:
