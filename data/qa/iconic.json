@@ -1,0 +1,26 @@
+{
+ "_doc": "Iconic places (tour-guide stops) polished first: each gets its own QA views (pipeline/qa/plan_iconic.py). osm: building id the views aim at (its centroid), or at: [x, y]; r: how far out the street views stand.",
+ "places": [
+  {"id": "austrian_hospice", "name": "Austrian Hospice", "osm": "w52890125", "r": 22},
+  {"id": "jaffa_gate", "name": "Jaffa Gate and its square", "at": [42, -2], "r": 25},
+  {"id": "citadel", "name": "Citadel / Tower of David", "at": [40, -60], "r": 35},
+  {"id": "damascus_gate", "name": "Damascus Gate", "osm": "w616186088", "r": 25},
+  {"id": "lions_gate", "name": "Lions' Gate", "osm": "w288395731", "r": 20},
+  {"id": "zion_gate", "name": "Zion Gate", "osm": "w290671706", "r": 20},
+  {"id": "dung_gate", "name": "Dung Gate", "osm": "w1545285986", "r": 20},
+  {"id": "new_gate", "name": "New Gate", "osm": "w1393450805", "r": 20},
+  {"id": "golden_gate", "name": "Golden Gate", "osm": "w291836693", "r": 25},
+  {"id": "western_wall", "name": "Western Wall plaza", "at": [610, 10], "r": 35},
+  {"id": "dome_of_the_rock", "name": "Dome of the Rock", "osm": "w4709536", "r": 40},
+  {"id": "al_aqsa", "name": "Al-Aqsa Mosque", "osm": "w280309331", "r": 40},
+  {"id": "holy_sepulchre", "name": "Church of the Holy Sepulchre and parvis", "osm": "w1022672085", "r": 30},
+  {"id": "muristan", "name": "Muristan and Church of the Redeemer", "osm": "w29268902", "r": 25},
+  {"id": "ecce_homo", "name": "Ecce Homo arch and basilica", "osm": "w744676490", "r": 18},
+  {"id": "flagellation", "name": "Church of the Flagellation / Condemnation", "osm": "w744674450", "r": 20},
+  {"id": "st_anne", "name": "St Anne's Church and Pools of Bethesda", "osm": "w126864879", "r": 25},
+  {"id": "hurva", "name": "Hurva Synagogue and square", "osm": "w45081545", "r": 25},
+  {"id": "st_james", "name": "St James Cathedral (Armenian)", "at": [163, -267], "r": 25},
+  {"id": "christ_church", "name": "Christ Church", "osm": "w126755060", "r": 18},
+  {"id": "davidson", "name": "Davidson Center / Robinson's Arch", "osm": "w147608624", "r": 30}
+ ]
+}
