@@ -809,7 +809,7 @@ def setup_ease_zones(cell=0.5):
 
 
 
-def seal_cracks(ground, tol=0.003, skip=None):          # (2 cm left hairlines of sky at grazing angles)
+def seal_cracks(ground, tol=0.003, skip=None, back_near=None):   # (2 cm left hairlines of sky at grazing angles)
     """Faces closing every vertical step between neighbouring ground triangles (a level area against
     the slope, the deck over Wilson's Arch, the ground lowered under landmarks): wherever the piece
     across an edge lies lower, one face from its surface up to this edge, looking at the low side.
@@ -871,8 +871,11 @@ def seal_cracks(ground, tol=0.003, skip=None):          # (2 cm left hairlines o
         # 4 cm back under the high side: where a landmark builds its own face on the edge, the seal
         # stays behind it instead of z-fighting with it
         t_ = (b[e, :2] - a[e, :2]) / L[e]
-        pa = a[e, :2] - nrm[e] * 0.04 - t_ * ext(a[e], t_)
-        pb = b[e, :2] - nrm[e] * 0.04 + t_ * ext(b[e], t_)
+        # 5 mm back, 4 cm only beside a landmark (4 cm everywhere left a floorless slot under the high
+        # edge, and at grazing angles sky showed through it along every kerb)
+        bk = 0.04 if (back_near is not None and shapely.contains_xy(back_near, mid[e, 0], mid[e, 1])) else 0.005
+        pa = a[e, :2] - nrm[e] * bk - t_ * ext(a[e], t_)
+        pb = b[e, :2] - nrm[e] * bk + t_ * ext(b[e], t_)
         out.append({"a": [round(pa[0], 3), round(pa[1], 3)], "b": [round(pb[0], 3), round(pb[1], 3)],
                     # well below the low side: it stands 4 cm back, and a grazing ray over the low edge
                     # would pass under a shallow foot
@@ -1469,7 +1472,10 @@ def main():
     # (the sunken courts and Wilson's Arch hall have their own walls on their outlines, landmarks_haram; a
     #  seal on the hall front would close its arches. The Citadel moat is sealed like any other step: its
     #  foot showed sky)
-    retaining = seal_cracks(ground, skip=unary_union([sunken.boundary, WILSON_HALL.boundary]).buffer(0.1))
+    lm_near = unary_union([bd["poly"] for bd in buildings if bd["osm"] in LANDMARK_IDS] or [Polygon()]).buffer(0.5)
+    prepare(lm_near)
+    retaining = seal_cracks(ground, skip=unary_union([sunken.boundary, WILSON_HALL.boundary]).buffer(0.1),
+                            back_near=lm_near)
     kerbs = []               # (the kerb faces are the crack seals along the roads: seal_cracks)
 
     # ---------------------------------------------------------------- buildings
