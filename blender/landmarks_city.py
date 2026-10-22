@@ -1946,16 +1946,23 @@ def austrian_hospice(mbs, bd, gen, place, lod=False):
     terrace's parapet, where the Austrian and Vatican flags fly (the generic house builder gave it
     random doors on the upper floors, AC boxes and lime domes)."""
     sol, deco = solid_of(mbs)
-    g = bd["ground"]
+    # floors from the garden terrace (the lowest ground round it; the record's ground is the median and on
+    # the uphill north side, which put the string course storeys up)
+    g = min(bd.get("edge_ground") or [bd["ground"]])
     col = (1.06, 1.01, 0.91)
     z1, z2, ze = g + 4.6, g + 8.9, g + 13.4               # floor levels and the eaves
 
     def style(L, zg, z_top):
+        zg = g
         hs = win_row(L, zg + 1.3, zg + 3.8, sp=3.1, w=1.15, kind="round", back="glass", margin=1.7, frame=0.14)
-        hs += win_row(L, z1 + 1.0, z1 + 3.3, sp=3.1, w=1.1, kind="flat", back="glass", grille=False, margin=1.7,
+        hs += win_row(L, z1 + 1.0, z1 + 3.3, sp=3.1, w=1.05, kind="round", back="glass", grille=False, margin=1.7,
                       frame=0.16)
-        hs += win_row(L, z2 + 1.0, z2 + 3.1, sp=3.1, w=1.1, kind="flat", back="glass", grille=False, margin=1.7,
-                      frame=0.16)
+        # the top storey (1931): an arcade of paired round arches, open, as it shows over the compound wall
+        n = int((L - 3.4) / 3.6)
+        for k in range(n):
+            uc = 1.7 + 3.6 * (k + 0.5) + (L - 3.4 - 3.6 * n) / 2
+            for du in (-0.62, 0.62):
+                hs.append(win(uc + du, 1.0, z2 + 0.9, z2 + 3.4, "round", VOID, 0.6, frame=0.1))
         return hs
     Z = StyledZones(bd, gen, style)
     exposed = list(Z.exposed)
@@ -1994,6 +2001,46 @@ def austrian_hospice(mbs, bd, gen, place, lod=False):
                      (x + fw * (j + 1) / nb, y, ze + 6.4), (x + fw * j / nb, y, ze + 6.4)]
             deco.poly(q, "plastic", Vector((0, -1, 0)), col=cl)
             deco.poly(q[::-1], "plastic", Vector((0, 1, 0)), col=cl)
+
+
+def hospice_gate(mbs, bd, gen, place, lod=False):
+    """Gatehouse of the Austrian Hospice (w375040921, corner of the Via Dolorosa and Al-Wad; Street View):
+    one storey of weathered ashlar, its top level with the compound's garden terrace. On the Via Dolorosa a
+    round-arched double wooden door up four steps between two round-arched barred windows, a string course
+    and a cornice; a low parapet with an iron railing round the roof terrace."""
+    sol, deco = solid_of(mbs)
+    ring = [tuple(p) for p in bd["ring"]]
+    eg = bd.get("edge_ground") or [bd["ground"]] * len(ring)
+    i = find_edge(ring, (425.9, 380.45), (-0.97, 0.24), tol=3)
+    g = eg[i] if i is not None else min(eg)
+    col = (0.95, 0.93, 0.89)
+    zt = g + 5.0
+    Z = Zones(bd, gen)
+    Z.add("all", big_box(ring), zt, "ashlar", col, roof="paving", windows=False)
+    if i is not None and not lod:
+        a, b = ring[i], ring[(i + 1) % len(ring)]
+        L = math.dist(a, b)
+        uc = L / 2
+
+        def holes(z0, z1):
+            return [win(uc, 1.5, g + 0.75, g + 3.75, "round", "door_wood", 0.35, floor=True, frame=0.18),
+                    win(uc - 2.9, 0.95, g + 1.6, g + 3.4, "round", VOID, 0.3, grille=True, frame=0.15),
+                    win(uc + 2.9, 0.95, g + 1.6, g + 3.4, "round", VOID, 0.3, grille=True, frame=0.15)]
+        Z.special(a, b, edge_hook(holes, gen=gen))
+    Z.build(sol, lod)
+    if lod:
+        return
+    if i is not None:
+        e = Edge(ring[i], ring[(i + 1) % len(ring)])
+        steps_run(sol, Edge(tuple(e.P(e.L / 2 - 1.3, 0, 1.4)[:2]), tuple(e.P(e.L / 2 - 1.3, 0, 0.0)[:2])),
+                  0.0, 1.4, -1.3, 1.3, g, g + 0.75, 4, g - 0.4)            # four steps up to the door
+        cornice(sol, e, 0.0, e.L, g + 4.1, 0.25, 0.14, ends=False)
+    for k in range(len(ring)):
+        a, b = ring[k], ring[(k + 1) % len(ring)]
+        if math.dist(a, b) > 1.0:
+            cornice(sol, Edge(a, b), 0.0, math.dist(a, b), zt - 0.35, 0.35, 0.2, ends=False)
+    parapet(sol, ring, zt, 0.45, 0.25, "ashlar", col)
+    rail(deco, mk.inset_ring(ring, 0.12), zt + 0.45, h=0.9, post=1.6)
 
 
 def sephardic(mbs, bd, gen, place, lod=False):
@@ -2051,6 +2098,7 @@ LANDMARKS = {
     "w126864879": st_anne,
     "w744676490": ecce_homo,
     "w52890125": austrian_hospice,
+    "w375040921": hospice_gate,
     "w1394857844": host_minaret((412.91, 379.34)),              # Via Dolorosa minaret, OSM node 5921367466
     "w126755060": simple_church(8.5, rise=3.4, kind="pointed", win_w=1.1, win_h=3.2,           # Christ Church (1849)
                                 obb_ring=[(153.4, -72.5), (167.4, -72.0), (168.5, -62.4), (153.6, -61.7)]),
