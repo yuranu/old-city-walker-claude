@@ -1926,6 +1926,64 @@ def simple_church(h, rise=0.0, kind="pointed", hip=False, domes=(), dome_mat="le
     return fn
 
 
+def austrian_hospice(mbs, bd, gen, place, lod=False):
+    """Austrian Hospice of the Holy Family (w52890125, 1856-63, third storey 1931, roof terrace 1932-33):
+    a palace in the manner of Vienna's Ringstrasse set back behind its compound wall and garden. Pale
+    dressed ashlar, three storeys on a regular grid: round-arched windows on the ground floor, framed
+    tall windows above, a string course over the ground floor and a main cornice under the roof
+    terrace's parapet, where the Austrian and Vatican flags fly (the generic house builder gave it
+    random doors on the upper floors, AC boxes and lime domes)."""
+    sol, deco = solid_of(mbs)
+    g = bd["ground"]
+    col = (1.06, 1.01, 0.91)
+    z1, z2, ze = g + 4.6, g + 8.9, g + 13.4               # floor levels and the eaves
+
+    def style(L, zg, z_top):
+        hs = win_row(L, zg + 1.3, zg + 3.8, sp=3.1, w=1.15, kind="round", back="glass", margin=1.7, frame=0.14)
+        hs += win_row(L, z1 + 1.0, z1 + 3.3, sp=3.1, w=1.1, kind="flat", back="glass", grille=False, margin=1.7,
+                      frame=0.16)
+        hs += win_row(L, z2 + 1.0, z2 + 3.1, sp=3.1, w=1.1, kind="flat", back="glass", grille=False, margin=1.7,
+                      frame=0.16)
+        return hs
+    Z = StyledZones(bd, gen, style)
+    exposed = list(Z.exposed)
+    Z.exposed = [True] * len(Z.ring)            # it stands storeys above the houses against it: windows all round
+    ring = [tuple(p) for p in bd["ring"]]
+    if area2(ring) < 0:
+        ring.reverse()
+        exposed = exposed[::-1][1:] + exposed[::-1][:1]
+    Z.add("all", big_box(ring), ze, "ashlar", col, roof="lime")
+    Z.build(sol, lod)
+    if lod:
+        return
+    n = len(ring)
+    for i in range(n):
+        a, b = ring[i], ring[(i + 1) % n]
+        if math.dist(a, b) < 1.0:
+            continue
+        e = Edge(a, b)
+        if i < len(exposed) and exposed[i]:
+            cornice(sol, e, 0.0, e.L, z1 - 0.3, 0.3, 0.16, ends=False)        # string course (free walls)
+        cornice(sol, e, 0.0, e.L, ze - 0.55, 0.55, 0.42, ends=False)          # main cornice, all round
+    parapet(sol, ring, ze, 1.05, 0.3, "ashlar", col)                       # the roof terrace's parapet
+    c = centroid(ring)
+    for k, (dx, cols) in enumerate(((-2.0, ((0.75, 0.06, 0.08), (1.0, 1.0, 1.0), (0.75, 0.06, 0.08))),
+                                    (2.0, ((1.0, 0.82, 0.1), (1.0, 1.0, 1.0))))):
+        x, y = c[0] + dx, c[1]
+        mk.tube(deco, [(x, y, ze), (x, y, ze + 6.5)], 0.04, "metal_grey", sides=6)
+        fw, fh = 1.8, 1.2
+        nb = len(cols)
+        for j, cl in enumerate(cols):                                     # stripes (horizontal / vertical)
+            if k == 0:
+                q = [(x, y, ze + 6.4 - fh * (j + 1) / nb), (x + fw, y, ze + 6.4 - fh * (j + 1) / nb),
+                     (x + fw, y, ze + 6.4 - fh * j / nb), (x, y, ze + 6.4 - fh * j / nb)]
+            else:
+                q = [(x + fw * j / nb, y, ze + 6.4 - fh), (x + fw * (j + 1) / nb, y, ze + 6.4 - fh),
+                     (x + fw * (j + 1) / nb, y, ze + 6.4), (x + fw * j / nb, y, ze + 6.4)]
+            deco.poly(q, "plastic", Vector((0, -1, 0)), col=cl)
+            deco.poly(q[::-1], "plastic", Vector((0, 1, 0)), col=cl)
+
+
 def sephardic(mbs, bd, gen, place, lod=False):
     """Four Sephardic Synagogues (w29265134): sunk below the street, so only low walls show; small
     white domes over the four halls (OSM nodes 4905159136-39)."""
@@ -1980,6 +2038,7 @@ LANDMARKS = {
     "w265410575": st_james,
     "w126864879": st_anne,
     "w744676490": ecce_homo,
+    "w52890125": austrian_hospice,
     "w1394857844": host_minaret((412.91, 379.34)),              # Via Dolorosa minaret, OSM node 5921367466
     "w126755060": simple_church(8.5, rise=3.4, kind="pointed", win_w=1.1, win_h=3.2,           # Christ Church (1849)
                                 obb_ring=[(153.4, -72.5), (167.4, -72.0), (168.5, -62.4), (153.6, -61.7)]),
