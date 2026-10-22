@@ -11,6 +11,7 @@ import sys
 from shapely.geometry import Point, Polygon
 
 from common import ROOT, building_index, load_spec
+from plan_views import NO_CAMERA
 
 
 def main():
@@ -30,7 +31,7 @@ def main():
 
     def free(x, y, rad=0.9):
         p = Point(x, y).buffer(rad)
-        return not any(polys[k].intersects(p) for k in tree.query(p))
+        return not any(polys[k].intersects(p) for k in tree.query(p)) and not any(q.intersects(p) for q in NO_CAMERA)
     views = []
     for ring_r in (r * 0.5, r * 0.8, r * 1.1):
         n = max(8, int(2 * math.pi * ring_r / 6))
