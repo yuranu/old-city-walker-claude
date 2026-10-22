@@ -1031,6 +1031,10 @@ def _hs_specials(Z, mbs, ring, g, base, gen, tf, nf):
     fw = edge_of((218.88, 182.0), (0.05, -1.0))
     if fw:
         Z.special(fw[0], fw[1], _hs_franks_west(mbs, g, base, gen))
+        if not lod:                          # the door at the stair head, as a card on the face: the zone edge
+            ef_ = Edge(fw[0], fw[1])         # there does not always match the special (it built a blank wall)
+            mk.card(deco, ef_.P(1.05, g + 2.2, 0.03), ef_.t, UP, 1.2, 2.6, "doors", cell_uv(gen, "doors", "door_wood"))
+            frame(sol, ef_, rect(0.45, 1.65, g + 2.2, g + 4.8), 0.15, 0.0, 0.1)
     fs = edge_of((221.75, 179.62), (1.0, 0.077))
     if fs:
         Z.special(fs[0], fs[1], _hs_franks_south(mbs, g, base, gen))
@@ -1130,8 +1134,9 @@ def _hs_facade(mbs, g, base, gen):
             door = rect(uc - 1.4, uc + 1.4, base, g + 4.4)
             if open_:
                 face(mb, e, u_band(orders[3], door), mat, offt, col=dkcol)
-                tunnel(mb, e, door, offt, offt - 1.6, mat, floor=True, col=col)
-                face(mb, e, door, VOID, offt - 1.6)
+                # a dim stone interior 5 m deep (1.6 m to a black panel read as a flat navy void)
+                tunnel(mb, e, door, offt, offt - 5.0, mat, floor=True, col=(0.42, 0.39, 0.35))
+                face(mb, e, door, mat, offt - 5.0, col=(0.16, 0.14, 0.12))
                 r = cell_uv(gen, "doors", "door_wood")
                 if r:                                           # leaves folded back against the reveals
                     for s, uu in ((-1, uc - 1.35), (1, uc + 1.35)):
@@ -1185,13 +1190,15 @@ def _hs_facade(mbs, g, base, gen):
 def _hs_franks_west(mbs, g, base, gen):
     """West face of the Chapel of the Franks: glazed iron-grid door at the stair head (photo hs_04)."""
     def fn(mb, e, ua, ub, z0, z1, mat, col):
-        if ua > 0.2 or ub < e.L - 0.2:
-            return False
+        # (any part of the edge the zones hand over: it is split, and requiring the whole edge left the
+        #  stair from the parvis running into a blank wall)
         hs = [win(1.05, 1.3, g + 2.2, g + 5.0, "round", "glass", 0.35, grille=True, frame=0.15),
               win(3.6, 0.6, g + 6.8, g + 8.2, "round", VOID, 0.3, grille=True)]
-        wall(mb, e, 0, e.L, z0, z1, mat, col, hs, gen)
-        cornice(mb, e, -0.2, e.L + 0.35, g + 11.0, 0.6, 0.35, ends=True)
-        cornice(mb, e, 1.95, e.L, g + 5.0, 0.3, 0.2, ends=True)
+        wall(mb, e, ua, ub, z0, z1, mat, col, holes_in(hs, ua, ub), gen)
+        if z1 > g + 11.6:
+            cornice(mb, e, max(-0.2, ua), min(e.L + 0.35, ub + (0.35 if ub > e.L - 0.2 else 0.0)), g + 11.0, 0.6, 0.35, ends=True)
+        if ub > 1.95:
+            cornice(mb, e, max(1.95, ua), ub, g + 5.0, 0.3, 0.2, ends=True)
         return True
     return fn
 
@@ -1200,19 +1207,19 @@ def _hs_franks_south(mbs, g, base, gen):
     """South face of the Chapel of the Franks (photos hs_10, hs_01_10053108): door and small window
     below, string course at 5 m, the large round-arched glazed window between marble colonnettes."""
     def fn(mb, e, ua, ub, z0, z1, mat, col):
-        if ua > 0.2 or ub < e.L - 0.6:
-            return False
         L = e.L
         uc = min(2.75, L / 2)
         hs = [win(L - 1.0, 0.9, g, g + 2.05, "flat", "door_wood", 0.2, floor=True, frame=0.12),
               win(L - 1.0, 0.45, g + 2.6, g + 3.1, "flat", VOID, 0.2, grille=True),
               win(uc, 3.2, g + 5.4, g + 9.9, "round", "glass", 0.45, grille=True)]
         wall(mb, e, ua, ub, z0, z1, mat, col, holes_in(hs, ua, ub), gen)
-        frame(mb, e, arch_ol(uc - 1.6, uc + 1.6, g + 8.29, g + 8.3, "round", seg=10), 0.3, 0.0, 0.1)
+        if ua <= uc - 2.2 and ub >= uc + 2.2:                  # the window's frame and colonnettes, once
+            frame(mb, e, arch_ol(uc - 1.6, uc + 1.6, g + 8.29, g + 8.3, "round", seg=10), 0.3, 0.0, 0.1)
+            for uu in (uc - 2.0, uc + 2.0):
+                column(mb, e.P(uu, 0, 0.2), g + 5.3, g + 8.3, 0.17, col=(1.08, 1.08, 1.08))
         cornice(mb, e, ua, ub, g + 5.0, 0.3, 0.2, ends=True)
-        cornice(mb, e, ua, ub + 0.2, g + 11.0, 0.6, 0.35, ends=True)
-        for uu in (uc - 2.0, uc + 2.0):
-            column(mb, e.P(uu, 0, 0.2), g + 5.3, g + 8.3, 0.17, col=(1.08, 1.08, 1.08))
+        if z1 > g + 11.6:
+            cornice(mb, e, ua, ub + 0.2, g + 11.0, 0.6, 0.35, ends=True)
         return True
     return fn
 
@@ -1399,9 +1406,11 @@ class StyledZones(Zones):
                         continue
                 ri = self.ring_edge(a, b) if (windows and not lod) else None
                 e = Edge(a, b)
-                if ri is not None and self.exposed[ri] and e.L > 2.5:
+                if ri is not None and e.L > 2.5 and (self.exposed[ri] or z_top - self.eground[ri] > 10.0):
                     hs = self.style(e.L, self.eground[ri], z_top) if windows is True else windows(e.L, self.eground[ri], z_top)
-                    wall(mb, e, 0, e.L, self.base, z_top, mat, col, hs, self.gen)
+                    if not self.exposed[ri]:          # a lower house stands against it: windows above its roof only
+                        hs = [h for h in hs if min(p[1] for p in h["ol"]) >= self.eground[ri] + 7.5]   # (a blank face
+                    wall(mb, e, 0, e.L, self.base, z_top, mat, col, hs, self.gen)                    # showed above the roofs)
                     continue
                 q = [(a[0], a[1], self.base), (b[0], b[1], self.base), (b[0], b[1], z_top), (a[0], a[1], z_top)]
                 mb.poly(q, mat, Vector((b[1] - a[1], -(b[0] - a[0]), 0)), col=col)
@@ -1559,13 +1568,15 @@ def hurva(mbs, bd, gen, place, lod=False):
     white = (1.08, 1.06, 1.0)
     i = find_edge(ring, (359.3, -154.7), (1.0, -0.05), tol=5)
     t = (v2(ring[(i + 1) % len(ring)]) - v2(ring[i])).normalized() if i is not None else Vector((1, 0))
-    # podium over the whole footprint (OSM height 3), rubble-faced
-    Z = Zones(bd, gen)
-    Z.add("podium", big_box(ring), g + 3.0, "rubble", (1.02, 0.98, 0.9), roof="paving", windows=False)
-    Z.build(sol, lod)
+    # a low podium just round the cube (2.5 m wide; it stood 3 m high over the whole OSM footprint, which
+    # takes in a stretch of Hurva Square, and walled the synagogue off from the square)
     c = v2(HURVA_C)
     Wb = 19.0
-    zb0, zb1 = g + 3.0, g + 15.0
+    Z = Zones(bd, gen)
+    Z.add("podium", rect_ring(c, t, Wb + 5.0, Wb + 5.0), g + 1.2, "rubble", (1.02, 0.98, 0.9), roof="paving",
+          windows=False)
+    Z.build(sol, lod)
+    zb0, zb1 = g + 1.2, g + 13.2
     rg = rect_ring(c, t, Wb, Wb)
     for k in range(4):
         e = Edge(rg[k], rg[(k + 1) % 4])
