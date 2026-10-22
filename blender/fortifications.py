@@ -575,12 +575,13 @@ def portal(mb, e, uc, P, depth_total, mat, outer=True, blocked=(), gen=None):
                       "ashlar", skip=(4,), col=DRESSED)
     pw_, ph_, pz_ = P["panel"]
     pz_ = max(pz_, dh + ph_ / 2 + 0.35)
-    pw_ = min(pw_, 2 * pointed_halfwidth(rw, rs, rr, pz_ + ph_ / 2 + 0.05) - 0.9)
-    panel(mb, e, uc, pz_, pw_, ph_, -rd, lines=3)
-    for s in (-1, 1):
-        u_r = uc + s * (pw_ / 2 + 0.3)
-        if pointed_halfwidth(rw, rs, rr, pz_ + 0.22) > abs(u_r - uc) + 0.22:
-            disc(mb, e, u_r, pz_, 0.18, 0.05, "ashlar", off=-rd, seg=8, col=DRESSED)
+    pw_ = min(pw_, 2 * pointed_halfwidth(rw, rs, rr, pz_ + ph_ / 2 + 0.05) - 0.9) if pz_ + ph_ / 2 < rs + rr else 0.0
+    if pw_ > 0.5:                              # (a tall pointed doorway leaves no room for the panel)
+        panel(mb, e, uc, pz_, pw_, ph_, -rd, lines=3)
+        for s in (-1, 1):
+            u_r = uc + s * (pw_ / 2 + 0.3)
+            if pointed_halfwidth(rw, rs, rr, pz_ + 0.22) > abs(u_r - uc) + 0.22:
+                disc(mb, e, u_r, pz_, 0.18, 0.05, "ashlar", off=-rd, seg=8, col=DRESSED)
     # the two leaves stand open against the passage walls just behind the door frame
     for s in (-1, 1):
         hinge = e.P(uc + s * (pw / 2 - 0.1 - 0.06), 0, -rd - frame_d - 0.06)
@@ -725,7 +726,10 @@ def groin_vault(mb, C, z_spring, rise, N=12, mat="ashlar", col=None, dome=0.0):
 GATE_OUTER = dict(recess_w=5.2, recess_spring=4.9, recess_rise=2.8, recess_d=0.5, band=0.75, band_rise=0.7,
                   door_r=0.65, frame_d=0.5, pass_spring=4.0, pass_rise=2.5, door_hmax=4.9, panel=(2.0, 0.75, 6.8))
 GATE_INNER = dict(recess_w=5.0, recess_spring=4.7, recess_rise=2.7, recess_d=0.6, band=0.6, band_rise=0.55,
-                  door_r=0.7, frame_d=0.45, pass_spring=4.0, pass_rise=2.5, door_hmax=4.5, panel=(1.6, 0.6, 6.45))
+                  door_r=0.7, frame_d=0.45, pass_spring=4.0, pass_rise=2.5, door_hmax=4.5, panel=(1.6, 0.6, 6.45),
+                  # (Street View from Omar ibn al-Khattab Square: the inner doorway is an open pointed arch rising
+                  #  well into the recess, not a flat 4.5 m door with a tympanum over it)
+                  door_shape="pointed", door_spring=4.1, door_rise=2.3)
 GATE_MERLONS = {"out": (2.9, 2.9, 0.6), "in": (2.0, 1.8, 0.9), "side": (2.3, 2.2, 0.5)}   # (corner, merlon, crenel)
 
 
@@ -1729,7 +1733,9 @@ def build_citadel(mb, c, gen, place, rng):
         ia, ib = run[0], run[-1]
         cut_a = (mass[ia], tuple(Edge(outer[(ia - 1) % no], outer[ia]).t.xy))
         cut_b = (mass[(ib + 1) % n], tuple(Edge(outer[(ib + 1) % no], outer[(ib + 2) % no]).t.xy))
-        glacis(mb, mass, run, 1.5, -D - 0.05, 3.0, cut_a, cut_b)
+        # (topping out below the street: at 1.5 m it stood over the moat railing as a pale 2 m plinth in front
+        #  of the wall, where Street View shows the wall rising straight from behind the railing)
+        glacis(mb, mass, run, -0.5, -D - 0.05, 2.4, cut_a, cut_b)
         chain = [mass[ia]] + [outer[i] for i in run] + [outer[(ib + 1) % no], mass[(ib + 1) % n]]
         chain = [p for k, p in enumerate(chain) if k == 0 or math.dist(p, chain[k - 1]) > 0.2]
         for k in range(len(chain) - 1):

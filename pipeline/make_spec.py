@@ -133,7 +133,10 @@ LOCAL_FLATS = [(612045223, (208.2, 183.4)),           # Holy Sepulchre parvis, a
                (WILSON_HALL, (633.0, 61.0)),
                # the Austrian Hospice compound (retaining wall w375040920): a garden terrace ~5 m over the Via
                # Dolorosa at its gatehouse (Street View: the terrace and its planters level with the gate's roof)
-               (375040920, (424.0, 374.0, 5.0))]
+               (375040920, (424.0, 374.0, 5.0)),
+               # Dung Gate: the road runs level through the gate and its forecourt (Street View); the terrain
+               # fell 20% straight through the passage
+               (Polygon([(611.0, -189.0), (640.0, -187.0), (646.0, -211.0), (617.0, -214.0)]), (627.9, -199.3, 0.0))]
 
 
 # covered streets: passages under buildings (OSM tunnel=yes|building_passage, covered=yes) are carved
@@ -824,7 +827,7 @@ def osm_walls(d, buildings, skip_ids=()):
     were not built at all, and every walled compound stood open to the street): segments of 2 m along
     each line outside the building footprints, a 2.6 m gap where a mapped path crosses. A wall stands
     3 m (or its OSM height) above the higher ground beside it; a retaining wall from the low side up to
-    a 1.1 m parapet over the high side. Lines inside the Haram are its builders' own."""
+    a 1.1 m parapet over the high side, and at least 4.5 m over the low side when it closes a ring (a compound). Lines inside the Haram are its builders' own."""
     # (clear of the footprints by 8 cm, the ends cut there run 25 cm on into the building: a wall line drawn
     #  along a building's face, the Austrian Hospice's on its gatehouse front, stood in front of the facade)
     fp = unary_union([bd["poly"] for bd in buildings]).buffer(0.08)
@@ -848,6 +851,10 @@ def osm_walls(d, buildings, skip_ids=()):
                 for g_ in getattr(x_, "geoms", [x_]):
                     if g_.geom_type == "Point":
                         cuts.append(g_.buffer(1.3))
+        # a closed retaining-wall ring is a compound's enclosure: at least 4.5 m over its low side even where
+        # the levels differ little (the Austrian Hospice wall on El-Wad hides the garden, only palms show over
+        # it), a parapet over a terrace higher than that; an open retaining wall ends in a parapet
+        ring_ = bool(w_.get("closed")) and len(pts_) > 3
         try:
             h_tag = float(str(t_.get("height", "")).replace("m", "").strip())
         except ValueError:
@@ -871,7 +878,12 @@ def osm_walls(d, buildings, skip_ids=()):
                     zl = street_z(p_[0] - nx_ * 0.9, p_[1] - ny_ * 0.9)
                     zr = street_z(p_[0] + nx_ * 0.9, p_[1] + ny_ * 0.9)
                     z0.append(round(min(zl, zr) - 0.4, 2))
-                    top = max(zl, zr) + (1.1 if kind == "retaining_wall" else (h_tag or 3.0))
+                    if kind != "retaining_wall":
+                        top = max(zl, zr) + (h_tag or 3.0)
+                    elif ring_:
+                        top = max(max(zl, zr) + 1.1, min(zl, zr) + 4.5)
+                    else:
+                        top = max(zl, zr) + 1.1
                     z1.append(round(top, 2))
                 out.append({"a": [round(a_[0], 3), round(a_[1], 3)], "b": [round(b_[0], 3), round(b_[1], 3)],
                             "z0": z0, "z1": z1, "thick": 0.6 if kind == "retaining_wall" else 0.45, "kind": kind,
