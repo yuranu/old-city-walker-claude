@@ -1519,6 +1519,10 @@ def entrance_podium(mb, e, D, gen, span, sd, z0=ENT_Z):
     u_full = ua - pt if sd > 0 else ub + pt                # outer face of the full-length side parapet
     u_stair = ub + pt if sd > 0 else ua - pt               # outer face of the stair-side parapet
     mb.poly([e.P(ua, zt, 0), e.P(ub, zt, 0), e.P(ub, zt, oe), e.P(ua, zt, oe)], "paving", UP)
+    # and 1 cm lower 0.6 m on into the doorway (sky showed in the joint at the threshold; lower, it never
+    # z-fights with a recess floor at the deck's level)
+    mb.poly([e.P(ua, zt - 0.01, -0.6), e.P(ub, zt - 0.01, -0.6), e.P(ub, zt - 0.01, 0.0), e.P(ua, zt - 0.01, 0.0)],
+            "paving", UP)
     arch = [(3.0, -D), (span - 0.1, -D)] + _seg_arch(3.0, span - 0.1, -D + 1.7, 0.9)
     full = [(0.0, -D - 0.1), (span, -D - 0.1), (span, -0.2), (oe + pt, -0.2), (oe + pt, zp), (0.0, zp)]
     short = [(0.0, -D - 0.1), (span, -D - 0.1), (span, -0.2), (os_, -0.2), (os_, zp), (0.0, zp)]
