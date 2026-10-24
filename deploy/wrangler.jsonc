@@ -3,7 +3,7 @@
 //   cd deploy && npx wrangler@4 deploy
 // (Kept out of game/: wrangler's auto-setup rewrites a Vite project into a Workers app.)
 {
-  "name": "old-city-walker",
+  "name": "old-city",
   "compatibility_date": "2026-10-19",
   "assets": {
     "directory": "../game/dist"
