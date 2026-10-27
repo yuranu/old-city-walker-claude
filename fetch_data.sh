@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# Fetch the inputs that are not versioned. Pinned inputs (data/raw: OSM snapshot, terrain tiles)
-# are only downloaded when missing; delete them deliberately to refresh from OSM.
+# Fetch the inputs that are not versioned, and check every pinned input against data/inputs.sha256
+# (docs/DATA.md). Files already present are not downloaded again.
+#   ./fetch_data.sh             terrain tiles + Poly Haven textures (what ./build.sh needs)
+#   ./fetch_data.sh --photos    also the reference photographs (evaluation, research notes, QA)
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=.venv/bin/python
 [ -x "$PY" ] || PY=python3
 mkdir -p data/raw/terrain
 
-# OpenStreetMap (ODbL), Old City bbox. Overpass is often overloaded; the main API map call is fine
-# for an area this small (~9 MB). Building ids in pipeline tables refer to this snapshot.
+# OpenStreetMap (ODbL): a frozen snapshot, versioned. Building ids in the pipeline tables refer to
+# it, so it is never refreshed here. These calls only document how it was taken (2026-10-19).
 [ -f data/raw/osm_oldcity.osm ] || curl -sS -A "old-city-walker-poc/0.2" -o data/raw/osm_oldcity.osm \
   'https://api.openstreetmap.org/api/0.6/map?bbox=35.2255,31.7700,35.2385,31.7825'
 
@@ -22,6 +24,17 @@ for t in 15/19590/13329 15/19591/13329 15/19590/13330 15/19591/13330 15/19590/13
 done
 
 $PY pipeline/fetch_textures.py 2k        # Poly Haven CC0 stone textures (+ tinted copies)
-$PY pipeline/fetch_ref_photos.py         # restore reference photos listed in the index.json files
-# To discover new geotagged photos around the area (rewrites data/photos/index.json):
-#   $PY pipeline/fetch_photos.py 150
+
+check() {      # check the pinned files whose paths match $1
+  grep -v '^#' data/inputs.sha256 | grep -E "$1" | sha256sum -c --quiet \
+    || { echo "pinned inputs differ from data/inputs.sha256 (see docs/DATA.md)" >&2; exit 1; }
+}
+check ' data/(raw|textures)/'
+
+if [ "${1:-}" = --photos ]; then
+  $PY pipeline/fetch_ref_photos.py       # restore the photographs listed in the index.json files
+  check ' data/photos'
+  # To discover new geotagged photos around the area (rewrites data/photos/index.json):
+  #   $PY pipeline/fetch_photos.py 150
+fi
+echo "inputs ok"

@@ -1,7 +1,8 @@
 """Re-download reference photographs listed in data/photos*/**/index.json.
 
-The repository versions only the metadata (title, page, author, licence, local file name) plus
-the photos the evaluation loop needs; everything else can be restored with this script.
+The repository versions only the metadata (title, page, author, licence, local file name); the
+images are restored with this script (./fetch_data.sh --photos runs it and checks the photos the
+evaluation loop needs against data/inputs.sha256).
 
     python3 pipeline/fetch_ref_photos.py [dir ...]     # default: data/photos and data/photos_ref/*
 """
