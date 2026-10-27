@@ -54,6 +54,7 @@ def ring_simplify(ring, tol=0.35):
 
 
 def main():
+    PUB.mkdir(parents=True, exist_ok=True)                   # game/public is build output (absent in a fresh clone)
     osm = json.loads((ROOT / "data/osm_local.json").read_text())
     sdir = ROOT / "data/spec"
     if (sdir / "base.json").exists():                        # whole city: base (context, walls) + every sector
