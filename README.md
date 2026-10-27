@@ -5,6 +5,12 @@ modelled in Blender from OpenStreetMap footprints, an 1865 survey of street leve
 research, and walked in a browser (three.js). Every point in the game maps to a real lat/lon.
 Shops are closed and there are no people.
 
+**Play it in the browser: <https://old-city-walker-claude.yuranu.com>** (desktop or phone; the
+city streams in, ~180 MB).
+
+The project was developed with [Claude Code](https://claude.com/claude-code): the pipeline, the
+Blender builders, the game and the QA loop were written by Claude under the author's direction.
+
 ![the walled city from the Mount of Olives](docs/img/city_from_olives.jpg)
 
 * **The whole walled city**, streamed by sector: 2,600 buildings, 0.86 km², 35 m of fall from
@@ -22,9 +28,13 @@ The process is a reusable playbook in [docs/METHODOLOGY.md](docs/METHODOLOGY.md)
 the whole city). The photo-matched evaluation loop is in [docs/EVALUATION.md](docs/EVALUATION.md),
 and the street-level terrain in [docs/TERRAIN.md](docs/TERRAIN.md).
 
-## Play
+## Play locally
+
+Models and photos are stored with [Git LFS](https://git-lfs.com); install it before cloning.
 
 ```bash
+git lfs install
+git clone https://github.com/yuranu/old-city-walker-claude.git && cd old-city-walker-claude
 cd game && npm install && npm run dev        # http://127.0.0.1:5173
 ```
 
@@ -57,6 +67,10 @@ PARTS="s04_sepulchre" ./build.sh --preview ""   # rebuild only some parts
 Optional: `.venv/bin/python pipeline/fetch_ref_photos.py` restores the research photographs listed
 in the `index.json` files (only those used by the evaluation loop are versioned).
 
+Publishing: `npm --prefix game run deploy:build` makes a static build in `game/dist` (meshopt-compressed
+models, large files split), which any static host can serve. `deploy/` holds the Cloudflare Worker
+config used for the live site.
+
 ## Pipeline
 
 ```
@@ -71,6 +85,8 @@ data/raw/osm_oldcity.osm (pinned OSM snapshot)
   blender/audit.py              coplanar-overlap / degenerate / open-edge audit
   pipeline/eval_set.py, blender/render_eval.py, pipeline/eval_compare.py
                                 photo-matched evaluation renders and scores
+  pipeline/qa/                  in-game view captures, contact sheets, vision-critic workflows,
+                                Street View comparisons of the iconic places (data/qa/)
 game/                           Vite + three.js + three-mesh-bvh walker
 ```
 
@@ -84,8 +100,10 @@ game/                           Vite + three.js + three-mesh-bvh walker
 
 ```
 pipeline/  blender/  game/  docs/       code and documentation
+deploy/                                 static hosting (Cloudflare Worker config, upload script)
 data/raw/                               pinned inputs (OSM snapshot, terrain tiles) - LFS
 data/reference/                         research notes, edge tables, evaluation cameras
+data/qa/                                QA levels, iconic places, findings ledger
 data/photos*/**/index.json              photo metadata (source, author, licence)
 data/photos*/  (selected .jpg)          photos used by the evaluation loop - LFS
 game/public/                            runtime data: city.glb, plan/photos JSON, in-game photos - LFS
@@ -94,14 +112,23 @@ game/public/                            runtime data: city.glb, plan/photos JSON
 Not versioned (regenerated): `.venv`, `node_modules`, `build/`, `renders/`, `data/textures/`,
 `data/scene_spec.json`, `data/osm_local.json`, bulk research photos.
 
-## Data and licences
+## Licence and data
 
-- Map data © OpenStreetMap contributors, ODbL (`data/raw/osm_oldcity.osm`).
-- Photographs: Wikimedia Commons, each under its own licence (CC BY, CC BY-SA, public domain).
-  Author, licence and source page are recorded in each `index.json` and in `game/public/photos.json`,
-  and shown in the game.
-- Textures: Poly Haven (CC0), downloaded at build time. Elevation: AWS Terrain Tiles (SRTM, public domain).
-- Google Maps / Street View is used only as a deep link. Nothing is scraped or downloaded.
+The code, documentation and original renders are released under the [MIT licence](LICENSE).
+The third-party data below keeps its own terms:
+
+- Map data © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/)
+  (`data/raw/*.osm`). The built city models are derived from it and carry the same attribution.
+- Photographs: Wikimedia Commons, each under its own licence (CC BY, CC BY-SA, GFDL, CC0, public
+  domain). Author, licence and source page are recorded in each `index.json` and in
+  `game/public/photos.json`, shown in the game, and printed on the evaluation comparisons.
+- Street levels: Ordnance Survey of Jerusalem 1864-65 (public domain), transcribed from the Princeton
+  University Library scan (`data/raw/terrain/os1865_*.csv`).
+- Elevation: [AWS Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) (Mapzen terrarium,
+  SRTM-derived here). Textures: Poly Haven (CC0), downloaded at build time.
+- Google Street View: the game only deep-links to it. The QA tooling (`pipeline/qa/sv_*.py`) can
+  fetch stills locally for side-by-side comparison; they are not versioned or published, and anyone
+  running it is responsible for complying with Google's terms.
 
 ## Findings so far
 
