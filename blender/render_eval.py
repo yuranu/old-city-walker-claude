@@ -316,6 +316,9 @@ def main():
         for name, c in cams.items():
             if only and name not in only:
                 continue
+            if "photo_w" not in c and not (ROOT / c["photo"]).exists():
+                print("skip %s: photo missing (%s; ./fetch_data.sh --photos)" % (name, c["photo"]))
+                continue
             jobs.append((name, c, out / ("%s_model%s.png" % (name, args.suffix)), args.fast or args.no_labels))
 
     for name, c, model_path, nolabels in jobs:

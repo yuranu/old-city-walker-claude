@@ -40,7 +40,7 @@ def thumb_for(title, width=1280):
     return ii[0].get("thumburl")
 
 
-def restore(d: Path):
+def restore(d: Path, gone):
     idx = json.loads((d / "index.json").read_text())
     items = idx if isinstance(idx, list) else idx.get("photos", [])
     n = 0
@@ -48,20 +48,27 @@ def restore(d: Path):
         fn = it.get("file")
         if not fn or (d / fn).exists():
             continue
-        url = it.get("thumb") or (thumb_for(it["title"]) if it.get("title") else None)
-        if not url:
-            continue
-        (d / fn).write_bytes(get(url))
-        n += 1
+        try:
+            url = it.get("thumb") or (thumb_for(it["title"]) if it.get("title") else None)
+            if not url:
+                raise LookupError("no longer on Commons")
+            (d / fn).write_bytes(get(url))
+            n += 1
+        except (urllib.error.HTTPError, LookupError) as e:    # deleted or renamed upstream: skip, report
+            gone.append("%s (%s: %s)" % ((d / fn).relative_to(ROOT), e, it.get("page", "")))
         time.sleep(1.2)
     print("%s: restored %d" % (d.relative_to(ROOT), n))
 
 
 def main():
-    dirs = [Path(a) for a in sys.argv[1:]] or [ROOT / "data/photos"] + sorted((ROOT / "data/photos_ref").glob("*/"))
+    dirs = [Path(a).resolve() for a in sys.argv[1:]] or [ROOT / "data/photos"] + sorted((ROOT / "data/photos_ref").glob("*/"))
+    gone = []
     for d in dirs:
         if (d / "index.json").exists():
-            restore(d)
+            restore(d, gone)
+    if gone:
+        print("WARNING: %d photos could not be downloaded (deleted or renamed on Commons?):" % len(gone))
+        print("\n".join("  " + g for g in gone))
 
 
 if __name__ == "__main__":

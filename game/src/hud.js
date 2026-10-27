@@ -22,6 +22,10 @@ export class Hud {
     this.photoBox = document.getElementById('photo');
     this.photoImg = document.getElementById('photoImg');
     this.photoMeta = document.getElementById('photoMeta');
+    this.photoGone = document.getElementById('photoGone');
+    // photos load from Wikimedia Commons: one deleted there (or no network) leaves its credit and link
+    this.photoImg.onerror = () => { this.photoImg.style.display = 'none'; this.photoGone.style.display = 'block'; };
+    this.photoImg.onload = () => { this.photoImg.style.display = 'block'; this.photoGone.style.display = 'none'; };
     this.photoIdx = 0;
     this.zoom = 2;
     this.streets = (plan.streets || []).filter((w) => w.name);

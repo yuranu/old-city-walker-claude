@@ -16,6 +16,7 @@
     #photo { right: 12px; top: 12px; width: 420px; display: none; }
     #photo img { width: 100%; border-radius: 4px; display: block; }
     #photo .meta { font-size: 12px; opacity: 0.85; margin-top: 6px; }
+    #photoGone { display: none; font-style: italic; }
     #photo a { color: #ffd88a; }
     #start { inset: 0; position: absolute; display: flex; align-items: center; justify-content: center; background: rgba(15, 12, 8, 0.45); cursor: pointer; }
     #start .box { max-width: 520px; text-align: center; }
@@ -51,7 +52,7 @@
     <div class="coords" id="coords"></div>
     <div class="hints" style="margin-top:6px;font-size:12px;opacity:.8"><kbd>F</kbd> fly · <kbd>M</kbd> map · <kbd>+</kbd>/<kbd>-</kbd> zoom minimap · <kbd>P</kbd> nearest real photo · <kbd>G</kbd> Google Maps</div>
   </div>
-  <div id="photo" class="panel"><img id="photoImg" alt="" /><div class="meta" id="photoMeta"></div></div>
+  <div id="photo" class="panel"><img id="photoImg" alt="" /><div class="meta" id="photoGone">This photo could not be loaded: it may no longer be on Wikimedia Commons.</div><div class="meta" id="photoMeta"></div></div>
   <div id="map" class="panel"><canvas id="mapCanvas" width="240" height="240"></canvas></div>
   <div id="bigmap" class="panel"><canvas id="bigCanvas"></canvas></div>
   <div id="start" class="panel">

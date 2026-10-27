@@ -324,6 +324,9 @@ def cmd_compare(a):
         if not mp.exists():
             print("no render for", name, "(run blender/render_eval.py)")
             continue
+        if not (ROOT / cam["photo"]).exists():
+            print("skip %s: photo missing (%s; ./fetch_data.sh --photos)" % (name, cam["photo"]))
+            continue
         photo, model = load_photo(cam), Image.open(mp).convert("RGB")
         mask = Image.open(kp) if kp.exists() else Image.new("L", model.size, 255)
         info = json.loads(jp.read_text()) if jp.exists() else {}

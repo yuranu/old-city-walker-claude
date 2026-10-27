@@ -33,7 +33,15 @@ check ' data/(raw|textures)/'
 
 if [ "${1:-}" = --photos ]; then
   $PY pipeline/fetch_ref_photos.py       # restore the photographs listed in the index.json files
-  check ' data/photos'
+  # photos are not build inputs: one deleted or replaced on Commons only costs its evaluation cameras
+  bad=$(grep -v '^#' data/inputs.sha256 | grep ' data/photos' | sha256sum -c 2>/dev/null | grep -v ': OK$' | cut -d: -f1) || true
+  if [ -n "$bad" ]; then
+    echo "WARNING: pinned photos missing or changed upstream; the evaluation skips their cameras:"
+    $PY -c 'import json, sys
+cams = json.load(open("data/reference/eval_cams.json"))["cams"]
+for f in sys.argv[1:]:
+    print("  %s  (cameras: %s)" % (f, ", ".join(n for n, c in cams.items() if c.get("photo") == f) or "none"))' $bad
+  fi
   # To discover new geotagged photos around the area (rewrites data/photos/index.json):
   #   $PY pipeline/fetch_photos.py 150
 fi
