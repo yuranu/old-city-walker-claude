@@ -31,7 +31,7 @@ Blender builders, the game and the QA loop were written by Claude under the auth
 | You want to | Do this |
 |---|---|
 | walk the city | open the [live site](https://old-city-walker-claude.yuranu.com) |
-| run it offline | download a release archive and follow its [instructions](release/README.md) |
+| run it offline | download the archive from the [latest release](https://github.com/yuranu/old-city-walker-claude/releases/latest) and follow its [instructions](release/README.md) |
 | rebuild it, change it, or apply the method elsewhere | build from source: [docs/BUILD.md](docs/BUILD.md) |
 
 Controls: click to walk, **WASD** + mouse, **Shift** run, **Space** jump. **P** shows the nearest
