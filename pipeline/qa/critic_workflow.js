@@ -7,7 +7,7 @@ export const meta = {
   ],
 }
 // args: { level, run: "<abs run dir>", nbatches, per: 6 }  (sheets listed in <run>/sheets.json)
-const RUBRIC = `Read /home/yuranu/projects/old-city-walker/data/qa/levels.md first: it defines the QA levels.`
+const RUBRIC = `Read data/qa/levels.md (in the repository root) first: it defines the QA levels.`
 const FIND = { type: 'object', properties: { findings: { type: 'array', items: { type: 'object', properties: {
   view: { type: 'string' }, kind: { type: 'string' }, severity: { type: 'string', enum: ['high', 'medium', 'low'] },
   what: { type: 'string' }, where_in_image: { type: 'string' } }, required: ['view', 'kind', 'severity', 'what', 'where_in_image'] } } },
