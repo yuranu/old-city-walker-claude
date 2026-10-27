@@ -4,11 +4,7 @@
 *.json  text eol=lf
 *.md    text eol=lf
 *.sh    text eol=lf
-*.osm !text !filter !merge !diff
-*.jpg !text !filter !merge !diff
-*.png !text !filter !merge !diff
-*.glb !text !filter !merge !diff
-*.blend !text !filter !merge !diff
-*.jpeg !text !filter !merge !diff
-*.webp !text !filter !merge !diff
-*.ktx2 !text !filter !merge !diff
+*.osm   text eol=lf
+# binary
+*.jpg   binary
+*.png   binary
