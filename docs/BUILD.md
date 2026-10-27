@@ -32,7 +32,8 @@ Photographs are not build inputs. They serve the evaluation loop, the research n
 comparisons, and the game's **P** key loads them straight from Wikimedia Commons. To download them:
 
 ```bash
-./fetch_data.sh --photos    # the reference photographs (~15 min at a polite request rate)
+.venv/bin/python pipeline/fetch_ref_photos.py data/photos_ref/eval data/photos   # the evaluation set (~10 min)
+./fetch_data.sh --photos    # every reference photograph, ~1,300 (about 1.5 h at a polite request rate)
 ```
 
 A photo deleted or replaced on Commons is skipped with a warning that names the evaluation
