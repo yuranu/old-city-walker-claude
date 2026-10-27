@@ -8,7 +8,7 @@ export const meta = {
 }
 // args: { root: "<abs repo>", batches: [["austrian_hospice", ...], ...] } (or places: [...], one batch each)
 // Pairs: <root>/build/qa/svcmp/<place>/pairs/*.jpg (left REAL, right MODEL, same spot / heading / field of view,
-// headings aligned by skyline matching; build with pipeline/qa/sv_ref.py + sv_compare.py).
+// headings aligned by skyline matching; pairs made by pipeline/qa/sv_compare.py from reference stills).
 const FIND = { type: 'object', properties: {
   useless: { type: 'array', items: { type: 'string' } },
   findings: { type: 'array', items: { type: 'object', properties: {
