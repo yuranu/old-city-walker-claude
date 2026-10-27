@@ -5,7 +5,7 @@ game/dist/
 __pycache__/
 *.pyc
 
-# --- build outputs (regenerate with ./build.sh)
+# --- build outputs (regenerate with ./build.sh; release archives in build/release)
 build/
 renders/
 data/osm_local.json
@@ -17,26 +17,19 @@ data/*.png
 #     ./fetch_data.sh (Poly Haven, CC0) + pipeline/gen_textures.py + pipeline/gen_signs.py
 data/textures/
 
-# --- reference photos: metadata (index.json with source URLs) is versioned, images are
-#     re-downloadable (pipeline/fetch_photos.py, pipeline/fetch_ref_photos.py).
-#     Only the photographs the evaluation loop depends on are kept (Git LFS).
+# --- reference photos: only the metadata (index.json: source URL, author, licence, position) is
+#     versioned. ./fetch_data.sh --photos restores the images (pinned in data/inputs.sha256);
+#     pipeline/fetch_ref_photos.py and pipeline/fetch_iconic_photos.py restore or find more.
+#     Street View stills (QA references during the research) are never stored here.
 data/photos/*.jpg
-!data/photos/041_185219889.jpg
-!data/photos/053_157136671.jpg
-!data/photos/062_157136657.jpg
-!data/photos/065_157136656.jpg
-!data/photos/072_157136654.jpg
-!data/photos/087_124589152.jpg
-!data/photos/103_124589146.jpg
-!data/photos/113_110483072.jpg
-!data/photos/141_84782472.jpg
-!data/photos/142_84782473.jpg
-data/photos_ref/*/*.jpg
-!data/photos_ref/eval/*.jpg
-#     iconic places: Commons photos (pipeline/fetch_iconic_photos.py) and Street View stills
-#     (pipeline/qa/sv_fetch.py, not ours to publish)
-data/photos_ref/iconic/*/*.jpg
+data/photos_ref/**/*.jpg
 data/photos_ref/sv/
+
+# --- downloaded terrain tiles (./fetch_data.sh, pinned in data/inputs.sha256)
+data/raw/terrain/*.png
+
+# --- the game's runtime data: all built by ./build.sh (models, manifest, plan, photo list, cameras)
+game/public/
 
 # --- editor / OS
 .DS_Store
