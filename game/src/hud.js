@@ -260,7 +260,7 @@ export class Hud {
   showPhoto(player) {
     const list = this.photosByDistance(player);
     const { p, d } = list[this.photoIdx % Math.min(list.length, 12)];
-    this.photoImg.src = '/' + p.file;
+    this.photoImg.src = p.url;
     this.photoMeta.innerHTML = `<b>${esc(p.title)}</b><br>${d.toFixed(0)} m from you · ${esc(p.date || '')}` +
       ` · ${esc(p.artist)} · ${esc(p.licence || '')}<br><a href="${p.page}" target="_blank" rel="noopener">Wikimedia Commons</a>` +
       ` · <kbd>N</kbd> next (${(this.photoIdx % 12) + 1}/12)`;

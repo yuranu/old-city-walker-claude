@@ -1,14 +1,14 @@
-"""Export what the game needs besides the GLB: a 2D plan for the minimap, the geo origin, and
-downscaled reference photos with attribution.
+"""Export what the game needs besides the GLB: a 2D plan for the minimap, the geo origin, the
+reference photo list (Commons thumbnail URLs with attribution; the game loads them from Commons)
+and the evaluation cameras.
 
     python3 pipeline/export_game_data.py
 """
 import html
 import json
 import re
+import shutil
 from pathlib import Path
-
-from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 PUB = ROOT / "game/public"
@@ -112,23 +112,13 @@ def main():
     }
     (PUB / "plan.json").write_text(json.dumps(plan, separators=(",", ":")))
 
+    # the selected photos (those with a local file name), linked to their 1280 px Commons thumbnails
     idx = json.loads((ROOT / "data/photos/index.json").read_text())
-    out = PUB / "photos"
-    out.mkdir(parents=True, exist_ok=True)
-    photos = []
-    for r in idx:
-        src = ROOT / "data/photos" / r.get("file", "")
-        if not r.get("file") or not src.exists():
-            continue
-        dst = out / src.name
-        if not dst.exists():
-            im = Image.open(src).convert("RGB")
-            im.thumbnail((800, 800))
-            im.save(dst, quality=82)
-        photos.append({"file": "photos/" + src.name, "x": r["x"], "y": r["y"], "title": r["title"][5:],
-                       "page": r["page"], "date": r["date"], "licence": r["licence"],
-                       "artist": strip_tags(r["artist"])[:80]})
+    photos = [{"url": r["thumb"].split("?")[0], "x": r["x"], "y": r["y"], "title": r["title"][5:],
+               "page": r["page"], "date": r["date"], "licence": r["licence"],
+               "artist": strip_tags(r["artist"])[:80]} for r in idx if r.get("file") and r.get("thumb")]
     (PUB / "photos.json").write_text(json.dumps(photos))
+    shutil.copyfile(ROOT / "data/reference/eval_cams.json", PUB / "eval_cams.json")
     print("plan: %d buildings, %d streets (%d KB); photos: %d" % (len(plan["buildings"]), len(plan["streets"]),
           (PUB / "plan.json").stat().st_size // 1024, len(photos)))
 
