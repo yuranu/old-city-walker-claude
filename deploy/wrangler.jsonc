@@ -1,14 +1,14 @@
 // Cloudflare deployment: a Worker that only serves the static build (game/dist from
-// `npm --prefix game run deploy:build`), on old-city.yuranu.com. No server code.
+// `npm --prefix game run deploy:build`), on old-city-walker-claude.yuranu.com. No server code.
 //   cd deploy && npx wrangler@4 deploy
 // (Kept out of game/: wrangler's auto-setup rewrites a Vite project into a Workers app.)
 {
-  "name": "old-city",
+  "name": "old-city-walker-claude",
   "compatibility_date": "2026-10-19",
   "assets": {
     "directory": "../game/dist"
   },
   "routes": [
-    { "pattern": "old-city.yuranu.com", "custom_domain": true }
+    { "pattern": "old-city-walker-claude.yuranu.com", "custom_domain": true }
   ]
 }
