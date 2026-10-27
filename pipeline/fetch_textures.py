@@ -1,6 +1,8 @@
-"""Download CC0 PBR textures from Poly Haven (api.polyhaven.com) into data/textures/<id>/.
+"""CC0 PBR textures from Poly Haven: the originals are a versioned snapshot in data/raw/polyhaven/<id>/
+(diff, nor, rough + info.json with the source URLs and size); this writes the tinted copies and
+data/textures/manifest.json. Only a texture missing from the snapshot is downloaded (api.polyhaven.com).
 
-    python3 pipeline/fetch_textures.py [res]      # res: 1k | 2k (default) | 4k
+    python3 pipeline/fetch_textures.py [res]      # res: 1k | 2k (default) | 4k, for new downloads
 """
 import json
 import sys
@@ -10,6 +12,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
+RAW = ROOT / "data/raw/polyhaven"
 OUT = ROOT / "data/textures"
 UA = "old-city-walker-poc/0.1"
 
@@ -31,27 +34,39 @@ def get(url):
         return r.read()
 
 
+def download(pid, res):
+    """Snapshot one texture into data/raw/polyhaven/<pid>/ (add its files to data/inputs.sha256)."""
+    files = json.loads(get("https://api.polyhaven.com/files/" + pid))
+    info = json.loads(get("https://api.polyhaven.com/info/" + pid))
+    d = RAW / pid
+    d.mkdir(parents=True, exist_ok=True)
+    meta = {"id": pid, "page": "https://polyhaven.com/a/" + pid, "licence": "CC0", "res": res,
+            "dimensions_mm": info.get("dimensions", [2000, 2000]), "maps": {}}
+    for key, short in MAPS.items():
+        entry = files.get(key, {}).get(res, {}).get("jpg") or files.get(key, {}).get(res, {}).get("png")
+        if not entry:
+            print("  missing", pid, key)
+            continue
+        fn = d / ("%s.%s" % (short, entry["url"].rsplit(".", 1)[-1]))
+        fn.write_bytes(get(entry["url"]))
+        meta["maps"][short] = {"file": fn.name, "url": entry["url"], "md5": entry.get("md5")}
+    (d / "info.json").write_text(json.dumps(meta, indent=1))
+    return meta
+
+
 def main():
     res = sys.argv[1] if len(sys.argv) > 1 else "2k"
     manifest = {}
     for role, (pid, tile, tint) in TEXTURES.items():
-        files = json.loads(get("https://api.polyhaven.com/files/" + pid))
-        info = json.loads(get("https://api.polyhaven.com/info/" + pid))
-        d = OUT / pid
-        d.mkdir(parents=True, exist_ok=True)
+        src = RAW / pid
+        meta = json.loads((src / "info.json").read_text()) if (src / "info.json").exists() else download(pid, res)
         manifest[role] = {"id": pid, "tile": tile, "tint": tint, "maps": {},
-                          "size_m": [v / 1000 for v in info.get("dimensions", [2000, 2000])]}
-        for key, short in MAPS.items():
-            entry = files.get(key, {}).get(res, {}).get("jpg") or files.get(key, {}).get(res, {}).get("png")
-            if not entry:
-                print("  missing", pid, key)
-                continue
-            ext = entry["url"].rsplit(".", 1)[-1]
-            fn = d / ("%s.%s" % (short, ext))
-            if not fn.exists():
-                fn.write_bytes(get(entry["url"]))
+                          "size_m": [v / 1000 for v in meta["dimensions_mm"]]}
+        for short, m in meta["maps"].items():
+            fn = src / m["file"]
             if short == "diff":                    # tinted copy per role
-                tfn = d / ("diff_%s.jpg" % role)
+                tfn = OUT / pid / ("diff_%s.jpg" % role)
+                tfn.parent.mkdir(parents=True, exist_ok=True)
                 im = Image.open(fn).convert("RGB")
                 # desaturate towards warm grey-cream first (photo-matched evaluation: the real stone is
                 # far less saturated than the raw textures), then tint
@@ -63,6 +78,7 @@ def main():
                 fn = tfn
             manifest[role]["maps"][short] = str(fn.relative_to(ROOT))
         print("%-7s %-28s tile %.1f m" % (role, pid, tile))
+    OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=1))
 
 

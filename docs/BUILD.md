@@ -1,7 +1,7 @@
 # Building and running from source
 
-Everything the game loads is built from the repository plus downloaded inputs that are pinned by
-checksum. Nothing prebuilt is fetched: a source build never uses a release archive.
+Everything the game loads is built from the repository alone: the inputs are versioned snapshots
+in `data/raw/`, pinned by checksum. The build needs no network and never uses a release archive.
 
 ## Requirements
 
@@ -22,19 +22,21 @@ python3 -m venv --system-site-packages .venv && .venv/bin/pip install -r require
 npm --prefix game install
 ```
 
-## 2. Fetch the inputs
+## 2. Inputs
+
+The build inputs are in the repository: the OSM snapshot, the 1865 survey transcription, the
+terrain tiles and the Poly Haven textures (`data/raw/`). `build.sh` checks them against
+`data/inputs.sha256` and stops on a mismatch. See [DATA.md](DATA.md).
+
+Photographs are not build inputs. They serve the evaluation loop, the research notes and the QA
+comparisons, and the game's **P** key loads them straight from Wikimedia Commons. To download them:
 
 ```bash
-./fetch_data.sh             # terrain tiles + Poly Haven textures, verified against data/inputs.sha256
-./fetch_data.sh --photos    # optional: the reference photographs (evaluation and research, ~10 min)
+./fetch_data.sh --photos    # the reference photographs (~15 min at a polite request rate)
 ```
 
-The OSM snapshot and the 1865 survey transcription are versioned and are not fetched. The
-downloads are checked against `data/inputs.sha256`; a mismatch stops the build rather than letting
-a changed upstream file change the city silently. See [DATA.md](DATA.md).
-
-The build itself needs no photographs. They serve the evaluation loop, the research notes and the
-QA comparisons; the game's **P** key loads them straight from Wikimedia Commons.
+A photo deleted or replaced on Commons is skipped with a warning that names the evaluation
+cameras depending on it.
 
 ## 3. Build
 
@@ -46,7 +48,7 @@ PARTS=none ./build.sh       # only the legacy Jaffa Gate scene (city.glb)
 JOBS=2 ./build.sh           # fewer parallel Blender processes
 ```
 
-Stages, all in `build.sh`: OSM to the local frame (`osm_to_local.py`), street levels
+Stages, all in `build.sh`: input check, tinted textures, OSM to the local frame (`osm_to_local.py`), street levels
 (`terrain_street.py`), the scene spec (`make_spec.py`, shapely), generated textures and signage,
 the game data (`export_game_data.py`: plan, photo list, evaluation cameras), then Blender builds
 the base (terrain, walls, landmarks, materials) and every sector in parallel, `write_manifest.py`

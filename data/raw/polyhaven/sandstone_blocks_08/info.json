@@ -1,0 +1,27 @@
+{
+ "id": "sandstone_blocks_08",
+ "page": "https://polyhaven.com/a/sandstone_blocks_08",
+ "licence": "CC0",
+ "res": "2k",
+ "dimensions_mm": [
+  3000,
+  3000
+ ],
+ "maps": {
+  "diff": {
+   "file": "diff.jpg",
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandstone_blocks_08/sandstone_blocks_08_diff_2k.jpg",
+   "md5": "2bd2a87974f1870fad58e25da35ed706"
+  },
+  "nor": {
+   "file": "nor.jpg",
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandstone_blocks_08/sandstone_blocks_08_nor_gl_2k.jpg",
+   "md5": "5156759065d1550ef60475c46611b89b"
+  },
+  "rough": {
+   "file": "rough.jpg",
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sandstone_blocks_08/sandstone_blocks_08_rough_2k.jpg",
+   "md5": "1f6cd4b874436929d438f8f5ba8818d9"
+  }
+ }
+}

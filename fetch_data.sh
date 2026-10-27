@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Fetch the inputs that are not versioned, and check every pinned input against data/inputs.sha256
-# (docs/DATA.md). Files already present are not downloaded again.
-#   ./fetch_data.sh             terrain tiles + Poly Haven textures (what ./build.sh needs)
+# The build inputs are versioned snapshots in data/raw (OSM, terrain tiles, Poly Haven textures);
+# this documents where they came from, re-downloads any that are missing, and checks them against
+# data/inputs.sha256 (docs/DATA.md). ./build.sh needs nothing from here.
+#   ./fetch_data.sh             check (and restore) the snapshots
 #   ./fetch_data.sh --photos    also the reference photographs (evaluation, research notes, QA)
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -23,13 +24,13 @@ for t in 15/19590/13329 15/19591/13329 15/19590/13330 15/19591/13330 15/19590/13
   [ -f "$f" ] || curl -sS -o "$f" "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/$t.png"
 done
 
-$PY pipeline/fetch_textures.py 2k        # Poly Haven CC0 stone textures (+ tinted copies)
+$PY pipeline/fetch_textures.py 2k        # Poly Haven CC0 stone textures (snapshot in data/raw/polyhaven) + tinted copies
 
 check() {      # check the pinned files whose paths match $1
   grep -v '^#' data/inputs.sha256 | grep -E "$1" | sha256sum -c --quiet \
     || { echo "pinned inputs differ from data/inputs.sha256 (see docs/DATA.md)" >&2; exit 1; }
 }
-check ' data/(raw|textures)/'
+check ' data/raw/'
 
 if [ "${1:-}" = --photos ]; then
   $PY pipeline/fetch_ref_photos.py       # restore the photographs listed in the index.json files

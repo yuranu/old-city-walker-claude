@@ -10,11 +10,13 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=.venv/bin/python
-# the exported geometry depends on the Blender version; inputs come from ./fetch_data.sh (docs/BUILD.md)
+# the exported geometry depends on the Blender version; the inputs are the snapshots in data/raw,
+# pinned in data/inputs.sha256 (docs/BUILD.md, docs/DATA.md)
 BV=$(blender --version 2>/dev/null | head -1)
 [[ $BV == "Blender 5.2"* ]] || { echo "needs Blender 5.2 (found: ${BV:-none})" >&2; exit 1; }
-[ -f data/textures/manifest.json ] && ls data/raw/terrain/*.png > /dev/null 2>&1 \
-  || { echo "inputs missing: run ./fetch_data.sh first" >&2; exit 1; }
+grep -v '^#' data/inputs.sha256 | grep ' data/raw/' | sha256sum -c --quiet \
+  || { echo "data/raw differs from data/inputs.sha256" >&2; exit 1; }
+[ -f data/textures/manifest.json ] || $PY pipeline/fetch_textures.py      # tinted copies of the Poly Haven snapshot
 # render on the discrete GPU when there is one (Mesa PRIME offload; harmless otherwise)
 if [ "$(ls /dev/dri | grep -c renderD)" -gt 1 ]; then export DRI_PRIME=1; fi
 $PY pipeline/osm_to_local.py

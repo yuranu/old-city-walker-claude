@@ -1,0 +1,27 @@
+{
+ "id": "square_cobblestone",
+ "page": "https://polyhaven.com/a/square_cobblestone",
+ "licence": "CC0",
+ "res": "2k",
+ "dimensions_mm": [
+  2000,
+  2000
+ ],
+ "maps": {
+  "diff": {
+   "file": "diff.jpg",
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/square_cobblestone/square_cobblestone_diff_2k.jpg",
+   "md5": "2dffeb19c153316e70cd91c41e3fd7ec"
+  },
+  "nor": {
+   "file": "nor.jpg",
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/square_cobblestone/square_cobblestone_nor_gl_2k.jpg",
+   "md5": "466cdb1efea20685378a6f2b4ca1960e"
+  },
+  "rough": {
+   "file": "rough.jpg",
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/square_cobblestone/square_cobblestone_rough_2k.jpg",
+   "md5": "ff79604fe2e00dafe206b2584aa48374"
+  }
+ }
+}

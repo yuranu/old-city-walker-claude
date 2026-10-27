@@ -13,8 +13,8 @@ data/scene_spec.json
 data/terrain.json
 data/*.png
 
-# --- downloaded and generated textures
-#     ./fetch_data.sh (Poly Haven, CC0) + pipeline/gen_textures.py + pipeline/gen_signs.py
+# --- generated textures: tinted copies of data/raw/polyhaven (pipeline/fetch_textures.py),
+#     pipeline/gen_textures.py, gen_signs.py, gen_landmark_textures.py
 data/textures/
 
 # --- reference photos: only the metadata (index.json: source URL, author, licence, position) is
@@ -24,9 +24,6 @@ data/textures/
 data/photos/*.jpg
 data/photos_ref/**/*.jpg
 data/photos_ref/sv/
-
-# --- downloaded terrain tiles (./fetch_data.sh, pinned in data/inputs.sha256)
-data/raw/terrain/*.png
 
 # --- the game's runtime data: all built by ./build.sh (models, manifest, plan, photo list, cameras)
 game/public/

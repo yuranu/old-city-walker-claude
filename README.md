@@ -48,11 +48,11 @@ effort, not the whole of it. It does not hold the result itself.
 - **Versioned:** code (`pipeline/`, `blender/`, `game/`), the method and its documentation
   (`docs/`), the research notes and the per-building decisions (`data/reference/`), QA levels
   and findings (`data/qa/`), provenance of every photograph used (`index.json` files: source,
-  author, licence, position), and the inputs that cannot be fetched again as they were (the
-  pinned OSM snapshot, the 1865 survey transcription).
+  author, licence, position), and snapshots of the build inputs (OSM, the 1865 survey
+  transcription, terrain tiles, textures; 32 MB that never change), so the city builds offline.
 - **Not versioned:** anything that can be downloaded or rebuilt. Photographs are referenced by
-  URL, downloaded inputs are pinned by checksum (`data/inputs.sha256`), and the models are built
-  by `./build.sh`. The release archives and the live site carry the built city.
+  URL, every snapshot and pinned photo has a checksum (`data/inputs.sha256`), and the models are
+  built by `./build.sh`. The release archives and the live site carry the built city.
 
 [docs/DATA.md](docs/DATA.md) lists every source, how it is pinned, and its licence.
 
@@ -78,7 +78,7 @@ game/                Vite + three.js + three-mesh-bvh walker; game/scripts: stat
 release/             release packaging and the instructions shipped in the archive
 deploy/              the live site's hosting (Cloudflare Worker config, upload script)
 docs/                manuals; docs/img: figures for this README
-data/raw/            pinned inputs: OSM snapshot, 1865 survey transcription (terrain tiles: fetched)
+data/raw/            input snapshots: OSM, 1865 survey transcription, terrain tiles, Poly Haven textures
 data/reference/      research notes per area and landmark, overrides, profiles, evaluation cameras
 data/photos*/        photo metadata (index.json); the images are fetched
 data/qa/             QA levels, regions, iconic places, findings ledger, Street View panoramas

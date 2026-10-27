@@ -1,5 +1,6 @@
-# SHA-256 of every downloaded or pinned input (docs/DATA.md). fetch_data.sh checks it; a mismatch
-# means an upstream file changed. Format: sha256sum; check with  grep -v '^#' data/inputs.sha256 | sha256sum -c
+# SHA-256 of every pinned input (docs/DATA.md). build.sh checks data/raw, fetch_data.sh --photos the
+# photos; a mismatch means a snapshot was altered or an upstream photo changed.
+# Check by hand:  grep -v '^#' data/inputs.sha256 | sha256sum -c
 a588d56a71ba029095ce6bb70f3cae0f17d300cba24e37a19a67f85655330d00  data/raw/osm_oldcity.osm
 e6f86783c71eea8639aa45707c6e2a79f711f0520ad6dddb7e51dad7ddff8678  data/raw/osm_west.osm
 e7fc92a2c99fa60d781e0c88720ac5c72902837e630da6241a5814255e10c321  data/raw/terrain/15_19590_13329.png
@@ -8,15 +9,15 @@ f4478d9db636ffc7d0c833d0065cf10863985a33f8494ffccc9800eb6d8660c3  data/raw/terra
 af4629ee0df3dbbf43fac53a780639f7d323828ccab4688b169ef4c646166f20  data/raw/terrain/15_19591_13329.png
 22b0dd753f1c20dfaf9b9dcc20803f5f04a9585d778f20f1492ed24880ba2b3b  data/raw/terrain/15_19591_13330.png
 682947eb4076038ce0f620e427f6fa80ab49b296cf94781dcb2dbfd7751986d4  data/raw/terrain/15_19591_13331.png
-da2f453c7c3683f5b01ca8b365ccf81ebce488afab7661adecd83208fc9aec97  data/textures/sandstone_blocks_08/diff.jpg
-735f205de2d44f2e7edddf22d6b7dca5cd2ace000f3f637546302508dd9616c2  data/textures/sandstone_blocks_08/nor.jpg
-676d9f00b54f303dc19856123312110be3859066661b224dececc3bc857c8f21  data/textures/sandstone_blocks_08/rough.jpg
-46c0be03ddf94e2eee4cc4ce3aa5526dedfcb85f41e78ea95017640164596602  data/textures/sandstone_blocks_05/diff.jpg
-df63ca75c87476f8ba0c6a3fab3fb841d590da2e5877a753815f20e1f091da1e  data/textures/sandstone_blocks_05/nor.jpg
-b610b74693219169f970fba609376ab8a449c2e3b515d5ec3d2269fe080bcf33  data/textures/sandstone_blocks_05/rough.jpg
-a6c5e0e7c4218ec10ddf9c7eb16709ab9e6ceafdf1ae5b917fd9129f80816ed4  data/textures/square_cobblestone/diff.jpg
-fe0754946e6df5aec23a4d3ec76edfee01b608c6c7777fca97160f2575764885  data/textures/square_cobblestone/nor.jpg
-0f0e8ef620f7ef61f6f492a14dd912ce17340bca9f0e3ba8c0a5fb3767896acd  data/textures/square_cobblestone/rough.jpg
+da2f453c7c3683f5b01ca8b365ccf81ebce488afab7661adecd83208fc9aec97  data/raw/polyhaven/sandstone_blocks_08/diff.jpg
+735f205de2d44f2e7edddf22d6b7dca5cd2ace000f3f637546302508dd9616c2  data/raw/polyhaven/sandstone_blocks_08/nor.jpg
+676d9f00b54f303dc19856123312110be3859066661b224dececc3bc857c8f21  data/raw/polyhaven/sandstone_blocks_08/rough.jpg
+46c0be03ddf94e2eee4cc4ce3aa5526dedfcb85f41e78ea95017640164596602  data/raw/polyhaven/sandstone_blocks_05/diff.jpg
+df63ca75c87476f8ba0c6a3fab3fb841d590da2e5877a753815f20e1f091da1e  data/raw/polyhaven/sandstone_blocks_05/nor.jpg
+b610b74693219169f970fba609376ab8a449c2e3b515d5ec3d2269fe080bcf33  data/raw/polyhaven/sandstone_blocks_05/rough.jpg
+a6c5e0e7c4218ec10ddf9c7eb16709ab9e6ceafdf1ae5b917fd9129f80816ed4  data/raw/polyhaven/square_cobblestone/diff.jpg
+fe0754946e6df5aec23a4d3ec76edfee01b608c6c7777fca97160f2575764885  data/raw/polyhaven/square_cobblestone/nor.jpg
+0f0e8ef620f7ef61f6f492a14dd912ce17340bca9f0e3ba8c0a5fb3767896acd  data/raw/polyhaven/square_cobblestone/rough.jpg
 84e3acfc6db5657bfd15105b4dcb72e9be29c1635425af0f070d14a1bc8f4e62  data/photos/041_185219889.jpg
 0458c35bf57f8bc966793bdbc96d6bff3879d8b9ad66f197b20d707fb0e9b1de  data/photos/053_157136671.jpg
 4e1d8a09dc4838fa183edb7fa5419e15e1203b06070c9b2f9a4a94858515570b  data/photos/062_157136657.jpg
