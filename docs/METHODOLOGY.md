@@ -26,10 +26,11 @@ centroid. Budget: hero ≈ 20 buildings per area is manageable by hand.
 
 ## 1. Acquire open data (automatic)
 
-`./fetch_data.sh` — OSM through the API `map` call (Overpass is often overloaded), AWS terrain
-tiles, Commons geotagged photos, Poly Haven CC0 textures. Change the bounding boxes and origin
-node to move to another area; the local frame is metres from a named OSM node, so any point
-maps exactly to lat/lon.
+`./fetch_data.sh` — AWS terrain tiles and Poly Haven CC0 textures, checked against
+`data/inputs.sha256`; with `--photos`, the Commons geotagged photographs. The OSM snapshot is taken
+once through the API `map` call (Overpass is often overloaded) and frozen, since the tables refer
+to its ids ([DATA.md](DATA.md)). Change the bounding boxes and origin node to move to another
+area; the local frame is metres from a named OSM node, so any point maps exactly to lat/lon.
 
 What you get and how far it can be trusted:
 * **OSM footprints** — excellent in the Old City; overlapping/broken polygons do exist and are

@@ -1,11 +1,13 @@
 # Old City Walker
 
-A walkable, geo-registered recreation of Jerusalem's walled Old City built from open data. It is
-modelled in Blender from OpenStreetMap footprints, an 1865 survey of street levels and photo-based
-research, and walked in a browser (three.js). Every point in the game maps to a real lat/lon.
-Shops are closed and there are no people.
+A walkable, geo-registered recreation of Jerusalem's walled Old City, built from open data: an
+example of what an AI coding agent can build for a real place. Buildings come from
+OpenStreetMap footprints, street levels from an 1865 survey, and heights, facades and detail from
+photo-based research. Each place is checked against real photographs and Street View. The city is
+modelled in Blender and walked in a browser (three.js). Every point in the game maps to a real
+lat/lon. Shops are closed and there are no people.
 
-**Play it in the browser: <https://old-city-walker-claude.yuranu.com>** (desktop or phone; the
+**Walk it in the browser: <https://old-city-walker-claude.yuranu.com>** (desktop or phone; the
 city streams in, ~180 MB).
 
 The project was developed with [Claude Code](https://claude.com/claude-code): the pipeline, the
@@ -24,123 +26,85 @@ Blender builders, the game and the QA loop were written by Claude under the auth
 ![in the game: Khan ez-Zeit and the Holy Sepulchre parvis](docs/img/ingame_streets.jpg)
 ![hero area](docs/img/hero_views.jpg)
 
-The process is a reusable playbook in [docs/METHODOLOGY.md](docs/METHODOLOGY.md) (§9: scaling to
-the whole city). The photo-matched evaluation loop is in [docs/EVALUATION.md](docs/EVALUATION.md),
-and the street-level terrain in [docs/TERRAIN.md](docs/TERRAIN.md).
+## Three ways in
 
-## Play locally
+| You want to | Do this |
+|---|---|
+| walk the city | open the [live site](https://old-city-walker-claude.yuranu.com) |
+| run it offline | download a release archive and follow its [instructions](release/README.md) |
+| rebuild it, change it, or apply the method elsewhere | build from source: [docs/BUILD.md](docs/BUILD.md) |
 
-Models and photos are stored with [Git LFS](https://git-lfs.com); install it before cloning.
+Controls: click to walk, **WASD** + mouse, **Shift** run, **Space** jump. **P** shows the nearest
+real geotagged photo (Wikimedia Commons, with author and licence) and **N** the next one. **G**
+opens the same spot and heading in Google Maps Street View. **O** toggles ambient occlusion and
+**F3** shows performance. On a phone: drag to look, the on-screen stick to walk.
 
-```bash
-git lfs install
-git clone https://github.com/yuranu/old-city-walker-claude.git && cd old-city-walker-claude
-cd game && npm install && npm run dev        # http://127.0.0.1:5173
-```
+## What this repository is
 
-Click to walk: **WASD** + mouse, **Shift** run, **Space** jump.
-**P** shows the nearest real geotagged photo (Wikimedia Commons, with author and licence) and **N** the next one.
-**G** opens the same spot and heading in Google Maps Street View. **O** toggles ambient occlusion and
-**F3** shows performance.
-URL `?x=60&y=8&h=90` starts at local metres (x east, y north from the Jaffa Gate OSM node) facing
-compass heading `h`. `?cam=<name>` loads an evaluation camera and `&clean=1` hides the HUD.
+The repository holds what is needed to rebuild the city and to see how it was made: the code,
+the method, and the research notes the model depends on. It is one product of a wider research
+effort, not the whole of it. It does not hold the result itself.
 
-`game/public/city.glb` (the Jaffa Gate area) is committed (Git LFS), so the game runs without the
-build pipeline; it is refreshed at milestones. The streamed whole city (`game/public/sectors.json`,
-`base/*.glb`, `sectors/*.glb`, ~440 MB) is built locally by `./build.sh`. The game uses it when
-present and falls back to `city.glb` otherwise. Integrated GPUs run it at about 6-10 ms per frame at
-1024x768. F3 shows which sectors are at full detail, and `?sectors=0` forces the single scene.
+- **Versioned:** code (`pipeline/`, `blender/`, `game/`), the method and its documentation
+  (`docs/`), the research notes and the per-building decisions (`data/reference/`), QA levels
+  and findings (`data/qa/`), provenance of every photograph used (`index.json` files: source,
+  author, licence, position), and the inputs that cannot be fetched again as they were (the
+  pinned OSM snapshot, the 1865 survey transcription).
+- **Not versioned:** anything that can be downloaded or rebuilt. Photographs are referenced by
+  URL, downloaded inputs are pinned by checksum (`data/inputs.sha256`), and the models are built
+  by `./build.sh`. The release archives and the live site carry the built city.
 
-## Rebuild
+[docs/DATA.md](docs/DATA.md) lists every source, how it is pinned, and its licence.
 
-Requirements: Blender 5.x (with system Python 3.14, as on Arch), Python 3.14 with a venv, Node.
+## Documentation
 
-```bash
-python3 -m venv --system-site-packages .venv && .venv/bin/pip install -r requirements.txt
-./fetch_data.sh          # textures (Poly Haven, CC0), photo metadata; the OSM snapshot is versioned
-./build.sh               # terrain -> spec -> textures/signs -> Blender: city.glb + base and 12 sectors
-                         # in parallel (~2 min) -> sectors.json -> audit
-PARTS="s04_sepulchre" ./build.sh --preview ""   # rebuild only some parts
-./build.sh --preview ""  # skip preview renders
-```
+| Document | Contents |
+|---|---|
+| [docs/BUILD.md](docs/BUILD.md) | requirements, fetching inputs, building, running, publishing |
+| [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | the method: data, tiers, spec, builders, scaling to a whole city |
+| [docs/TERRAIN.md](docs/TERRAIN.md) | street-level terrain from the 1865 survey and the DEM |
+| [docs/EVALUATION.md](docs/EVALUATION.md) | the photo-matched evaluation loop |
+| [docs/QA.md](docs/QA.md) | QA levels, in-game captures, automated checks, vision critics, Street View references |
+| [docs/DATA.md](docs/DATA.md) | data sources, what is versioned and why, licences |
+| [release/README.md](release/README.md) | running a release archive |
 
-Optional: `.venv/bin/python pipeline/fetch_ref_photos.py` restores the research photographs listed
-in the `index.json` files (only those used by the evaluation loop are versioned).
-
-Publishing: `npm --prefix game run deploy:build` makes a static build in `game/dist` (meshopt-compressed
-models, large files split), which any static host can serve. `deploy/` holds the Cloudflare Worker
-config used for the live site.
-
-## Pipeline
+## Repository layout
 
 ```
-data/raw/osm_oldcity.osm (pinned OSM snapshot)
-  pipeline/osm_to_local.py      OSM -> metres around the Jaffa Gate node (incl. multipolygons)
-  pipeline/make_spec.py         shapely: footprints (overlaps resolved), tiers, ground regions,
-                                kerbs, steps, facades (facades.py + hero.py), plaques from OSM
-                                street names, dressing (dressing.py)  ->  data/scene_spec.json
-  pipeline/gen_textures.py      paving, setts, closed-shop door/shutter atlas, cut-outs, decals
-  pipeline/gen_signs.py         signage atlas with shaped Hebrew/Arabic (Pillow + raqm)
-  blender/build_city.py         facade_build.py, fortifications.py, props.py -> city.glb
-  blender/audit.py              coplanar-overlap / degenerate / open-edge audit
-  pipeline/eval_set.py, blender/render_eval.py, pipeline/eval_compare.py
-                                photo-matched evaluation renders and scores
-  pipeline/qa/                  in-game view captures, contact sheets, vision-critic workflows,
-                                Street View comparisons of the iconic places (data/qa/)
-game/                           Vite + three.js + three-mesh-bvh walker
+pipeline/            data -> scene spec (Python, shapely), textures, signs, evaluation
+pipeline/qa/         QA: view planning, image and geometry checks, critic workflows, Street View pairs
+blender/             builders: facades, fortifications, landmarks, props -> glTF; audits, renders
+game/                Vite + three.js + three-mesh-bvh walker; game/scripts: static build, QA capture
+release/             release packaging and the instructions shipped in the archive
+deploy/              the live site's hosting (Cloudflare Worker config, upload script)
+docs/                manuals; docs/img: figures for this README
+data/raw/            pinned inputs: OSM snapshot, 1865 survey transcription (terrain tiles: fetched)
+data/reference/      research notes per area and landmark, overrides, profiles, evaluation cameras
+data/photos*/        photo metadata (index.json); the images are fetched
+data/qa/             QA levels, regions, iconic places, findings ledger, Street View panoramas
+build.sh, fetch_data.sh
 ```
-
-| Detail tier | Area | Content |
-|---|---|---|
-| hero | gate, square, east end | photo-matched facades, full dressing |
-| mid | rest of the walkable area | rule-based facades |
-| context | ~100 m around | massing, window cards, domes, rooftop rooms and clutter |
-
-## Repository layout and what is versioned
-
-```
-pipeline/  blender/  game/  docs/       code and documentation
-deploy/                                 static hosting (Cloudflare Worker config, upload script)
-data/raw/                               pinned inputs (OSM snapshot, terrain tiles) - LFS
-data/reference/                         research notes, edge tables, evaluation cameras
-data/qa/                                QA levels, iconic places, findings ledger
-data/photos*/**/index.json              photo metadata (source, author, licence)
-data/photos*/  (selected .jpg)          photos used by the evaluation loop - LFS
-game/public/                            runtime data: city.glb, plan/photos JSON, in-game photos - LFS
-```
-
-Not versioned (regenerated): `.venv`, `node_modules`, `build/`, `renders/`, `data/textures/`,
-`data/scene_spec.json`, `data/osm_local.json`, bulk research photos.
 
 ## Licence and data
 
 The code, documentation and original renders are released under the [MIT licence](LICENSE).
-The third-party data below keeps its own terms:
-
-- Map data © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/)
-  (`data/raw/*.osm`). The built city models are derived from it and carry the same attribution.
-- Photographs: Wikimedia Commons, each under its own licence (CC BY, CC BY-SA, GFDL, CC0, public
-  domain). Author, licence and source page are recorded in each `index.json` and in
-  `game/public/photos.json`, shown in the game, and printed on the evaluation comparisons.
-- Street levels: Ordnance Survey of Jerusalem 1864-65 (public domain), transcribed from the Princeton
-  University Library scan (`data/raw/terrain/os1865_*.csv`).
-- Elevation: [AWS Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) (Mapzen terrarium,
-  SRTM-derived here). Textures: Poly Haven (CC0), downloaded at build time.
-- Google Street View: the game only deep-links to it. The QA tooling (`pipeline/qa/sv_*.py`) can
-  fetch stills locally for side-by-side comparison; they are not versioned or published, and anyone
-  running it is responsible for complying with Google's terms.
+Third-party data keeps its own terms: map data © OpenStreetMap contributors (ODbL), photographs
+from Wikimedia Commons under their individual licences, the 1865 Ordnance Survey (public domain),
+AWS Terrain Tiles, and Poly Haven textures (CC0). Details and attribution: [docs/DATA.md](docs/DATA.md).
 
 ## Findings so far
 
 - OSM footprints, walls, gates, steps and street furniture are excellent. Heights are almost
   absent and come from photos.
 - Open DEMs are useless at street scale. The ground is modelled as regions (streets, road below
-  kerbs, moat, courtyard) with step runs.
+  kerbs, moat, courtyard) with step runs, levelled from the 1865 survey's spot heights.
 - Flicker came from coplanar geometry, mostly opening floors against the ground and overlapping
   OSM footprints. The audit drove it from 180 m² to ~1 m² of overlap.
 - Commons GPS is ±5–15 m. Camera poses for evaluation are refined visually against the model.
 - The photo-matched comparison is the most useful signal: it showed, for example, that the plaza
   uses modern grey lamp poles and slatted bins rather than the expected black lanterns.
+- Critics that judge a view without a reference rate plausibility, not truth: a landmark passed
+  review while missing its compound walls. Every critic pass now compares REAL | MODEL pairs.
 
 | | |
 |---|---|
